@@ -16,13 +16,16 @@ export const UPDATE_MEMBER_BY_ADMIN = gql`
 			memberFullName
 			memberImage
 			memberAddress
-			memberDesc
-			memberProperties
-			memberRank
+			memberDescription
+			memberCars
 			memberArticles
+			memberFollowers
+			memberFollowings
 			memberPoints
 			memberLikes
 			memberViews
+			memberComments
+			memberRank
 			memberWarnings
 			memberBlocks
 			deletedAt
@@ -34,61 +37,59 @@ export const UPDATE_MEMBER_BY_ADMIN = gql`
 `;
 
 /**************************
- *        PROPERTY        *
+ *        CAR        *
  *************************/
 
-export const UPDATE_PROPERTY_BY_ADMIN = gql`
-	mutation UpdatePropertyByAdmin($input: PropertyUpdate!) {
-		updatePropertyByAdmin(input: $input) {
+export const UPDATE_CAR_BY_ADMIN = gql`
+	mutation UpdateCarByAdmin($input: CarUpdate!) {
+		updateCarByAdmin(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			carStatus
+			carBrand
+			carModel
+			carType
+			carYear
+			carPrice
+			carFuelType
+			carTransmission
+			carColor
+			carImages
+			carDescription
+			carComments
+			carRank
+			carLikes
+			carViews
 			memberId
 			soldAt
 			deletedAt
-			constructedAt
 			createdAt
 			updatedAt
 		}
 	}
 `;
 
-export const REMOVE_PROPERTY_BY_ADMIN = gql`
-	mutation RemovePropertyByAdmin($input: String!) {
-		removePropertyByAdmin(propertyId: $input) {
+export const REMOVE_CAR_BY_ADMIN = gql`
+	mutation RemoveCarByAdmin($input: String!) {
+		removeCarByAdmin(carId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			carStatus
+			carBrand
+			carModel
+			carType
+			carYear
+			carPrice
+			carFuelType
+			carTransmission
+			carColor
+			carImages
+			carDescription
+			carComments
+			carRank
+			carLikes
+			carViews
 			memberId
 			soldAt
 			deletedAt
-			constructedAt
 			createdAt
 			updatedAt
 		}

@@ -10,7 +10,7 @@ export interface MemberUpdate {
 	memberFullName?: string;
 	memberImage?: string;
 	memberAddress?: string;
-	memberDesc?: string;
+	memberDescription?: string;
 	deletedAt?: Date;
 }
 
@@ -23,6 +23,6 @@ export interface AdminMemberUpdate {
 	memberFullName?: string;
 	memberImage?: string;
 	memberAddress?: string;
-	memberDesc?: string;
+	memberDescription?: string;
 	deletedAt?: Date;
 }

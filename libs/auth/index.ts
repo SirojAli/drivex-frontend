@@ -24,9 +24,9 @@ export const logIn = async (nick: string, password: string): Promise<void> => {
 			updateUserInfo(jwtToken);
 		}
 	} catch (err) {
-		console.warn('login err', err);
+		console.warn('login error', err);
 		logOut();
-		// throw new Error('Login Err');
+		// throw new Error('Login Error');
 	}
 };
 
@@ -46,17 +46,17 @@ const requestJwtToken = async ({
 			fetchPolicy: 'network-only',
 		});
 
-		console.log('---------- login ----------');
+		console.log('---------- LOGIN ----------');
 		const { accessToken } = result?.data?.login;
 
 		return { jwtToken: accessToken };
 	} catch (err: any) {
-		console.log('request token err', err.graphQLErrors);
+		console.log('request token error', err.graphQLErrors);
 		switch (err.graphQLErrors[0].message) {
-			case 'Definer: login and password do not match':
-				await sweetMixinErrorAlert('Please check your password again');
+			case 'Definer: Login and Password do not match':
+				await sweetMixinErrorAlert('Please check your Password again');
 				break;
-			case 'Definer: user has been blocked!':
+			case 'Definer: User has been blocked!':
 				await sweetMixinErrorAlert('User has been blocked!');
 				break;
 		}
@@ -73,7 +73,7 @@ export const signUp = async (nick: string, password: string, phone: string, type
 			updateUserInfo(jwtToken);
 		}
 	} catch (err) {
-		console.warn('login err', err);
+		console.warn('login error', err);
 		logOut();
 		// throw new Error('Login Err');
 	}
@@ -101,17 +101,17 @@ const requestSignUpJwtToken = async ({
 			fetchPolicy: 'network-only',
 		});
 
-		console.log('---------- login ----------');
+		console.log('---------- LOGIN ----------');
 		const { accessToken } = result?.data?.signup;
 
 		return { jwtToken: accessToken };
 	} catch (err: any) {
-		console.log('request token err', err.graphQLErrors);
+		console.log('request token error', err.graphQLErrors);
 		switch (err.graphQLErrors[0].message) {
-			case 'Definer: login and password do not match':
-				await sweetMixinErrorAlert('Please check your password again');
+			case 'Definer: Login and Password do not match':
+				await sweetMixinErrorAlert('Please check your Password again');
 				break;
-			case 'Definer: user has been blocked!':
+			case 'Definer: User has been blocked!':
 				await sweetMixinErrorAlert('User has been blocked!');
 				break;
 		}
@@ -141,8 +141,8 @@ export const updateUserInfo = (jwtToken: any) => {
 				? '/img/profile/defaultUser.svg'
 				: `${claims.memberImage}`,
 		memberAddress: claims.memberAddress ?? '',
-		memberDesc: claims.memberDesc ?? '',
-		memberProperties: claims.memberProperties,
+		memberDescription: claims.memberDescription ?? '',
+		memberCars: claims.memberCars,
 		memberRank: claims.memberRank,
 		memberArticles: claims.memberArticles,
 		memberPoints: claims.memberPoints,
@@ -175,8 +175,8 @@ const deleteUserInfo = () => {
 		memberFullName: '',
 		memberImage: '',
 		memberAddress: '',
-		memberDesc: '',
-		memberProperties: 0,
+		memberDescription: '',
+		memberCars: 0,
 		memberRank: 0,
 		memberArticles: 0,
 		memberPoints: 0,

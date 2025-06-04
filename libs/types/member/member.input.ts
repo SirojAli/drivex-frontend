@@ -1,6 +1,7 @@
-import { MemberAuthType, MemberStatus, MemberType } from '../../enums/member.enum';
+import { MemberType, MemberAuthType, MemberStatus } from '../../enums/member.enum';
 import { Direction } from '../../enums/common.enum';
 
+// 1. Registration input
 export interface MemberInput {
 	memberNick: string;
 	memberPassword: string;
@@ -9,33 +10,38 @@ export interface MemberInput {
 	memberAuthType?: MemberAuthType;
 }
 
+// 2. Login input
 export interface LoginInput {
 	memberNick: string;
 	memberPassword: string;
 }
 
-interface AISearch {
+// 3. Search input for Sellers
+export interface SISearch {
 	text?: string;
 }
 
-export interface AgentsInquiry {
+// 4. Seller Inquiry
+export interface SellersInquiry {
 	page: number;
 	limit: number;
-	sort?: string;
+	sort?: string; // availableSellerSorts
 	direction?: Direction;
-	search: AISearch;
+	search: SISearch;
 }
 
-interface MISearch {
+// 5. Search input for Members
+export interface MISearch {
 	memberStatus?: MemberStatus;
 	memberType?: MemberType;
 	text?: string;
 }
 
+// 6. Member Inquiry
 export interface MembersInquiry {
 	page: number;
 	limit: number;
-	sort?: string;
+	sort?: string; // availableMemberSorts
 	direction?: Direction;
 	search: MISearch;
 }

@@ -16,15 +16,18 @@ export const SIGN_UP = gql`
 			memberFullName
 			memberImage
 			memberAddress
-			memberDesc
-			memberWarnings
-			memberBlocks
-			memberProperties
-			memberRank
+			memberDescription
+			memberCars
 			memberArticles
+			memberFollowers
+			memberFollowings
 			memberPoints
 			memberLikes
 			memberViews
+			memberComments
+			memberRank
+			memberWarnings
+			memberBlocks
 			deletedAt
 			createdAt
 			updatedAt
@@ -45,14 +48,18 @@ export const LOGIN = gql`
 			memberFullName
 			memberImage
 			memberAddress
-			memberDesc
-			memberWarnings
-			memberBlocks
-			memberProperties
-			memberRank
+			memberDescription
+			memberCars
+			memberArticles
+			memberFollowers
+			memberFollowings
 			memberPoints
 			memberLikes
 			memberViews
+			memberComments
+			memberRank
+			memberWarnings
+			memberBlocks
 			deletedAt
 			createdAt
 			updatedAt
@@ -73,13 +80,16 @@ export const UPDATE_MEMBER = gql`
 			memberFullName
 			memberImage
 			memberAddress
-			memberDesc
-			memberProperties
-			memberRank
+			memberDescription
+			memberCars
 			memberArticles
+			memberFollowers
+			memberFollowings
 			memberPoints
 			memberLikes
 			memberViews
+			memberComments
+			memberRank
 			memberWarnings
 			memberBlocks
 			deletedAt
@@ -102,14 +112,18 @@ export const LIKE_TARGET_MEMBER = gql`
 			memberFullName
 			memberImage
 			memberAddress
-			memberDesc
-			memberWarnings
-			memberBlocks
-			memberProperties
-			memberRank
+			memberDescription
+			memberCars
+			memberArticles
+			memberFollowers
+			memberFollowings
 			memberPoints
 			memberLikes
 			memberViews
+			memberComments
+			memberRank
+			memberWarnings
+			memberBlocks
 			deletedAt
 			createdAt
 			updatedAt
@@ -119,90 +133,87 @@ export const LIKE_TARGET_MEMBER = gql`
 `;
 
 /**************************
- *        PROPERTY        *
+ *        CAR        *
  *************************/
 
-export const CREATE_PROPERTY = gql`
-	mutation CreateProperty($input: PropertyInput!) {
-		createProperty(input: $input) {
+export const CREATE_CAR = gql`
+	mutation CreateCar($input: CarInput!) {
+		createCar(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			carStatus
+			carBrand
+			carModel
+			carType
+			carYear
+			carPrice
+			carFuelType
+			carTransmission
+			carColor
+			carImages
+			carDescription
+			carComments
+			carRank
+			carLikes
+			carViews
 			memberId
 			soldAt
 			deletedAt
-			constructedAt
 			createdAt
 			updatedAt
 		}
 	}
 `;
 
-export const UPDATE_PROPERTY = gql`
-	mutation UpdateProperty($input: PropertyUpdate!) {
-		updateProperty(input: $input) {
+export const UPDATE_CAR = gql`
+	mutation UpdateCar($input: CarUpdate!) {
+		updateCar(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			carStatus
+			carBrand
+			carModel
+			carType
+			carYear
+			carPrice
+			carFuelType
+			carTransmission
+			carColor
+			carImages
+			carDescription
+			carComments
+			carRank
+			carLikes
+			carViews
 			memberId
 			soldAt
 			deletedAt
-			constructedAt
 			createdAt
 			updatedAt
 		}
 	}
 `;
 
-export const LIKE_TARGET_PROPERTY = gql`
-	mutation LikeTargetProperty($input: String!) {
-		likeTargetProperty(propertyId: $input) {
+export const LIKE_TARGET_CAR = gql`
+	mutation LikeTargetCar($input: String!) {
+		likeTargetCar(carId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			carStatus
+			carBrand
+			carModel
+			carType
+			carYear
+			carPrice
+			carFuelType
+			carTransmission
+			carColor
+			carImages
+			carDescription
+			carComments
+			carRank
+			carLikes
+			carViews
 			memberId
 			soldAt
 			deletedAt
-			constructedAt
 			createdAt
 			updatedAt
 		}

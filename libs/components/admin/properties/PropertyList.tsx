@@ -14,11 +14,11 @@ import {
 } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { Stack } from '@mui/material';
-import { Property } from '../../../types/property/property';
+import { Property } from '../../../types/car/car';
 import { REACT_APP_API_URL } from '../../../config';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Typography from '@mui/material/Typography';
-import { PropertyStatus } from '../../../enums/property.enum';
+import { PropertyStatus } from '../../../enums/car.enum';
 
 interface Data {
 	id: string;

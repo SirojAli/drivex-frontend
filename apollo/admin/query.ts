@@ -17,15 +17,18 @@ export const GET_ALL_MEMBERS_BY_ADMIN = gql`
 				memberFullName
 				memberImage
 				memberAddress
-				memberDesc
-				memberWarnings
-				memberBlocks
-				memberProperties
-				memberRank
+				memberDescription
+				memberCars
 				memberArticles
+				memberFollowers
+				memberFollowings
 				memberPoints
 				memberLikes
 				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
 				deletedAt
 				createdAt
 				updatedAt
@@ -39,33 +42,32 @@ export const GET_ALL_MEMBERS_BY_ADMIN = gql`
 `;
 
 /**************************
- *        PROPERTY        *
+ *        CAR        *
  *************************/
 
-export const GET_ALL_PROPERTIES_BY_ADMIN = gql`
-	query GetAllPropertiesByAdmin($input: AllPropertiesInquiry!) {
-		getAllPropertiesByAdmin(input: $input) {
+export const GET_ALL_CARS_BY_ADMIN = gql`
+	query GetAllCarsByAdmin($input: AllCarsInquiry!) {
+		getAllCarsByAdmin(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				carStatus
+				carBrand
+				carModel
+				carType
+				carYear
+				carPrice
+				carFuelType
+				carTransmission
+				carColor
+				carImages
+				carDescription
+				carComments
+				carRank
+				carLikes
+				carViews
 				memberId
 				soldAt
 				deletedAt
-				constructedAt
 				createdAt
 				updatedAt
 				memberData {
@@ -78,14 +80,18 @@ export const GET_ALL_PROPERTIES_BY_ADMIN = gql`
 					memberFullName
 					memberImage
 					memberAddress
-					memberDesc
-					memberWarnings
-					memberBlocks
-					memberProperties
-					memberRank
+					memberDescription
+					memberCars
+					memberArticles
+					memberFollowers
+					memberFollowings
 					memberPoints
 					memberLikes
 					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
 					deletedAt
 					createdAt
 					updatedAt
@@ -128,14 +134,18 @@ export const GET_ALL_BOARD_ARTICLES_BY_ADMIN = gql`
 					memberFullName
 					memberImage
 					memberAddress
-					memberDesc
-					memberWarnings
-					memberBlocks
-					memberProperties
-					memberRank
+					memberDescription
+					memberCars
+					memberArticles
+					memberFollowers
+					memberFollowings
 					memberPoints
 					memberLikes
 					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
 					deletedAt
 					createdAt
 					updatedAt
@@ -175,14 +185,18 @@ export const GET_COMMENTS = gql`
 					memberFullName
 					memberImage
 					memberAddress
-					memberDesc
-					memberWarnings
-					memberBlocks
-					memberProperties
-					memberRank
+					memberDescription
+					memberCars
+					memberArticles
+					memberFollowers
+					memberFollowings
 					memberPoints
 					memberLikes
 					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
 					deletedAt
 					createdAt
 					updatedAt
