@@ -1,5 +1,6 @@
 import { Container, Stack } from '@mui/material';
 import { NextPage } from 'next';
+import withLayoutFull from '../../libs/components/layout/LayoutFull';
 
 const CarDetail: NextPage = () => {
 	console.log('CAR LIST DETAIL PAGE');
@@ -12,5 +13,4 @@ const CarDetail: NextPage = () => {
 	);
 };
 
-// export default withLayoutFull(CarDetail);
-export default CarDetail;
+export default withLayoutFull(CarDetail);

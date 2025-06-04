@@ -1,7 +1,7 @@
 import { Stack, Box, Container } from '@mui/material';
 import { brown, green } from '@mui/material/colors';
 import { NextPage } from 'next';
-import withLayoutMain from '../libs/components/layout/LayoutHome';
+import withLayoutMain from '../libs/components/layout/LayoutMain';
 
 // import useDeviceDetect from '../libs/hooks/useDeviceDetect';
 // import withLayoutMain from '../libs/components/layout/LayoutHome';
@@ -53,16 +53,14 @@ import withLayoutMain from '../libs/components/layout/LayoutHome';
 
 const Home: NextPage = () => {
 	return (
-		<>
-			<Container>
-				<Stack flexDirection={'column'}>
-					<Box>CARS</Box>
-					<Box>MEMBERS</Box>
-					<Box>ARTICLES</Box>
-					<Box>PROFILE</Box>
-				</Stack>
-			</Container>
-		</>
+		<Container>
+			<Stack flexDirection={'column'}>
+				<Box>CARS</Box>
+				<Box>MEMBERS</Box>
+				<Box>ARTICLES</Box>
+				<Box>PROFILE</Box>
+			</Stack>
+		</Container>
 	);
 };
 

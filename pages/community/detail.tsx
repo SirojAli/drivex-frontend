@@ -2,16 +2,15 @@ import { Container, Stack } from '@mui/material';
 import { NextPage } from 'next';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 
-const CarList: NextPage = () => {
-	console.log('CAR LIST PAGE');
+const ArticleDetail: NextPage = () => {
+	console.log('ARTICLE DETAIL PAGE');
 	return (
 		<>
 			<Stack sx={{ background: '#81c784' }}>HEADER</Stack>
-			<Container>ARTICLE DETAIL</Container>
+			<Container>ARTICLE LIST DETAIL</Container>
 			<Stack sx={{ background: '#a1887f' }}>FOOTER</Stack>
 		</>
 	);
 };
 
-// export default withLayoutFull(CarList);
-export default withLayoutBasic(CarList);
+export default withLayoutBasic(ArticleDetail);

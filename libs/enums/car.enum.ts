@@ -19,6 +19,11 @@ export enum CarBrand {
 	PORSCHE = 'PORSCHE',
 	TESLA = 'TESLA',
 	BYD = 'BYD',
+	LEXUS = 'LEXUS',
+	ROLLS_ROYCE = 'ROLLS_ROYCE',
+	FERRARI = 'FERRARI',
+	LAMBORGHINI = 'LAMBORGHINI',
+	BUGATTI = 'BUGATTI',
 }
 
 export enum CarType {
@@ -85,6 +90,11 @@ export const carBrandLabels: Record<CarBrand, string> = {
 	PORSCHE: 'Porsche',
 	TESLA: 'Tesla',
 	BYD: 'BYD',
+	LEXUS: 'Lexus',
+	ROLLS_ROYCE: 'Rolls-Royce',
+	FERRARI: 'Ferrari',
+	LAMBORGHINI: 'Lamborghini',
+	BUGATTI: 'Bugatti',
 };
 
 export const carTypeLabels: Record<CarType, string> = {
