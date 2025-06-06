@@ -16,14 +16,16 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 
 const withLayoutBasic = (Component: any) => {
 	return (props: any) => {
-		<>
+		return (
 			<>
 				<Head>
 					<title>Drivex</title>
 					<meta name={'title'} content={`Drivex`} />
 				</Head>
 				<Stack id="pc-wrap">
-					<Stack id={'top'}>HEADER</Stack>
+					<Stack id={'top'} sx={{ background: '#81c784' }}>
+						HEADER
+					</Stack>
 					{/* <Stack id={'top'}><Top /></Stack> */}
 
 					{/* <Stack
@@ -47,11 +49,13 @@ const withLayoutBasic = (Component: any) => {
 					{/* {user?._id && <Chat />} */}
 					{/* <Chat /> */}
 
-					<Stack id={'footer'}>FOOTER</Stack>
+					<Stack id={'footer'} sx={{ background: '#a18871' }}>
+						FOOTER
+					</Stack>
 					{/* <Stack id={'footer'}><Footer /></Stack> */}
 				</Stack>
 			</>
-		</>;
+		);
 	};
 };
 

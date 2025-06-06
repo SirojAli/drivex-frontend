@@ -4,14 +4,7 @@ import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 
 const CarList: NextPage = () => {
 	console.log('CAR LIST PAGE');
-	return (
-		<>
-			<Stack sx={{ background: '#81c784' }}>HEADER</Stack>
-			<Container>ARTICLE DETAIL</Container>
-			<Stack sx={{ background: '#a1887f' }}>FOOTER</Stack>
-		</>
-	);
+	return <Container>CAR LIST</Container>;
 };
 
-// export default withLayoutFull(CarList);
 export default withLayoutBasic(CarList);

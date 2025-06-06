@@ -17,31 +17,37 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 
 const withLayoutMain = (Component: any) => {
 	return (props: any) => {
-		<>
-			<Head>
-				<title>Drivex</title>
-				<meta name={'title'} content={`Drivex`} />
-			</Head>
-			<Stack id="pc-wrap">
-				<Stack id={'top'}>HEADER</Stack>
-				{/* <Stack id={'top'}><Top /></Stack> */}
+		return (
+			<>
+				<Head>
+					<title>Drivex</title>
+					<meta name={'title'} content={`Drivex`} />
+				</Head>
+				<Stack id="pc-wrap">
+					<Stack id={'top'} sx={{ background: '#81c784' }}>
+						HEADER
+					</Stack>
+					{/* <Stack id={'top'}><Top /></Stack> */}
 
-				{/* <Stack className={'header-main'}>
+					{/* <Stack className={'header-main'}>
 					<FiberContainer />
 					<Stack className={'container'}><HeaderFilter /></Stack>
 				</Stack> */}
 
-				<Stack id={'main'}>
-					<Component {...props} />
+					<Stack id={'main'}>
+						<Component {...props} />
+					</Stack>
+
+					{/* {user?._id && <Chat />} */}
+					{/* <Chat /> */}
+
+					<Stack id={'footer'} sx={{ background: '#a18871' }}>
+						FOOTER
+					</Stack>
+					{/* <Stack id={'footer'}><Footer /></Stack> */}
 				</Stack>
-
-				{/* {user?._id && <Chat />} */}
-				{/* <Chat /> */}
-
-				<Stack id={'footer'}>FOOTER</Stack>
-				{/* <Stack id={'footer'}><Footer /></Stack> */}
-			</Stack>
-		</>;
+			</>
+		);
 	};
 };
 
