@@ -30,7 +30,7 @@ interface Range {
 }
 
 // 3. SEARCH FILTERS (Car Inquiry Search)
-interface CarISearch {
+export interface CarISearch {
 	memberId?: string;
 	brandList?: CarBrand[];
 	typeList?: CarType[];

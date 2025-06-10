@@ -1,50 +1,40 @@
 import React, { useEffect } from 'react';
-import { Stack } from '@mui/material';
-import Head from 'next/head';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-
-// import Top from '../Top';
-// import Footer from '../Footer';
-// import FiberContainer from '../common/FiberContainer';
-// import HeaderFilter from '../homepage/HeaderFilter';
-// import { userVar } from '../../../apollo/store';
-// import { useReactiveVar } from '@apollo/client';
-// import { getJwtToken, updateUserInfo } from '../../auth';
-// import Chat from '../Chat';
-// import 'swiper/css';
-// import 'swiper/css/pagination';
-// import 'swiper/css/navigation';
+import Head from 'next/head';
+import Top from '../Top';
+import Footer from '../Footer';
+import { Stack } from '@mui/material';
+import HeaderFilter from '../homepage/HeaderFilter';
+import { userVar } from '../../../apollo/store';
+import { useReactiveVar } from '@apollo/client';
+import { getJwtToken, updateUserInfo } from '../../auth';
 
 const withLayoutMain = (Component: any) => {
 	return (props: any) => {
 		return (
 			<>
 				<Head>
-					<title>Drivex</title>
-					<meta name={'title'} content={`Drivex`} />
+					<title>DriveX</title>
+					<meta name={'title'} content={`DriveX`} />
 				</Head>
 				<Stack id="pc-wrap">
-					<Stack id={'top'} sx={{ background: '#81c784' }}>
-						HEADER
+					<Stack id={'top'}>
+						<Top />
 					</Stack>
-					{/* <Stack id={'top'}><Top /></Stack> */}
 
-					{/* <Stack className={'header-main'}>
-					<FiberContainer />
-					<Stack className={'container'}><HeaderFilter /></Stack>
-				</Stack> */}
+					<Stack className={'header-main'}>
+						<Stack className={'container'}>
+							<HeaderFilter />
+						</Stack>
+					</Stack>
 
 					<Stack id={'main'}>
 						<Component {...props} />
 					</Stack>
 
-					{/* {user?._id && <Chat />} */}
-					{/* <Chat /> */}
-
-					<Stack id={'footer'} sx={{ background: '#a18871' }}>
-						FOOTER
+					<Stack id={'footer'}>
+						<Footer />
 					</Stack>
-					{/* <Stack id={'footer'}><Footer /></Stack> */}
 				</Stack>
 			</>
 		);
