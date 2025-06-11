@@ -37,24 +37,24 @@ const HeaderFilter = () => {
 					</Stack>
 					<Stack className={'search-logo'}>
 						<Box className={'logo'}>
-							<img src="/img/icons/search_white.svg" alt="" />
+							<img src="/img/icons/suv.png" alt="" />
 							<span>SUV</span>
 						</Box>
 						<Box className={'logo'}>
-							<img src="/img/icons/search_white.svg" alt="" />
-							<span>Sedan</span>
-						</Box>
-						<Box className={'logo'}>
-							<img src="/img/icons/search_white.svg" alt="" />
+							<img src="/img/icons/coupe.png" alt="" />
 							<span>Coupe</span>
 						</Box>
 						<Box className={'logo'}>
-							<img src="/img/icons/search_white.svg" alt="" />
-							<span>Hatchback</span>
-							<Box className={'logo'}>
-								<img src="/img/icons/search_white.svg" alt="" />
-								<span>Crossover</span>
-							</Box>
+							<img src="/img/icons/minivan.png" alt="" />
+							<span>Minivan</span>
+						</Box>
+						<Box className={'logo'}>
+							<img src="/img/icons/sedan.png" alt="" />
+							<span>Sedan</span>
+						</Box>
+						<Box className={'logo'}>
+							<img src="/img/icons/truck.png" alt="" />
+							<span>Pickup Truck</span>
 						</Box>
 					</Stack>
 				</Stack>

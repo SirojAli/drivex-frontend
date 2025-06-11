@@ -37,6 +37,7 @@
 							flex-direction: row;
 							gap: 20px;
 							align-items: center;
+							// background-color: #ff7101;
 
 							img {
 								width: 40px;
@@ -208,41 +209,41 @@
 				}
 
 				.search-box {
+					position: relative;
 					width: 1290px;
-					// height: 60px;
+					height: 60px;
+					margin-top: 186px;
+					padding: 16px 29px;
 					display: flex;
 					align-items: center;
 					flex-direction: column;
 					gap: 20px;
-					position: relative;
 
 					.select-box {
-						width: 100%;
-						height: 62px;
+						width: 1200px;
 						display: flex;
 						flex-direction: row;
 						justify-content: space-between;
-						display: flex;
 						padding: 22px;
+						align-items: center;
 						gap: 10px;
 						border-radius: 16px;
 						background: #fff;
 						box-shadow: 0px 4px 26px 0px rgba(66, 71, 76, 0.08);
-						border: 1px solid red;
 
 						.box {
-							flex: 1;
-							max-width: 213px;
-							height: 56px;
-							padding: 0 22px;
-							background: rgba(255, 255, 255, 0.575);
-							border-radius: 12px;
-							box-sizing: border-box;
+							padding: 24px 22px;
+							width: 200px;
+							height: 50px;
 							display: flex;
+							flex-direction: row;
 							align-items: center;
 							justify-content: space-between;
+							border-radius: 14px;
+							border: 1px solid #ededed;
+							padding: 10px 16px;
+							flex: 1 0 0;
 							cursor: pointer;
-							color: #555;
 							&.on {
 								background: #ffffff;
 								border: 1px solid #000;
@@ -255,7 +256,6 @@
 								font-style: normal;
 								font-weight: 400;
 								line-height: 26px;
-								color: inherit; // new
 							}
 							svg {
 								width: 20px;
@@ -281,17 +281,22 @@
 							}
 						}
 					}
+
 					.search-logo {
-						width: 750px;
+						width: 700px;
 						height: 40px;
 						display: flex;
 						flex-direction: row;
 						align-items: center;
-						border: 1px solid navy;
+						justify-content: space-between;
 						position: relative;
 						gap: 10px;
+						backdrop-filter: blur(2px);
+						// border: 1px solid red;
 
 						.logo {
+							width: auto;
+							// height: 30px;
 							display: flex;
 							padding: 6px 16px;
 							align-items: center;
@@ -308,7 +313,7 @@
 								font-size: 14px;
 								font-style: normal;
 								font-weight: 400;
-								line-height: 140%; /* 19.6px */
+								line-height: 20px; /* 19.6px */
 							}
 						}
 					}
@@ -319,17 +324,85 @@
 
 	#footer {
 		position: relative;
-		padding: 60px 0px 18px 0px;
+		padding: 40px 0px;
 		width: 100%;
 		height: auto;
 		display: flex;
-		flex-direction: row;
-		background: #181a20;
+		flex-direction: column;
+		background: #24272c;
+		gap: 40px;
+		align-self: stretch;
+		align-items: center;
+
 		.footer-container {
 			width: 1300px;
-			height: auto;
+			height: 550px;
 			margin: 0 auto;
-			.main {
+			border: 1px solid white;
+			align-items: center;
+
+			.divider {
+				width: 1290px;
+				height: 2px;
+				// opacity: 0.06;
+				background: #fff;
+			}
+
+			.footer-top {
+				width: 100%;
+				height: 70px;
+				display: flex;
+				justify-content: space-between;
+				gap: 30px;
+				flex-direction: row;
+
+				.top {
+					width: 300px;
+					height: 100%;
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					gap: 30px;
+					// border: 1px solid white;
+
+					.icon {
+						width: 70px;
+						height: 70px;
+						flex-shrink: 0;
+					}
+
+					.text {
+						width: 200px;
+						height: 50px;
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+						gap: 6px;
+
+						h5 {
+							align-self: stretch;
+							color: #fff;
+							font-family: $font;
+							font-size: 18px;
+							font-style: normal;
+							font-weight: 500;
+							line-height: normal;
+						}
+
+						span {
+							align-self: stretch;
+							color: #fff;
+							font-family: $font;
+							font-size: 13px;
+							font-style: normal;
+							font-weight: 300;
+							line-height: normal;
+						}
+					}
+				}
+			}
+
+			.footer-main {
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
@@ -459,7 +532,8 @@
 					}
 				}
 			}
-			.second {
+
+			.footer-end {
 				margin-top: 60px;
 				height: 45px;
 				border-top: 1px solid #212329;

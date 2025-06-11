@@ -11,7 +11,7 @@ const Top = () => {
 				<Stack className={'container'}>
 					<Box component={'div'} className={'logo-box'}>
 						<Link href={'/'} className={'logo'}>
-							<img src="/img/logo/icon.png" alt="" />
+							<img src="/img/logo/icon.png" alt="logo" />
 							<span>DriveX</span>
 						</Link>
 					</Box>
