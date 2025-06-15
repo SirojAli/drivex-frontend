@@ -3,8 +3,8 @@ import { Stack } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-// import Top from '../Top';
-// import Footer from '../Footer';
+import Top from '../Top';
+import Footer from '../Footer';
 // import { getJwtToken, updateUserInfo } from '../../auth';
 // import Chat from '../Chat';
 // import { useReactiveVar } from '@apollo/client';
@@ -23,36 +23,34 @@ const withLayoutBasic = (Component: any) => {
 					<meta name={'title'} content={`Drivex`} />
 				</Head>
 				<Stack id="pc-wrap">
-					<Stack id={'top'} sx={{ background: '#81c784' }}>
-						HEADER
+					<Stack id="top">
+						<Top />
 					</Stack>
-					{/* <Stack id={'top'}><Top /></Stack> */}
 
-					{/* <Stack
-						className={`header-basic ${authHeader && 'auth'}`}
+					<Stack
+						className={`header-basic`}
 						style={{
-							backgroundImage: `url(${memoizedValues.bgImage})`,
+							backgroundImage: `url/img/cars/header1.jpg`,
 							backgroundSize: 'cover',
 							boxShadow: 'inset 10px 40px 150px 40px rgb(24 22 36)',
 						}}
 					>
 						<Stack className={'container'}>
-							<strong>{t(memoizedValues.title)}</strong>
-								<span>{t(memoizedValues.desc)}</span>
+							<strong>DriveX Platform</strong>
+							<span>We are glad to serve you!</span>
 						</Stack>
-					</Stack> */}
+					</Stack>
 
-					<Stack id={'main'}>
+					<Stack id="main">
 						<Component {...props} />
 					</Stack>
 
 					{/* {user?._id && <Chat />} */}
 					{/* <Chat /> */}
 
-					<Stack id={'footer'} sx={{ background: '#a18871' }}>
-						FOOTER
+					<Stack id="footer">
+						<Footer />
 					</Stack>
-					{/* <Stack id={'footer'}><Footer /></Stack> */}
 				</Stack>
 			</>
 		);

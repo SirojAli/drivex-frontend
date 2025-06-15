@@ -3,8 +3,11 @@ import { NextPage } from 'next';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 
 const ArticleList: NextPage = () => {
-	console.log('ARTICLE LIST PAGE');
-	return <Container>ARTICLE LIST</Container>;
+	return (
+		<div className={'car-list'}>
+			<Stack className={'container'}>ARTICLE LIST</Stack>
+		</div>
+	);
 };
 
 export default withLayoutBasic(ArticleList);

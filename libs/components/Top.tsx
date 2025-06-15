@@ -36,7 +36,7 @@ const Top = () => {
 						<Link href={'/brand'}>
 							<div>Brands</div>
 						</Link>
-						<Link href={'/cars'}>
+						<Link href={'/car'}>
 							<div>All Cars</div>
 						</Link>
 						<Link href={'/community?articleCategory=NEWS'}>

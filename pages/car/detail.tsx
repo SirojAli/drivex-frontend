@@ -3,8 +3,11 @@ import { NextPage } from 'next';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 
 const CarDetail: NextPage = () => {
-	console.log('CAR DETAIL PAGE');
-	return <Container>CAR DETAIL</Container>;
+	return (
+		<div className={'car-detail-list'}>
+			<Stack className={'container'}>CAR DETAIL LIST</Stack>
+		</div>
+	);
 };
 
 export default withLayoutBasic(CarDetail);

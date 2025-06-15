@@ -18,7 +18,7 @@ const withLayoutMain = (Component: any) => {
 					<meta name={'title'} content={`DriveX`} />
 				</Head>
 				<Stack id="pc-wrap">
-					<Stack id={'top'}>
+					<Stack id="top">
 						<Top />
 					</Stack>
 
@@ -28,11 +28,11 @@ const withLayoutMain = (Component: any) => {
 						</Stack>
 					</Stack>
 
-					<Stack id={'main'}>
+					<Stack id="main">
 						<Component {...props} />
 					</Stack>
 
-					<Stack id={'footer'}>
+					<Stack id="footer">
 						<Footer />
 					</Stack>
 				</Stack>

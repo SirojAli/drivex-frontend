@@ -53,14 +53,16 @@ import withLayoutMain from '../libs/components/layout/LayoutMain';
 
 const Home: NextPage = () => {
 	return (
-		<Container>
-			<Stack flexDirection={'column'}>
-				<Box>CARS</Box>
-				<Box>MEMBERS</Box>
-				<Box>ARTICLES</Box>
-				<Box>PROFILE</Box>
+		<Stack>
+			<Stack className={'home-page'}>
+				<Stack className={'container'}>Top Brands</Stack>
+				<Stack className={'container'}>Popular Cars</Stack>
+				<Stack className={'container'}>Video Ads</Stack>
+				<Stack className={'container'}>Compare Cars</Stack>
+				<Stack className={'container'}>Car Reviews</Stack>
+				<Stack className={'container'}>Car Blogs</Stack>
 			</Stack>
-		</Container>
+		</Stack>
 	);
 };
 

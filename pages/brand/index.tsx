@@ -2,12 +2,12 @@ import { Container, Stack } from '@mui/material';
 import { NextPage } from 'next';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 
-const CarList: NextPage = () => {
+const BrandList: NextPage = () => {
 	return (
-		<div className={'car-list'}>
-			<Stack className={'container'}>CAR LIST</Stack>
+		<div className={'brand-list'}>
+			<Stack className={'container'}>BRAND LIST</Stack>
 		</div>
 	);
 };
 
-export default withLayoutBasic(CarList);
+export default withLayoutBasic(BrandList);

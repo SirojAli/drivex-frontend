@@ -21,18 +21,18 @@ const withLayoutFull = (Component: any) => {
 				<meta name={'title'} content={`Drivex`} />
 			</Head>
 			<Stack id="pc-wrap">
-				<Stack id={'top'}>HEADER</Stack>
-				{/* <Stack id={'top'}><Top /></Stack> */}
+				<Stack id="top">HEADER</Stack>
+				{/* <Stack id='top'><Top /></Stack> */}
 
-				<Stack id={'main'}>
+				<Stack id="main">
 					<Component {...props} />
 				</Stack>
 
 				{/* {user?._id && <Chat />} */}
 				{/* <Chat /> */}
 
-				<Stack id={'footer'}>FOOTER</Stack>
-				{/* <Stack id={'footer'}><Footer /></Stack> */}
+				<Stack id="footer">FOOTER</Stack>
+				{/* <Stack id='footer'><Footer /></Stack> */}
 			</Stack>
 		</>;
 	};
