@@ -1,12 +1,26 @@
 import { Stack, Box } from '@mui/material';
+import React, { useState, useEffect } from 'react';
 import { Logout } from '@mui/icons-material';
 import Link from 'next/link';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 const Top = () => {
+	/*INITIALIZATIONS*/
+	const [scrollPosition, setScrollPosition] = useState(0);
+
+	useEffect(() => {
+		const scrollHandler = () => {
+			setScrollPosition(window.pageYOffset);
+		};
+		window.addEventListener('scroll', scrollHandler);
+		return () => window.removeEventListener('scroll', scrollHandler);
+	}, []);
+
+	const isScrolled = scrollPosition >= 100;
+
 	return (
-		<Stack className={'navbar'}>
+		<Stack className={`navbar ${isScrolled ? 'active_scroll' : ''}`}>
 			<Stack className={'navbar-main'}>
 				<Stack className={'container'}>
 					<Box component={'div'} className={'logo-box'}>

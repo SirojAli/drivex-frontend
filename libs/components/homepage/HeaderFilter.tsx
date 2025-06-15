@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Stack, Box, Modal, Divider, Button } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import SearchIcon from '@mui/icons-material/Search';
 
 const HeaderFilter = () => {
 	return (
@@ -32,7 +33,8 @@ const HeaderFilter = () => {
 							<ExpandMoreIcon />
 						</Box>
 						<Box className={'search-btn'}>
-							<img src="/img/icons/search_white.svg" alt="" />
+							<span>Search</span>
+							<SearchIcon className={'btn'} />
 						</Box>
 					</Stack>
 					<Stack className={'search-logo'}>

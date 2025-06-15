@@ -16,7 +16,7 @@ const Footer = () => {
 						<img src="/img/icons/cup.png" alt="icon" />
 					</Box>
 					<Box className={'text'}>
-						<h5>TOP 1 Korean</h5>
+						<h5>Korean Number 1</h5>
 						<span>Largest Auto Portal</span>
 					</Box>
 				</Stack>
@@ -53,8 +53,8 @@ const Footer = () => {
 			{/* Footer Main */}
 			<Stack className={'footer-main'}>
 				<Stack className={'main'}>
+					<h3>About DriveX</h3>
 					<Box className={'info'}>
-						<h3>About DriveX</h3>
 						<span>About us</span>
 						<span>Careers With Us</span>
 						<span>Terms & Conditions</span>
@@ -65,8 +65,8 @@ const Footer = () => {
 					</Box>
 				</Stack>
 				<Stack className={'main'}>
+					<h3>Popular Cars</h3>
 					<Box className={'info'}>
-						<h3>Popular Cars</h3>
 						<span>BMW</span>
 						<span>Mercedes-Benz</span>
 						<span>Kia</span>
@@ -77,8 +77,8 @@ const Footer = () => {
 					</Box>
 				</Stack>
 				<Stack className={'main'}>
+					<h3>Other</h3>
 					<Box className={'info'}>
-						<h3>Other</h3>
 						<span>Terms and Conditions</span>
 						<span>Privacy Policy</span>
 						<span>Copyrights</span>
@@ -89,15 +89,15 @@ const Footer = () => {
 					</Box>
 				</Stack>
 				<Stack className={'main'}>
+					<h3>Newsletter</h3>
 					<Box className={'email'}>
-						<h3>Newsletter</h3>
 						<p>Stay on top of the latest car trends, tips, and tricks</p>
-						<Box className={'send-email'}>
-							<form className="form">
-								<input type="email" placeholder="Your Email Address" required />
-								<button type="submit">Send</button>
-							</form>
-						</Box>
+						<form className="form">
+							<input type="email" placeholder="Your email address" required />
+							<button type="submit">
+								<p>Send</p>
+							</button>
+						</form>
 					</Box>
 				</Stack>
 			</Stack>
@@ -105,18 +105,18 @@ const Footer = () => {
 
 			{/* Footer End */}
 			<Stack className={'footer-end'}>
-				<Box className={'end'}>
+				<Box className={'logo-box'}>
 					<img src="/img/logo/icon.png" alt="logo" />
 					<span>DriveX</span>
 				</Box>
-				<Box className={'end'}>
+				<Box className={'info-social'}>
 					<span>© 2025 Drivex. All rights reserved</span>
 					<div className={'media-box'}>
-						<FacebookOutlinedIcon />
-						<TelegramIcon />
-						<InstagramIcon />
-						<TwitterIcon />
-						<YouTubeIcon />
+						<FacebookOutlinedIcon className={'icon'} />
+						<TelegramIcon className={'icon'} />
+						<InstagramIcon className={'icon'} />
+						<TwitterIcon className={'icon'} />
+						<YouTubeIcon className={'icon'} />
 					</div>
 				</Box>
 			</Stack>
