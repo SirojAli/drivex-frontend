@@ -6,8 +6,503 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+		// gap: 50px;
+		background: #fff;
 
-		gap: 50px;
-		background: yellow;
+		// 1. TopBrands
+		.top-brands {
+			width: 100%;
+			height: auto;
+			padding: 100px 0px 100px;
+			display: flex;
+			flex-direction: row;
+
+			.container {
+				width: 1290px;
+				height: 275px;
+				flex-direction: column;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 40px;
+				// border: 1px solid black;
+
+				.brand-text {
+					width: 200px;
+					height: 40px;
+					display: flex;
+					align-items: center;
+
+					h2 {
+						color: #000; // figma: 24272c
+						font-family: $font;
+						font-size: 30px;
+						font-style: normal;
+						font-weight: 500;
+						line-height: normal;
+					}
+				}
+
+				.empty-list {
+					width: 100%;
+					height: 280px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+
+				.brand-car-swiper {
+				}
+
+				.top-brand-card {
+					width: 1290px;
+					height: auto;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					flex-direction: row;
+					// border: 1px solid #000;
+
+					.brand-box {
+						width: 142px;
+						height: 142px;
+						padding: 24px;
+						gap: 20px;
+						border-radius: 16px;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						border: 1px solid #ededed;
+						// border: 1px solid #000;
+						cursor: pointer;
+
+						&:hover {
+							transform: translateY(-5px) scale(1.03);
+							box-shadow: 0px 30px 60px 0px rgba(0, 0, 0, 0.1);
+							background: #fff;
+						}
+
+						img {
+							width: 140px;
+							height: 80px;
+							border-radius: 16px;
+							// background: #d9d9d9;
+						}
+
+						.brand-info {
+							width: 90px;
+							height: 43px;
+							display: flex;
+							flex-direction: column;
+							gap: 4px;
+
+							p {
+								color: #161e2d;
+								font-family: $font;
+								font-size: 16px;
+								font-style: normal;
+								font-weight: 600;
+								line-height: 22px;
+							}
+
+							span {
+								color: #5c6368;
+								font-family: $font;
+								font-size: 12px;
+								font-style: normal;
+								font-weight: 400;
+								line-height: 16px;
+							}
+						}
+					}
+
+					img {
+						width: 140px;
+						height: 80px;
+						border-radius: 16px;
+						// background: #d9d9d9;
+					}
+
+					.brand-info {
+						width: 90px;
+						height: 22px;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						gap: 4px;
+
+						p {
+							color: #161e2d;
+							text-align: center;
+							font-family: $font;
+							font-size: 16px;
+							font-style: normal;
+							font-weight: 600;
+							line-height: 22px;
+						}
+
+						span {
+							color: #5c6368;
+							text-align: center;
+							font-family: $font;
+							font-size: 12px;
+							font-style: normal;
+							font-weight: 400;
+							line-height: 16px;
+						}
+					}
+				}
+			}
+		}
+
+		// 2. PopularCars
+		.popular-cars {
+			width: 100%;
+			height: 300px;
+			width: 100%;
+			height: auto;
+			padding-bottom: 110px;
+			display: flex;
+			flex-direction: row;
+			// border: 1px solid red;
+
+			.container {
+				width: 1290px;
+				height: auto;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 40px;
+				flex-wrap: wrap;
+				// border: 1px solid red;
+
+				.popular-text {
+					width: 200px;
+					height: 40px;
+					display: flex;
+					align-items: center;
+
+					h2 {
+						color: #000; // figma: 24272c
+						font-family: $font;
+						font-size: 30px;
+						font-style: normal;
+						font-weight: 500;
+						line-height: normal;
+					}
+				}
+
+				.empty-list {
+					width: 100%;
+					height: 280px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+
+				.popular-car-box {
+					width: 1290px;
+					display: flex;
+					flex-wrap: wrap;
+					flex-direction: row;
+					gap: 30px;
+					justify-content: center;
+
+					.car-box {
+						width: 300px;
+						height: 460px;
+						position: relative;
+						display: flex;
+						flex-direction: column;
+						align-items: flex-start;
+						border-radius: 20px;
+						cursor: pointer;
+						border: 1px solid #e5e5e5;
+						box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+						background-color: #fff;
+
+						.img-box {
+							width: 298px;
+							height: 225px;
+							position: relative;
+							overflow: hidden;
+							border-top-left-radius: 20px;
+							border-top-right-radius: 20px;
+
+							img {
+								width: 100%;
+								height: 100%;
+								object-fit: cover;
+								display: block;
+								border-radius: inherit;
+							}
+
+							.img-feat {
+								position: absolute;
+								top: 10px;
+								left: 10px;
+								display: flex;
+								padding: 6px 12px;
+								align-items: center;
+								border-radius: 99px;
+								background: #ff7101;
+
+								span {
+									color: #fff;
+									font-family: $font;
+									font-size: 12px;
+									font-style: normal;
+									font-weight: 500;
+									line-height: 17px;
+								}
+							}
+
+							.like-btn {
+								width: 30px;
+								height: 30px;
+								padding: 8px;
+								position: absolute;
+								top: 10px;
+								right: 10px;
+								opacity: 0;
+								transition: opacity 0.3s ease, transform 0.2s ease;
+								z-index: 2;
+								cursor: pointer;
+								color: rgba(0, 0, 0, 0.3);
+								background-color: rgba(255, 255, 255, 0.85);
+								border-radius: 50%;
+								padding: 6px;
+
+								&:hover {
+									transform: scale(1.1);
+								}
+
+								&.liked {
+									color: red;
+								}
+							}
+
+							&:hover .like-btn {
+								opacity: 1;
+							}
+						}
+
+						.car-info {
+							width: 300px;
+							height: 235px;
+							display: flex;
+							padding: 16px;
+							flex-direction: column;
+							align-items: flex-start;
+							gap: 20px;
+
+							.car-content {
+								width: 268px;
+								height: 124px;
+								display: flex;
+								flex-direction: column;
+								align-items: flex-start;
+								justify-content: space-between;
+								gap: 8px;
+
+								.car-type {
+									width: auto;
+									height: auto;
+									color: #ff7101;
+									font-family: $font;
+									font-size: 14px;
+									font-style: normal;
+									font-weight: 500;
+									line-height: 20px;
+								}
+
+								.car-name {
+									width: auto;
+									height: auto;
+									color: #24272c;
+									font-family: $font;
+									font-size: 18px;
+									font-style: normal;
+									font-weight: 600;
+									line-height: normal;
+								}
+
+								.car-category {
+									width: 100%;
+									height: 20px;
+									display: flex;
+									align-items: flex-start;
+									gap: 12px;
+
+									.category {
+										width: auto;
+										height: 20px;
+										display: flex;
+										align-items: center;
+										gap: 8px;
+
+										img {
+											width: 16px;
+											height: 16px;
+										}
+
+										span {
+											width: auto;
+											height: 20px;
+											color: #696665;
+											font-family: $font;
+											font-size: 14px;
+											font-style: normal;
+											font-weight: 400;
+											line-height: 20px;
+										}
+									}
+								}
+
+								.car-price-btn {
+									width: 100%;
+									height: 25px;
+									display: flex;
+									flex-direction: row;
+									justify-content: space-between;
+									align-items: center;
+									margin-top: 12px;
+
+									.price {
+										color: #ff7101;
+										font-family: $font;
+										font-size: 26px;
+										font-style: normal;
+										font-weight: 600;
+										line-height: normal;
+									}
+
+									.view-like-btn {
+										display: flex;
+										align-items: center;
+										gap: 12px;
+
+										.view-btn,
+										.like-btn {
+											display: flex;
+											align-items: center;
+											justify-content: center;
+											// border-radius: 6px;
+											// padding: 3px 6px;
+											// background-color: #f3f3f3;
+
+											.view,
+											.like {
+												width: 18px;
+												height: 18px;
+												color: #444;
+											}
+
+											span {
+												font-size: 15px;
+												margin-left: 3px;
+												color: #444;
+											}
+										}
+									}
+								}
+							}
+							.divider {
+								width: 268px;
+								height: 1px;
+								background: #ededed;
+								// border: 1px solid red;
+							}
+							.car-logo {
+								width: 268px;
+								height: 60px;
+								display: flex;
+								justify-content: space-between;
+								// border: 1px solid red;
+
+								.logo {
+									width: auto;
+									height: 100%;
+									display: flex;
+									align-items: center;
+									gap: 10px;
+
+									img {
+										width: 38px;
+										height: 38px;
+										fill: #d9d9d9;
+										// border: 1px solid #000;
+										// border-radius: 50%;
+									}
+
+									span {
+										color: #24272c;
+										font-family: $font;
+										font-size: 14px;
+										font-style: normal;
+										font-weight: 500;
+										line-height: normal;
+									}
+								}
+
+								.view-btn {
+									width: 90px;
+									height: 38px;
+									display: flex;
+									width: 90px;
+									height: 38px;
+									padding: 10px;
+									justify-content: center;
+									align-items: center;
+									gap: 4px;
+									border-radius: 14px;
+									border: 1px solid #24272c;
+
+									span {
+										color: #24272c;
+										font-family: $font;
+										font-size: 14px;
+										font-style: normal;
+										font-weight: 500;
+										line-height: normal;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// 3. Advertisement
+		.video-frame {
+			width: 100%;
+			height: 300px;
+			background: black;
+			transform: perspective(0px);
+			box-shadow: -3px 0px 20px 14px #34343480;
+		}
+
+		// 4. CompareCars
+		.compare-cars {
+			width: 100%;
+			height: 300px;
+			border: 1px solid red;
+		}
+
+		// 5. CarReview
+		.car-review {
+			width: 100%;
+			height: 300px;
+			border: 1px solid red;
+		}
+
+		// 6. CommunityBoards
+		.community-board {
+			width: 100%;
+			height: 300px;
+			border: 1px solid red;
+		}
 	}
 }

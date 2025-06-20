@@ -1,66 +1,23 @@
 import { Stack, Box, Container } from '@mui/material';
-import { brown, green } from '@mui/material/colors';
 import { NextPage } from 'next';
 import withLayoutMain from '../libs/components/layout/LayoutMain';
-
-// import useDeviceDetect from '../libs/hooks/useDeviceDetect';
-// import withLayoutMain from '../libs/components/layout/LayoutHome';
-// import CommunityBoards from '../libs/components/homepage/CommunityBoards';
-// import PopularProperties from '../libs/components/homepage/PopularProperties';
-// import TopAgents from '../libs/components/homepage/TopAgents';
-// import Events from '../libs/components/homepage/Events';
-// import TrendProperties from '../libs/components/homepage/TrendProperties';
-// import TopProperties from '../libs/components/homepage/TopProperties';
-// import { Stack } from '@mui/material';
-// import Advertisement from '../libs/components/homepage/Advertisement';
-// import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-
-// export const getStaticProps = async ({ locale }: any) => ({
-// 	props: {
-// 		...(await serverSideTranslations(locale, ['common'])),
-// 	},
-// });
-
-// const Home: NextPage = () => {
-// 	const device = useDeviceDetect();
-
-// 	if (device === 'mobile') {
-// 		return (
-// 			<Stack className={'home-page'}>
-// 				<TrendProperties />
-// 				<PopularProperties />
-// 				<Advertisement />
-// 				<TopProperties />
-// 				<TopAgents />
-// 			</Stack>
-// 		);
-// 	} else {
-// 		return (
-// 			<Stack className={'home-page'}>
-// 				<TrendProperties />
-// 				<PopularProperties />
-// 				<Advertisement />
-// 				<TopProperties />
-// 				<TopAgents />
-// 				<Events />
-// 				<CommunityBoards />
-// 			</Stack>
-// 		);
-// 	}
-// };
-
-// export default withLayoutMain(Home);
+import TopBrands from '../libs/components/homepage/TopBrands';
+import Advertisement from '../libs/components/homepage/Advertisement';
+import CommunityBoards from '../libs/components/homepage/CommunityBoards';
+import CarReview from '../libs/components/homepage/CarReview';
+import PopularCars from '../libs/components/homepage/PopularCars';
+import CompareCars from '../libs/components/homepage/CompareCars';
 
 const Home: NextPage = () => {
 	return (
 		<Stack>
 			<Stack className={'home-page'}>
-				<Stack className={'container'}>Top Brands</Stack>
-				<Stack className={'container'}>Popular Cars</Stack>
-				<Stack className={'container'}>Video Ads</Stack>
-				<Stack className={'container'}>Compare Cars</Stack>
-				<Stack className={'container'}>Car Reviews</Stack>
-				<Stack className={'container'}>Car Blogs</Stack>
+				<TopBrands />
+				<PopularCars />
+				<Advertisement />
+				<CompareCars />
+				<CarReview />
+				<CommunityBoards />
 			</Stack>
 		</Stack>
 	);
