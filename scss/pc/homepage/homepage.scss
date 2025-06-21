@@ -6,7 +6,6 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		// gap: 50px;
 		background: #fff;
 
 		// 1. TopBrands
@@ -546,7 +545,7 @@
 		.compare-cars {
 			width: 100%;
 			height: auto;
-			padding: 100px 0px 100px;
+			padding: 120px 0px 100px;
 
 			.container {
 				width: 1290px;
@@ -791,7 +790,6 @@
 		.car-review {
 			width: 100%;
 			height: 700px;
-			border: 1px solid red;
 
 			.container {
 				width: 1290px;
@@ -800,7 +798,6 @@
 				flex-direction: column;
 				align-items: center;
 				gap: 40px;
-				// border: 1px solid red;
 
 				.empty-list {
 					width: 100%;
@@ -962,8 +959,311 @@
 		// 6. CommunityBoards
 		.community-board {
 			width: 100%;
-			height: 300px;
-			border: 1px solid red;
+			height: 100%;
+			background: rgba(255, 113, 1, 0.06);
+			padding: 50px 0px 100px;
+
+			.container {
+				width: 1290px;
+				height: 630px;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 40px;
+
+				.blog-text {
+					width: 100%;
+					height: 40px;
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					// border: 1px solid black;
+
+					h2 {
+						align-items: center;
+						color: #000;
+						font-family: $font;
+						font-size: 30px;
+						font-style: normal;
+						font-weight: 500;
+						line-height: normal;
+					}
+				}
+
+				.main-blog {
+					width: 1290px;
+					height: 549px;
+					display: flex;
+					width: 1290px;
+					gap: 30px;
+					display: flex;
+					flex-direction: row;
+
+					.post {
+						width: 630px;
+						height: 100%;
+						border: 1px solid rgba(0, 0, 0, 0.12);
+						border-radius: 16px;
+						overflow: hidden;
+						box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
+						transition: transform 0.3s ease, box-shadow 0.3s ease;
+						// background: #fff;
+						// border: 1px solid red;
+
+						&:hover {
+							transform: translateY(-4px);
+							box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+						}
+
+						.img-box {
+							width: 630px;
+							height: 415px;
+							position: relative;
+
+							img {
+								width: 100%;
+								height: 100%;
+								// border-radius: 16px;
+							}
+
+							.date {
+								position: absolute;
+								display: inline-flex;
+								bottom: 20px;
+								left: 20px;
+								padding: 6px 12px;
+								align-items: center;
+								gap: 10px;
+								border-radius: 99px;
+								background: #ff7101;
+								box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+								transition: background 0.3s ease;
+
+								p {
+									color: #fff;
+									font-family: $font;
+									font-size: 12px;
+									font-style: normal;
+									font-weight: 600;
+									line-height: 17px;
+								}
+							}
+						}
+
+						.content {
+							width: 100%;
+							display: flex;
+							flex-direction: column;
+							gap: 12px;
+							margin-top: 16px;
+							padding: 0 20px 20px;
+
+							.heading {
+								width: 100%;
+								display: flex;
+								flex-direction: column;
+								gap: 8px;
+
+								.name-type {
+									display: flex;
+									align-items: flex-start;
+									flex-direction: row;
+									gap: 8px;
+
+									.name {
+										color: #000;
+										font-family: $font;
+										font-size: 14px;
+										font-weight: 700;
+										cursor: pointer;
+									}
+
+									.dvr {
+										width: 1px;
+										height: 12px;
+										background: rgba(0, 0, 0, 0.15);
+									}
+
+									.type {
+										color: #ff7101;
+										font-family: $font;
+										font-size: 14px;
+										font-style: normal;
+										font-weight: 500;
+										line-height: normal;
+										cursor: pointer;
+									}
+								}
+
+								h2 {
+									color: #000;
+									font-family: $font;
+									font-size: 22px;
+									font-weight: 500;
+									line-height: 1.3;
+									cursor: pointer;
+									transition: color 0.3s ease;
+
+									&:hover {
+										color: #ff7101;
+									}
+								}
+							}
+
+							span {
+								color: #000;
+								font-family: $font;
+								font-size: 14px;
+								font-weight: 400;
+								line-height: 20px;
+							}
+						}
+					}
+
+					.divider {
+						width: 1px;
+						height: 100%;
+						background: rgba(0, 0, 0, 0.15);
+					}
+
+					.listing {
+						width: 599px;
+						height: 100%;
+						display: flex;
+						flex-direction: column;
+						gap: 25px;
+						// border: 1px solid red;
+
+						.dvr {
+							width: 100%;
+							height: 1px;
+							background: rgba(0, 0, 0, 0.15);
+						}
+
+						.blog {
+							display: flex;
+							align-items: flex-start;
+							gap: 10px;
+							border: 1px solid red;
+							flex-direction: row;
+							border: 1px solid rgba(0, 0, 0, 0.12);
+							border-radius: 16px;
+							overflow: hidden;
+							box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
+							transition: transform 0.3s ease, box-shadow 0.3s ease;
+							cursor: pointer;
+
+							&:hover {
+								transform: translateY(-4px);
+								box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+							}
+
+							img {
+								width: 190px;
+								height: 125px;
+							}
+
+							.content {
+								width: 399px;
+								height: auto;
+								display: flex;
+								flex-direction: column;
+								gap: 12px;
+
+								.heading {
+									width: 100%;
+									display: flex;
+									flex-direction: column;
+									gap: 8px;
+
+									.name-type {
+										display: flex;
+										align-items: flex-start;
+										flex-direction: row;
+										gap: 8px;
+										margin-top: 5px;
+
+										.name {
+											color: #000;
+											font-family: $font;
+											font-size: 14px;
+											font-weight: 700;
+											cursor: pointer;
+										}
+
+										.dvr {
+											width: 1px;
+											height: 12px;
+											background: rgba(0, 0, 0, 0.15);
+										}
+
+										.type {
+											color: #ff7101;
+											font-family: $font;
+											font-size: 14px;
+											font-style: normal;
+											font-weight: 500;
+											line-height: normal;
+											cursor: pointer;
+										}
+									}
+
+									h2 {
+										color: #000;
+										font-family: $font;
+										font-size: 16px;
+										font-weight: 500;
+										line-height: 22px;
+										cursor: pointer;
+										transition: color 0.3s ease;
+
+										&:hover {
+											color: #ff7101;
+										}
+									}
+								}
+
+								span {
+									color: #000;
+									font-family: $font;
+									font-size: 14px;
+									font-weight: 400;
+									line-height: 20px;
+								}
+							}
+						}
+
+						.see-more {
+							width: 190px;
+							height: 50px;
+							display: flex;
+							width: 190px;
+							height: 50px;
+							justify-content: center;
+							align-items: center;
+							gap: 10px;
+							border-radius: 14px;
+							border: 1px solid #ff7101;
+							cursor: pointer;
+
+							span {
+								color: #ff7101;
+								font-family: $font;
+								font-size: 16px;
+								font-style: normal;
+								font-weight: 500;
+								line-height: normal;
+							}
+
+							.arrow {
+								width: 30px;
+								height: 30px;
+								fill: #ff7101;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }
