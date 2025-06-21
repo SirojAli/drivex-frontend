@@ -10,6 +10,10 @@ const PopularCars = () => {
 			<Stack className={'container'}>
 				<Box className={'popular-text'}>
 					<h2>Popular Cars</h2>
+					<div className={'view-all'}>
+						<p>View all</p>
+						<img src="/img/icons/arrow.png" alt="" />
+					</div>
 				</Box>
 
 				<Stack className={'popular-car-box'}>

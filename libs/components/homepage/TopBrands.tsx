@@ -18,6 +18,10 @@ const TopBrands = () => {
 			<Stack className={'container'}>
 				<Box className={'brand-text'}>
 					<h2>Top Brands</h2>
+					<div className={'view-all'}>
+						<p>View all</p>
+						<img src="/img/icons/arrow.png" alt="" />
+					</div>
 				</Box>
 
 				{topBrands.length === 0 ? (
