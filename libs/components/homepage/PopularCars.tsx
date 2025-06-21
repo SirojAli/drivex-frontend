@@ -12,9 +12,9 @@ const PopularCars = () => {
 					<h2>Popular Cars</h2>
 				</Box>
 
-				<Stack className="popular-car-box">
+				<Stack className={'popular-car-box'}>
 					{popularCars.length === 0 ? (
-						<Box className="empty-list">Popular Cars Empty</Box>
+						<Box className={'empty-list'}>Popular Cars Empty</Box>
 					) : (
 						popularCars.map((car, index) => <PopularCarCard car={car} key={index} />)
 					)}

@@ -92,7 +92,7 @@ const Footer = () => {
 					<h3>Newsletter</h3>
 					<Box className={'email'}>
 						<p>Stay on top of the latest car trends, tips, and tricks</p>
-						<form className="form">
+						<form className={'form'}>
 							<input type="email" placeholder="Your email address" required />
 							<button type="submit">
 								<p>Send</p>
