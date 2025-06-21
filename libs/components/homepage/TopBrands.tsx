@@ -7,8 +7,8 @@ import { Autoplay, Navigation, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-// import './TopBrands.scss';
 import TopBrandCard from './TopBrandCard';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 const TopBrands = () => {
 	const [topBrands, setTopBrands] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8]);
@@ -20,7 +20,7 @@ const TopBrands = () => {
 					<h2>Top Brands</h2>
 					<div className={'view-all'}>
 						<p>View all</p>
-						<img src="/img/icons/arrow.png" alt="" />
+						<ArrowRightAltIcon className={'arrow'} />
 					</div>
 				</Box>
 

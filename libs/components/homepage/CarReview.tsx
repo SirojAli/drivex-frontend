@@ -4,6 +4,7 @@ import CarReviewCard from './CarReviewCard';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 const CarReview = () => {
 	const [carReview, setCarReview] = useState<number[]>([1, 2, 3]);
@@ -15,7 +16,7 @@ const CarReview = () => {
 					<h2>News, reviews & Video</h2>
 					<div className={'view-all'}>
 						<p>View all</p>
-						<img src="/img/icons/arrow.png" alt="arrow" />
+						<ArrowRightAltIcon className={'arrow'} />
 					</div>
 				</Box>
 
@@ -26,14 +27,18 @@ const CarReview = () => {
 
 					<Swiper
 						className={'review-swiper'}
-						slidesPerView={1}
+						slidesPerView={'auto'}
 						spaceBetween={30}
 						modules={[Autoplay, Navigation]}
 						navigation={{
 							nextEl: '.swiper-review-next',
 							prevEl: '.swiper-review-prev',
 						}}
-						loop
+						loop={true}
+						autoplay={{
+							delay: 2500,
+							disableOnInteraction: false,
+						}}
 					>
 						{carReview.map((id: number) => (
 							<SwiperSlide key={id}>

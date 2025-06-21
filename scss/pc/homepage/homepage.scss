@@ -63,6 +63,7 @@
 						gap: 4px;
 						border-radius: 14px;
 						border: 1px solid #ededed;
+						cursor: pointer;
 
 						p {
 							color: #24272c;
@@ -73,9 +74,10 @@
 							line-height: normal;
 						}
 
-						img {
-							width: 20px;
-							height: 20px;
+						.arrow {
+							width: 30px;
+							height: 30px;
+							fill: #24272c;
 						}
 					}
 				}
@@ -241,6 +243,7 @@
 						gap: 4px;
 						border-radius: 14px;
 						border: 1px solid #ededed;
+						cursor: pointer;
 
 						p {
 							color: #24272c;
@@ -251,9 +254,10 @@
 							line-height: normal;
 						}
 
-						img {
-							width: 20px;
-							height: 20px;
+						.arrow {
+							width: 30px;
+							height: 30px;
+							fill: #24272c;
 						}
 					}
 				}
@@ -836,6 +840,7 @@
 						gap: 4px;
 						border-radius: 14px;
 						border: 1px solid #ededed;
+						cursor: pointer;
 
 						p {
 							color: #24272c;
@@ -846,9 +851,10 @@
 							line-height: normal;
 						}
 
-						img {
-							width: 20px;
-							height: 20px;
+						.arrow {
+							width: 30px;
+							height: 30px;
+							fill: #24272c;
 						}
 					}
 				}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Stack, Box } from '@mui/material';
 import PopularCarCard from './PopularCarCard';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 const PopularCars = () => {
 	const [popularCars, setPopularCar] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8]);
@@ -12,7 +13,7 @@ const PopularCars = () => {
 					<h2>Popular Cars</h2>
 					<div className={'view-all'}>
 						<p>View all</p>
-						<img src="/img/icons/arrow.png" alt="" />
+						<ArrowRightAltIcon className={'arrow'} />
 					</div>
 				</Box>
 
