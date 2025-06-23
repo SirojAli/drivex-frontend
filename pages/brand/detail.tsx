@@ -4,7 +4,7 @@ import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 
 const BrandDetail: NextPage = () => {
 	return (
-		<div className={'brand-list'}>
+		<div className={'brand-detail-page'}>
 			<Stack className={'container'}>BRAND DETAIL LIST</Stack>
 		</div>
 	);

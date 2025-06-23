@@ -1,6 +1,14 @@
 /** IMPORTS **/
 @import '/scss/variables.scss';
+// @import '/scss/pc/general.scss';
+
 @import '/scss/pc/homepage/homepage';
+
+@import '/scss/pc/brand/brand';
+@import '/scss/pc/brand/detail.scss';
+
+@import '/scss/pc/car/car';
+@import '/scss/pc/car/detail.scss';
 
 #pc-wrap {
 	#top {
