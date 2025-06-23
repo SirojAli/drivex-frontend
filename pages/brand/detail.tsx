@@ -65,11 +65,13 @@ const BrandDetail: NextPage = () => {
 				</Box>
 
 				{/* Car Cards */}
-				<Stack className={'car-list'}>
-					{mockCars.map((car, index) => (
-						<CarCard key={index} car={car} />
-					))}
-				</Stack>
+				<Box className={'car-list-box'}>
+					<Stack className={'car-list'}>
+						{mockCars.map((car, index) => (
+							<CarCard key={index} car={car} />
+						))}
+					</Stack>
+				</Box>
 			</Stack>
 		</div>
 	);
