@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Stack, Box } from '@mui/material';
-import PopularCarCard from './PopularCarCard';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import CarCard from '../car/CarCard';
 
 const PopularCars = () => {
 	const [popularCars, setPopularCar] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8]);
@@ -21,7 +21,7 @@ const PopularCars = () => {
 					{popularCars.length === 0 ? (
 						<Box className={'empty-list'}>Popular Cars Empty</Box>
 					) : (
-						popularCars.map((car, index) => <PopularCarCard car={car} key={index} />)
+						popularCars.map((car, index) => <CarCard car={car} key={index} />)
 					)}
 				</Stack>
 			</Stack>
