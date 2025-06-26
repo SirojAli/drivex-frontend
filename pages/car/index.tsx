@@ -1,13 +1,53 @@
-import { Container, Stack } from '@mui/material';
+import React, { useState } from 'react';
+import { Stack, Box, Pagination } from '@mui/material';
 import { NextPage } from 'next';
-import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import CarFilter from '../../libs/components/car/Filter';
+import CarCard from '../../libs/components/car/CarCard';
+import withLayoutFull from '../../libs/components/layout/LayoutFull';
+import Link from 'next/link';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+// Base car object
+const mockCar = {
+	name: 'BMW X7 2022 Super Turbo',
+	type: 'SUV',
+	fuel: 'Petrol',
+	transmission: 'Auto',
+	engine: '3.0 L',
+	price: '$73,000',
+	views: 1000,
+	likes: 100,
+	image: '/img/cars/header1.jpg',
+	logo: '/img/logo/BMW.png',
+	brand: 'BMW',
+};
+
+// Create 55 independent copies of the same car
+const mockCars = new Array(55).fill(null).map(() => ({ ...mockCar }));
 
 const CarList: NextPage = () => {
+	const [currentPage, setCurrentPage] = useState(1);
+	const carsPerPage = 12;
+	const totalPages = Math.ceil(mockCars.length / carsPerPage);
+
+	const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {
+		setCurrentPage(page);
+	};
+
+	const currentCars = mockCars.slice((currentPage - 1) * carsPerPage, currentPage * carsPerPage);
+
 	return (
 		<div id="car-list-page">
 			<Stack className={'container'}>
-				{/* 1. Title */}
+				{/* Sub-Header */}
+				<Stack className={'sub-header'}>
+					<Link href={'/'} className={'link'}>
+						Home
+					</Link>
+					<ArrowForwardIosIcon className={'arrow'} />
+					<span>All Cars</span>
+				</Stack>
+				{/* Title */}
 				<Stack className={'car-list-title'}>
 					<h2>1,000+ Get The Best Deals On Brand New Cars</h2>
 					<p>
@@ -16,19 +56,36 @@ const CarList: NextPage = () => {
 					</p>
 				</Stack>
 
-				{/* 2. Main */}
+				{/* Main */}
 				<Stack className={'main-list'}>
-					{/* 2.1. Filter */}
+					{/* Filter */}
 					<Stack className={'filter-box'}>
 						<CarFilter />
 					</Stack>
 
-					{/* 2.2. Car List */}
-					<Stack className={'car-list-box'}></Stack>
+					{/* Car List */}
+					<Stack className={'car-list-box'}>
+						{currentCars.length === 0 ? (
+							<Box className={'empty-list'}>No cars available.</Box>
+						) : (
+							<Stack className={'car-list'}>
+								{currentCars.map((car, index) => (
+									<CarCard key={index} car={car} />
+								))}
+							</Stack>
+						)}
+
+						{/* Pagination */}
+						{totalPages > 1 && (
+							<Box className={'pagination-box'}>
+								<Pagination count={totalPages} page={currentPage} onChange={handlePageChange} color="primary" />
+							</Box>
+						)}
+					</Stack>
 				</Stack>
 			</Stack>
 		</div>
 	);
 };
 
-export default withLayoutBasic(CarList);
+export default withLayoutFull(CarList);

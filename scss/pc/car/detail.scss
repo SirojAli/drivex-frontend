@@ -1,1 +1,15 @@
+#pc-wrap {
+	#car-detail-page {
+		background: #ffffff;
 
+		.container {
+			width: 1320px;
+			height: auto;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 60px 0px 100px;
+			border: 1px solid black;
+		}
+	}
+}

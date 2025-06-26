@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { Stack } from '@mui/material';
+import Head from 'next/head';
+import Footer from '../Footer';
+import TopFull from '../TopFull';
+
 import { useRouter } from 'next/router';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import Head from 'next/head';
-// import Top from '../Top';
-// import Footer from '../Footer';
 // import { getJwtToken, updateUserInfo } from '../../auth';
 // import Chat from '../Chat';
 // import { useReactiveVar } from '@apollo/client';
@@ -15,26 +16,25 @@ import Head from 'next/head';
 
 const withLayoutFull = (Component: any) => {
 	return (props: any) => {
-		<>
-			<Head>
-				<title>Drivex</title>
-				<meta name={'title'} content={`Drivex`} />
-			</Head>
-			<Stack id="pc-wrap">
-				<Stack id="top">HEADER</Stack>
-				{/* <Stack id='top'><Top /></Stack> */}
-
-				<Stack id="main">
-					<Component {...props} />
+		return (
+			<>
+				<Head>
+					<title>Drivex</title>
+					<meta name="title" content="Drivex" />
+				</Head>
+				<Stack id="pc-wrap">
+					<Stack id="top-full">
+						<TopFull />
+					</Stack>
+					<Stack id="main">
+						<Component {...props} />
+					</Stack>
+					<Stack id="footer">
+						<Footer />
+					</Stack>
 				</Stack>
-
-				{/* {user?._id && <Chat />} */}
-				{/* <Chat /> */}
-
-				<Stack id="footer">FOOTER</Stack>
-				{/* <Stack id='footer'><Footer /></Stack> */}
-			</Stack>
-		</>;
+			</>
+		);
 	};
 };
 

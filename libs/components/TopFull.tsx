@@ -1,12 +1,12 @@
 import { Stack, Box } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import { Logout } from '@mui/icons-material';
+import { AccountCircle, Logout } from '@mui/icons-material';
 import Link from 'next/link';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-const Top = () => {
+const TopFull = () => {
 	/*INITIALIZATIONS*/
 	const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -51,7 +51,7 @@ const Top = () => {
 						<FavoriteBorderIcon className={'like'} />
 						<div className={'divider'}></div>
 						<div className={'login-user'}>
-							<img src={'/img/profile/defaultUser.png'} alt="" />
+							<AccountCircle className={'user'} />
 							<span>Login</span>
 						</div>
 					</Box>
@@ -62,4 +62,4 @@ const Top = () => {
 };
 
 // export default withRouter(Top);
-export default Top;
+export default TopFull;

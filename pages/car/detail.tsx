@@ -4,7 +4,7 @@ import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 
 const CarDetail: NextPage = () => {
 	return (
-		<div className={'car-detail-list'}>
+		<div id="car-detail-list">
 			<Stack className={'container'}>CAR DETAIL LIST</Stack>
 		</div>
 	);
