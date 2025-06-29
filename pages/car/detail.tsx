@@ -1,4 +1,4 @@
-import { Stack, TextField, Button, Checkbox, FormControlLabel, Typography, Box } from '@mui/material';
+import { Stack, TextField, Button, Checkbox, FormControlLabel, Typography, Box, Avatar } from '@mui/material';
 import { NextPage } from 'next';
 import { useState } from 'react';
 import withLayoutFull from '../../libs/components/layout/LayoutFull';
@@ -12,6 +12,25 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import StarIcon from '@mui/icons-material/Star';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
+import ChatIcon from '@mui/icons-material/Chat';
+import CallIcon from '@mui/icons-material/Call';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import OutlinedFlagIcon from '@mui/icons-material/OutlinedFlag';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import MapIcon from '@mui/icons-material/Map';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import EmojiTransportationIcon from '@mui/icons-material/EmojiTransportation';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
+import PaletteIcon from '@mui/icons-material/Palette';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import AddRoadIcon from '@mui/icons-material/AddRoad';
+import SpeedIcon from '@mui/icons-material/Speed';
+import DoorFrontIcon from '@mui/icons-material/DoorFront';
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import NoCrashIcon from '@mui/icons-material/NoCrash';
 
 const carImages = [
 	'/img/cars/header1.jpg',
@@ -357,9 +376,232 @@ const CarDetail: NextPage = () => {
 
 					{/* Car List */}
 					<Stack className={'right-box'}>
-						<Stack className={'brand-box'}></Stack>
-						<Stack className={'car-overview'}></Stack>
-						<Stack className={'recommend-cars'}></Stack>
+						{/* Contact Dealer */}
+						<Stack className={'seller-contact'}>
+							<Stack className={'main'}>
+								<Box className={'info'}>
+									<img src="/img/logo/BMW.png" alt="brand-logo" />
+									<Box className={'content'}>
+										<h4>BMW</h4>
+										<div className={'verify'}>
+											<VerifiedIcon className={'icon'} />
+											<p>Verified dealer</p>
+										</div>
+									</Box>
+								</Box>
+								<Box className={'map'}>
+									<div className={'locate'}>
+										<MapIcon className={'icon'} />
+										<p>2972 Westheimer Rd. Santa Ana, Illinois 85486 </p>
+									</div>
+									<iframe
+										src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25867.098915951767!2d128.68632810247993!3d35.86402299180927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35660bba427bf179%3A0x1fc02da732b9072f!2sGeumhogangbyeon-ro%2C%20Dong-gu%2C%20Daegu!5e0!3m2!1suz!2skr!4v1695537640704!5m2!1suz!2skr"
+										width="100%"
+										height="100%"
+										style={{ border: 0 }}
+										allowFullScreen={true}
+										loading="lazy"
+										referrerPolicy="no-referrer-when-downgrade"
+									></iframe>
+								</Box>
+								<Box className={'contact-box'}>
+									<p>Contact Dealer</p>
+									<div className={'contact'}>
+										<Box className={'call'}>
+											<CallIcon className={'icon'} />
+											<span>Call to Dealer</span>
+										</Box>
+										<Box className={'message'}>
+											<ChatIcon className={'icon'} />
+											<span>Chat</span>
+										</Box>
+									</div>
+								</Box>
+							</Stack>
+							<Stack className={'report'}>
+								<OutlinedFlagIcon className={'icon'} />
+								<span>Report this listing</span>
+							</Stack>
+						</Stack>
+
+						{/* Car Overview */}
+						<Stack className={'car-overview'}>
+							<h3>Car Overview</h3>
+							<Stack className={'main'}>
+								{/* Car Brand */}
+								<Box className={'over-box'}>
+									<EmojiTransportationIcon className={'icon'} />
+									<div className={'content'}>
+										<span>Car Make</span>
+										<p>BMW</p>
+									</div>
+								</Box>
+								{/* Car Type */}
+								<Box className={'over-box'}>
+									<DirectionsCarIcon className={'icon'} />
+									<div className={'content'}>
+										<span>Car Type</span>
+										<p>Sedan</p>
+									</div>
+								</Box>
+								{/* VIN Number */}
+								<Box className={'over-box'}>
+									<FormatListNumberedIcon className={'icon'} />
+									<div className={'content'}>
+										<span>VIN Number</span>
+										<p>66516518732132</p>
+									</div>
+								</Box>
+								{/* Condition */}
+								<Box className={'over-box'}>
+									<NoCrashIcon className={'icon'} />
+									<div className={'content'}>
+										<span>Condition</span>
+										<p>New</p>
+									</div>
+								</Box>
+								{/* Car Year */}
+								<Box className={'over-box'}>
+									<EventAvailableIcon className={'icon'} />
+									<div className={'content'}>
+										<span>Year</span>
+										<p>2024</p>
+									</div>
+								</Box>
+								{/* Car Fuel Type */}
+								<Box className={'over-box'}>
+									<LocalGasStationIcon className={'icon'} />
+									<div className={'content'}>
+										<span>Fuel Type</span>
+										<p>Petrol</p>
+									</div>
+								</Box>
+								{/* Car Transmission */}
+								<Box className={'over-box'}>
+									<img src="/img/icons/transmission.png" alt="" className={'img1'} />
+									<div className={'content'}>
+										<span>Transmission</span>
+										<p>Manual</p>
+									</div>
+								</Box>
+								{/* Car Color */}
+								<Box className={'over-box'}>
+									<PaletteIcon className={'icon'} />
+									<div className={'content'}>
+										<span>Color</span>
+										<p>Black</p>
+									</div>
+								</Box>
+								{/* Engine Size */}
+								<Box className={'over-box'}>
+									<img src="/img/icons/engine.png" alt="" />
+									<div className={'content'}>
+										<span>Engine Size</span>
+										<p>3.0</p>
+									</div>
+								</Box>
+								{/* Maximum Speed */}
+								<Box className={'over-box'}>
+									<SpeedIcon className={'icon'} />
+									<div className={'content'}>
+										<span>Speed</span>
+										<p>240</p>
+									</div>
+								</Box>
+								{/* Car Seats */}
+								<Box className={'over-box'}>
+									<AirlineSeatReclineNormalIcon className={'icon'} />
+									<div className={'content'}>
+										<span>Seats</span>
+										<p>4</p>
+									</div>
+								</Box>
+								{/* City MPG */}
+								<Box className={'over-box'}>
+									<LocationCityIcon className={'icon'} />
+									<div className={'content'}>
+										<span>City MPG</span>
+										<p>20</p>
+									</div>
+								</Box>
+								{/* Highway MPG */}
+								<Box className={'over-box'}>
+									<AddRoadIcon className={'icon'} />
+									<div className={'content'}>
+										<span>Highway MPG</span>
+										<p>24</p>
+									</div>
+								</Box>
+								{/* Doors */}
+								<Box className={'over-box'}>
+									<DoorFrontIcon className={'icon'} />
+									<div className={'content'}>
+										<span>Doors</span>
+										<p>4</p>
+									</div>
+								</Box>
+								{/* Cylinders */}
+								<Box className={'over-box'}>
+									<img src="/img/icons/cylinders.jpg" alt="" />
+									<div className={'content'}>
+										<span>Cylinders</span>
+										<p>6</p>
+									</div>
+								</Box>
+								{/* Drive Type */}
+								<Box className={'over-box'}>
+									<img src="/img/icons/wheel.png" alt="" className={'img1'} />
+									<div className={'content'}>
+										<span>Drive Type</span>
+										<p>AWD - All-wheel drive</p>
+									</div>
+								</Box>
+							</Stack>
+						</Stack>
+
+						{/* Popular Cars */}
+						<Stack className={'popular-cars'}>
+							<Box className={'title'}>
+								<h3>Popular Cars</h3>
+								<span>Explore 32 more cars you might like</span>
+							</Box>
+							<Box className={'listing'}>
+								<Box className={'car-box'}>
+									<img src={'/img/cars/header1.jpg'} alt={'Car'} />
+									<div className={'text'}>
+										<p>2012 Mercedes-Benz E-Class 2009-2013 E 200 CGI Avantgarde</p>
+										<span>$73,000</span>
+									</div>
+								</Box>
+								<Box className={'car-box'}>
+									<img src={'/img/cars/header1.jpg'} alt={'Car'} />
+									<div className={'text'}>
+										<p>2012 Mercedes-Benz E-Class 2009-2013 E 200 CGI Avantgarde</p>
+										<span>$73,000</span>
+									</div>
+								</Box>
+								<Box className={'car-box'}>
+									<img src={'/img/cars/header1.jpg'} alt={'Car'} />
+									<div className={'text'}>
+										<p>2012 Mercedes-Benz E-Class 2009-2013 E 200 CGI Avantgarde</p>
+										<span>$73,000</span>
+									</div>
+								</Box>
+								<Box className={'car-box'}>
+									<img src={'/img/cars/header1.jpg'} alt={'Car'} />
+									<div className={'text'}>
+										<p>2012 Mercedes-Benz E-Class 2009-2013 E 200 CGI Avantgarde</p>
+										<span>$73,000</span>
+									</div>
+								</Box>
+							</Box>
+							<Box className={'show-more'}>
+								<Typography className={'more-link'}>View more cars</Typography>
+								<Box className={'arrow'}>
+									<ArrowDownwardIcon className={'icon'} />
+								</Box>
+							</Box>
+						</Stack>
 					</Stack>
 				</Stack>
 			</Stack>
