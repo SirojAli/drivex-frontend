@@ -249,6 +249,24 @@ const CarDetail: NextPage = () => {
 								))}
 							</Box>
 						</Stack>
+						<Stack className={'address-config'}>
+							<Typography className={'title'}>Location</Typography>
+							<div className={'locate'}>
+								<MapIcon className={'icon'} />
+								<p>2972 Westheimer Rd. Santa Ana, Illinois 85486 </p>
+							</div>
+							<Stack className={'map-box'}>
+								<iframe
+									src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25867.098915951767!2d128.68632810247993!3d35.86402299180927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35660bba427bf179%3A0x1fc02da732b9072f!2sGeumhogangbyeon-ro%2C%20Dong-gu%2C%20Daegu!5e0!3m2!1suz!2skr!4v1695537640704!5m2!1suz!2skr"
+									width="100%"
+									height="100%"
+									style={{ border: 0 }}
+									allowFullScreen={true}
+									loading="lazy"
+									referrerPolicy="no-referrer-when-downgrade"
+								></iframe>
+							</Stack>
+						</Stack>
 						<div className={'divider'}></div>
 						<Stack className={'reviews'}>
 							<h2>Reviews & Rating</h2>
@@ -382,28 +400,42 @@ const CarDetail: NextPage = () => {
 								<Box className={'info'}>
 									<img src="/img/logo/BMW.png" alt="brand-logo" />
 									<Box className={'content'}>
-										<h4>BMW</h4>
+										<h4>Mercedes-Benz</h4>
 										<div className={'verify'}>
 											<VerifiedIcon className={'icon'} />
 											<p>Verified dealer</p>
 										</div>
 									</Box>
 								</Box>
-								<Box className={'map'}>
-									<div className={'locate'}>
-										<MapIcon className={'icon'} />
-										<p>2972 Westheimer Rd. Santa Ana, Illinois 85486 </p>
-									</div>
-									<iframe
-										src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25867.098915951767!2d128.68632810247993!3d35.86402299180927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35660bba427bf179%3A0x1fc02da732b9072f!2sGeumhogangbyeon-ro%2C%20Dong-gu%2C%20Daegu!5e0!3m2!1suz!2skr!4v1695537640704!5m2!1suz!2skr"
-										width="100%"
-										height="100%"
-										style={{ border: 0 }}
-										allowFullScreen={true}
-										loading="lazy"
-										referrerPolicy="no-referrer-when-downgrade"
-									></iframe>
+								<Box className={'businees-hours'}>
+									<p>Business hours</p>
+									<Box className={'schedule'}>
+										<Box className={'tab'}>
+											<p>Monday - Friday:</p>
+											<span>9:00 - 18:00</span>
+										</Box>
+										<Box className={'tab'}>
+											<p>Saturday:</p>
+											<span>10:00 - 16:00</span>
+										</Box>
+										<Box className={'tab'}>
+											<p>Sunday & Holidays</p>
+											<span>Close</span>
+										</Box>
+									</Box>
 								</Box>
+								<div className={'dvr'}></div>
+								<Box className={'rate'}>
+									<p>1000+ Reviews</p>
+									<Box className={'stars'}>
+										{Array(5)
+											.fill(0)
+											.map((_, i) => (
+												<StarIcon key={i} className={'filled-star'} />
+											))}
+									</Box>
+								</Box>
+
 								<Box className={'contact-box'}>
 									<p>Contact Dealer</p>
 									<div className={'contact'}>
@@ -417,10 +449,6 @@ const CarDetail: NextPage = () => {
 										</Box>
 									</div>
 								</Box>
-							</Stack>
-							<Stack className={'report'}>
-								<OutlinedFlagIcon className={'icon'} />
-								<span>Report this listing</span>
 							</Stack>
 						</Stack>
 
