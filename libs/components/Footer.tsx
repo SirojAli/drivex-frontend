@@ -3,8 +3,8 @@ import moment from 'moment';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TelegramIcon from '@mui/icons-material/Telegram';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import YouTubeIcon from '@mui/icons-material/YouTube';
+import XIcon from '@mui/icons-material/X';
 
 const Footer = () => {
 	return (
@@ -115,7 +115,7 @@ const Footer = () => {
 						<FacebookOutlinedIcon className={'icon'} />
 						<TelegramIcon className={'icon'} />
 						<InstagramIcon className={'icon'} />
-						<TwitterIcon className={'icon'} />
+						<XIcon className={'icon'} />
 						<YouTubeIcon className={'icon'} />
 					</div>
 				</Box>

@@ -4,11 +4,14 @@
 
 @import '/scss/pc/homepage/homepage';
 
-@import '/scss/pc/brand/brand';
+@import '/scss/pc/brand/brand.scss';
 @import '/scss/pc/brand/detail.scss';
 
-@import '/scss/pc/car/car';
+@import '/scss/pc/car/car.scss';
 @import '/scss/pc/car/detail.scss';
+
+@import '/scss/pc/community/blog.scss';
+@import '/scss/pc/community/detail.scss';
 
 #pc-wrap {
 	#top {
