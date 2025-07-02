@@ -1,0 +1,139 @@
+import React, { useCallback, useState } from 'react';
+import { NextPage } from 'next';
+import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
+import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, Stack } from '@mui/material';
+import { useRouter } from 'next/router';
+import { logIn, signUp } from '../../libs/auth';
+import { sweetMixinErrorAlert } from '../../libs/sweetAlert';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import withLayoutFull from '../../libs/components/layout/LayoutFull';
+import Link from 'next/link';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+export const getStaticProps = async ({ locale }: any) => ({
+	props: {
+		...(await serverSideTranslations(locale, ['common'])),
+	},
+});
+
+// ...imports stay the same
+
+const Join: NextPage = () => {
+	const router = useRouter();
+	const device = useDeviceDetect();
+	const [input, setInput] = useState({ nick: '', password: '', phone: '', type: 'USER' });
+	const [loginView, setLoginView] = useState<boolean>(true);
+
+	const viewChangeHandler = (state: boolean) => setLoginView(state);
+
+	const checkUserTypeHandler = (e: any) => {
+		const checked = e.target.checked;
+		const value = checked ? e.target.name : 'USER';
+		handleInput('type', value);
+	};
+
+	const handleInput = useCallback((name: any, value: any) => {
+		setInput((prev) => ({ ...prev, [name]: value }));
+	}, []);
+
+	const doLogin = useCallback(async () => {
+		try {
+			await logIn(input.nick, input.password);
+			await router.push(`${router.query.referrer ?? '/'}`);
+		} catch (err: any) {
+			await sweetMixinErrorAlert(err.message);
+		}
+	}, [input]);
+
+	const doSignUp = useCallback(async () => {
+		try {
+			await signUp(input.nick, input.password, input.phone, input.type);
+			await router.push(`${router.query.referrer ?? '/'}`);
+		} catch (err: any) {
+			await sweetMixinErrorAlert(err.message);
+		}
+	}, [input]);
+
+	if (device === 'mobile') return <div>LOGIN MOBILE</div>;
+
+	return (
+		<Stack id="join-page">
+			<Stack className={'container'}>
+				{/* Sub-Header */}
+				<Stack className={'sub-header'}>
+					<Link href={'/'} className={'link'}>
+						Home
+					</Link>
+					<ArrowForwardIosIcon className={'arrow'} />
+					<span>Login / Signup</span>
+				</Stack>
+				<Stack className={'main'}>
+					<Stack className={'left'}>
+						<img src="/img/cars/header1.jpg" alt="" />
+					</Stack>
+					<Stack className={'right'}>
+						<Box className={'info'}>
+							<span>{loginView ? 'login' : 'signup'}</span>
+						</Box>
+						<Box className={'input-wrap'}>
+							<div className={'input-box'}>
+								<span>User Name</span>
+								<input
+									type="text"
+									placeholder={'User name'}
+									onChange={(e: any) => handleInput('nick', e.target.value)}
+									required
+									onKeyDown={(e) => {
+										if (e.key === 'Enter') loginView ? doLogin() : doSignUp();
+									}}
+								/>
+							</div>
+							{!loginView && (
+								<div className={'input-box'}>
+									<span>Email Address</span>
+									<input
+										type="email"
+										placeholder={'Email address'}
+										onChange={(e: any) => handleInput('email', e.target.value)}
+										required
+										onKeyDown={(e) => {
+											if (e.key === 'Enter') doSignUp();
+										}}
+									/>
+								</div>
+							)}
+							<div className={'input-box'}>
+								<span>Password</span>
+								<input
+									type="text"
+									placeholder={'Your Password'}
+									onChange={(e: any) => handleInput('password', e.target.value)}
+									required
+									onKeyDown={(e) => {
+										if (e.key === 'Enter') loginView ? doLogin() : doSignUp();
+									}}
+								/>
+							</div>
+						</Box>
+						<Box className={'ask-info'}>
+							{loginView ? (
+								<p>
+									Don't you have an account?
+									<b onClick={() => viewChangeHandler(false)}>Signup</b>
+								</p>
+							) : (
+								<p>
+									Already have an account?
+									<b onClick={() => viewChangeHandler(true)}>Login</b>
+								</p>
+							)}
+						</Box>
+					</Stack>
+				</Stack>
+			</Stack>
+		</Stack>
+	);
+};
+
+export default withLayoutFull(Join);

@@ -50,10 +50,12 @@ const TopFull = () => {
 					<Box component={'div'} className={'user-box'}>
 						<FavoriteBorderIcon className={'like'} />
 						<div className={'divider'}></div>
-						<div className={'login-user'}>
-							<AccountCircle className={'user'} />
-							<span>Login</span>
-						</div>
+						<Link href={'/account/join'}>
+							<div className={'login-user'}>
+								<AccountCircle className={'user'} />
+								<span>Login</span>
+							</div>
+						</Link>
 					</Box>
 				</Stack>
 			</Stack>

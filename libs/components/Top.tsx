@@ -1,6 +1,6 @@
 import { Stack, Box } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import { Logout } from '@mui/icons-material';
+import { AccountCircle, Logout } from '@mui/icons-material';
 import Link from 'next/link';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -50,10 +50,12 @@ const Top = () => {
 					<Box component={'div'} className={'user-box'}>
 						<FavoriteBorderIcon className={'like'} />
 						<div className={'divider'}></div>
-						<div className={'login-user'}>
-							<img src={'/img/profile/defaultUser.png'} alt="" />
-							<span>Login</span>
-						</div>
+						<Link href={'/account/join'}>
+							<div className={'login-user'}>
+								<AccountCircle className={'user'} />
+								<span>Login</span>
+							</div>
+						</Link>
 					</Box>
 				</Stack>
 			</Stack>
