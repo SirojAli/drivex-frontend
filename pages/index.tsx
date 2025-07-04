@@ -1,5 +1,7 @@
 import { Stack, Box, Container } from '@mui/material';
 import { NextPage } from 'next';
+import useDeviceDetect from '../libs/hooks/useDeviceDetect';
+
 import withLayoutMain from '../libs/components/layout/LayoutMain';
 import TopBrands from '../libs/components/homepage/TopBrands';
 import Advertisement from '../libs/components/homepage/Advertisement';
@@ -9,8 +11,10 @@ import PopularCars from '../libs/components/homepage/PopularCars';
 import CompareCars from '../libs/components/homepage/CompareCars';
 
 const Home: NextPage = () => {
-	return (
-		<Stack>
+	const device = useDeviceDetect();
+
+	if (device === 'mobile') {
+		return (
 			<Stack className={'home-page'}>
 				<TopBrands />
 				<PopularCars />
@@ -19,8 +23,19 @@ const Home: NextPage = () => {
 				<CarReview />
 				<CommunityBoards />
 			</Stack>
-		</Stack>
-	);
+		);
+	} else {
+		return (
+			<Stack className={'home-page'}>
+				<TopBrands />
+				<PopularCars />
+				<Advertisement />
+				<CompareCars />
+				<CarReview />
+				<CommunityBoards />
+			</Stack>
+		);
+	}
 };
 
 export default withLayoutMain(Home);

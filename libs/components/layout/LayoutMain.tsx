@@ -11,33 +11,66 @@ import { getJwtToken, updateUserInfo } from '../../auth';
 
 const withLayoutMain = (Component: any) => {
 	return (props: any) => {
-		return (
-			<>
-				<Head>
-					<title>DriveX</title>
-					<meta name={'title'} content={`DriveX`} />
-				</Head>
-				<Stack id="pc-wrap">
-					<Stack id="top">
-						<Top />
-					</Stack>
+		const device = useDeviceDetect();
+		const user = useReactiveVar(userVar);
 
-					<Stack className={'header-main'}>
-						<Stack className={'container'}>
-							<HeaderFilter />
+		/*** LIFECYCLES ***/
+		useEffect(() => {
+			const jwt = getJwtToken();
+			if (jwt) updateUserInfo(jwt);
+		}, []);
+
+		/*** HANDLERS ***/
+
+		if (device == 'mobile') {
+			return (
+				<>
+					<Head>
+						<title>Drivex</title>
+						<meta name={'title'} content={`Drivex`} />
+					</Head>
+					<Stack id="mobile-wrap">
+						<Stack id="top">
+							<Top />
+						</Stack>
+						<Stack id="main">
+							<Component {...props} />
+						</Stack>
+						<Stack id="footer">
+							<Footer />
 						</Stack>
 					</Stack>
+				</>
+			);
+		} else {
+			return (
+				<>
+					<Head>
+						<title>DriveX</title>
+						<meta name={'title'} content={`DriveX`} />
+					</Head>
+					<Stack id="pc-wrap">
+						<Stack id="top">
+							<Top />
+						</Stack>
 
-					<Stack id="main">
-						<Component {...props} />
-					</Stack>
+						<Stack className={'header-main'}>
+							<Stack className={'container'}>
+								<HeaderFilter />
+							</Stack>
+						</Stack>
 
-					<Stack id="footer">
-						<Footer />
+						<Stack id="main">
+							<Component {...props} />
+						</Stack>
+
+						<Stack id="footer">
+							<Footer />
+						</Stack>
 					</Stack>
-				</Stack>
-			</>
-		);
+				</>
+			);
+		}
 	};
 };
 

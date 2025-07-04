@@ -17,7 +17,7 @@ const HeaderFilter = () => {
 				<Stack className={'search-box'}>
 					<Stack className={'select-box'}>
 						<Box component={'div'} className={'box on'}>
-							<span>Brands</span>
+							<span>Car Make</span>
 							<ExpandMoreIcon />
 						</Box>
 						<Box className={'box'}>

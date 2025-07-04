@@ -1,15 +1,38 @@
 import { Stack, Box } from '@mui/material';
-import React, { useState, useEffect } from 'react';
-import { AccountCircle, Logout } from '@mui/icons-material';
+import React, { useCallback, useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter, withRouter } from 'next/router';
+import { AccountCircle, Logout } from '@mui/icons-material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { useTranslation } from 'next-i18next';
+import { getJwtToken, logOut, updateUserInfo } from '../auth';
+import Button from '@mui/material/Button';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { CaretDown } from 'phosphor-react';
+import useDeviceDetect from '../hooks/useDeviceDetect';
+import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
+import { useReactiveVar } from '@apollo/client';
+import { userVar } from '../../apollo/store';
+import { REACT_APP_API_URL } from '../config';
 
 const TopFull = () => {
 	/*INITIALIZATIONS*/
 	const [scrollPosition, setScrollPosition] = useState(0);
+	const device = useDeviceDetect();
+	const user = useReactiveVar(userVar);
+	const router = useRouter();
+	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
+	const drop = Boolean(anchorEl2);
+	const [colorChange, setColorChange] = useState(false);
+	const [anchorEl, setAnchorEl] = React.useState<any | HTMLElement>(null);
+	let open = Boolean(anchorEl);
+	const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
+	const logoutOpen = Boolean(logoutAnchor);
 
+	/*** LIFECYCLES ***/
 	useEffect(() => {
 		const scrollHandler = () => {
 			setScrollPosition(window.pageYOffset);
@@ -17,51 +40,120 @@ const TopFull = () => {
 		window.addEventListener('scroll', scrollHandler);
 		return () => window.removeEventListener('scroll', scrollHandler);
 	}, []);
-
 	const isScrolled = scrollPosition >= 100;
 
-	return (
-		<Stack className={`navbar ${isScrolled ? 'active_scroll' : ''}`}>
-			<Stack className={'navbar-main'}>
-				<Stack className={'container'}>
-					<Box component={'div'} className={'logo-box'}>
-						<Link href={'/'} className={'logo'}>
-							<img src="/img/logo/icon.png" alt="logo" />
-							<span>DriveX</span>
-						</Link>
-					</Box>
-					<Box component={'div'} className={'router-box'}>
-						<Link href={'/'}>
-							<div>Home</div>
-						</Link>
-						<Link href={'/brand'}>
-							<div>Brands</div>
-						</Link>
-						<Link href={'/car'}>
-							<div>All Cars</div>
-						</Link>
-						<Link href={'/community?articleCategory=NEWS'}>
-							<div>Community</div>
-						</Link>
-						<Link href={'/cs'}>
-							<div>CS</div>
-						</Link>
-					</Box>
-					<Box component={'div'} className={'user-box'}>
-						<FavoriteBorderIcon className={'like'} />
-						<div className={'divider'}></div>
-						<Link href={'/account/join'}>
-							<div className={'login-user'}>
-								<AccountCircle className={'user'} />
-								<span>Login</span>
-							</div>
-						</Link>
-					</Box>
+	useEffect(() => {
+		const jwt = getJwtToken();
+		if (jwt) updateUserInfo(jwt);
+	}, []);
+
+	/*** HANDLERS ***/
+
+	if (device == 'mobile') {
+		return (
+			<Stack className={'top'}>
+				<Link href={'/'}>
+					<div>Home</div>
+				</Link>
+				<Link href={'/brand'}>
+					<div>Brands</div>
+				</Link>
+				<Link href={'/car'}>
+					<div>All Cars</div>
+				</Link>
+				<Link href={'/community'}>
+					<div>Community</div>
+				</Link>
+				<Link href={'/cs'}>
+					<div>CS</div>
+				</Link>
+			</Stack>
+		);
+	} else {
+		return (
+			<Stack className={`navbar ${isScrolled ? 'active_scroll' : ''}`}>
+				<Stack className={'navbar-main'}>
+					<Stack className={'container'}>
+						<Box component={'div'} className={'logo-box'}>
+							<Link href={'/'} className={'logo'}>
+								<img src="/img/logo/icon.png" alt="logo" />
+								<span>DriveX</span>
+							</Link>
+						</Box>
+						<Box component={'div'} className={'router-box'}>
+							<Link href={'/'}>
+								<div>Home</div>
+							</Link>
+							<Link href={'/brand'}>
+								<div>Brands</div>
+							</Link>
+							<Link href={'/car'}>
+								<div>All Cars</div>
+							</Link>
+							<Link href={'/community'}>
+								<div>Community</div>
+							</Link>
+							<Link href={'/cs'}>
+								<div>CS</div>
+							</Link>
+							{user?._id && (
+								<Link href={'/mypage'}>
+									<div>My Page</div>
+								</Link>
+							)}
+						</Box>
+						<Box component="div" className="user-box">
+							{user?._id ? (
+								<>
+									<NotificationsIcon className="icon" />
+									<div className="divider" />
+									<FavoriteBorderIcon className="icon" />
+									<div className="divider" />
+									<div
+										className="login-user"
+										onClick={(e) => setLogoutAnchor(e.currentTarget)}
+										style={{ cursor: 'pointer' }}
+									>
+										<img
+											src={
+												user.memberImage ? `${REACT_APP_API_URL}/${user.memberImage}` : '/img/profile/defaultUser.png'
+											}
+											alt="user"
+										/>
+									</div>
+
+									<Menu
+										id="logout-menu"
+										anchorEl={logoutAnchor}
+										open={logoutOpen}
+										onClose={() => setLogoutAnchor(null)}
+										sx={{ mt: '5px' }}
+									>
+										<MenuItem
+											onClick={() => {
+												setLogoutAnchor(null);
+												logOut();
+											}}
+										>
+											<Logout fontSize="small" style={{ color: 'blue', marginRight: '10px' }} />
+											Logout
+										</MenuItem>
+									</Menu>
+								</>
+							) : (
+								<Link href="/account/join">
+									<div className="login-user">
+										<AccountCircle className="icon" />
+										<span>Login / Signup</span>
+									</div>
+								</Link>
+							)}
+						</Box>
+					</Stack>
 				</Stack>
 			</Stack>
-		</Stack>
-	);
+		);
+	}
 };
 
-// export default withRouter(Top);
-export default TopFull;
+export default withRouter(TopFull);
