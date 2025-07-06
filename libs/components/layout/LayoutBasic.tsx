@@ -20,13 +20,13 @@ const withLayoutBasic = (Component: any) => {
 		const device = useDeviceDetect();
 		const user = useReactiveVar(userVar);
 
-		/*** LIFECYCLES ***/
+		/** LIFECYCLES **/
 		useEffect(() => {
 			const jwt = getJwtToken();
 			if (jwt) updateUserInfo(jwt);
 		}, []);
 
-		/*** HANDLERS ***/
+		/** HANDLERS **/
 
 		if (device == 'mobile') {
 			return (

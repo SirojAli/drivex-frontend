@@ -1,4 +1,4 @@
-import { Stack, Box } from '@mui/material';
+import { Stack, Box, Tooltip, IconButton } from '@mui/material';
 import React, { useCallback, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, withRouter } from 'next/router';
@@ -32,7 +32,7 @@ const Top = () => {
 	const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
 	const logoutOpen = Boolean(logoutAnchor);
 
-	/*** LIFECYCLES ***/
+	/** LIFECYCLES **/
 	useEffect(() => {
 		const scrollHandler = () => {
 			setScrollPosition(window.pageYOffset);
@@ -47,7 +47,7 @@ const Top = () => {
 		if (jwt) updateUserInfo(jwt);
 	}, []);
 
-	/*** HANDLERS ***/
+	/** HANDLERS **/
 
 	if (device == 'mobile') {
 		return (
@@ -105,9 +105,18 @@ const Top = () => {
 						<Box component="div" className="user-box">
 							{user?._id ? (
 								<>
-									<NotificationsIcon className="icon" />
+									<Tooltip title="Notifications">
+										<IconButton>
+											<NotificationsIcon className="icon" />
+										</IconButton>
+									</Tooltip>
 									<div className="divider" />
-									<FavoriteBorderIcon className="icon" />
+									<Tooltip title="Favorites">
+										<IconButton>
+											<FavoriteBorderIcon className="icon" />
+										</IconButton>
+									</Tooltip>
+
 									<div className="divider" />
 									<div
 										className="login-user"
