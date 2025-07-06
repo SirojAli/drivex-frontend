@@ -16,28 +16,16 @@ export enum CarBrand {
 	MERCEDES = 'MERCEDES',
 	TOYOTA = 'TOYOTA',
 	AUDI = 'AUDI',
-	PORSCHE = 'PORSCHE',
 	TESLA = 'TESLA',
-	BYD = 'BYD',
-	LEXUS = 'LEXUS',
-	ROLLS_ROYCE = 'ROLLS_ROYCE',
-	FERRARI = 'FERRARI',
-	LAMBORGHINI = 'LAMBORGHINI',
-	BUGATTI = 'BUGATTI',
 }
 
 export enum CarType {
 	SEDAN = 'SEDAN',
 	SUV = 'SUV',
-	TRUCK = 'TRUCK',
+	HATCHBACK = 'HATCHBACK',
+	CROSSOVER = 'CROSSOVER',
 	COUPE = 'COUPE',
 	CONVERTIBLE = 'CONVERTIBLE',
-	HATCHBACK = 'HATCHBACK',
-	MINIVAN = 'MINIVAN',
-	PICKUP = 'PICKUP',
-	CROSSOVER = 'CROSSOVER',
-	WAGON = 'WAGON',
-	MPV = 'MPV',
 }
 
 export enum CarFuelType {
@@ -51,7 +39,6 @@ export enum CarFuelType {
 export enum CarTransmission {
 	MANUAL = 'MANUAL',
 	AUTO = 'AUTO',
-	SEMI_AUTO = 'SEMI_AUTO',
 }
 
 export enum CarColor {
@@ -61,12 +48,9 @@ export enum CarColor {
 	GREY = 'GREY',
 	BLUE = 'BLUE',
 	RED = 'RED',
-	GREEN = 'GREEN',
-	YELLOW = 'YELLOW',
-	ORANGE = 'ORANGE',
-	BROWN = 'BROWN',
-	GOLD = 'GOLD',
-	PURPLE = 'PURPLE',
+	GREEN = 'GREEN', // optional
+	YELLOW = 'YELLOW', // optional
+	ORANGE = 'ORANGE', // optional
 }
 
 /**************************
@@ -87,28 +71,16 @@ export const carBrandLabels: Record<CarBrand, string> = {
 	MERCEDES: 'Mercedes-Benz',
 	TOYOTA: 'Toyota',
 	AUDI: 'Audi',
-	PORSCHE: 'Porsche',
 	TESLA: 'Tesla',
-	BYD: 'BYD',
-	LEXUS: 'Lexus',
-	ROLLS_ROYCE: 'Rolls-Royce',
-	FERRARI: 'Ferrari',
-	LAMBORGHINI: 'Lamborghini',
-	BUGATTI: 'Bugatti',
 };
 
 export const carTypeLabels: Record<CarType, string> = {
 	SEDAN: 'Sedan',
 	SUV: 'SUV',
-	TRUCK: 'Truck',
+	HATCHBACK: 'Hatchback',
+	CROSSOVER: 'Crossover',
 	COUPE: 'Coupe',
 	CONVERTIBLE: 'Convertible',
-	HATCHBACK: 'Hatchback',
-	MINIVAN: 'Minivan',
-	PICKUP: 'Pickup Truck',
-	CROSSOVER: 'Crossover',
-	WAGON: 'Station Wagon',
-	MPV: 'Multi-Purpose Vehicle',
 };
 
 export const carFuelTypeLabels: Record<CarFuelType, string> = {
@@ -122,7 +94,6 @@ export const carFuelTypeLabels: Record<CarFuelType, string> = {
 export const carTransmissionLabels: Record<CarTransmission, string> = {
 	MANUAL: 'Manual',
 	AUTO: 'Automatic',
-	SEMI_AUTO: 'Semi-Automatic',
 };
 
 export const carColorLabels: Record<CarColor, string> = {
@@ -132,10 +103,7 @@ export const carColorLabels: Record<CarColor, string> = {
 	GREY: 'Grey',
 	BLUE: 'Blue',
 	RED: 'Red',
-	GREEN: 'Green',
-	YELLOW: 'Yellow',
-	ORANGE: 'Orange',
-	BROWN: 'Brown',
-	GOLD: 'Gold',
-	PURPLE: 'Purple',
+	GREEN: 'Green', // optional
+	YELLOW: 'Yellow', // optional
+	ORANGE: 'Orange', // optional
 };

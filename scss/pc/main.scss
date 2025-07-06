@@ -322,20 +322,21 @@
 
 				.header-text {
 					width: 500px;
-					height: 300px;
+					height: auto;
 					display: inline-flex;
 					flex-direction: column;
 					align-items: flex-start;
-					gap: 30px;
+					gap: 20px;
 					margin-top: 150px;
+					// border: 1px solid white;
 
 					.bold {
 						color: #fff;
 						font-family: $font;
-						font-size: 70px;
+						font-size: 50px;
 						font-style: normal;
 						font-weight: 600;
-						line-height: 70px;
+						line-height: 60px;
 					}
 
 					.short {
@@ -343,11 +344,12 @@
 						font-family: $font;
 						font-size: 20px;
 						font-style: normal;
-						font-weight: 300;
+						font-weight: 400;
 						line-height: normal;
 					}
 
 					.detail {
+						margin-top: 10px;
 						display: flex;
 						width: 204px;
 						height: 50px;
@@ -359,10 +361,10 @@
 						background: #fff;
 						cursor: pointer;
 
-						p {
-							color: #24272c;
+						.p {
+							color: #000;
 							font-family: $font;
-							font-size: 16px;
+							font-size: 18px;
 							font-style: normal;
 							font-weight: 500;
 							line-height: normal;
@@ -374,7 +376,7 @@
 					position: relative;
 					width: 1290px;
 					height: 60px;
-					margin-top: 186px;
+					margin-top: 250px;
 					padding: 16px 29px;
 					display: flex;
 					align-items: center;
@@ -459,7 +461,7 @@
 					}
 
 					.search-logo {
-						width: 700px;
+						width: auto;
 						height: 40px;
 						display: flex;
 						flex-direction: row;
@@ -482,6 +484,7 @@
 							img {
 								width: 26px;
 								height: 26px;
+								filter: brightness(0) saturate(100%) invert(100%);
 							}
 
 							span {
