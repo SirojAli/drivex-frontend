@@ -31,6 +31,7 @@ import SpeedIcon from '@mui/icons-material/Speed';
 import DoorFrontIcon from '@mui/icons-material/DoorFront';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import NoCrashIcon from '@mui/icons-material/NoCrash';
+import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 
 const carImages = [
 	'/img/cars/header1.jpg',
@@ -89,6 +90,8 @@ const reviews = [
 ];
 
 const CarDetail: NextPage = () => {
+	const device = useDeviceDetect();
+
 	const [slideImage, setSlideImage] = useState<string>(carImages[0]);
 	const [activeTab, setActiveTab] = useState<string>('Overview');
 
@@ -136,505 +139,509 @@ const CarDetail: NextPage = () => {
 		// Add real submission logic here if needed
 	};
 
-	return (
-		<div id="car-detail-page">
-			<Stack className={'container'}>
-				{/* Sub-Header */}
-				<Stack className={'sub-header'}>
-					<Link href={'/'} className={'link'}>
-						Home
-					</Link>
-					<ArrowForwardIosIcon className={'arrow'} />
-					<span>Car Detail</span>
-				</Stack>
+	if (device === 'mobile') {
+		return <Stack>CAR DETAIL MOBILE</Stack>;
+	} else {
+		return (
+			<div id="car-detail-page">
+				<Stack className={'container'}>
+					{/* Sub-Header */}
+					<Stack className={'sub-header'}>
+						<Link href={'/'} className={'link'}>
+							Home
+						</Link>
+						<ArrowForwardIosIcon className={'arrow'} />
+						<span>Car Detail</span>
+					</Stack>
 
-				{/* Title */}
-				<Stack className={'car-detail-title'}>
-					<Box className={'content'}>
-						<Box className={'heading'}>
-							<h1>BMW X7 2020 Super Turbo</h1>
-							<div className={'car-category'}>
-								<div className={'category'}>
-									<img src="/img/icons/fuel.png" alt="fuel" />
-									<span>Petrol</span>
+					{/* Title */}
+					<Stack className={'car-detail-title'}>
+						<Box className={'content'}>
+							<Box className={'heading'}>
+								<h1>BMW X7 2020 Super Turbo</h1>
+								<div className={'car-category'}>
+									<div className={'category'}>
+										<img src="/img/icons/fuel.png" alt="fuel" />
+										<span>Petrol</span>
+									</div>
+									<div className={'category'}>
+										<img src="/img/icons/auto.png" alt="transmission" />
+										<span>Auto</span>
+									</div>
+									<div className={'category'}>
+										<img src="/img/icons/speed.png" alt="engine" />
+										<span>3.0 L</span>
+									</div>
 								</div>
-								<div className={'category'}>
-									<img src="/img/icons/auto.png" alt="transmission" />
-									<span>Auto</span>
-								</div>
-								<div className={'category'}>
-									<img src="/img/icons/speed.png" alt="engine" />
-									<span>3.0 L</span>
-								</div>
-							</div>
-						</Box>
-						<span>$73,000</span>
-						{/* <Box className={'sub-content'}>
+							</Box>
+							<span>$73,000</span>
+							{/* <Box className={'sub-content'}>
 							<div className={'price'}>
 								<p>Monthly installment payment:</p>
 								<span>$4,000</span>
 							</div>
 							<span>New car price: $100.000</span>
 						</Box> */}
-					</Box>
-					<Box className={'action-box'}>
-						<div className={'action'}>
-							<FavoriteBorderIcon className={'icon'} />
-						</div>
-						<div className={'action'}>
-							<ShareIcon className={'icon'} />
-						</div>
-						<div className={'action'}>
-							<CompareArrowsIcon className={'icon'} />
-						</div>
-					</Box>
-				</Stack>
-
-				{/* Main */}
-				<Stack className={'main-list'}>
-					{/* Filter */}
-					<Stack className={'left-box'}>
-						<Stack className={'img-box'}>
-							<Stack className={'main-img'}>
-								<img src={slideImage} alt="main-car" />
-							</Stack>
-
-							<Stack className={'sub-img'}>
-								{carImages.map((img, index) => (
-									<Stack
-										className={`sub-img-box ${img === slideImage ? 'active' : ''}`}
-										onClick={() => setSlideImage(img)}
-										key={index}
-									>
-										<img src={img} alt="sub-car" />
-									</Stack>
-								))}
-							</Stack>
-						</Stack>
-						<Stack className={'tab-box'}>
-							{tabs.map((tab) => (
-								<Button
-									key={tab}
-									onClick={() => setActiveTab(tab)}
-									className={`tab-btn ${activeTab === tab ? 'active' : ''}`}
-								>
-									{tab}
-								</Button>
-							))}
-						</Stack>
-						<Stack className={'desc'}>
-							<h2>Description</h2>
-							<span>
-								<p>{firstSentence}.</p>
-								<p>{restText}</p>
-							</span>
-						</Stack>
-						<div className={'divider'}></div>
-						<Stack className={'feat'}>
-							<h2>Features</h2>
-							<Box className={'main-feat'}>
-								{mainFeatures.map((feature) => (
-									<Box className={'feature-item'} key={feature}>
-										<CheckCircleIcon className={'check-icon'} />
-										<span>{feature}</span>
-									</Box>
-								))}
-							</Box>
-							<Box className={'other-feat'}>
-								{otherFeatureGroups.map((group) => (
-									<Box className={'feat-group'} key={group}>
-										<Typography className={'group-title'}>{group}</Typography>
-										<ArrowForwardIosIcon className={'arrow-icon'} />
-									</Box>
-								))}
-							</Box>
-						</Stack>
-						<Stack className={'address-config'}>
-							<Typography className={'title'}>Location</Typography>
-							<div className={'locate'}>
-								<MapIcon className={'icon'} />
-								<p>2972 Westheimer Rd. Santa Ana, Illinois 85486 </p>
+						</Box>
+						<Box className={'action-box'}>
+							<div className={'action'}>
+								<FavoriteBorderIcon className={'icon'} />
 							</div>
-							<Stack className={'map-box'}>
-								<iframe
-									src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25867.098915951767!2d128.68632810247993!3d35.86402299180927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35660bba427bf179%3A0x1fc02da732b9072f!2sGeumhogangbyeon-ro%2C%20Dong-gu%2C%20Daegu!5e0!3m2!1suz!2skr!4v1695537640704!5m2!1suz!2skr"
-									width="100%"
-									height="100%"
-									style={{ border: 0 }}
-									allowFullScreen={true}
-									loading="lazy"
-									referrerPolicy="no-referrer-when-downgrade"
-								></iframe>
-							</Stack>
-						</Stack>
-						<div className={'divider'}></div>
-						<Stack className={'reviews'}>
-							<h2>Reviews & Rating</h2>
-							<Box className={'rating-box'}>
-								<Box className={'star-box'}>
-									<StarIcon className={'main-star'} />
-								</Box>
-								<Typography className={'score'}>4.8</Typography>
-								<Box className={'total'}>
-									<Typography className={'rating-label'}>Overall Rating</Typography>
-									<Typography className={'total-reviews'}>
-										Based on <strong>372 Reviews</strong>
-									</Typography>
-								</Box>
-							</Box>
-							<Typography className={'section-title'}>372 Ratings and Reviews</Typography>
-							{reviews.map((r) => (
-								<Box key={r.id} className={'review'}>
-									<Box className={'avatar-name-wrapper'}>
-										<Box className={'avatar'}>{r.name[0]}</Box>
-										<Box className={'avatar-name'}>
-											<Typography className={'user-name'}>{r.name}</Typography>
-											<Box className={'stars'}>
-												{Array(5)
-													.fill(0)
-													.map((_, i) => (
-														<StarIcon key={i} className={'filled-star'} />
-													))}
-											</Box>
-										</Box>
-										<Typography className={'date'}>{r.date}</Typography>
-									</Box>
-									<Box className={'content'}>
-										<Typography className={'comment'}>{r.comment}</Typography>
-										<Box className={'footer'}>
-											<Typography className={'helpful-label'}>Is this review helpful?</Typography>
-											<Button
-												className={`helpful-btn ${helpful[r.id] === true ? 'selected' : ''}`}
-												onClick={() => handleHelpful(r.id, true)}
-											>
-												<ThumbUpAltOutlinedIcon fontSize="small" />
-												Yes
-											</Button>
-											<Button
-												className={`helpful-btn ${helpful[r.id] === false ? 'selected' : ''}`}
-												onClick={() => handleHelpful(r.id, false)}
-											>
-												<ThumbDownAltOutlinedIcon fontSize="small" />
-												No
-											</Button>
-										</Box>
-									</Box>
-								</Box>
-							))}
-							<Box className={'show-more'}>
-								<Typography className={'more-link'}>View more reviews</Typography>
-								<Box className={'arrow'}>
-									<ArrowDownwardIcon className={'icon'} />
-								</Box>
-							</Box>
-						</Stack>
-						<Stack className={'comment'}>
-							<Typography className={'reply-title'}>Leave a Comment</Typography>
-							<Typography className={'reply-note'}>Your email address will not be published</Typography>
-
-							<Box className={'input-row'}>
-								<TextField
-									label="Your name"
-									name="name"
-									value={replyForm.name}
-									onChange={handleReplyChange}
-									className={'text-field'}
-								/>
-								<TextField
-									label="Your email"
-									name="email"
-									value={replyForm.email}
-									onChange={handleReplyChange}
-									className={'text-field'}
-								/>
-							</Box>
-
-							<FormControlLabel
-								control={<Checkbox checked={replyForm.remember} onChange={handleRememberChange} name="remember" />}
-								label="Save your name, email for the next time review"
-							/>
-
-							<Box className="input-text">
-								<TextField
-									label="Your Message"
-									name="message"
-									value={replyForm.message}
-									onChange={handleReplyChange}
-									multiline
-									fullWidth
-									InputProps={{
-										sx: {
-											height: '130px', // Total height of the TextField
-											alignItems: 'flex-start', // Align text to top
-										},
-									}}
-									InputLabelProps={{
-										shrink: true, // Keeps the label up
-									}}
-									sx={{
-										'& .MuiInputBase-root': {
-											height: '130px',
-											alignItems: 'flex-start',
-										},
-										'& .MuiInputBase-inputMultiline': {
-											padding: '12px',
-											height: '100% !important',
-											boxSizing: 'border-box',
-											resize: 'none',
-										},
-									}}
-								/>
-							</Box>
-
-							<Button onClick={handlePostComment} className={'submit-btn'}>
-								<span>Post Comment</span>
-							</Button>
-						</Stack>
+							<div className={'action'}>
+								<ShareIcon className={'icon'} />
+							</div>
+							<div className={'action'}>
+								<CompareArrowsIcon className={'icon'} />
+							</div>
+						</Box>
 					</Stack>
 
-					{/* Car List */}
-					<Stack className={'right-box'}>
-						{/* Contact Dealer */}
-						<Stack className={'seller-contact'}>
-							<Stack className={'main'}>
-								<Box className={'info'}>
-									<img src="/img/logo/BMW.png" alt="brand-logo" />
-									<Box className={'content'}>
-										<h4>Mercedes-Benz</h4>
-										<div className={'verify'}>
-											<VerifiedIcon className={'icon'} />
-											<p>Verified dealer</p>
+					{/* Main */}
+					<Stack className={'main-list'}>
+						{/* Filter */}
+						<Stack className={'left-box'}>
+							<Stack className={'img-box'}>
+								<Stack className={'main-img'}>
+									<img src={slideImage} alt="main-car" />
+								</Stack>
+
+								<Stack className={'sub-img'}>
+									{carImages.map((img, index) => (
+										<Stack
+											className={`sub-img-box ${img === slideImage ? 'active' : ''}`}
+											onClick={() => setSlideImage(img)}
+											key={index}
+										>
+											<img src={img} alt="sub-car" />
+										</Stack>
+									))}
+								</Stack>
+							</Stack>
+							<Stack className={'tab-box'}>
+								{tabs.map((tab) => (
+									<Button
+										key={tab}
+										onClick={() => setActiveTab(tab)}
+										className={`tab-btn ${activeTab === tab ? 'active' : ''}`}
+									>
+										{tab}
+									</Button>
+								))}
+							</Stack>
+							<Stack className={'desc'}>
+								<h2>Description</h2>
+								<span>
+									<p>{firstSentence}.</p>
+									<p>{restText}</p>
+								</span>
+							</Stack>
+							<div className={'divider'}></div>
+							<Stack className={'feat'}>
+								<h2>Features</h2>
+								<Box className={'main-feat'}>
+									{mainFeatures.map((feature) => (
+										<Box className={'feature-item'} key={feature}>
+											<CheckCircleIcon className={'check-icon'} />
+											<span>{feature}</span>
+										</Box>
+									))}
+								</Box>
+								<Box className={'other-feat'}>
+									{otherFeatureGroups.map((group) => (
+										<Box className={'feat-group'} key={group}>
+											<Typography className={'group-title'}>{group}</Typography>
+											<ArrowForwardIosIcon className={'arrow-icon'} />
+										</Box>
+									))}
+								</Box>
+							</Stack>
+							<Stack className={'address-config'}>
+								<Typography className={'title'}>Location</Typography>
+								<div className={'locate'}>
+									<MapIcon className={'icon'} />
+									<p>2972 Westheimer Rd. Santa Ana, Illinois 85486 </p>
+								</div>
+								<Stack className={'map-box'}>
+									<iframe
+										src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25867.098915951767!2d128.68632810247993!3d35.86402299180927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35660bba427bf179%3A0x1fc02da732b9072f!2sGeumhogangbyeon-ro%2C%20Dong-gu%2C%20Daegu!5e0!3m2!1suz!2skr!4v1695537640704!5m2!1suz!2skr"
+										width="100%"
+										height="100%"
+										style={{ border: 0 }}
+										allowFullScreen={true}
+										loading="lazy"
+										referrerPolicy="no-referrer-when-downgrade"
+									></iframe>
+								</Stack>
+							</Stack>
+							<div className={'divider'}></div>
+							<Stack className={'reviews'}>
+								<h2>Reviews & Rating</h2>
+								<Box className={'rating-box'}>
+									<Box className={'star-box'}>
+										<StarIcon className={'main-star'} />
+									</Box>
+									<Typography className={'score'}>4.8</Typography>
+									<Box className={'total'}>
+										<Typography className={'rating-label'}>Overall Rating</Typography>
+										<Typography className={'total-reviews'}>
+											Based on <strong>372 Reviews</strong>
+										</Typography>
+									</Box>
+								</Box>
+								<Typography className={'section-title'}>372 Ratings and Reviews</Typography>
+								{reviews.map((r) => (
+									<Box key={r.id} className={'review'}>
+										<Box className={'avatar-name-wrapper'}>
+											<Box className={'avatar'}>{r.name[0]}</Box>
+											<Box className={'avatar-name'}>
+												<Typography className={'user-name'}>{r.name}</Typography>
+												<Box className={'stars'}>
+													{Array(5)
+														.fill(0)
+														.map((_, i) => (
+															<StarIcon key={i} className={'filled-star'} />
+														))}
+												</Box>
+											</Box>
+											<Typography className={'date'}>{r.date}</Typography>
+										</Box>
+										<Box className={'content'}>
+											<Typography className={'comment'}>{r.comment}</Typography>
+											<Box className={'footer'}>
+												<Typography className={'helpful-label'}>Is this review helpful?</Typography>
+												<Button
+													className={`helpful-btn ${helpful[r.id] === true ? 'selected' : ''}`}
+													onClick={() => handleHelpful(r.id, true)}
+												>
+													<ThumbUpAltOutlinedIcon fontSize="small" />
+													Yes
+												</Button>
+												<Button
+													className={`helpful-btn ${helpful[r.id] === false ? 'selected' : ''}`}
+													onClick={() => handleHelpful(r.id, false)}
+												>
+													<ThumbDownAltOutlinedIcon fontSize="small" />
+													No
+												</Button>
+											</Box>
+										</Box>
+									</Box>
+								))}
+								<Box className={'show-more'}>
+									<Typography className={'more-link'}>View more reviews</Typography>
+									<Box className={'arrow'}>
+										<ArrowDownwardIcon className={'icon'} />
+									</Box>
+								</Box>
+							</Stack>
+							<Stack className={'comment'}>
+								<Typography className={'reply-title'}>Leave a Comment</Typography>
+								<Typography className={'reply-note'}>Your email address will not be published</Typography>
+
+								<Box className={'input-row'}>
+									<TextField
+										label="Your name"
+										name="name"
+										value={replyForm.name}
+										onChange={handleReplyChange}
+										className={'text-field'}
+									/>
+									<TextField
+										label="Your email"
+										name="email"
+										value={replyForm.email}
+										onChange={handleReplyChange}
+										className={'text-field'}
+									/>
+								</Box>
+
+								<FormControlLabel
+									control={<Checkbox checked={replyForm.remember} onChange={handleRememberChange} name="remember" />}
+									label="Save your name, email for the next time review"
+								/>
+
+								<Box className="input-text">
+									<TextField
+										label="Your Message"
+										name="message"
+										value={replyForm.message}
+										onChange={handleReplyChange}
+										multiline
+										fullWidth
+										InputProps={{
+											sx: {
+												height: '130px', // Total height of the TextField
+												alignItems: 'flex-start', // Align text to top
+											},
+										}}
+										InputLabelProps={{
+											shrink: true, // Keeps the label up
+										}}
+										sx={{
+											'& .MuiInputBase-root': {
+												height: '130px',
+												alignItems: 'flex-start',
+											},
+											'& .MuiInputBase-inputMultiline': {
+												padding: '12px',
+												height: '100% !important',
+												boxSizing: 'border-box',
+												resize: 'none',
+											},
+										}}
+									/>
+								</Box>
+
+								<Button onClick={handlePostComment} className={'submit-btn'}>
+									<span>Post Comment</span>
+								</Button>
+							</Stack>
+						</Stack>
+
+						{/* Car List */}
+						<Stack className={'right-box'}>
+							{/* Contact Dealer */}
+							<Stack className={'seller-contact'}>
+								<Stack className={'main'}>
+									<Box className={'info'}>
+										<img src="/img/logo/BMW.png" alt="brand-logo" />
+										<Box className={'content'}>
+											<h4>Mercedes-Benz</h4>
+											<div className={'verify'}>
+												<VerifiedIcon className={'icon'} />
+												<p>Verified dealer</p>
+											</div>
+										</Box>
+									</Box>
+									<Box className={'businees-hours'}>
+										<p>Business hours</p>
+										<Box className={'schedule'}>
+											<Box className={'tab'}>
+												<p>Monday - Friday:</p>
+												<span>9:00 - 18:00</span>
+											</Box>
+											<Box className={'tab'}>
+												<p>Saturday:</p>
+												<span>10:00 - 16:00</span>
+											</Box>
+											<Box className={'tab'}>
+												<p>Sunday & Holidays</p>
+												<span>Close</span>
+											</Box>
+										</Box>
+									</Box>
+									<div className={'dvr'}></div>
+									<Box className={'rate'}>
+										<p>1000+ Reviews</p>
+										<Box className={'stars'}>
+											{Array(5)
+												.fill(0)
+												.map((_, i) => (
+													<StarIcon key={i} className={'filled-star'} />
+												))}
+										</Box>
+									</Box>
+
+									<Box className={'contact-box'}>
+										<p>Contact Dealer</p>
+										<div className={'contact'}>
+											<Box className={'call'}>
+												<CallIcon className={'icon'} />
+												<span>Call to Dealer</span>
+											</Box>
+											<Box className={'message'}>
+												<ChatIcon className={'icon'} />
+												<span>Chat</span>
+											</Box>
+										</div>
+									</Box>
+								</Stack>
+							</Stack>
+
+							{/* Car Overview */}
+							<Stack className={'car-overview'}>
+								<h3>Car Overview</h3>
+								<Stack className={'main'}>
+									{/* Car Brand */}
+									<Box className={'over-box'}>
+										<EmojiTransportationIcon className={'icon'} />
+										<div className={'content'}>
+											<span>Car Make</span>
+											<p>BMW</p>
+										</div>
+									</Box>
+									{/* Car Type */}
+									<Box className={'over-box'}>
+										<DirectionsCarIcon className={'icon'} />
+										<div className={'content'}>
+											<span>Car Type</span>
+											<p>Sedan</p>
+										</div>
+									</Box>
+									{/* VIN Number */}
+									<Box className={'over-box'}>
+										<FormatListNumberedIcon className={'icon'} />
+										<div className={'content'}>
+											<span>VIN Number</span>
+											<p>66516518732132</p>
+										</div>
+									</Box>
+									{/* Condition */}
+									<Box className={'over-box'}>
+										<NoCrashIcon className={'icon'} />
+										<div className={'content'}>
+											<span>Condition</span>
+											<p>New</p>
+										</div>
+									</Box>
+									{/* Car Year */}
+									<Box className={'over-box'}>
+										<EventAvailableIcon className={'icon'} />
+										<div className={'content'}>
+											<span>Year</span>
+											<p>2024</p>
+										</div>
+									</Box>
+									{/* Car Fuel Type */}
+									<Box className={'over-box'}>
+										<LocalGasStationIcon className={'icon'} />
+										<div className={'content'}>
+											<span>Fuel Type</span>
+											<p>Petrol</p>
+										</div>
+									</Box>
+									{/* Car Transmission */}
+									<Box className={'over-box'}>
+										<img src="/img/icons/transmission.png" alt="" className={'img1'} />
+										<div className={'content'}>
+											<span>Transmission</span>
+											<p>Manual</p>
+										</div>
+									</Box>
+									{/* Car Color */}
+									<Box className={'over-box'}>
+										<PaletteIcon className={'icon'} />
+										<div className={'content'}>
+											<span>Color</span>
+											<p>Black</p>
+										</div>
+									</Box>
+									{/* Engine Size */}
+									<Box className={'over-box'}>
+										<img src="/img/icons/engine.png" alt="" />
+										<div className={'content'}>
+											<span>Engine Size</span>
+											<p>3.0</p>
+										</div>
+									</Box>
+									{/* Maximum Speed */}
+									<Box className={'over-box'}>
+										<SpeedIcon className={'icon'} />
+										<div className={'content'}>
+											<span>Speed</span>
+											<p>240</p>
+										</div>
+									</Box>
+									{/* Car Seats */}
+									<Box className={'over-box'}>
+										<AirlineSeatReclineNormalIcon className={'icon'} />
+										<div className={'content'}>
+											<span>Seats</span>
+											<p>4</p>
+										</div>
+									</Box>
+									{/* City MPG */}
+									<Box className={'over-box'}>
+										<LocationCityIcon className={'icon'} />
+										<div className={'content'}>
+											<span>City MPG</span>
+											<p>20</p>
+										</div>
+									</Box>
+									{/* Highway MPG */}
+									<Box className={'over-box'}>
+										<AddRoadIcon className={'icon'} />
+										<div className={'content'}>
+											<span>Highway MPG</span>
+											<p>24</p>
+										</div>
+									</Box>
+									{/* Doors */}
+									<Box className={'over-box'}>
+										<DoorFrontIcon className={'icon'} />
+										<div className={'content'}>
+											<span>Doors</span>
+											<p>4</p>
+										</div>
+									</Box>
+									{/* Cylinders */}
+									<Box className={'over-box'}>
+										<img src="/img/icons/cylinders.jpg" alt="" />
+										<div className={'content'}>
+											<span>Cylinders</span>
+											<p>6</p>
+										</div>
+									</Box>
+									{/* Drive Type */}
+									<Box className={'over-box'}>
+										<img src="/img/icons/wheel.png" alt="" className={'img1'} />
+										<div className={'content'}>
+											<span>Drive Type</span>
+											<p>AWD - All-wheel drive</p>
+										</div>
+									</Box>
+								</Stack>
+							</Stack>
+
+							{/* Popular Cars */}
+							<Stack className={'popular-cars'}>
+								<Box className={'title'}>
+									<h3>Popular Cars</h3>
+									<span>Explore 32 more cars you might like</span>
+								</Box>
+								<Box className={'listing'}>
+									<Box className={'car-box'}>
+										<img src={'/img/cars/header1.jpg'} alt={'Car'} />
+										<div className={'text'}>
+											<p>2012 Mercedes-Benz E-Class 2009-2013 E 200 CGI Avantgarde</p>
+											<span>$73,000</span>
+										</div>
+									</Box>
+									<Box className={'car-box'}>
+										<img src={'/img/cars/header1.jpg'} alt={'Car'} />
+										<div className={'text'}>
+											<p>2012 Mercedes-Benz E-Class 2009-2013 E 200 CGI Avantgarde</p>
+											<span>$73,000</span>
+										</div>
+									</Box>
+									<Box className={'car-box'}>
+										<img src={'/img/cars/header1.jpg'} alt={'Car'} />
+										<div className={'text'}>
+											<p>2012 Mercedes-Benz E-Class 2009-2013 E 200 CGI Avantgarde</p>
+											<span>$73,000</span>
+										</div>
+									</Box>
+									<Box className={'car-box'}>
+										<img src={'/img/cars/header1.jpg'} alt={'Car'} />
+										<div className={'text'}>
+											<p>2012 Mercedes-Benz E-Class 2009-2013 E 200 CGI Avantgarde</p>
+											<span>$73,000</span>
 										</div>
 									</Box>
 								</Box>
-								<Box className={'businees-hours'}>
-									<p>Business hours</p>
-									<Box className={'schedule'}>
-										<Box className={'tab'}>
-											<p>Monday - Friday:</p>
-											<span>9:00 - 18:00</span>
-										</Box>
-										<Box className={'tab'}>
-											<p>Saturday:</p>
-											<span>10:00 - 16:00</span>
-										</Box>
-										<Box className={'tab'}>
-											<p>Sunday & Holidays</p>
-											<span>Close</span>
-										</Box>
+								<Box className={'show-more'}>
+									<Typography className={'more-link'}>View more cars</Typography>
+									<Box className={'arrow'}>
+										<ArrowDownwardIcon className={'icon'} />
 									</Box>
 								</Box>
-								<div className={'dvr'}></div>
-								<Box className={'rate'}>
-									<p>1000+ Reviews</p>
-									<Box className={'stars'}>
-										{Array(5)
-											.fill(0)
-											.map((_, i) => (
-												<StarIcon key={i} className={'filled-star'} />
-											))}
-									</Box>
-								</Box>
-
-								<Box className={'contact-box'}>
-									<p>Contact Dealer</p>
-									<div className={'contact'}>
-										<Box className={'call'}>
-											<CallIcon className={'icon'} />
-											<span>Call to Dealer</span>
-										</Box>
-										<Box className={'message'}>
-											<ChatIcon className={'icon'} />
-											<span>Chat</span>
-										</Box>
-									</div>
-								</Box>
 							</Stack>
-						</Stack>
-
-						{/* Car Overview */}
-						<Stack className={'car-overview'}>
-							<h3>Car Overview</h3>
-							<Stack className={'main'}>
-								{/* Car Brand */}
-								<Box className={'over-box'}>
-									<EmojiTransportationIcon className={'icon'} />
-									<div className={'content'}>
-										<span>Car Make</span>
-										<p>BMW</p>
-									</div>
-								</Box>
-								{/* Car Type */}
-								<Box className={'over-box'}>
-									<DirectionsCarIcon className={'icon'} />
-									<div className={'content'}>
-										<span>Car Type</span>
-										<p>Sedan</p>
-									</div>
-								</Box>
-								{/* VIN Number */}
-								<Box className={'over-box'}>
-									<FormatListNumberedIcon className={'icon'} />
-									<div className={'content'}>
-										<span>VIN Number</span>
-										<p>66516518732132</p>
-									</div>
-								</Box>
-								{/* Condition */}
-								<Box className={'over-box'}>
-									<NoCrashIcon className={'icon'} />
-									<div className={'content'}>
-										<span>Condition</span>
-										<p>New</p>
-									</div>
-								</Box>
-								{/* Car Year */}
-								<Box className={'over-box'}>
-									<EventAvailableIcon className={'icon'} />
-									<div className={'content'}>
-										<span>Year</span>
-										<p>2024</p>
-									</div>
-								</Box>
-								{/* Car Fuel Type */}
-								<Box className={'over-box'}>
-									<LocalGasStationIcon className={'icon'} />
-									<div className={'content'}>
-										<span>Fuel Type</span>
-										<p>Petrol</p>
-									</div>
-								</Box>
-								{/* Car Transmission */}
-								<Box className={'over-box'}>
-									<img src="/img/icons/transmission.png" alt="" className={'img1'} />
-									<div className={'content'}>
-										<span>Transmission</span>
-										<p>Manual</p>
-									</div>
-								</Box>
-								{/* Car Color */}
-								<Box className={'over-box'}>
-									<PaletteIcon className={'icon'} />
-									<div className={'content'}>
-										<span>Color</span>
-										<p>Black</p>
-									</div>
-								</Box>
-								{/* Engine Size */}
-								<Box className={'over-box'}>
-									<img src="/img/icons/engine.png" alt="" />
-									<div className={'content'}>
-										<span>Engine Size</span>
-										<p>3.0</p>
-									</div>
-								</Box>
-								{/* Maximum Speed */}
-								<Box className={'over-box'}>
-									<SpeedIcon className={'icon'} />
-									<div className={'content'}>
-										<span>Speed</span>
-										<p>240</p>
-									</div>
-								</Box>
-								{/* Car Seats */}
-								<Box className={'over-box'}>
-									<AirlineSeatReclineNormalIcon className={'icon'} />
-									<div className={'content'}>
-										<span>Seats</span>
-										<p>4</p>
-									</div>
-								</Box>
-								{/* City MPG */}
-								<Box className={'over-box'}>
-									<LocationCityIcon className={'icon'} />
-									<div className={'content'}>
-										<span>City MPG</span>
-										<p>20</p>
-									</div>
-								</Box>
-								{/* Highway MPG */}
-								<Box className={'over-box'}>
-									<AddRoadIcon className={'icon'} />
-									<div className={'content'}>
-										<span>Highway MPG</span>
-										<p>24</p>
-									</div>
-								</Box>
-								{/* Doors */}
-								<Box className={'over-box'}>
-									<DoorFrontIcon className={'icon'} />
-									<div className={'content'}>
-										<span>Doors</span>
-										<p>4</p>
-									</div>
-								</Box>
-								{/* Cylinders */}
-								<Box className={'over-box'}>
-									<img src="/img/icons/cylinders.jpg" alt="" />
-									<div className={'content'}>
-										<span>Cylinders</span>
-										<p>6</p>
-									</div>
-								</Box>
-								{/* Drive Type */}
-								<Box className={'over-box'}>
-									<img src="/img/icons/wheel.png" alt="" className={'img1'} />
-									<div className={'content'}>
-										<span>Drive Type</span>
-										<p>AWD - All-wheel drive</p>
-									</div>
-								</Box>
-							</Stack>
-						</Stack>
-
-						{/* Popular Cars */}
-						<Stack className={'popular-cars'}>
-							<Box className={'title'}>
-								<h3>Popular Cars</h3>
-								<span>Explore 32 more cars you might like</span>
-							</Box>
-							<Box className={'listing'}>
-								<Box className={'car-box'}>
-									<img src={'/img/cars/header1.jpg'} alt={'Car'} />
-									<div className={'text'}>
-										<p>2012 Mercedes-Benz E-Class 2009-2013 E 200 CGI Avantgarde</p>
-										<span>$73,000</span>
-									</div>
-								</Box>
-								<Box className={'car-box'}>
-									<img src={'/img/cars/header1.jpg'} alt={'Car'} />
-									<div className={'text'}>
-										<p>2012 Mercedes-Benz E-Class 2009-2013 E 200 CGI Avantgarde</p>
-										<span>$73,000</span>
-									</div>
-								</Box>
-								<Box className={'car-box'}>
-									<img src={'/img/cars/header1.jpg'} alt={'Car'} />
-									<div className={'text'}>
-										<p>2012 Mercedes-Benz E-Class 2009-2013 E 200 CGI Avantgarde</p>
-										<span>$73,000</span>
-									</div>
-								</Box>
-								<Box className={'car-box'}>
-									<img src={'/img/cars/header1.jpg'} alt={'Car'} />
-									<div className={'text'}>
-										<p>2012 Mercedes-Benz E-Class 2009-2013 E 200 CGI Avantgarde</p>
-										<span>$73,000</span>
-									</div>
-								</Box>
-							</Box>
-							<Box className={'show-more'}>
-								<Typography className={'more-link'}>View more cars</Typography>
-								<Box className={'arrow'}>
-									<ArrowDownwardIcon className={'icon'} />
-								</Box>
-							</Box>
 						</Stack>
 					</Stack>
 				</Stack>
-			</Stack>
-		</div>
-	);
+			</div>
+		);
+	}
 };
 
 export default withLayoutFull(CarDetail);

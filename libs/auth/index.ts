@@ -184,5 +184,6 @@ const deleteUserInfo = () => {
 		memberViews: 0,
 		memberWarnings: 0,
 		memberBlocks: 0,
+		brandSlug: '',
 	});
 };

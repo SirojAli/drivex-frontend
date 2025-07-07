@@ -4,6 +4,7 @@ import { Stack, Box, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import CarCard from '../../libs/components/car/CarCard';
+import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 
 const mockCars = new Array(20).fill({
 	name: 'BMW X7 2020 Super Turbo',
@@ -20,6 +21,7 @@ const mockCars = new Array(20).fill({
 });
 
 const BrandDetail: NextPage = () => {
+	const device = useDeviceDetect();
 	const [searchQuery, setSearchQuery] = useState('');
 
 	const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,50 +33,54 @@ const BrandDetail: NextPage = () => {
 		// Optional: Filter logic
 	};
 
-	return (
-		<div id="brand-detail-page">
-			<Stack className={'container-box'}>
-				{/* Header */}
-				<Box className={'brand-header'}>
-					<h2 className={'brand-name'}>BMW</h2>
-				</Box>
-
-				{/* Filter and Search */}
-				<Box className={'filter-search-box'}>
-					<Box className={'filter-box'}>
-						{['Top', 'Popular', 'New', 'Discount'].map((filter) => (
-							<div key={filter} className={'filter-button'}>
-								<p>{filter}</p>
-							</div>
-						))}
+	if (device === 'mobile') {
+		return <Stack>CAR BRAND DETAIL MOBILE</Stack>;
+	} else {
+		return (
+			<div id="brand-detail-page">
+				<Stack className={'container-box'}>
+					{/* Header */}
+					<Box className={'brand-header'}>
+						<h2 className={'brand-name'}>BMW</h2>
 					</Box>
-					<Box className={'search-box'}>
-						<form className={'search-form'} onSubmit={handleSearchSubmit}>
-							<input
-								type="search"
-								placeholder="Search car"
-								className={'search-input'}
-								value={searchQuery}
-								onChange={handleSearchChange}
-							/>
-							<Button type="submit" className={'search-btn'}>
-								<SearchIcon />
-							</Button>
-						</form>
-					</Box>
-				</Box>
 
-				{/* Car Cards */}
-				<Box className={'car-list-box'}>
-					<Stack className={'car-list'}>
-						{mockCars.map((car, index) => (
-							<CarCard key={index} car={car} />
-						))}
-					</Stack>
-				</Box>
-			</Stack>
-		</div>
-	);
+					{/* Filter and Search */}
+					<Box className={'filter-search-box'}>
+						<Box className={'filter-box'}>
+							{['Top', 'Popular', 'New', 'Discount'].map((filter) => (
+								<div key={filter} className={'filter-button'}>
+									<p>{filter}</p>
+								</div>
+							))}
+						</Box>
+						<Box className={'search-box'}>
+							<form className={'search-form'} onSubmit={handleSearchSubmit}>
+								<input
+									type="search"
+									placeholder="Search car"
+									className={'search-input'}
+									value={searchQuery}
+									onChange={handleSearchChange}
+								/>
+								<Button type="submit" className={'search-btn'}>
+									<SearchIcon />
+								</Button>
+							</form>
+						</Box>
+					</Box>
+
+					{/* Car Cards */}
+					<Box className={'car-list-box'}>
+						<Stack className={'car-list'}>
+							{mockCars.map((car, index) => (
+								<CarCard key={index} car={car} />
+							))}
+						</Stack>
+					</Box>
+				</Stack>
+			</div>
+		);
+	}
 };
 
 export default withLayoutBasic(BrandDetail);

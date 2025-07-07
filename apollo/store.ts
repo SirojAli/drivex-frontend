@@ -24,6 +24,7 @@ export const userVar = makeVar<CustomJwtPayload>({
 	memberViews: 0,
 	memberWarnings: 0,
 	memberBlocks: 0,
+	brandSlug: '',
 });
 
 export const socketVar = makeVar<WebSocket | null>(null);
