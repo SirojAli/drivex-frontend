@@ -26,6 +26,7 @@ export interface Member {
 	memberRank: number;
 	memberWarnings: number;
 	memberBlocks: number;
+	brandSlug?: string;
 	deletedAt?: Date;
 	createdAt: Date;
 	updatedAt: Date;

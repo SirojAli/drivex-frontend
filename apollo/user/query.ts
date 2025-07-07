@@ -29,6 +29,7 @@ export const GET_SELLERS = gql`
 				memberRank
 				memberWarnings
 				memberBlocks
+				brandSlug
 				deletedAt
 				createdAt
 				updatedAt
@@ -46,42 +47,43 @@ export const GET_SELLERS = gql`
 	}
 `;
 
-export const GET_MEMBER = gql(`
-query GetMember($input: String!) {
-    getMember(memberId: $input) {
-      _id
-      memberType
-      memberStatus
-      memberAuthType
-      memberPhone
-      memberNick
-      memberFullName
-      memberImage
-      memberAddress
-      memberDescription
-      memberCars
-      memberArticles
-      memberFollowers
-      memberFollowings
-      memberPoints
-      memberLikes
-      memberViews
-      memberComments
-      memberRank
-      memberWarnings
-      memberBlocks
-      deletedAt
-      createdAt
-      updatedAt
-      accessToken
-      meFollowed {
-        followingId
-        followerId
-        myFollowing
-				}
-    }
-}
-`);
+export const GET_MEMBER = gql`
+	query GetMember($input: String!) {
+		getMember(memberId: $input) {
+			_id
+			memberType
+			memberStatus
+			memberAuthType
+			memberPhone
+			memberNick
+			memberFullName
+			memberImage
+			memberAddress
+			memberDescription
+			memberCars
+			memberArticles
+			memberFollowers
+			memberFollowings
+			memberPoints
+			memberLikes
+			memberViews
+			memberComments
+			memberRank
+			memberWarnings
+			memberBlocks
+			brandSlug
+			deletedAt
+			createdAt
+			updatedAt
+			accessToken
+			meFollowed {
+				followingId
+				followerId
+				myFollowing
+			}
+		}
+	}
+`;
 
 /**************************
  *        CAR        *
@@ -106,6 +108,17 @@ export const GET_CAR = gql`
 			carRank
 			carLikes
 			carViews
+			carVinNumber
+			carIsNew
+			carEngineSize
+			carMaxSpeed
+			carSeats
+			carDoors
+			carCityMpg
+			carHighwayMpg
+			carCylinders
+			carDriveType
+			carSlug
 			memberId
 			soldAt
 			deletedAt
@@ -133,6 +146,7 @@ export const GET_CAR = gql`
 				memberRank
 				memberWarnings
 				memberBlocks
+				brandSlug
 				deletedAt
 				createdAt
 				updatedAt
@@ -167,6 +181,17 @@ export const GET_CARS = gql`
 				carRank
 				carLikes
 				carViews
+				carVinNumber
+				carIsNew
+				carEngineSize
+				carMaxSpeed
+				carSeats
+				carDoors
+				carCityMpg
+				carHighwayMpg
+				carCylinders
+				carDriveType
+				carSlug
 				memberId
 				soldAt
 				deletedAt
@@ -194,6 +219,7 @@ export const GET_CARS = gql`
 					memberRank
 					memberWarnings
 					memberBlocks
+					brandSlug
 					deletedAt
 					createdAt
 					updatedAt
@@ -227,10 +253,22 @@ export const GET_SELLERS_CAR = gql`
 				carColor
 				carImages
 				carDescription
+				carSlug
 				carComments
 				carRank
 				carLikes
 				carViews
+				carVinNumber
+				carIsNew
+				carEngineSize
+				carMaxSpeed
+				carSeats
+				carDoors
+				carCityMpg
+				carHighwayMpg
+				carCylinders
+				carDriveType
+				carSlug
 				memberId
 				soldAt
 				deletedAt
@@ -260,10 +298,22 @@ export const GET_FAVORITES = gql`
 				carColor
 				carImages
 				carDescription
+				carSlug
 				carComments
 				carRank
 				carLikes
 				carViews
+				carVinNumber
+				carIsNew
+				carEngineSize
+				carMaxSpeed
+				carSeats
+				carDoors
+				carCityMpg
+				carHighwayMpg
+				carCylinders
+				carDriveType
+				carSlug
 				memberId
 				soldAt
 				deletedAt
@@ -291,6 +341,7 @@ export const GET_FAVORITES = gql`
 					memberRank
 					memberWarnings
 					memberBlocks
+					brandSlug
 					deletedAt
 					createdAt
 					updatedAt
@@ -320,10 +371,22 @@ export const GET_VISITED = gql`
 				carColor
 				carImages
 				carDescription
+				carSlug
 				carComments
 				carRank
 				carLikes
 				carViews
+				carVinNumber
+				carIsNew
+				carEngineSize
+				carMaxSpeed
+				carSeats
+				carDoors
+				carCityMpg
+				carHighwayMpg
+				carCylinders
+				carDriveType
+				carSlug
 				memberId
 				soldAt
 				deletedAt
@@ -351,6 +414,7 @@ export const GET_VISITED = gql`
 					memberRank
 					memberWarnings
 					memberBlocks
+					brandSlug
 					deletedAt
 					createdAt
 					updatedAt
@@ -380,6 +444,7 @@ export const GET_BOARD_ARTICLE = gql`
 			articleViews
 			articleLikes
 			articleComments
+			articleSlug
 			memberId
 			createdAt
 			updatedAt
@@ -405,6 +470,7 @@ export const GET_BOARD_ARTICLE = gql`
 				memberRank
 				memberWarnings
 				memberBlocks
+				brandSlug
 				deletedAt
 				createdAt
 				updatedAt
@@ -431,6 +497,7 @@ export const GET_BOARD_ARTICLES = gql`
 				articleViews
 				articleLikes
 				articleComments
+				articleSlug
 				memberId
 				createdAt
 				updatedAt
@@ -461,6 +528,7 @@ export const GET_BOARD_ARTICLES = gql`
 					memberRank
 					memberWarnings
 					memberBlocks
+					brandSlug
 					deletedAt
 					createdAt
 					updatedAt
@@ -511,6 +579,7 @@ export const GET_COMMENTS = gql`
 					memberRank
 					memberWarnings
 					memberBlocks
+					brandSlug
 					deletedAt
 					createdAt
 					updatedAt

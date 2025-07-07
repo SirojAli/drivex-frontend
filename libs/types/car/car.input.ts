@@ -4,7 +4,7 @@ import {
 	CarType,
 	CarFuelType,
 	CarTransmission,
-	CarColor,
+	CarDriveType,
 } from '../../enums/car.enum';
 import { Direction } from '../../enums/common.enum';
 
@@ -17,14 +17,29 @@ export interface CarInput {
 	carPrice: number;
 	carFuelType: CarFuelType;
 	carTransmission: CarTransmission;
-	carColor: CarColor;
+	carColor: string;
 	carImages: string[];
 	carDescription?: string;
+	carVinNumber: string;
+	carIsNew: boolean;
+	carEngineSize: number;
+	carMaxSpeed: number;
+	carSeats: number;
+	carDoors: number;
+	carCityMpg: number;
+	carHighwayMpg: number;
+	carCylinders: number;
+	carDriveType: CarDriveType;
 	memberId?: string;
 }
 
 // 2. RANGE TYPES
-interface Range {
+interface PriceRange {
+	start: number;
+	end: number;
+}
+
+interface YearRange {
 	start: number;
 	end: number;
 }
@@ -36,9 +51,19 @@ export interface CarISearch {
 	typeList?: CarType[];
 	fuelList?: CarFuelType[];
 	transmissionList?: CarTransmission[];
-	colorList?: CarColor[];
-	pricesRange?: Range;
-	yearRange?: Range;
+	colorList?: string;
+	pricesRange?: PriceRange;
+	yearRange?: YearRange;
+	carIsNew?: boolean;
+	minSpecs?: {
+		minSeats?: number;
+		minDoors?: number;
+		minCylinders?: number;
+		minEngineSize?: number;
+		minCityMpg?: number;
+		minHighwayMpg?: number;
+		minMaxSpeed?: number;
+	};
 	text?: string;
 }
 

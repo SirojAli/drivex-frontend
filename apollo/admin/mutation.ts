@@ -28,6 +28,7 @@ export const UPDATE_MEMBER_BY_ADMIN = gql`
 			memberRank
 			memberWarnings
 			memberBlocks
+			brandSlug
 			deletedAt
 			createdAt
 			updatedAt
@@ -59,6 +60,17 @@ export const UPDATE_CAR_BY_ADMIN = gql`
 			carRank
 			carLikes
 			carViews
+			carVinNumber
+			carIsNew
+			carEngineSize
+			carMaxSpeed
+			carSeats
+			carDoors
+			carCityMpg
+			carHighwayMpg
+			carCylinders
+			carDriveType
+			carSlug
 			memberId
 			soldAt
 			deletedAt
@@ -87,6 +99,17 @@ export const REMOVE_CAR_BY_ADMIN = gql`
 			carRank
 			carLikes
 			carViews
+			carVinNumber
+			carIsNew
+			carEngineSize
+			carMaxSpeed
+			carSeats
+			carDoors
+			carCityMpg
+			carHighwayMpg
+			carCylinders
+			carDriveType
+			carSlug
 			memberId
 			soldAt
 			deletedAt
@@ -111,6 +134,7 @@ export const UPDATE_BOARD_ARTICLE_BY_ADMIN = gql`
 			articleImage
 			articleViews
 			articleLikes
+			articleSlug
 			memberId
 			createdAt
 			updatedAt
@@ -129,6 +153,7 @@ export const REMOVE_BOARD_ARTICLE_BY_ADMIN = gql`
 			articleImage
 			articleViews
 			articleLikes
+			articleSlug
 			memberId
 			createdAt
 			updatedAt

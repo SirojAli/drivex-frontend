@@ -28,6 +28,7 @@ export const SIGN_UP = gql`
 			memberRank
 			memberWarnings
 			memberBlocks
+			brandSlug
 			deletedAt
 			createdAt
 			updatedAt
@@ -60,6 +61,7 @@ export const LOGIN = gql`
 			memberRank
 			memberWarnings
 			memberBlocks
+			brandSlug
 			deletedAt
 			createdAt
 			updatedAt
@@ -92,6 +94,7 @@ export const UPDATE_MEMBER = gql`
 			memberRank
 			memberWarnings
 			memberBlocks
+			brandSlug
 			deletedAt
 			createdAt
 			updatedAt
@@ -124,6 +127,7 @@ export const LIKE_TARGET_MEMBER = gql`
 			memberRank
 			memberWarnings
 			memberBlocks
+			brandSlug
 			deletedAt
 			createdAt
 			updatedAt
@@ -155,6 +159,17 @@ export const CREATE_CAR = gql`
 			carRank
 			carLikes
 			carViews
+			carVinNumber
+			carIsNew
+			carEngineSize
+			carMaxSpeed
+			carSeats
+			carDoors
+			carCityMpg
+			carHighwayMpg
+			carCylinders
+			carDriveType
+			carSlug
 			memberId
 			soldAt
 			deletedAt
@@ -183,6 +198,17 @@ export const UPDATE_CAR = gql`
 			carRank
 			carLikes
 			carViews
+			carVinNumber
+			carIsNew
+			carEngineSize
+			carMaxSpeed
+			carSeats
+			carDoors
+			carCityMpg
+			carHighwayMpg
+			carCylinders
+			carDriveType
+			carSlug
 			memberId
 			soldAt
 			deletedAt
@@ -211,6 +237,17 @@ export const LIKE_TARGET_CAR = gql`
 			carRank
 			carLikes
 			carViews
+			carVinNumber
+			carIsNew
+			carEngineSize
+			carMaxSpeed
+			carSeats
+			carDoors
+			carCityMpg
+			carHighwayMpg
+			carCylinders
+			carDriveType
+			carSlug
 			memberId
 			soldAt
 			deletedAt
@@ -235,6 +272,7 @@ export const CREATE_BOARD_ARTICLE = gql`
 			articleImage
 			articleViews
 			articleLikes
+			articleSlug
 			memberId
 			createdAt
 			updatedAt
@@ -253,6 +291,7 @@ export const UPDATE_BOARD_ARTICLE = gql`
 			articleImage
 			articleViews
 			articleLikes
+			articleSlug
 			memberId
 			createdAt
 			updatedAt
@@ -271,6 +310,7 @@ export const LIKE_TARGET_BOARD_ARTICLE = gql`
 			articleImage
 			articleViews
 			articleLikes
+			articleSlug
 			memberId
 			createdAt
 			updatedAt

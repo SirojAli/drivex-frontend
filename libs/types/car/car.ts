@@ -4,10 +4,15 @@ import {
 	CarType,
 	CarFuelType,
 	CarTransmission,
-	CarColor,
+	CarDriveType,
 } from '../../enums/car.enum';
-import { MeLiked } from '../like/meLiked';
 import { Member } from '../member/member';
+
+export interface MeLiked {
+	memberId: string;
+	likeRefId: string;
+	myFavorite: boolean;
+}
 
 export interface TotalCounter {
 	total: number;
@@ -23,13 +28,24 @@ export interface Car {
 	carPrice: number;
 	carFuelType: CarFuelType;
 	carTransmission: CarTransmission;
-	carColor: CarColor;
+	carColor: string;
 	carImages: string[];
 	carDescription?: string;
 	carComments: number;
 	carRank: number;
 	carLikes: number;
 	carViews: number;
+	carVinNumber: string;
+	carIsNew: boolean;
+	carEngineSize: number;
+	carMaxSpeed: number;
+	carSeats: number;
+	carDoors: number;
+	carCityMpg: number;
+	carHighwayMpg: number;
+	carCylinders: number;
+	carDriveType: CarDriveType;
+	carSlug: string;
 	memberId: string;
 	soldAt?: Date;
 	deletedAt?: Date;

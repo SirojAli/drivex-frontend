@@ -6,4 +6,5 @@ export interface BoardArticleUpdate {
 	articleTitle?: string;
 	articleContent?: string;
 	articleImage?: string;
+	articleSlug?: string;
 }

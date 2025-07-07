@@ -12,6 +12,7 @@ export interface BoardArticle {
 	articleViews: number;
 	articleLikes: number;
 	articleComments: number;
+	articleSlug: string;
 	memberId: string;
 	createdAt: Date;
 	updatedAt: Date;

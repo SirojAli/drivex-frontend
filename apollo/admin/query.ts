@@ -29,6 +29,7 @@ export const GET_ALL_MEMBERS_BY_ADMIN = gql`
 				memberRank
 				memberWarnings
 				memberBlocks
+				brandSlug
 				deletedAt
 				createdAt
 				updatedAt
@@ -65,6 +66,17 @@ export const GET_ALL_CARS_BY_ADMIN = gql`
 				carRank
 				carLikes
 				carViews
+				carVinNumber
+				carIsNew
+				carEngineSize
+				carMaxSpeed
+				carSeats
+				carDoors
+				carCityMpg
+				carHighwayMpg
+				carCylinders
+				carDriveType
+				carSlug
 				memberId
 				soldAt
 				deletedAt
@@ -92,6 +104,7 @@ export const GET_ALL_CARS_BY_ADMIN = gql`
 					memberRank
 					memberWarnings
 					memberBlocks
+					brandSlug
 					deletedAt
 					createdAt
 					updatedAt
@@ -121,6 +134,7 @@ export const GET_ALL_BOARD_ARTICLES_BY_ADMIN = gql`
 				articleImage
 				articleViews
 				articleLikes
+				articleSlug
 				memberId
 				createdAt
 				updatedAt
