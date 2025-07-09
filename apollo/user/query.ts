@@ -12,6 +12,7 @@ export const GET_SELLERS = gql`
 				memberType
 				memberStatus
 				memberAuthType
+				memberEmail
 				memberPhone
 				memberNick
 				memberFullName
@@ -54,6 +55,7 @@ export const GET_MEMBER = gql`
 			memberType
 			memberStatus
 			memberAuthType
+			memberEmail
 			memberPhone
 			memberNick
 			memberFullName
@@ -129,6 +131,7 @@ export const GET_CAR = gql`
 				memberType
 				memberStatus
 				memberAuthType
+				memberEmail
 				memberPhone
 				memberNick
 				memberFullName
@@ -202,6 +205,7 @@ export const GET_CARS = gql`
 					memberType
 					memberStatus
 					memberAuthType
+					memberEmail
 					memberPhone
 					memberNick
 					memberFullName
@@ -324,6 +328,7 @@ export const GET_FAVORITES = gql`
 					memberType
 					memberStatus
 					memberAuthType
+					memberEmail
 					memberPhone
 					memberNick
 					memberFullName
@@ -397,6 +402,7 @@ export const GET_VISITED = gql`
 					memberType
 					memberStatus
 					memberAuthType
+					memberEmail
 					memberPhone
 					memberNick
 					memberFullName
@@ -453,6 +459,7 @@ export const GET_BOARD_ARTICLE = gql`
 				memberType
 				memberStatus
 				memberAuthType
+				memberEmail
 				memberPhone
 				memberNick
 				memberFullName
@@ -511,6 +518,7 @@ export const GET_BOARD_ARTICLES = gql`
 					memberType
 					memberStatus
 					memberAuthType
+					memberEmail
 					memberPhone
 					memberNick
 					memberFullName
@@ -562,6 +570,7 @@ export const GET_COMMENTS = gql`
 					memberType
 					memberStatus
 					memberAuthType
+					memberEmail
 					memberPhone
 					memberNick
 					memberFullName
@@ -620,6 +629,7 @@ export const GET_MEMBER_FOLLOWERS = gql`
 					memberType
 					memberStatus
 					memberAuthType
+					memberEmail
 					memberPhone
 					memberNick
 					memberFullName
@@ -663,6 +673,7 @@ export const GET_MEMBER_FOLLOWINGS = gql`
 					memberType
 					memberStatus
 					memberAuthType
+					memberEmail
 					memberPhone
 					memberNick
 					memberFullName

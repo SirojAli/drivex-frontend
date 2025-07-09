@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
-import { Box, Stack } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, Stack } from '@mui/material';
+
 import { useRouter } from 'next/router';
 import { logIn, signUp } from '../../libs/auth';
 import { sweetMixinErrorAlert } from '../../libs/sweetAlert';
@@ -12,7 +13,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 const Join: NextPage = () => {
 	const router = useRouter();
 	const device = useDeviceDetect();
-	const [input, setInput] = useState({ nick: '', password: '', phone: '', type: 'USER' });
+	const [input, setInput] = useState({ nick: '', password: '', email: '' });
 	const [loginView, setLoginView] = useState<boolean>(true);
 
 	const viewChangeHandler = (state: boolean) => setLoginView(state);
@@ -32,12 +33,14 @@ const Join: NextPage = () => {
 
 	const doSignUp = useCallback(async () => {
 		try {
-			await signUp(input.nick, input.password, input.phone, input.type);
+			await signUp(input.nick, input.password, input.email);
 			await router.push(`${router.query.referrer ?? '/'}`);
 		} catch (err: any) {
 			await sweetMixinErrorAlert(err.message);
 		}
 	}, [input]);
+
+	console.log('+input: ', input);
 
 	if (device === 'mobile') {
 		return <div>LOGIN MOBILE</div>;
@@ -100,6 +103,30 @@ const Join: NextPage = () => {
 										}}
 									/>
 								</div>
+							</Box>
+							<Box className={'register'}>
+								{loginView && (
+									<div className={'remember-info'}>
+										<FormGroup>
+											<FormControlLabel control={<Checkbox defaultChecked size="small" />} label="Remember me" />
+										</FormGroup>
+										<a>Lost your password?</a>
+									</div>
+								)}
+
+								{loginView ? (
+									<Button variant="contained" disabled={input.nick == '' || input.password == ''} onClick={doLogin}>
+										LOGIN
+									</Button>
+								) : (
+									<Button
+										variant="contained"
+										disabled={input.nick == '' || input.password == '' || input.email == ''}
+										onClick={doSignUp}
+									>
+										SIGNUP
+									</Button>
+								)}
 							</Box>
 							<Box className={'ask-info'}>
 								{loginView ? (

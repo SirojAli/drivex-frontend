@@ -11,6 +11,7 @@ export const UPDATE_MEMBER_BY_ADMIN = gql`
 			memberType
 			memberStatus
 			memberAuthType
+			memberEmail
 			memberPhone
 			memberNick
 			memberFullName

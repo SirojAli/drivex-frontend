@@ -12,6 +12,7 @@ export const GET_ALL_MEMBERS_BY_ADMIN = gql`
 				memberType
 				memberStatus
 				memberAuthType
+				memberEmail
 				memberPhone
 				memberNick
 				memberFullName
@@ -87,6 +88,7 @@ export const GET_ALL_CARS_BY_ADMIN = gql`
 					memberType
 					memberStatus
 					memberAuthType
+					memberEmail
 					memberPhone
 					memberNick
 					memberFullName
@@ -143,6 +145,7 @@ export const GET_ALL_BOARD_ARTICLES_BY_ADMIN = gql`
 					memberType
 					memberStatus
 					memberAuthType
+					memberEmail
 					memberPhone
 					memberNick
 					memberFullName
@@ -194,6 +197,7 @@ export const GET_COMMENTS = gql`
 					memberType
 					memberStatus
 					memberAuthType
+					memberEmail
 					memberPhone
 					memberNick
 					memberFullName

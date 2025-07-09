@@ -64,9 +64,9 @@ const requestJwtToken = async ({
 	}
 };
 
-export const signUp = async (nick: string, password: string, phone: string, type: string): Promise<void> => {
+export const signUp = async (nick: string, password: string, email: string): Promise<void> => {
 	try {
-		const { jwtToken } = await requestSignUpJwtToken({ nick, password, phone, type });
+		const { jwtToken } = await requestSignUpJwtToken({ nick, password, email });
 
 		if (jwtToken) {
 			updateStorage({ jwtToken });
@@ -82,13 +82,11 @@ export const signUp = async (nick: string, password: string, phone: string, type
 const requestSignUpJwtToken = async ({
 	nick,
 	password,
-	phone,
-	type,
+	email,
 }: {
 	nick: string;
 	password: string;
-	phone: string;
-	type: string;
+	email: string;
 }): Promise<{ jwtToken: string }> => {
 	const apolloClient = await initializeApollo();
 
@@ -96,7 +94,7 @@ const requestSignUpJwtToken = async ({
 		const result = await apolloClient.mutate({
 			mutation: SIGN_UP,
 			variables: {
-				input: { memberNick: nick, memberPassword: password, memberPhone: phone, memberType: type },
+				input: { memberNick: nick, memberPassword: password, memberEmail: email },
 			},
 			fetchPolicy: 'network-only',
 		});
@@ -133,12 +131,13 @@ export const updateUserInfo = (jwtToken: any) => {
 		memberType: claims.memberType ?? '',
 		memberStatus: claims.memberStatus ?? '',
 		memberAuthType: claims.memberAuthType,
+		memberEmail: claims.memberEmail ?? '',
 		memberPhone: claims.memberPhone ?? '',
 		memberNick: claims.memberNick ?? '',
 		memberFullName: claims.memberFullName ?? '',
 		memberImage:
 			claims.memberImage === null || claims.memberImage === undefined
-				? '/img/profile/defaultUser.svg'
+				? '/img/profile/defaultUser.png'
 				: `${claims.memberImage}`,
 		memberAddress: claims.memberAddress ?? '',
 		memberDescription: claims.memberDescription ?? '',
@@ -170,6 +169,7 @@ const deleteUserInfo = () => {
 		memberType: '',
 		memberStatus: '',
 		memberAuthType: '',
+		memberEmail: '',
 		memberPhone: '',
 		memberNick: '',
 		memberFullName: '',

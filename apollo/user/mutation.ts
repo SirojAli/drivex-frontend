@@ -11,6 +11,7 @@ export const SIGN_UP = gql`
 			memberType
 			memberStatus
 			memberAuthType
+			memberEmail
 			memberPhone
 			memberNick
 			memberFullName
@@ -44,6 +45,7 @@ export const LOGIN = gql`
 			memberType
 			memberStatus
 			memberAuthType
+			memberEmail
 			memberPhone
 			memberNick
 			memberFullName
@@ -77,6 +79,7 @@ export const UPDATE_MEMBER = gql`
 			memberType
 			memberStatus
 			memberAuthType
+			memberEmail
 			memberPhone
 			memberNick
 			memberFullName
@@ -110,6 +113,7 @@ export const LIKE_TARGET_MEMBER = gql`
 			memberType
 			memberStatus
 			memberAuthType
+			memberEmail
 			memberPhone
 			memberNick
 			memberFullName
