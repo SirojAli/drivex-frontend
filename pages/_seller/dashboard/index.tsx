@@ -1,32 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import withSellerLayout from '../../../libs/components/layout/LayoutSeller';
-
-import { MemberPanelList } from '../../../libs/components/admin/users/MemberList';
 import { Box, Container, InputAdornment, List, ListItem, Stack } from '@mui/material';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { TabContext } from '@mui/lab';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import TablePagination from '@mui/material/TablePagination';
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { useMutation, useQuery } from '@apollo/client';
-import { T } from '../../../libs/types/common';
-import { sweetErrorHandling } from '../../../libs/sweetAlert';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import ArticleIcon from '@mui/icons-material/Article';
 import StarsIcon from '@mui/icons-material/Stars';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import SellerCarList from '../../../libs/components/seller/SellerCarList';
 import SellerBlogList from '../../../libs/components/seller/SellerBlogList';
-import AllReviews from '../../../libs/components/seller/AllReviews';
+import SellerReviewList from '../../../libs/components/seller/SellerReviewList';
 
 const SellerDashboard: NextPage = ({ initialInquiry, ...props }: any) => {
 	return (
 		<Container maxWidth={false}>
-			<h1>DASHBOARD</h1>
+			<h2 className={'dash-title'}>DASHBOARD</h2>
 			<Stack className={'main-content'}>
 				{/* DASHBOARD */}
 				<Stack className={'main-dashboard'}>
@@ -78,7 +65,7 @@ const SellerDashboard: NextPage = ({ initialInquiry, ...props }: any) => {
 
 				{/* REVIEWS */}
 				<Stack className={'all-reviews'}>
-					<AllReviews />
+					<SellerReviewList />
 				</Stack>
 
 				{/* MY BLOGS */}

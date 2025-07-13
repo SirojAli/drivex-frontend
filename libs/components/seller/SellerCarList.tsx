@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter, withRouter } from 'next/router';
-import Link from 'next/link';
 import { Box, List, ListItemButton, ListItemIcon, ListItemText, Pagination, Stack } from '@mui/material';
-import cookies from 'js-cookie';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import EditIcon from '@mui/icons-material/Edit';
 import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
 import DeleteIcon from '@mui/icons-material/Delete';

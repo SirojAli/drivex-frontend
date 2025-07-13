@@ -77,7 +77,7 @@ const SellerMenuList = (props: any) => {
 								component="a"
 								className={activeMenu === item.title ? 'menu on' : 'menu'}
 								sx={{
-									minHeight: 48,
+									minHeight: 40,
 									justifyContent: openMenu ? 'initial' : 'center',
 									px: 2.5,
 								}}

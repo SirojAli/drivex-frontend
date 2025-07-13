@@ -1,23 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import type { NextPage } from 'next';
 import withSellerLayout from '../../../libs/components/layout/LayoutSeller';
-
-import { MemberPanelList } from '../../../libs/components/admin/users/MemberList';
-import { Box, InputAdornment, List, ListItem, Stack } from '@mui/material';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { TabContext } from '@mui/lab';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import TablePagination from '@mui/material/TablePagination';
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { useMutation, useQuery } from '@apollo/client';
-import { T } from '../../../libs/types/common';
-import { sweetErrorHandling } from '../../../libs/sweetAlert';
+import { Container, Stack } from '@mui/material';
+import SellerBlogList from '../../../libs/components/seller/SellerBlogList';
 
 const MyBlogs: NextPage = ({ initialInquiry, ...props }: any) => {
-	return <h1>MY BLOGS</h1>;
+	return (
+		<Container maxWidth={false} sx={{ display: 'flex', flexDirection: 'column' }}>
+			{/* <h1 className={'list-title'}>MY BLOGS</h1> */}
+			<Stack className={'blog-listing'}>
+				<SellerBlogList />
+			</Stack>
+		</Container>
+	);
 };
 
 export default withSellerLayout(MyBlogs);

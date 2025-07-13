@@ -19,7 +19,7 @@
 			.link {
 				color: #000;
 				font-family: $font;
-				font-size: 18px;
+				font-size: 16px;
 				font-style: normal;
 				font-weight: 500;
 				line-height: 23px;
@@ -50,8 +50,8 @@
 				cursor: pointer;
 
 				.icon {
-					width: 24px;
-					height: 24px;
+					width: 20px;
+					height: 20px;
 					color: #fff;
 				}
 
@@ -69,28 +69,30 @@
 		.logo-box {
 			display: flex;
 			flex-direction: row;
-			padding: 30px 34px 0px 30px;
 			align-items: center;
-			gap: 8px;
-			margin-bottom: 30px;
+			justify-content: center;
+			gap: 10px;
+			margin: 15px 0;
+			border: 1px solid white;
 
 			img {
-				width: 40px;
-				height: 40px;
+				width: 30px;
+				height: 30px;
 			}
 
 			span {
 				color: #fff;
 				font-family: $font;
-				font-size: 40px;
+				font-size: 30px;
 				font-style: normal;
 				font-weight: 600;
-				line-height: 23px;
+				line-height: 20px;
 			}
 		}
 
 		.user {
 			background: #24272c;
+			border: 1px solid white;
 		}
 
 		hr {
@@ -115,7 +117,7 @@
 			font-style: normal;
 			font-weight: 400;
 			line-height: 20px;
-			opacity: 0.4;
+			opacity: 0.5;
 		}
 
 		.avatar-info {
@@ -175,7 +177,7 @@
 				font-style: normal;
 				font-weight: 400;
 				line-height: 20px;
-				opacity: 0.4;
+				opacity: 0.5;
 			}
 		}
 
@@ -189,8 +191,8 @@
 				color: #fff;
 				transition: background-color 0.3s ease;
 				border-radius: 10px;
-				// padding: 12px 14px;
 				gap: 12px;
+				// border: 1px solid white;
 
 				.MuiListItemText-root {
 					.MuiListItemText-primary {
@@ -225,15 +227,15 @@
 		padding: 0 40px;
 		// border: 2px solid black;
 
-		h1 {
+		// DASHBOARD
+		.dash-title {
 			color: #000;
 			font-family: $font;
-			font-size: 40px;
+			font-size: 24px;
 			font-style: normal;
 			font-weight: 600;
-			line-height: 48px;
+			line-height: 28px;
 		}
-
 		.main-content {
 			display: flex;
 			flex-direction: column;
@@ -487,10 +489,11 @@
 					border-radius: 16px;
 
 					h3 {
-						font-size: 20px;
+						color: #000;
+						font-family: $font;
+						font-size: 24px;
 						font-weight: 600;
 						margin-bottom: 20px;
-						color: #333;
 					}
 
 					.car-box {
@@ -755,7 +758,6 @@
 					display: flex;
 					padding: 30px;
 					flex-direction: column;
-					align-items: flex-start;
 					gap: 30px;
 					border-radius: 16px;
 					border: 1px solid #ededed;
@@ -765,81 +767,88 @@
 						color: #000;
 						font-family: $font;
 						font-size: 24px;
-						font-weight: 500;
+						font-weight: 600;
+						margin-bottom: 20px;
 					}
 
 					.review-list {
 						width: 100%;
-					}
 
-					.review-item {
-						display: flex;
-						align-items: flex-start;
-						gap: 20px;
-						border-bottom: 1px solid #eee;
-						padding-bottom: 16px;
+						.review-item {
+							display: flex;
+							align-items: flex-start;
+							gap: 20px;
+							border-bottom: 1px solid #eee;
+							padding-bottom: 16px;
 
-						.avatar {
-							width: 48px;
-							height: 48px;
-						}
+							.avatar {
+								width: 48px;
+								height: 48px;
+							}
 
-						.review-content {
-							flex: 1;
+							.review-content {
+								flex: 1;
 
-							.header {
-								display: flex;
-								justify-content: space-between;
-								align-items: center;
+								.header {
+									display: flex;
+									justify-content: space-between;
+									align-items: center;
 
-								.name {
+									.name {
+										font-family: $font;
+										font-weight: 600;
+										font-size: 18px;
+									}
+
+									.time {
+										font-family: $font;
+										font-size: 12px;
+										color: #888;
+									}
+								}
+
+								.custom-rating {
+									& .MuiRating-iconFilled {
+										color: #ff7101;
+									}
+
+									& .MuiRating-iconEmpty {
+										color: #ddd;
+									}
+								}
+
+								.text {
 									font-family: $font;
-									font-weight: 600;
-									font-size: 18px;
+									margin: 8px 0;
+									font-size: 14px;
+									color: #333;
 								}
 
-								.time {
+								.car {
 									font-family: $font;
-									font-size: 12px;
-									color: #888;
-								}
-							}
+									font-size: 14px;
+									color: #000;
+									font-family: $font;
 
-							.custom-rating {
-								& .MuiRating-iconFilled {
-									color: #ff7101;
-								}
+									a {
+										color: #ff7101;
+										text-decoration: none;
+										font-weight: 500;
 
-								& .MuiRating-iconEmpty {
-									color: #ddd;
-								}
-							}
-
-							.text {
-								font-family: $font;
-								margin: 8px 0;
-								font-size: 14px;
-								color: #333;
-							}
-
-							.car {
-								font-family: $font;
-								font-size: 14px;
-								color: #000;
-								font-family: $font;
-
-								a {
-									color: #ff7101;
-									text-decoration: none;
-									font-weight: 500;
-
-									&:hover {
-										text-decoration: underline;
-										color: darken(#ff7101, 10%);
+										&:hover {
+											text-decoration: underline;
+											color: darken(#ff7101, 10%);
+										}
 									}
 								}
 							}
 						}
+					}
+
+					.pagination-box {
+						display: flex;
+						justify-content: center;
+						margin-top: 24px;
 					}
 				}
 			}
@@ -854,10 +863,11 @@
 					border-radius: 16px;
 
 					h3 {
-						font-size: 20px;
+						color: #000;
+						font-family: $font;
+						font-size: 24px;
 						font-weight: 600;
 						margin-bottom: 20px;
-						color: #333;
 					}
 
 					.blog-box {
@@ -1104,6 +1114,676 @@
 				}
 			}
 		}
+
+		// MY LISTING
+		.car-listing {
+			display: flex;
+			background: #fff;
+
+			.list-boxes {
+				padding: 24px;
+				background-color: #f8f9fa;
+				border-radius: 16px;
+
+				h3 {
+					color: #000;
+					font-family: $font;
+					font-size: 24px;
+					font-weight: 600;
+					margin-bottom: 20px;
+				}
+
+				.car-box {
+					display: flex;
+					flex-direction: column;
+					gap: 16px;
+
+					.title-bar {
+						display: flex;
+						align-items: center;
+						background-color: #ffffff;
+						padding: 14px 20px;
+						border-radius: 12px;
+						font-weight: 600;
+						font-size: 14px;
+						color: #333;
+
+						.list {
+							flex: 2;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+
+						.stat,
+						.date {
+							flex: 1;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+
+						.act {
+							flex: 2;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+
+						.divr {
+							width: 1px;
+							height: 20px;
+							background-color: #e0e0e0;
+							margin: 0 10px;
+						}
+					}
+
+					.car-listing {
+						display: flex;
+						flex-direction: column;
+						gap: 12px;
+
+						.car-items {
+							display: flex;
+							align-items: center;
+							background-color: #fff;
+							padding: 16px 20px;
+							border: 1px solid #e0e0e0;
+							border-radius: 12px;
+							box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+							.car-content {
+								display: flex;
+								align-items: center;
+								flex: 2;
+
+								.car-img {
+									width: 60px;
+									height: 40px;
+									overflow: hidden;
+									border-radius: 8px;
+									margin-right: 16px;
+
+									img {
+										width: 100%;
+										height: 100%;
+										object-fit: cover;
+									}
+								}
+
+								.car-info {
+									display: flex;
+									flex-direction: column;
+
+									h5 {
+										font-size: 16px;
+										font-weight: 600;
+										margin: 0;
+										color: #333;
+									}
+
+									span {
+										font-size: 13px;
+										color: #777;
+										margin-top: 4px;
+									}
+
+									p {
+										font-size: 14px;
+										font-weight: 500;
+										color: #222;
+										margin-top: 6px;
+									}
+								}
+							}
+
+							.car-status {
+								flex: 1;
+								display: flex;
+								justify-content: center;
+
+								.status-active,
+								.status-sold,
+								.status-delete {
+									padding: 6px 12px;
+									border-radius: 8px;
+									text-align: center;
+
+									p {
+										font-size: 12px;
+										font-weight: 500;
+										margin: 0; // added to reset any default margin
+									}
+								}
+
+								.status-active {
+									background-color: #e8f5e9;
+									border: 1px solid #81c784;
+
+									.active {
+										color: #388e3c;
+									}
+								}
+
+								.status-sold {
+									background-color: rgba(110, 85, 255, 0.1);
+									border: 1px solid rgba(110, 85, 255, 0.14);
+
+									.sold {
+										color: #6e55ff;
+									}
+								}
+
+								.status-delete {
+									background-color: #ffebee;
+									border: 1px solid #ef5350;
+
+									.delete {
+										color: #c62828;
+									}
+								}
+							}
+
+							.car-date {
+								flex: 1;
+								text-align: center;
+
+								p {
+									font-size: 13px;
+									color: #555;
+									margin: 0; // reset default margin
+								}
+							}
+
+							.car-action {
+								flex: 2;
+								display: flex;
+								justify-content: space-evenly;
+								align-items: center;
+
+								.car-edit,
+								.car-sold,
+								.car-delete {
+									display: flex;
+									align-items: center;
+									gap: 6px;
+									cursor: pointer;
+									padding: 6px 10px;
+									border-radius: 8px;
+									font-size: 13px;
+									font-weight: 500;
+									transition: background-color 0.2s ease;
+
+									.icon {
+										font-size: 18px;
+									}
+								}
+
+								.car-edit {
+									background-color: #e3f2fd;
+									color: #1976d2;
+									border: 1px solid #90caf9;
+									transition: background-color 0.2s ease, border-color 0.2s ease;
+
+									&:hover {
+										background-color: #bbdefb;
+										border-color: #64b5f6;
+									}
+								}
+
+								.car-sold {
+									background-color: rgba(110, 85, 255, 0.1);
+									color: #6e55ff;
+									border: 1px solid rgba(110, 85, 255, 0.14);
+									transition: background-color 0.2s ease, border-color 0.2s ease;
+
+									&:hover {
+										background-color: rgba(110, 85, 255, 0.25);
+										border-color: #6e55ff;
+									}
+								}
+
+								.car-delete {
+									background-color: #ffebee;
+									color: #c62828;
+									border: 1px solid #ef9a9a;
+									transition: background-color 0.2s ease, border-color 0.2s ease;
+
+									&:hover {
+										background-color: #ffcdd2;
+										border-color: #e57373;
+									}
+								}
+							}
+
+							.divr {
+								width: 1px;
+								height: 40px;
+								background-color: #e0e0e0;
+								margin: 0 10px;
+							}
+						}
+
+						.divider {
+							height: 1px;
+							background-color: #e0e0e0;
+							margin: 8px 0;
+						}
+					}
+				}
+
+				.pagination-box {
+					display: flex;
+					justify-content: center;
+					margin-top: 24px;
+				}
+			}
+		}
+
+		// ADD LISTING
+		.add-listing {
+			display: flex;
+			background: #fff;
+
+			h3 {
+				color: #000;
+				font-family: $font;
+				font-size: 24px;
+				font-weight: 600;
+				margin-bottom: 20px;
+			}
+
+			.adding-boxes {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 30px;
+
+				.upload-photos {
+				}
+				.car-details {
+				}
+				.safety-feat {
+				}
+				.upload-video {
+				}
+				.save-button {
+				}
+			}
+		}
+
+		// MY FAVORITES
+
+		// MY BLOGS
+		.blog-listing {
+			display: flex;
+			background: #fff;
+
+			.list-boxes {
+				padding: 24px;
+				background-color: #f8f9fa;
+				border-radius: 16px;
+
+				h3 {
+					color: #000;
+					font-family: $font;
+					font-size: 24px;
+					font-weight: 600;
+					margin-bottom: 20px;
+				}
+
+				.blog-box {
+					display: flex;
+					flex-direction: column;
+					gap: 16px;
+
+					.title-bar {
+						display: flex;
+						align-items: center;
+						background-color: #ffffff;
+						padding: 14px 20px;
+						border-radius: 12px;
+						font-weight: 600;
+						font-size: 14px;
+						color: #333;
+
+						.list {
+							flex: 2;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+
+						.stat,
+						.date {
+							flex: 1;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+
+						.act {
+							flex: 2;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+
+						.divr {
+							width: 1px;
+							height: 20px;
+							background-color: #e0e0e0;
+							margin: 0 10px;
+						}
+					}
+
+					.blog-listing {
+						display: flex;
+						flex-direction: column;
+						gap: 12px;
+
+						.blog-items {
+							display: flex;
+							align-items: center;
+							background-color: #fff;
+							padding: 16px 20px;
+							border: 1px solid #e0e0e0;
+							border-radius: 12px;
+							box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+							.blog-content {
+								display: flex;
+								align-items: center;
+								flex: 2;
+
+								.blog-img {
+									width: 60px;
+									height: 40px;
+									overflow: hidden;
+									border-radius: 8px;
+									margin-right: 16px;
+
+									img {
+										width: 100%;
+										height: 100%;
+										object-fit: cover;
+									}
+								}
+
+								.blog-info {
+									display: flex;
+									flex-direction: column;
+
+									h5 {
+										font-size: 16px;
+										font-weight: 600;
+										margin: 0;
+										color: #333;
+									}
+
+									span {
+										font-size: 13px;
+										color: #777;
+										margin-top: 4px;
+									}
+
+									p {
+										font-size: 14px;
+										font-weight: 500;
+										color: #222;
+										margin-top: 6px;
+									}
+								}
+							}
+
+							.blog-status {
+								flex: 1;
+								display: flex;
+								justify-content: center;
+
+								.status-active,
+								.status-sold,
+								.status-delete {
+									padding: 6px 12px;
+									border-radius: 8px;
+									text-align: center;
+
+									p {
+										font-size: 12px;
+										font-weight: 500;
+										margin: 0;
+									}
+								}
+
+								.status-active {
+									background-color: #e8f5e9;
+									border: 1px solid #81c784;
+
+									.active {
+										color: #388e3c;
+									}
+								}
+
+								.status-sold {
+									background-color: rgba(110, 85, 255, 0.1);
+									border: 1px solid rgba(110, 85, 255, 0.14);
+
+									.sold {
+										color: #6e55ff;
+									}
+								}
+
+								.status-delete {
+									background-color: #ffebee;
+									border: 1px solid #ef5350;
+
+									.delete {
+										color: #c62828;
+									}
+								}
+							}
+
+							.blog-date {
+								flex: 1;
+								text-align: center;
+
+								p {
+									font-size: 13px;
+									color: #555;
+									margin: 0;
+								}
+							}
+
+							.blog-action {
+								flex: 2;
+								display: flex;
+								justify-content: space-evenly;
+								align-items: center;
+
+								.blog-edit,
+								.blog-sold,
+								.blog-delete {
+									display: flex;
+									align-items: center;
+									gap: 6px;
+									cursor: pointer;
+									padding: 6px 10px;
+									border-radius: 8px;
+									font-size: 13px;
+									font-weight: 500;
+									transition: background-color 0.2s ease;
+
+									.icon {
+										font-size: 18px;
+									}
+								}
+
+								.blog-edit {
+									background-color: #e3f2fd;
+									color: #1976d2;
+									border: 1px solid #90caf9;
+
+									&:hover {
+										background-color: #bbdefb;
+										border-color: #64b5f6;
+									}
+								}
+
+								.blog-sold {
+									background-color: rgba(110, 85, 255, 0.1);
+									color: #6e55ff;
+									border: 1px solid rgba(110, 85, 255, 0.14);
+
+									&:hover {
+										background-color: rgba(110, 85, 255, 0.25);
+										border-color: #6e55ff;
+									}
+								}
+
+								.blog-delete {
+									background-color: #ffebee;
+									color: #c62828;
+									border: 1px solid #ef9a9a;
+
+									&:hover {
+										background-color: #ffcdd2;
+										border-color: #e57373;
+									}
+								}
+							}
+
+							.divr {
+								width: 1px;
+								height: 40px;
+								background-color: #e0e0e0;
+								margin: 0 10px;
+							}
+						}
+
+						.divider {
+							height: 1px;
+							background-color: #e0e0e0;
+							margin: 8px 0;
+						}
+					}
+				}
+
+				.pagination-box {
+					display: flex;
+					justify-content: center;
+					margin-top: 24px;
+				}
+			}
+		}
+
+		// ADD BLOG
+		// MESSAGES
+
+		// ALL REVIEWS
+		.all-reviews {
+			display: flex;
+			background: #fff;
+
+			.review-boxes {
+				display: flex;
+				padding: 30px;
+				flex-direction: column;
+				gap: 30px;
+				border-radius: 16px;
+				border: 1px solid #ededed;
+				width: 100%;
+
+				h3 {
+					color: #000;
+					font-family: $font;
+					font-size: 24px;
+					font-weight: 600;
+					margin-bottom: 20px;
+				}
+
+				.review-list {
+					width: 100%;
+
+					.review-item {
+						display: flex;
+						align-items: flex-start;
+						gap: 20px;
+						border-bottom: 1px solid #eee;
+						padding-bottom: 16px;
+
+						.avatar {
+							width: 48px;
+							height: 48px;
+						}
+
+						.review-content {
+							flex: 1;
+
+							.header {
+								display: flex;
+								justify-content: space-between;
+								align-items: center;
+
+								.name {
+									font-family: $font;
+									font-weight: 600;
+									font-size: 18px;
+								}
+
+								.time {
+									font-family: $font;
+									font-size: 12px;
+									color: #888;
+								}
+							}
+
+							.custom-rating {
+								& .MuiRating-iconFilled {
+									color: #ff7101;
+								}
+
+								& .MuiRating-iconEmpty {
+									color: #ddd;
+								}
+							}
+
+							.text {
+								font-family: $font;
+								margin: 8px 0;
+								font-size: 14px;
+								color: #333;
+							}
+
+							.car {
+								font-family: $font;
+								font-size: 14px;
+								color: #000;
+								font-family: $font;
+
+								a {
+									color: #ff7101;
+									text-decoration: none;
+									font-weight: 500;
+
+									&:hover {
+										text-decoration: underline;
+										color: darken(#ff7101, 10%);
+									}
+								}
+							}
+						}
+					}
+				}
+
+				.pagination-box {
+					display: flex;
+					justify-content: center;
+					margin-top: 24px;
+				}
+			}
+		}
+
+		// MY PROFILE
 	}
 }
 
