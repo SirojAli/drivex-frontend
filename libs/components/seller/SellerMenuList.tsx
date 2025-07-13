@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import Link from 'next/link';
-import { List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Article, Car, ChatCircleText, Gauge, Heart, Pen, SignOut, Star, User, UserSquare } from 'phosphor-react';
 import cookies from 'js-cookie';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
@@ -53,47 +53,51 @@ const SellerMenuList = (props: any) => {
 	}, []);
 
 	const menu_set = [
-		{ title: 'Dashboard', icon: <Gauge size={20} color="#bdbdbd" weight="fill" />, url: '/seller/dashboard' },
-		{ title: 'My Listing', icon: <Car size={20} color="#bdbdbd" weight="fill" />, url: '/seller/myListing' },
-		{ title: 'Add Listing', icon: <UserSquare size={20} color="#bdbdbd" weight="fill" />, url: '/seller/addListing' },
-		{ title: 'My Favorites', icon: <Heart size={20} color="#bdbdbd" weight="fill" />, url: '/seller/myFavorites' },
-		{ title: 'My Blogs', icon: <Article size={20} color="#bdbdbd" weight="fill" />, url: '/seller/myBlogs' },
-		{ title: 'Add Blog', icon: <Pen size={20} color="#bdbdbd" weight="fill" />, url: '/seller/addBlog/write' },
-		{ title: 'Messages', icon: <ChatCircleText size={20} color="#bdbdbd" weight="fill" />, url: '/seller/messages' },
-		{ title: 'Reviews', icon: <Star size={20} color="#bdbdbd" weight="fill" />, url: '/seller/reviews' },
-		{ title: 'My Profile', icon: <User size={20} color="#bdbdbd" weight="fill" />, url: '/seller/myProfile' },
-		{ title: 'Logout', icon: <SignOut size={20} color="#bdbdbd" weight="fill" />, url: '/seller/logout' },
+		{ title: 'Dashboard', icon: <Gauge size={20} color="#bdbdbd" weight="fill" />, url: '/_seller/dashboard' },
+		{ title: 'My Listing', icon: <Car size={20} color="#bdbdbd" weight="fill" />, url: '/_seller/myListing' },
+		{ title: 'Add Listing', icon: <UserSquare size={20} color="#bdbdbd" weight="fill" />, url: '/_seller/addListing' },
+		{ title: 'My Favorites', icon: <Heart size={20} color="#bdbdbd" weight="fill" />, url: '/_seller/myFavorites' },
+		{ title: 'My Blogs', icon: <Article size={20} color="#bdbdbd" weight="fill" />, url: '/_seller/myBlogs' },
+		{ title: 'Add Blog', icon: <Pen size={20} color="#bdbdbd" weight="fill" />, url: '/_seller/addBlog' },
+		{ title: 'Messages', icon: <ChatCircleText size={20} color="#bdbdbd" weight="fill" />, url: '/_seller/messages' },
+		{ title: 'Reviews', icon: <Star size={20} color="#bdbdbd" weight="fill" />, url: '/_seller/reviews' },
+		{ title: 'My Profile', icon: <User size={20} color="#bdbdbd" weight="fill" />, url: '/_seller/myProfile' },
 	];
 
 	return (
-		<>
-			{menu_set.map((item, index) => (
-				<List key={index} disablePadding className="menu_wrap">
-					<Link href={item.url} passHref legacyBehavior>
-						<ListItemButton
-							component="a"
-							className={activeMenu === item.title ? 'menu on' : 'menu'}
-							sx={{
-								minHeight: 48,
-								justifyContent: openMenu ? 'initial' : 'center',
-								px: 2.5,
-							}}
-						>
-							<ListItemIcon
+		<div className={'seller-menu'}>
+			<Box className={'menu-title'}>
+				<p>Menu</p>
+			</Box>
+			<Box className={'menu-content'}>
+				{menu_set.map((item, index) => (
+					<List key={index} disablePadding className="menu_wrap">
+						<Link href={item.url} passHref legacyBehavior>
+							<ListItemButton
+								component="a"
+								className={activeMenu === item.title ? 'menu on' : 'menu'}
 								sx={{
-									minWidth: 0,
-									mr: openMenu ? 3 : 'auto',
-									justifyContent: 'center',
+									minHeight: 48,
+									justifyContent: openMenu ? 'initial' : 'center',
+									px: 2.5,
 								}}
 							>
-								{item.icon}
-							</ListItemIcon>
-							<ListItemText primary={item.title} />
-						</ListItemButton>
-					</Link>
-				</List>
-			))}
-		</>
+								<ListItemIcon
+									sx={{
+										minWidth: 0,
+										mr: openMenu ? 3 : 'auto',
+										justifyContent: 'center',
+									}}
+								>
+									{item.icon}
+								</ListItemIcon>
+								<ListItemText primary={item.title} />
+							</ListItemButton>
+						</Link>
+					</List>
+				))}
+			</Box>
+		</div>
 	);
 };
 

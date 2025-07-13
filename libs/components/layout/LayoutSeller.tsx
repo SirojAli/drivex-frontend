@@ -18,6 +18,11 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { REACT_APP_API_URL } from '../../config';
 import { MemberType } from '../../enums/member.enum';
+import TopFull from '../TopFull';
+import Link from 'next/link';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Logout } from '@mui/icons-material';
+
 const drawerWidth = 280;
 
 const withSellerLayout = (Component: ComponentType) => {
@@ -30,6 +35,8 @@ const withSellerLayout = (Component: ComponentType) => {
 		const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 		const [title, setTitle] = useState('seller');
 		const [loading, setLoading] = useState(true);
+		const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
+		const logoutOpen = Boolean(logoutAnchor);
 
 		/** LIFECYCLES **/
 		useEffect(() => {
@@ -45,15 +52,16 @@ const withSellerLayout = (Component: ComponentType) => {
 		}, [loading, user, router]);
 
 		/** HANDLERS **/
-		const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-			setAnchorElUser(event.currentTarget);
+		const handleLogoutMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+			setLogoutAnchor(event.currentTarget);
 		};
 
-		const handleCloseUserMenu = () => {
-			setAnchorElUser(null);
+		const handleLogoutMenuClose = () => {
+			setLogoutAnchor(null);
 		};
 
 		const logoutHandler = () => {
+			setLogoutAnchor(null);
 			logOut();
 			router.push('/').then();
 		};
@@ -61,72 +69,73 @@ const withSellerLayout = (Component: ComponentType) => {
 		if (!user || user?.memberType !== MemberType.SELLER) return null;
 
 		return (
-			<main id="pc-wrap" className="seller">
-				<Box component={'div'} sx={{ display: 'flex' }}>
+			<main id="pc-wrap" className={'seller'}>
+				<Box component={'div'} sx={{ display: 'flex', width: '100%' }}>
+					{/* SELLER NAVBAR */}
 					<AppBar
 						position="fixed"
 						sx={{
 							width: `calc(100% - ${drawerWidth}px)`,
 							ml: `${drawerWidth}px`,
 							boxShadow: 'rgb(100 116 139 / 12%) 0px 1px 4px',
-							background: 'none',
+							backgroundColor: '#fff',
+							zIndex: 1100,
 						}}
 					>
-						<Toolbar>
-							<Tooltip title="Open settings">
-								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+						<Box className={'seller-header'}>
+							<Box className={'nav-links'}>
+								<Link href="/" className={'link'}>
+									Home
+								</Link>
+								<Link href="/brand" className={'link'}>
+									Brands
+								</Link>
+								<Link href="/car" className={'link'}>
+									All Cars
+								</Link>
+								<Link href="/community" className={'link'}>
+									Community
+								</Link>
+								<Link href="/cs" className={'link'}>
+									CS
+								</Link>
+								<Link href="/mypage" className={'link'}>
+									My Page
+								</Link>
+							</Box>
+
+							<Box className={'profile-area'}>
+								<Box
+									className={'avatar-button'}
+									onClick={handleLogoutMenuOpen}
+									aria-controls={logoutOpen ? 'logout-menu' : undefined}
+									aria-haspopup="true"
+									aria-expanded={logoutOpen ? 'true' : undefined}
+								>
 									<Avatar
 										src={
-											user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'
+											user?.memberImage ? `${REACT_APP_API_URL}/${user.memberImage}` : '/img/profile/defaultUser.svg'
 										}
+										alt="Seller"
 									/>
-								</IconButton>
-							</Tooltip>
-							<Menu
-								sx={{ mt: '45px' }}
-								id="menu-appbar"
-								className={'pop-menu'}
-								anchorEl={anchorElUser}
-								anchorOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								open={Boolean(anchorElUser)}
-								onClose={handleCloseUserMenu}
-							>
-								<Box
-									component={'div'}
-									onClick={handleCloseUserMenu}
-									sx={{
-										width: '200px',
-									}}
-								>
-									<Stack sx={{ px: '20px', my: '12px' }}>
-										<Typography variant={'h6'} component={'h6'} sx={{ mb: '4px' }}>
-											{user?.memberNick}
-										</Typography>
-										<Typography variant={'subtitle1'} component={'p'} color={'#757575'}>
-											{user?.memberPhone}
-										</Typography>
-									</Stack>
-									<Divider />
-									<Box component={'div'} sx={{ p: 1, py: '6px' }} onClick={logoutHandler}>
-										<MenuItem sx={{ px: '16px', py: '6px' }}>
-											<Typography variant={'subtitle1'} component={'span'}>
-												Logout
-											</Typography>
-										</MenuItem>
-									</Box>
 								</Box>
-							</Menu>
-						</Toolbar>
+
+								<Menu id="logout-menu" anchorEl={logoutAnchor} open={logoutOpen} onClose={handleLogoutMenuClose}>
+									<MenuItem onClick={logoutHandler} style={{ display: 'flex', marginTop: '16px', marginRight: '10px' }}>
+										<Logout fontSize="small" />
+										Logout
+									</MenuItem>
+								</Menu>
+
+								<Box className={'add-list'} onClick={() => router.push('/_seller/add-listing')}>
+									<AddCircleOutlineIcon />
+									<p>Add Listing</p>
+								</Box>
+							</Box>
+						</Box>
 					</AppBar>
 
+					{/* SELLER MENU LIST */}
 					<Drawer
 						sx={{
 							width: drawerWidth,
@@ -134,44 +143,41 @@ const withSellerLayout = (Component: ComponentType) => {
 							'& .MuiDrawer-paper': {
 								width: drawerWidth,
 								boxSizing: 'border-box',
+								background: '#24272c',
 							},
 						}}
 						variant="permanent"
 						anchor="left"
-						className="aside"
+						className={'aside'}
 					>
-						<Toolbar sx={{ flexDirection: 'column', alignItems: 'flexStart' }}>
+						<Stack sx={{ flexDirection: 'column', alignItems: 'flexStart' }}>
 							<Stack className={'logo-box'}>
-								<img src={'/img/logo/logoText.svg'} alt={'logo'} />
+								<img src={'/img/logo/logo.png'} alt={'logo'} />
+								<span>DriveX</span>
 							</Stack>
 
-							<Stack
-								className="user"
-								direction={'row'}
-								alignItems={'center'}
-								sx={{
-									bgcolor: openMenu ? 'rgba(255, 255, 255, 0.04)' : 'none',
-									borderRadius: '8px',
-									px: '24px',
-									py: '11px',
-								}}
-							>
-								<Avatar
-									src={user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'}
-								/>
-								<Typography variant={'body2'} p={1} ml={1}>
-									{user?.memberNick} <br />
-									{user?.memberPhone}
-								</Typography>
+							<Stack className={'user'} direction={'column'}>
+								<p>Profile</p>
+								<Box className={'avatar-info'}>
+									<Avatar
+										src={
+											user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'
+										}
+										sx={{ width: '50px', height: '50px' }}
+									/>
+									<Box className={'user-info'}>
+										<p>{user?.memberNick} </p>
+										<span>{user?.memberEmail}</span>
+									</Box>
+								</Box>
 							</Stack>
-						</Toolbar>
-
+						</Stack>
 						<Divider />
-
 						<SellerMenuList />
 					</Drawer>
 
-					<Box component={'div'} id="bunker" sx={{ flexGrow: 1 }}>
+					{/* SELLER COMPONENTS */}
+					<Box component={'div'} id="seller-dashboard" sx={{ flexGrow: 1, minWidth: 0 }}>
 						{/*@ts-ignore*/}
 						<Component {...props} setSnackbar={setSnackbar} setTitle={setTitle} />
 					</Box>

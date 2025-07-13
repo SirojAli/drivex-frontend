@@ -9,7 +9,7 @@ const SellerHome: NextPage = (props: any) => {
 	/** LIFECYCLES **/
 	useEffect(() => {
 		console.log('Router object:', router);
-		router.push('/seller/dashboard');
+		router.push('/_seller/dashboard');
 	}, []);
 	return <></>;
 };
