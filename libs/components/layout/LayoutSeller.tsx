@@ -155,7 +155,6 @@ const withSellerLayout = (Component: ComponentType) => {
 								<img src={'/img/logo/logo.png'} alt={'logo'} />
 								<span>DriveX</span>
 							</Stack>
-
 							<Stack className={'user'} direction={'column'}>
 								<p>Profile</p>
 								<Box className={'avatar-info'}>
