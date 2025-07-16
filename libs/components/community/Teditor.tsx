@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { Box, Button, FormControl, MenuItem, Stack, Typography, Select, TextField } from '@mui/material';
 import { BoardArticleCategory } from '../../enums/board-article.enum';
+import { articleCategoryLabels } from '../../enums/board-article.enum';
 import { Editor } from '@toast-ui/react-editor';
 import { getJwtToken } from '../../auth';
 import { REACT_APP_API_URL } from '../../config';
@@ -17,7 +18,7 @@ const TuiEditor = () => {
 	const editorRef = useRef<Editor>(null),
 		token = getJwtToken(),
 		router = useRouter();
-	const [articleCategory, setArticleCategory] = useState<BoardArticleCategory>(BoardArticleCategory.FREE);
+	const [articleCategory, setArticleCategory] = useState<BoardArticleCategory>(BoardArticleCategory.NEWS);
 
 	/** APOLLO REQUESTS **/
 	const [createBoardArticle] = useMutation(CREATE_BOARD_ARTICLE);
@@ -38,8 +39,8 @@ const TuiEditor = () => {
 				'operations',
 				JSON.stringify({
 					query: `mutation ImageUploader($file: Upload!, $target: String!) {
-						imageUploader(file: $file, target: $target) 
-				  }`,
+            imageUploader(file: $file, target: $target) 
+          }`,
 					variables: {
 						file: null,
 						target: 'article',
@@ -81,7 +82,7 @@ const TuiEditor = () => {
 		memoizedValues.articleTitle = e.target.value;
 	};
 
-	const handleRegisterButton = async () => {
+	const createBlogHandler = async () => {
 		try {
 			const editor = editorRef.current;
 			const articleContent = editor?.getInstance().getHTML() as string;
@@ -113,38 +114,32 @@ const TuiEditor = () => {
 	};
 
 	return (
-		<Stack>
-			<Stack direction="row" style={{ margin: '40px' }} justifyContent="space-evenly">
-				<Box component={'div'} className={'form_row'} style={{ width: '300px' }}>
-					<Typography style={{ color: '#7f838d', margin: '10px' }} variant="h3">
+		<Stack className="tui-editor-container">
+			<Stack direction="row" className="tui-editor-form-row" justifyContent="space-evenly">
+				<Box component={'div'} className="form_row category-select">
+					<Typography className="label" variant="h3">
 						Category
 					</Typography>
-					<FormControl sx={{ width: '100%', background: 'white' }}>
+					<FormControl className="select-control">
 						<Select
 							value={articleCategory}
 							onChange={changeCategoryHandler}
 							displayEmpty
 							inputProps={{ 'aria-label': 'Without label' }}
 						>
-							<MenuItem value={BoardArticleCategory.FREE}>
-								<span>Free</span>
-							</MenuItem>
-							<MenuItem value={BoardArticleCategory.HUMOR}>Humor</MenuItem>
-							<MenuItem value={BoardArticleCategory.NEWS}>News</MenuItem>
-							<MenuItem value={BoardArticleCategory.RECOMMEND}>Recommendation</MenuItem>
+							{Object.values(BoardArticleCategory).map((category) => (
+								<MenuItem key={category} value={category}>
+									{articleCategoryLabels[category]}
+								</MenuItem>
+							))}
 						</Select>
 					</FormControl>
 				</Box>
-				<Box component={'div'} style={{ width: '300px', flexDirection: 'column' }}>
-					<Typography style={{ color: '#7f838d', margin: '10px' }} variant="h3">
+				<Box component={'div'} className="form_row title-input">
+					<Typography className="label" variant="h3">
 						Title
 					</Typography>
-					<TextField
-						onChange={articleTitleHandler}
-						id="filled-basic"
-						label="Type Title"
-						style={{ width: '300px', background: 'white' }}
-					/>
+					<TextField onChange={articleTitleHandler} id="filled-basic" label="Blog Title" className="title-textfield" />
 				</Box>
 			</Stack>
 
@@ -174,15 +169,10 @@ const TuiEditor = () => {
 				}}
 			/>
 
-			<Stack direction="row" justifyContent="center">
-				<Button
-					variant="contained"
-					color="primary"
-					style={{ margin: '30px', width: '250px', height: '45px' }}
-					onClick={handleRegisterButton}
-				>
-					Register
-				</Button>
+			<Stack className={'save-button'}>
+				<button type="button" className={'save-listing-btn'} onClick={createBlogHandler} disabled={doDisabledCheck()}>
+					Save Blog
+				</button>
 			</Stack>
 		</Stack>
 	);

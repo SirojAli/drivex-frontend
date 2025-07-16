@@ -3,7 +3,6 @@ import type { NextPage } from 'next';
 import withSellerLayout from '../../../libs/components/layout/LayoutSeller';
 import { useRouter } from 'next/router';
 import { Button, Stack, Typography, Box } from '@mui/material';
-import useDeviceDetect from '../../../libs/hooks/useDeviceDetect';
 import { REACT_APP_API_URL } from '../../../libs/config';
 import axios from 'axios';
 import { getJwtToken } from '../../../libs/auth/index';
@@ -18,7 +17,6 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const AddListing: NextPage = ({ initialValues, ...props }: any) => {
-	const device = useDeviceDetect();
 	const router = useRouter();
 	const inputRef = useRef<any>(null);
 	const token = getJwtToken();
@@ -191,460 +189,448 @@ const AddListing: NextPage = ({ initialValues, ...props }: any) => {
 
 	console.log('+insertCarData', insertCarData);
 
-	if (device === 'mobile') {
-		return <div>ADD NEW CAR MOBILE PAGE</div>;
-	} else {
-		return (
-			<div className={'add-listing'}>
-				<h3>Add Listing</h3>
-				<Stack className={'adding-boxes'}>
-					{/* UPLOAD IMAGE */}
-					<Stack className={'upload-photos'}>
-						<p>Upload Photos</p>
-						<Stack className={'images-box'}>
-							<Stack className={'upload-box'}>
-								<Button
-									className={'browse-button'}
-									onClick={() => {
-										inputRef.current.click();
-									}}
-								>
-									<InsertPhotoIcon className={'icon'} />
-									<Typography className={'text'}>Select Photos</Typography>
-									<input
-										ref={inputRef}
-										type="file"
-										hidden={true}
-										onChange={uploadImages}
-										multiple={true}
-										accept="image/jpg, image/jpeg, image/png"
-									/>
-								</Button>
-								<Stack className={'text-box'}>
-									<Typography className={'drag-title'}>Photos must be JPG, JPEG or PNG format</Typography>
-									<Typography className={'format-title'}>(Up to 5 photos)</Typography>
-								</Stack>
-							</Stack>
-							<Stack className={'gallery-box'}>
-								{insertCarData?.carImages.map((image: string) => {
-									const imagePath: string = `${REACT_APP_API_URL}/${image}`;
-									return (
-										<Stack className={'image-box'}>
-											<img src={imagePath} alt="" />
-										</Stack>
-									);
-								})}
+	return (
+		<div className={'add-listing'}>
+			<h3>Add Listing</h3>
+			<Stack className={'adding-boxes'}>
+				{/* UPLOAD IMAGE */}
+				<Stack className={'upload-photos'}>
+					<p>Upload Photos</p>
+					<Stack className={'images-box'}>
+						<Stack className={'upload-box'}>
+							<Button
+								className={'browse-button'}
+								onClick={() => {
+									inputRef.current.click();
+								}}
+							>
+								<InsertPhotoIcon className={'icon'} />
+								<Typography className={'text'}>Select Photos</Typography>
+								<input
+									ref={inputRef}
+									type="file"
+									hidden={true}
+									onChange={uploadImages}
+									multiple={true}
+									accept="image/jpg, image/jpeg, image/png"
+								/>
+							</Button>
+							<Stack className={'text-box'}>
+								<Typography className={'drag-title'}>Photos must be JPG, JPEG or PNG format</Typography>
+								<Typography className={'format-title'}>(Up to 5 photos)</Typography>
 							</Stack>
 						</Stack>
-					</Stack>
-
-					{/* CAR DETAILS */}
-					<Stack className={'car-details'}>
-						<p>Car details</p>
-						<Stack className={'car-configs'}>
-							{/* Brand Name, Model, Car Type */}
-							<Box className={'config'}>
-								{/* brand-name */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Car Brand</Typography>
-									<div className={'select-wrapper'}>
-										<select
-											className={'select-box'}
-											defaultValue={insertCarData.carBrand || 'select'}
-											value={insertCarData.carBrand || 'select'}
-											onChange={({ target: { value } }) =>
-												// @ts-ignore
-												setInsertCarData({ ...insertCarData, carBrand: value })
-											}
-										>
-											<>
-												<option selected={true} disabled={true} value={'select'}>
-													Select
-												</option>
-												{carBrand.map((brand: any) => (
-													<option value={`${brand}`} key={brand}>
-														{brand}
-													</option>
-												))}
-											</>
-										</select>
-										<KeyboardArrowDownIcon className={'arrow-down'} />
-									</div>
-								</Stack>
-
-								{/* Car Type */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Car Type</Typography>
-									<div className={'select-wrapper'}>
-										<select
-											className={'select-box'}
-											defaultValue={insertCarData.carType || 'select'}
-											value={insertCarData.carType || 'select'}
-											onChange={({ target: { value } }) =>
-												// @ts-ignore
-												setInsertCarData({ ...insertCarData, carType: value })
-											}
-										>
-											<>
-												<option selected={true} disabled={true} value={'select'}>
-													Select
-												</option>
-												{carType.map((type: any) => (
-													<option value={`${type}`} key={type}>
-														{type}
-													</option>
-												))}
-											</>
-										</select>
-										<KeyboardArrowDownIcon className={'arrow-down'} />
-									</div>
-								</Stack>
-
-								{/* Car Model */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Car Model</Typography>
-									<input
-										type="text"
-										className={'input-box'}
-										placeholder={'Model'}
-										value={insertCarData.carModel}
-										onChange={({ target: { value } }) => setInsertCarData({ ...insertCarData, carModel: value })}
-									/>
-								</Stack>
-							</Box>
-
-							{/* Price, Year, FuelType */}
-							<Box className={'config'}>
-								{/* Car Price */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Car Price</Typography>
-									<input
-										type="text"
-										className={'input-box'}
-										placeholder={'Price'}
-										value={insertCarData.carPrice ? insertCarData.carPrice.toLocaleString('ko-KR') + ' KRW' : ''}
-										onChange={({ target: { value } }) => {
-											const cleanedValue = value.replace(/[,\sKRW]/g, '');
-											const numberValue = parseFloat(cleanedValue);
-
-											if (!isNaN(numberValue)) {
-												setInsertCarData({ ...insertCarData, carPrice: numberValue });
-											} else {
-												setInsertCarData({ ...insertCarData, carPrice: 0 });
-											}
-										}}
-									/>
-								</Stack>
-
-								{/* Car Year */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Car Year</Typography>
-									<input
-										type="text"
-										className={'input-box'}
-										placeholder={'Year'}
-										value={insertCarData.carYear}
-										onChange={({ target: { value } }) =>
-											setInsertCarData({ ...insertCarData, carYear: parseInt(value) })
-										}
-									/>
-								</Stack>
-
-								{/* Car Fuel Type */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Car Fuel Type</Typography>
-									<div className={'select-wrapper'}>
-										<select
-											className={'select-box'}
-											defaultValue={insertCarData.carFuelType || 'select'}
-											value={insertCarData.carFuelType || 'select'}
-											onChange={({ target: { value } }) =>
-												// @ts-ignore
-												setInsertCarData({ ...insertCarData, carFuelType: value })
-											}
-										>
-											<>
-												<option selected={true} disabled={true} value={'select'}>
-													Select
-												</option>
-												{carFuelType.map((fuelType: any) => (
-													<option value={`${fuelType}`} key={fuelType}>
-														{fuelType}
-													</option>
-												))}
-											</>
-										</select>
-										<KeyboardArrowDownIcon className={'arrow-down'} />
-									</div>
-								</Stack>
-							</Box>
-
-							{/* Transmissions, Color, VIN Number */}
-							<Box className={'config'}>
-								{/* Car Transmissions */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Car Transmission</Typography>
-									<div className={'select-wrapper'}>
-										<select
-											className={'select-box'}
-											defaultValue={insertCarData.carTransmission || 'select'}
-											value={insertCarData.carTransmission || 'select'}
-											onChange={({ target: { value } }) =>
-												// @ts-ignore
-												setInsertCarData({ ...insertCarData, carTransmission: value })
-											}
-										>
-											<>
-												<option selected={true} disabled={true} value={'select'}>
-													Select
-												</option>
-												{carTransmission.map((type: any) => (
-													<option value={`${type}`} key={type}>
-														{type}
-													</option>
-												))}
-											</>
-										</select>
-										<KeyboardArrowDownIcon className={'arrow-down'} />
-									</div>
-								</Stack>
-
-								{/* Car Colors */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Car Color</Typography>
-									<input
-										type="text"
-										className={'input-box'}
-										placeholder={'Color'}
-										value={insertCarData.carColor}
-										onChange={({ target: { value } }) => setInsertCarData({ ...insertCarData, carColor: value })}
-									/>
-								</Stack>
-
-								{/* Car VIN Number */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Car VIN Number</Typography>
-									<input
-										type="text"
-										className={'input-box'}
-										placeholder={'Enter VIN'}
-										value={insertCarData.carVinNumber}
-										maxLength={17}
-										onChange={({ target: { value } }) => {
-											const cleaned = value.toUpperCase().replace(/[^A-HJ-NPR-Z0-9]/g, '');
-											setInsertCarData({ ...insertCarData, carVinNumber: cleaned });
-										}}
-									/>
-								</Stack>
-							</Box>
-
-							{/* isNew, Engine Size, Speed */}
-							<Box className={'config'}>
-								{/* Is New */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Is New</Typography>
-									<div style={{ display: 'flex', gap: '1rem', marginTop: '4px' }}>
-										<label>
-											<input
-												type="radio"
-												name="isNew"
-												value="yes"
-												checked={insertCarData.carIsNew === true}
-												onChange={() => setInsertCarData({ ...insertCarData, carIsNew: true })}
-											/>
-											Yes
-										</label>
-										<label>
-											<input
-												type="radio"
-												name="isNew"
-												value="no"
-												checked={insertCarData.carIsNew === false}
-												onChange={() => setInsertCarData({ ...insertCarData, carIsNew: false })}
-											/>
-											No
-										</label>
-									</div>
-								</Stack>
-
-								{/* Engine Size (L) */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Engine Size (L)</Typography>
-									<input
-										type="number"
-										step="0.1"
-										min="0"
-										className={'input-box'}
-										placeholder={'e.g., 2.0'}
-										value={insertCarData.carEngineSize}
-										onChange={({ target: { value } }) =>
-											setInsertCarData({ ...insertCarData, carEngineSize: parseFloat(value) })
-										}
-									/>
-								</Stack>
-
-								{/* Max Speed (km/h) */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Max Speed (km/h)</Typography>
-									<input
-										type="number"
-										min="0"
-										className={'input-box'}
-										placeholder={'e.g., 240'}
-										value={insertCarData.carMaxSpeed}
-										onChange={({ target: { value } }) =>
-											setInsertCarData({ ...insertCarData, carMaxSpeed: parseInt(value) })
-										}
-									/>
-								</Stack>
-							</Box>
-
-							{/* Seats, Doors, Cylinders */}
-							<Box className={'config'}>
-								{/* Seats */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Seats</Typography>
-									<input
-										type="number"
-										className={'input-box'}
-										placeholder="Number of Seats"
-										value={insertCarData.carSeats}
-										min={1}
-										max={9}
-										onChange={({ target: { value } }) =>
-											setInsertCarData({ ...insertCarData, carSeats: parseInt(value) })
-										}
-									/>
-								</Stack>
-
-								{/* Doors */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Doors</Typography>
-									<input
-										type="number"
-										className={'input-box'}
-										placeholder="Number of Doors"
-										value={insertCarData.carDoors}
-										min={2}
-										max={5}
-										onChange={({ target: { value } }) =>
-											setInsertCarData({ ...insertCarData, carDoors: parseInt(value) })
-										}
-									/>
-								</Stack>
-
-								{/* Cylinders */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Cylinders</Typography>
-									<input
-										type="number"
-										className={'input-box'}
-										placeholder="Engine Cylinders"
-										value={insertCarData.carCylinders}
-										min={2}
-										max={16}
-										onChange={({ target: { value } }) =>
-											setInsertCarData({ ...insertCarData, carCylinders: parseInt(value) })
-										}
-									/>
-								</Stack>
-							</Box>
-
-							{/* City MPG, Highway MPG, Drive Type */}
-							<Box className={'config'}>
-								{/* City MPG */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>City MPG</Typography>
-									<input
-										type="number"
-										className={'input-box'}
-										placeholder="City MPG"
-										value={insertCarData.carCityMpg}
-										min={1}
-										max={100}
-										onChange={({ target: { value } }) =>
-											setInsertCarData({ ...insertCarData, carCityMpg: parseInt(value) })
-										}
-									/>
-								</Stack>
-
-								{/* Highway MPG */}
-								<Stack className={'input-config'}>
-									<Typography className={'title'}>Highway MPG</Typography>
-									<input
-										type="number"
-										className={'input-box'}
-										placeholder="Highway MPG"
-										value={insertCarData.carHighwayMpg}
-										min={1}
-										max={100}
-										onChange={({ target: { value } }) =>
-											setInsertCarData({ ...insertCarData, carHighwayMpg: parseInt(value) })
-										}
-									/>
-								</Stack>
-
-								{/* Drive Type */}
-								<Stack className={'input-config'}>
-									<Typography className="title">Drive Type</Typography>
-									<div className={'select-wrapper'}>
-										<select
-											className={'select-box'}
-											defaultValue={insertCarData.carDriveType || 'select'}
-											value={insertCarData.carDriveType || 'select'}
-											onChange={({ target: { value } }) =>
-												// @ts-ignore
-												setInsertCarData({ ...insertCarData, carDriveType: value })
-											}
-										>
-											<>
-												<option selected={true} disabled={true} value={'select'}>
-													Select
-												</option>
-												{carDriveType.map((driveType: any) => (
-													<option value={`${driveType}`} key={driveType}>
-														{driveType}
-													</option>
-												))}
-											</>
-										</select>
-										<KeyboardArrowDownIcon className={'arrow-down'} />
-									</div>
-								</Stack>
-							</Box>
+						<Stack className={'gallery-box'}>
+							{insertCarData?.carImages.map((image: string) => {
+								const imagePath: string = `${REACT_APP_API_URL}/${image}`;
+								return (
+									<Stack className={'image-box'}>
+										<img src={imagePath} alt="" />
+									</Stack>
+								);
+							})}
 						</Stack>
-					</Stack>
-
-					{/* CAR DESCRIPTION */}
-					<Stack className={'car-desc'}>
-						<p>Car Description</p>
-						<Stack className={'config-column'}>
-							<textarea
-								name=""
-								id=""
-								className={'description-text'}
-								value={insertCarData.carDescription}
-								onChange={({ target: { value } }) => setInsertCarData({ ...insertCarData, carDescription: value })}
-							></textarea>
-						</Stack>
-					</Stack>
-
-					{/* SAVE LISTING */}
-					{/* SAVE LISTING */}
-					<Stack className={'save-button'}>
-						<button
-							type="button"
-							className={'save-listing-btn'}
-							onClick={createCarHandler}
-							disabled={doDisabledCheck()}
-						>
-							Save Listing
-						</button>
 					</Stack>
 				</Stack>
-			</div>
-		);
-	}
+
+				{/* CAR DETAILS */}
+				<Stack className={'car-details'}>
+					<p>Car details</p>
+					<Stack className={'car-configs'}>
+						{/* Brand Name, Model, Car Type */}
+						<Box className={'config'}>
+							{/* brand-name */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Car Brand</Typography>
+								<div className={'select-wrapper'}>
+									<select
+										className={'select-box'}
+										defaultValue={insertCarData.carBrand || 'select'}
+										value={insertCarData.carBrand || 'select'}
+										onChange={({ target: { value } }) =>
+											// @ts-ignore
+											setInsertCarData({ ...insertCarData, carBrand: value })
+										}
+									>
+										<>
+											<option selected={true} disabled={true} value={'select'}>
+												Select
+											</option>
+											{carBrand.map((brand: any) => (
+												<option value={`${brand}`} key={brand}>
+													{brand}
+												</option>
+											))}
+										</>
+									</select>
+									<KeyboardArrowDownIcon className={'arrow-down'} />
+								</div>
+							</Stack>
+
+							{/* Car Type */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Car Type</Typography>
+								<div className={'select-wrapper'}>
+									<select
+										className={'select-box'}
+										defaultValue={insertCarData.carType || 'select'}
+										value={insertCarData.carType || 'select'}
+										onChange={({ target: { value } }) =>
+											// @ts-ignore
+											setInsertCarData({ ...insertCarData, carType: value })
+										}
+									>
+										<>
+											<option selected={true} disabled={true} value={'select'}>
+												Select
+											</option>
+											{carType.map((type: any) => (
+												<option value={`${type}`} key={type}>
+													{type}
+												</option>
+											))}
+										</>
+									</select>
+									<KeyboardArrowDownIcon className={'arrow-down'} />
+								</div>
+							</Stack>
+
+							{/* Car Model */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Car Model</Typography>
+								<input
+									type="text"
+									className={'input-box'}
+									placeholder={'Model'}
+									value={insertCarData.carModel}
+									onChange={({ target: { value } }) => setInsertCarData({ ...insertCarData, carModel: value })}
+								/>
+							</Stack>
+						</Box>
+
+						{/* Price, Year, FuelType */}
+						<Box className={'config'}>
+							{/* Car Price */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Car Price</Typography>
+								<input
+									type="text"
+									className={'input-box'}
+									placeholder={'Price'}
+									value={insertCarData.carPrice ? insertCarData.carPrice.toLocaleString('ko-KR') + ' KRW' : ''}
+									onChange={({ target: { value } }) => {
+										const cleanedValue = value.replace(/[,\sKRW]/g, '');
+										const numberValue = parseFloat(cleanedValue);
+
+										if (!isNaN(numberValue)) {
+											setInsertCarData({ ...insertCarData, carPrice: numberValue });
+										} else {
+											setInsertCarData({ ...insertCarData, carPrice: 0 });
+										}
+									}}
+								/>
+							</Stack>
+
+							{/* Car Year */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Car Year</Typography>
+								<input
+									type="text"
+									className={'input-box'}
+									placeholder={'Year'}
+									value={insertCarData.carYear}
+									onChange={({ target: { value } }) => setInsertCarData({ ...insertCarData, carYear: parseInt(value) })}
+								/>
+							</Stack>
+
+							{/* Car Fuel Type */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Car Fuel Type</Typography>
+								<div className={'select-wrapper'}>
+									<select
+										className={'select-box'}
+										defaultValue={insertCarData.carFuelType || 'select'}
+										value={insertCarData.carFuelType || 'select'}
+										onChange={({ target: { value } }) =>
+											// @ts-ignore
+											setInsertCarData({ ...insertCarData, carFuelType: value })
+										}
+									>
+										<>
+											<option selected={true} disabled={true} value={'select'}>
+												Select
+											</option>
+											{carFuelType.map((fuelType: any) => (
+												<option value={`${fuelType}`} key={fuelType}>
+													{fuelType}
+												</option>
+											))}
+										</>
+									</select>
+									<KeyboardArrowDownIcon className={'arrow-down'} />
+								</div>
+							</Stack>
+						</Box>
+
+						{/* Transmissions, Color, VIN Number */}
+						<Box className={'config'}>
+							{/* Car Transmissions */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Car Transmission</Typography>
+								<div className={'select-wrapper'}>
+									<select
+										className={'select-box'}
+										defaultValue={insertCarData.carTransmission || 'select'}
+										value={insertCarData.carTransmission || 'select'}
+										onChange={({ target: { value } }) =>
+											// @ts-ignore
+											setInsertCarData({ ...insertCarData, carTransmission: value })
+										}
+									>
+										<>
+											<option selected={true} disabled={true} value={'select'}>
+												Select
+											</option>
+											{carTransmission.map((type: any) => (
+												<option value={`${type}`} key={type}>
+													{type}
+												</option>
+											))}
+										</>
+									</select>
+									<KeyboardArrowDownIcon className={'arrow-down'} />
+								</div>
+							</Stack>
+
+							{/* Car Colors */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Car Color</Typography>
+								<input
+									type="text"
+									className={'input-box'}
+									placeholder={'Color'}
+									value={insertCarData.carColor}
+									onChange={({ target: { value } }) => setInsertCarData({ ...insertCarData, carColor: value })}
+								/>
+							</Stack>
+
+							{/* Car VIN Number */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Car VIN Number</Typography>
+								<input
+									type="text"
+									className={'input-box'}
+									placeholder={'Enter VIN'}
+									value={insertCarData.carVinNumber}
+									maxLength={17}
+									onChange={({ target: { value } }) => {
+										const cleaned = value.toUpperCase().replace(/[^A-HJ-NPR-Z0-9]/g, '');
+										setInsertCarData({ ...insertCarData, carVinNumber: cleaned });
+									}}
+								/>
+							</Stack>
+						</Box>
+
+						{/* isNew, Engine Size, Speed */}
+						<Box className={'config'}>
+							{/* Is New */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Is New</Typography>
+								<div style={{ display: 'flex', gap: '1rem', marginTop: '4px' }}>
+									<label>
+										<input
+											type="radio"
+											name="isNew"
+											value="yes"
+											checked={insertCarData.carIsNew === true}
+											onChange={() => setInsertCarData({ ...insertCarData, carIsNew: true })}
+										/>
+										Yes
+									</label>
+									<label>
+										<input
+											type="radio"
+											name="isNew"
+											value="no"
+											checked={insertCarData.carIsNew === false}
+											onChange={() => setInsertCarData({ ...insertCarData, carIsNew: false })}
+										/>
+										No
+									</label>
+								</div>
+							</Stack>
+
+							{/* Engine Size (L) */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Engine Size (L)</Typography>
+								<input
+									type="number"
+									step="0.1"
+									min="0"
+									className={'input-box'}
+									placeholder={'e.g., 2.0'}
+									value={insertCarData.carEngineSize}
+									onChange={({ target: { value } }) =>
+										setInsertCarData({ ...insertCarData, carEngineSize: parseFloat(value) })
+									}
+								/>
+							</Stack>
+
+							{/* Max Speed (km/h) */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Max Speed (km/h)</Typography>
+								<input
+									type="number"
+									min="0"
+									className={'input-box'}
+									placeholder={'e.g., 240'}
+									value={insertCarData.carMaxSpeed}
+									onChange={({ target: { value } }) =>
+										setInsertCarData({ ...insertCarData, carMaxSpeed: parseInt(value) })
+									}
+								/>
+							</Stack>
+						</Box>
+
+						{/* Seats, Doors, Cylinders */}
+						<Box className={'config'}>
+							{/* Seats */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Seats</Typography>
+								<input
+									type="number"
+									className={'input-box'}
+									placeholder="Number of Seats"
+									value={insertCarData.carSeats}
+									min={1}
+									max={9}
+									onChange={({ target: { value } }) =>
+										setInsertCarData({ ...insertCarData, carSeats: parseInt(value) })
+									}
+								/>
+							</Stack>
+
+							{/* Doors */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Doors</Typography>
+								<input
+									type="number"
+									className={'input-box'}
+									placeholder="Number of Doors"
+									value={insertCarData.carDoors}
+									min={2}
+									max={5}
+									onChange={({ target: { value } }) =>
+										setInsertCarData({ ...insertCarData, carDoors: parseInt(value) })
+									}
+								/>
+							</Stack>
+
+							{/* Cylinders */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Cylinders</Typography>
+								<input
+									type="number"
+									className={'input-box'}
+									placeholder="Engine Cylinders"
+									value={insertCarData.carCylinders}
+									min={2}
+									max={16}
+									onChange={({ target: { value } }) =>
+										setInsertCarData({ ...insertCarData, carCylinders: parseInt(value) })
+									}
+								/>
+							</Stack>
+						</Box>
+
+						{/* City MPG, Highway MPG, Drive Type */}
+						<Box className={'config'}>
+							{/* City MPG */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>City MPG</Typography>
+								<input
+									type="number"
+									className={'input-box'}
+									placeholder="City MPG"
+									value={insertCarData.carCityMpg}
+									min={1}
+									max={100}
+									onChange={({ target: { value } }) =>
+										setInsertCarData({ ...insertCarData, carCityMpg: parseInt(value) })
+									}
+								/>
+							</Stack>
+
+							{/* Highway MPG */}
+							<Stack className={'input-config'}>
+								<Typography className={'title'}>Highway MPG</Typography>
+								<input
+									type="number"
+									className={'input-box'}
+									placeholder="Highway MPG"
+									value={insertCarData.carHighwayMpg}
+									min={1}
+									max={100}
+									onChange={({ target: { value } }) =>
+										setInsertCarData({ ...insertCarData, carHighwayMpg: parseInt(value) })
+									}
+								/>
+							</Stack>
+
+							{/* Drive Type */}
+							<Stack className={'input-config'}>
+								<Typography className="title">Drive Type</Typography>
+								<div className={'select-wrapper'}>
+									<select
+										className={'select-box'}
+										defaultValue={insertCarData.carDriveType || 'select'}
+										value={insertCarData.carDriveType || 'select'}
+										onChange={({ target: { value } }) =>
+											// @ts-ignore
+											setInsertCarData({ ...insertCarData, carDriveType: value })
+										}
+									>
+										<>
+											<option selected={true} disabled={true} value={'select'}>
+												Select
+											</option>
+											{carDriveType.map((driveType: any) => (
+												<option value={`${driveType}`} key={driveType}>
+													{driveType}
+												</option>
+											))}
+										</>
+									</select>
+									<KeyboardArrowDownIcon className={'arrow-down'} />
+								</div>
+							</Stack>
+						</Box>
+					</Stack>
+				</Stack>
+
+				{/* CAR DESCRIPTION */}
+				<Stack className={'car-desc'}>
+					<p>Car Description</p>
+					<Stack className={'config-column'}>
+						<textarea
+							name=""
+							id=""
+							className={'description-text'}
+							value={insertCarData.carDescription}
+							onChange={({ target: { value } }) => setInsertCarData({ ...insertCarData, carDescription: value })}
+						></textarea>
+					</Stack>
+				</Stack>
+
+				{/* SAVE LISTING */}
+				<Stack className={'save-button'}>
+					<button type="button" className={'save-listing-btn'} onClick={createCarHandler} disabled={doDisabledCheck()}>
+						Save Listing
+					</button>
+				</Stack>
+			</Stack>
+		</div>
+	);
 };
 
 AddListing.defaultProps = {

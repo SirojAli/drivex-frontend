@@ -11,7 +11,6 @@ import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import ChatIcon from '@mui/icons-material/Chat';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import StarIcon from '@mui/icons-material/Star';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import FacebookIcon from '@mui/icons-material/Facebook';
