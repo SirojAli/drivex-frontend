@@ -69,16 +69,16 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	} else {
 		return (
 			<div id="member-follows-page">
-				<Stack className="main-title-box">
-					<Stack className="right-box">
-						<Typography className="main-title">{category === 'followers' ? 'Followers' : 'Followings'}</Typography>
+				<Stack className={'main-title-box'}>
+					<Stack className={'right-box'}>
+						<Typography className={'main-title'}>{category === 'followers' ? 'Followers' : 'Followings'}</Typography>
 					</Stack>
 				</Stack>
-				<Stack className="follows-list-box">
-					<Stack className="listing-title-box">
-						<Typography className="title-text">Name</Typography>
-						<Typography className="title-text">Details</Typography>
-						<Typography className="title-text">Subscription</Typography>
+				<Stack className={'follows-list-box'}>
+					<Stack className={'listing-title-box'}>
+						<Typography className={'title-text'}>Name</Typography>
+						<Typography className={'title-text'}>Details</Typography>
+						<Typography className={'title-text'}>Subscription</Typography>
 					</Stack>
 					{memberFollowers?.length === 0 && (
 						<div className={'no-data'}>
@@ -91,13 +91,13 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 							? `${REACT_APP_API_URL}/${follower?.followerData?.memberImage}`
 							: '/img/profile/defaultUser.svg';
 						return (
-							<Stack className="follows-card-box" key={follower._id}>
+							<Stack className={'follows-card-box'} key={follower._id}>
 								<Stack className={'info'} onClick={() => redirectToMemberPageHandler(follower?.followerData?._id)}>
-									<Stack className="image-box">
+									<Stack className={'image-box'}>
 										<img src={imagePath} alt="" />
 									</Stack>
-									<Stack className="information-box">
-										<Typography className="name">{follower?.followerData?.memberNick}</Typography>
+									<Stack className={'information-box'}>
+										<Typography className={'name'}>{follower?.followerData?.memberNick}</Typography>
 									</Stack>
 								</Stack>
 								<Stack className={'details-box'}>
@@ -128,7 +128,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 									</Box>
 								</Stack>
 								{user?._id !== follower?.followerId && (
-									<Stack className="action-box">
+									<Stack className={'action-box'}>
 										{follower.meFollowed && follower.meFollowed[0]?.myFollowing ? (
 											<>
 												<Typography>Following</Typography>
@@ -160,8 +160,8 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 					})}
 				</Stack>
 				{memberFollowers.length !== 0 && (
-					<Stack className="pagination-config">
-						<Stack className="pagination-box">
+					<Stack className={'pagination-config'}>
+						<Stack className={'pagination-box'}>
 							<Pagination
 								page={followInquiry.page}
 								count={Math.ceil(total / followInquiry.limit)}
@@ -170,7 +170,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 								color="primary"
 							/>
 						</Stack>
-						<Stack className="total-result">
+						<Stack className={'total-result'}>
 							<Typography>{total} followers</Typography>
 						</Stack>
 					</Stack>

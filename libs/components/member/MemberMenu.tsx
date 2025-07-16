@@ -59,7 +59,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 						<Typography className={'view-list'}>{member?.memberType}</Typography>
 					</Stack>
 				</Stack>
-				<Stack className="follow-button-box">
+				<Stack className={'follow-button-box'}>
 					{member?.meFollowed && member?.meFollowed[0]?.myFollowing ? (
 						<>
 							<Button
@@ -83,11 +83,11 @@ const MemberMenu = (props: MemberMenuProps) => {
 				</Stack>
 				<Stack className={'sections'}>
 					<Stack className={'section'}>
-						<Typography className="title" variant={'h5'}>
+						<Typography className={'title'} variant={'h5'}>
 							Details
 						</Typography>
 						<List className={'sub-section'}>
-							{member?.memberType === 'AGENT' && (
+							{member?.memberType === 'SELLER' && (
 								<ListItem className={category === 'properties' ? 'focus' : ''}>
 									<Link
 										href={{
@@ -106,8 +106,8 @@ const MemberMenu = (props: MemberMenuProps) => {
 											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 												Properties
 											</Typography>
-											<Typography className="count-title" variant="subtitle1">
-												{member?.memberProperties}
+											<Typography className={'count-title'} variant="subtitle1">
+												{member?.memberCars}
 											</Typography>
 										</div>
 									</Link>
@@ -158,7 +158,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 											Followers
 										</Typography>
-										<Typography className="count-title" variant="subtitle1">
+										<Typography className={'count-title'} variant="subtitle1">
 											{member?.memberFollowers}
 										</Typography>
 									</div>
@@ -209,7 +209,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 											Followings
 										</Typography>
-										<Typography className="count-title" variant="subtitle1">
+										<Typography className={'count-title'} variant="subtitle1">
 											{member?.memberFollowings}
 										</Typography>
 									</div>
@@ -219,7 +219,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 					</Stack>
 					<Stack className={'section'} sx={{ marginTop: '10px' }}>
 						<div>
-							<Typography className="title" variant={'h5'}>
+							<Typography className={'title'} variant={'h5'}>
 								Community
 							</Typography>
 							<List className={'sub-section'}>
@@ -242,7 +242,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 												Articles
 											</Typography>
-											<Typography className="count-title" variant="subtitle1">
+											<Typography className={'count-title'} variant="subtitle1">
 												{member?.memberArticles}
 											</Typography>
 										</div>

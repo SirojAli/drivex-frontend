@@ -360,7 +360,7 @@ const CarDetail: NextPage = () => {
 									label="Save your name, email for the next time review"
 								/>
 
-								<Box className="input-text">
+								<Box className={'input-text'}>
 									<TextField
 										label="Your Message"
 										name="message"

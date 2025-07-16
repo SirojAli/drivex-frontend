@@ -9,19 +9,19 @@ const Article = () => {
 		return <div>PROPERTY CARD</div>;
 	} else {
 		return (
-			<Stack className="card-config">
-				<Stack className="top">
+			<Stack className={'card-config'}>
+				<Stack className={'top'}>
 					<img src="/img/cars/header1.jpg" alt="" />
 					<Box component={'div'} className={'date'}>
 						<Typography>July 28</Typography>
 					</Box>
 				</Stack>
-				<Stack className="bottom">
-					<Stack className="name-address">
-						<Stack className="name">
+				<Stack className={'bottom'}>
+					<Stack className={'name-address'}>
+						<Stack className={'name'}>
 							<Typography>Equestrian Family Home</Typography>
 						</Stack>
-						<Stack className="address">
+						<Stack className={'address'}>
 							<Typography>Shillymdong, Kwanak-ku, Seoul </Typography>
 						</Stack>
 					</Stack>

@@ -500,15 +500,15 @@ const Faq = () => {
 					{data[category] &&
 						data[category].map((ele: any) => (
 							<Accordion expanded={expanded === ele?.id} onChange={handleChange(ele?.id)} key={ele?.subject}>
-								<AccordionSummary id="panel1d-header" className="question" aria-controls="panel1d-content">
-									<Typography className="badge" variant={'h3'}>
+								<AccordionSummary id="panel1d-header" className={'question'} aria-controls="panel1d-content">
+									<Typography className={'badge'} variant={'h3'}>
 										Q
 									</Typography>
 									<Typography> {ele?.subject}</Typography>
 								</AccordionSummary>
 								<AccordionDetails>
 									<Stack className={'answer flex-box'}>
-										<Typography className="badge" variant={'h3'} color={'primary'}>
+										<Typography className={'badge'} variant={'h3'} color={'primary'}>
 											A
 										</Typography>
 										<Typography> {ele?.content}</Typography>

@@ -114,7 +114,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
 				<>
 					<Toolbar>
 						<Box component={'div'}>
-							<Box component={'div'} className="flex_box">
+							<Box component={'div'} className={'flex_box'}>
 								<Checkbox
 									color="primary"
 									indeterminate={numSelected > 0 && numSelected < rowCount}

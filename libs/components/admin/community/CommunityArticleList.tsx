@@ -159,7 +159,7 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 													href={`/community/detail?articleCategory=${article.articleCategory}&id=${article._id}`}
 													className={'img_box'}
 												>
-													<IconButton className="btn_window">
+													<IconButton className={'btn_window'}>
 														<Tooltip title={'Open window'}>
 															<OpenInBrowserRoundedIcon />
 														</Tooltip>

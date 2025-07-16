@@ -99,13 +99,13 @@ const MyPage: NextPage = () => {
 	} else {
 		return (
 			<div id="my-page" style={{ position: 'relative' }}>
-				<div className="container">
+				<div className={'container'}>
 					<Stack className={'my-page'}>
 						<Stack className={'back-frame'}>
 							<Stack className={'left-config'}>
 								<MyMenu />
 							</Stack>
-							<Stack className="main-config" mb={'76px'}>
+							<Stack className={'main-config'} mb={'76px'}>
 								<Stack className={'list-config'}>
 									{category === 'myFavorites' && <MyFavorites />}
 									{category === 'recentlyVisited' && <RecentlyVisited />}

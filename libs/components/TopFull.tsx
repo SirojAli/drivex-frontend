@@ -102,23 +102,23 @@ const TopFull = () => {
 								</Link>
 							)}
 						</Box>
-						<Box component="div" className="user-box">
+						<Box component="div" className={'user-box'}>
 							{user?._id ? (
 								<>
 									<Tooltip title="Notifications">
 										<IconButton>
-											<NotificationsIcon className="icon" />
+											<NotificationsIcon className={'icon'} />
 										</IconButton>
 									</Tooltip>
-									<div className="divider" />
+									<div className={'divider'} />
 									<Tooltip title="Favorites">
 										<IconButton>
-											<FavoriteBorderIcon className="icon" />
+											<FavoriteBorderIcon className={'icon'} />
 										</IconButton>
 									</Tooltip>
-									<div className="divider" />
+									<div className={'divider'} />
 									<div
-										className="login-user"
+										className={'login-user'}
 										onClick={(e) => setLogoutAnchor(e.currentTarget)}
 										style={{ cursor: 'pointer' }}
 									>
@@ -150,8 +150,8 @@ const TopFull = () => {
 								</>
 							) : (
 								<Link href="/account/join">
-									<div className="login-user">
-										<AccountCircle className="icon" />
+									<div className={'login-user'}>
+										<AccountCircle className={'icon'} />
 										<span>Login / Signup</span>
 									</div>
 								</Link>

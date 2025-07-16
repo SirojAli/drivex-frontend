@@ -579,7 +579,7 @@ const AddListing: NextPage = ({ initialValues, ...props }: any) => {
 
 							{/* Drive Type */}
 							<Stack className={'input-config'}>
-								<Typography className="title">Drive Type</Typography>
+								<Typography className={'title'}>Drive Type</Typography>
 								<div className={'select-wrapper'}>
 									<select
 										className={'select-box'}

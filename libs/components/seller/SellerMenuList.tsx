@@ -71,7 +71,7 @@ const SellerMenuList = (props: any) => {
 			</Box>
 			<Box className={'menu-content'}>
 				{menu_set.map((item, index) => (
-					<List key={index} disablePadding className="menu_wrap">
+					<List key={index} disablePadding className={'menu_wrap'}>
 						<Link href={item.url} passHref legacyBehavior>
 							<ListItemButton
 								component="a"

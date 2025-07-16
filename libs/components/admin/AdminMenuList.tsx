@@ -138,12 +138,12 @@ const AdminMenuList = (props: any) => {
 					</ListItemButton>
 					<Collapse
 						in={!!clickMenu.find((menu: string) => menu === item.title)}
-						className="menu"
+						className={'menu'}
 						timeout="auto"
 						component="li"
 						unmountOnExit
 					>
-						<List className="menu-list" disablePadding>
+						<List className={'menu-list'} disablePadding>
 							{sub_menu_set[item.title] &&
 								sub_menu_set[item.title].map((sub: any, i: number) => (
 									<Link href={sub.url} shallow={true} replace={true} key={i}>

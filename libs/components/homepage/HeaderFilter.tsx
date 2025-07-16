@@ -182,7 +182,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				<Stack className={'header-text'}>
 					<p className={'bold'}>Find Your Perfect Car Today</p>
 					{/* <span className={'short'}>Explore Cars from Leading Global Brands</span> */}
-					<span className="short">Discover New Models from Brands You Love</span>
+					<span className={'short'}>Discover New Models from Brands You Love</span>
 					<Box className={'detail'}>
 						<Link href={'/car'} className={'p'}>
 							Get Started

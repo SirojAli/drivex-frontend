@@ -104,13 +104,13 @@ const MemberPage: NextPage = () => {
 	} else {
 		return (
 			<div id="member-page" style={{ position: 'relative' }}>
-				<div className="container">
+				<div className={'container'}>
 					<Stack className={'member-page'}>
 						<Stack className={'back-frame'}>
 							<Stack className={'left-config'}>
 								<MemberMenu subscribeHandler={subscribeHandler} unsubscribeHandler={unsubscribeHandler} />
 							</Stack>
-							<Stack className="main-config" mb={'76px'}>
+							<Stack className={'main-config'} mb={'76px'}>
 								<Stack className={'list-config'}>
 									{category === 'followers' && (
 										<MemberFollowers

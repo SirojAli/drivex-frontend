@@ -27,7 +27,7 @@ const AdminNotice: NextPage = (props: any) => {
 			<Box component={'div'} className={'title flex_space'}>
 				<Typography variant={'h2'}>Notice Management</Typography>
 				<Button
-					className="btn_add"
+					className={'btn_add'}
 					variant={'contained'}
 					size={'medium'}
 					// onClick={() => router.push(`/_admin/cs/faq_create`)}

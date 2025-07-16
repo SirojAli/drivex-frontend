@@ -152,7 +152,7 @@ const EditProfile: NextPage = ({ initialValues, ...props }: any) => {
 
 					<Stack className={'section-content'}>
 						<Stack className={'input-box'}>
-							<Typography className="title">Brand Name</Typography>
+							<Typography className={'title'}>Brand Name</Typography>
 							<input
 								type="text"
 								placeholder="Name"
@@ -163,7 +163,7 @@ const EditProfile: NextPage = ({ initialValues, ...props }: any) => {
 						</Stack>
 						<Stack className={'input-box2'}>
 							<Stack className={'input2'}>
-								<Typography className="title">Brand Email</Typography>
+								<Typography className={'title'}>Brand Email</Typography>
 								<input
 									type="text"
 									placeholder="Address"
@@ -173,7 +173,7 @@ const EditProfile: NextPage = ({ initialValues, ...props }: any) => {
 								/>
 							</Stack>
 							<Stack className={'input2'}>
-								<Typography className="title">Brand Phone</Typography>
+								<Typography className={'title'}>Brand Phone</Typography>
 								<input
 									type="text"
 									placeholder="Address"
@@ -184,7 +184,7 @@ const EditProfile: NextPage = ({ initialValues, ...props }: any) => {
 							</Stack>
 						</Stack>
 						<Stack className={'input-box'}>
-							<Typography className="title">Brand Address</Typography>
+							<Typography className={'title'}>Brand Address</Typography>
 							<input
 								type="text"
 								placeholder="Address"
@@ -194,7 +194,7 @@ const EditProfile: NextPage = ({ initialValues, ...props }: any) => {
 							/>
 						</Stack>
 						<Stack className={'input-box'}>
-							<Typography className="title">Brand Description</Typography>
+							<Typography className={'title'}>Brand Description</Typography>
 							<Stack className={'input-desc'}>
 								<textarea
 									name=""

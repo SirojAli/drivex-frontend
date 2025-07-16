@@ -72,12 +72,12 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 	} else {
 		return (
 			<div id="member-articles-page">
-				<Stack className="main-title-box">
-					<Stack className="right-box">
-						<Typography className="main-title">Articles</Typography>
+				<Stack className={'main-title-box'}>
+					<Stack className={'right-box'}>
+						<Typography className={'main-title'}>Articles</Typography>
 					</Stack>
 				</Stack>
-				<Stack className="articles-list-box">
+				<Stack className={'articles-list-box'}>
 					{memberBoArticles?.length === 0 && (
 						<div className={'no-data'}>
 							<img src="/img/icons/icoAlert.svg" alt="" />
@@ -96,8 +96,8 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 					})}
 				</Stack>
 				{memberBoArticles?.length !== 0 && (
-					<Stack className="pagination-config">
-						<Stack className="pagination-box">
+					<Stack className={'pagination-config'}>
+						<Stack className={'pagination-box'}>
 							<Pagination
 								count={Math.ceil(total / searchFilter.limit) || 1}
 								page={searchFilter.page}
@@ -106,8 +106,8 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 								onChange={paginationHandler}
 							/>
 						</Stack>
-						<Stack className="total-result">
-							<Typography>{total} property available</Typography>
+						<Stack className={'total-result'}>
+							<Typography>{total} cars available</Typography>
 						</Stack>
 					</Stack>
 				)}

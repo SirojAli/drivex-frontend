@@ -114,13 +114,13 @@ const TuiEditor = () => {
 	};
 
 	return (
-		<Stack className="tui-editor-container">
-			<Stack direction="row" className="tui-editor-form-row" justifyContent="space-evenly">
-				<Box component={'div'} className="form_row category-select">
-					<Typography className="label" variant="h3">
+		<Stack className={'tui-editor-container'}>
+			<Stack direction="row" className={'tui-editor-form-row'} justifyContent="space-evenly">
+				<Box component={'div'} className={'form_row category-select'}>
+					<Typography className={'label'} variant="h3">
 						Category
 					</Typography>
-					<FormControl className="select-control">
+					<FormControl className={'select-control'}>
 						<Select
 							value={articleCategory}
 							onChange={changeCategoryHandler}
@@ -135,11 +135,16 @@ const TuiEditor = () => {
 						</Select>
 					</FormControl>
 				</Box>
-				<Box component={'div'} className="form_row title-input">
-					<Typography className="label" variant="h3">
+				<Box component={'div'} className={'form_row title-input'}>
+					<Typography className={'label'} variant="h3">
 						Title
 					</Typography>
-					<TextField onChange={articleTitleHandler} id="filled-basic" label="Blog Title" className="title-textfield" />
+					<TextField
+						onChange={articleTitleHandler}
+						id="filled-basic"
+						label="Blog Title"
+						className={'title-textfield'}
+					/>
 				</Box>
 			</Stack>
 
