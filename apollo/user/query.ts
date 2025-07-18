@@ -264,7 +264,6 @@ export const GET_SELLERS_CAR = gql`
 				carImages
 				carVideoUrl
 				carDescription
-				carSlug
 				carComments
 				carRank
 				carLikes
@@ -310,7 +309,6 @@ export const GET_FAVORITES = gql`
 				carImages
 				carVideoUrl
 				carDescription
-				carSlug
 				carComments
 				carRank
 				carLikes
@@ -386,7 +384,6 @@ export const GET_VISITED = gql`
 				carImages
 				carVideoUrl
 				carDescription
-				carSlug
 				carComments
 				carRank
 				carLikes

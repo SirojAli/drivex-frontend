@@ -36,13 +36,13 @@ export interface CarInput {
 
 // 2. RANGE TYPES
 interface PriceRange {
-	start: number;
-	end: number;
+	start?: number;
+	end?: number;
 }
 
 interface YearRange {
-	start: number;
-	end: number;
+	start?: number;
+	end?: number;
 }
 
 // 3. SEARCH FILTERS (Car Inquiry Search)
