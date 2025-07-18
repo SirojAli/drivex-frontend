@@ -10,6 +10,7 @@ export interface MemberUpdate {
 	memberPassword?: string;
 	memberFullName?: string;
 	memberImage?: string;
+	memberVideoUrl?: string;
 	memberAddress?: string;
 	memberDescription?: string;
 	deletedAt?: Date;
@@ -24,6 +25,7 @@ export interface AdminMemberUpdate {
 	memberNick?: string;
 	memberFullName?: string;
 	memberImage?: string;
+	memberVideoUrl?: string;
 	memberAddress?: string;
 	memberDescription?: string;
 	deletedAt?: Date;

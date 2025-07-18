@@ -9,6 +9,7 @@
 
 @import '/scss/pc/car/car.scss';
 @import '/scss/pc/car/detail.scss';
+@import '/scss/pc/car/compare.scss';
 
 @import '/scss/pc/community/blog.scss';
 @import '/scss/pc/community/detail.scss';
@@ -926,5 +927,20 @@
 				}
 			}
 		}
+	}
+
+	.MuiPaper-root.MuiMenu-paper {
+		padding: 8px;
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	}
+
+	.compare-car-modal {
+		padding: 29px 0px 18px 0px;
+		position: relative;
+		width: 962px;
+		height: auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 }

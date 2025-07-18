@@ -231,7 +231,7 @@
 									top: 10px;
 									left: 10px;
 									display: flex;
-									padding: 6px 12px;
+									padding: 5px 11px;
 									align-items: center;
 									border-radius: 99px;
 									background: #ff7101;
@@ -239,20 +239,20 @@
 									span {
 										color: #fff;
 										font-family: $font;
-										font-size: 12px;
+										font-size: 11px;
 										font-style: normal;
 										font-weight: 500;
-										line-height: 17px;
+										line-height: 15px;
 									}
 								}
 
-								.like-btn {
+								.like-btn,
+								.compare-btn {
 									width: 30px;
 									height: 30px;
 									padding: 8px;
 									position: absolute;
 									top: 10px;
-									right: 10px;
 									opacity: 0;
 									transition: opacity 0.3s ease, transform 0.2s ease;
 									z-index: 2;
@@ -260,18 +260,29 @@
 									color: rgba(0, 0, 0, 0.3);
 									background-color: rgba(255, 255, 255, 0.85);
 									border-radius: 50%;
-									padding: 6px;
+									display: flex;
+									align-items: center;
+									justify-content: center;
 
 									&:hover {
 										transform: scale(1.1);
 									}
+								}
+
+								.like-btn {
+									right: 10px;
 
 									&.liked {
 										color: red;
 									}
 								}
 
-								&:hover .like-btn {
+								.compare-btn {
+									right: 45px;
+								}
+
+								&:hover .like-btn,
+								&:hover .compare-btn {
 									opacity: 1;
 								}
 							}
@@ -295,37 +306,26 @@
 									gap: 8px;
 
 									.car-type {
-										width: auto;
-										height: auto;
 										color: #ff7101;
 										font-family: $font;
 										font-size: 14px;
-										font-style: normal;
 										font-weight: 500;
 										line-height: 20px;
 									}
 
 									.car-name {
-										width: auto;
-										height: auto;
 										color: #24272c;
 										font-family: $font;
 										font-size: 18px;
-										font-style: normal;
 										font-weight: 600;
-										line-height: normal;
 									}
 
 									.car-category {
 										width: 100%;
-										height: 20px;
 										display: flex;
-										align-items: flex-start;
 										gap: 12px;
 
 										.category {
-											width: auto;
-											height: 20px;
 											display: flex;
 											align-items: center;
 											gap: 8px;
@@ -336,12 +336,9 @@
 											}
 
 											span {
-												width: auto;
-												height: 20px;
 												color: #696665;
 												font-family: $font;
 												font-size: 14px;
-												font-style: normal;
 												font-weight: 400;
 												line-height: 20px;
 											}
@@ -350,9 +347,7 @@
 
 									.car-price-btn {
 										width: 100%;
-										height: 25px;
 										display: flex;
-										flex-direction: row;
 										justify-content: space-between;
 										align-items: center;
 										margin-top: 12px;
@@ -361,9 +356,7 @@
 											color: #ff7101;
 											font-family: $font;
 											font-size: 26px;
-											font-style: normal;
 											font-weight: 600;
-											line-height: normal;
 										}
 
 										.view-like-btn {
@@ -376,9 +369,6 @@
 												display: flex;
 												align-items: center;
 												justify-content: center;
-												// border-radius: 6px;
-												// padding: 3px 6px;
-												// background-color: #f3f3f3;
 
 												.view,
 												.like {
@@ -396,22 +386,20 @@
 										}
 									}
 								}
+
 								.divider {
 									width: 268px;
 									height: 1px;
 									background: #ededed;
-									// border: 1px solid red;
 								}
+
 								.car-logo {
 									width: 268px;
 									height: 60px;
 									display: flex;
 									justify-content: space-between;
-									// border: 1px solid red;
 
 									.logo {
-										width: auto;
-										height: 100%;
 										display: flex;
 										align-items: center;
 										gap: 10px;
@@ -419,18 +407,13 @@
 										img {
 											width: 38px;
 											height: 38px;
-											fill: #d9d9d9;
-											// border: 1px solid #000;
-											// border-radius: 50%;
 										}
 
 										span {
 											color: #24272c;
 											font-family: $font;
 											font-size: 14px;
-											font-style: normal;
 											font-weight: 500;
-											line-height: normal;
 										}
 									}
 
@@ -438,12 +421,9 @@
 										width: 90px;
 										height: 38px;
 										display: flex;
-										width: 90px;
-										height: 38px;
-										padding: 10px;
 										justify-content: center;
 										align-items: center;
-										gap: 4px;
+										padding: 10px;
 										border-radius: 14px;
 										border: 1px solid #24272c;
 
@@ -451,9 +431,7 @@
 											color: #24272c;
 											font-family: $font;
 											font-size: 14px;
-											font-style: normal;
 											font-weight: 500;
-											line-height: normal;
 										}
 									}
 								}

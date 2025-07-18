@@ -16,6 +16,7 @@ export const SIGN_UP = gql`
 			memberNick
 			memberFullName
 			memberImage
+			memberVideoUrl
 			memberAddress
 			memberDescription
 			memberCars
@@ -50,6 +51,7 @@ export const LOGIN = gql`
 			memberNick
 			memberFullName
 			memberImage
+			memberVideoUrl
 			memberAddress
 			memberDescription
 			memberCars
@@ -84,6 +86,7 @@ export const UPDATE_MEMBER = gql`
 			memberNick
 			memberFullName
 			memberImage
+			memberVideoUrl
 			memberAddress
 			memberDescription
 			memberCars
@@ -118,6 +121,7 @@ export const LIKE_TARGET_MEMBER = gql`
 			memberNick
 			memberFullName
 			memberImage
+			memberVideoUrl
 			memberAddress
 			memberDescription
 			memberCars
@@ -158,6 +162,7 @@ export const CREATE_CAR = gql`
 			carTransmission
 			carColor
 			carImages
+			carVideoUrl
 			carDescription
 			carComments
 			carRank
@@ -197,6 +202,7 @@ export const UPDATE_CAR = gql`
 			carTransmission
 			carColor
 			carImages
+			carVideoUrl
 			carDescription
 			carComments
 			carRank
@@ -236,6 +242,7 @@ export const LIKE_TARGET_CAR = gql`
 			carTransmission
 			carColor
 			carImages
+			carVideoUrl
 			carDescription
 			carComments
 			carRank

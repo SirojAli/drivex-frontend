@@ -12,6 +12,7 @@ export interface CustomJwtPayload extends JwtPayload {
 	// Optional fields
 	memberFullName?: string;
 	memberImage?: string;
+	memberVideoUrl?: string;
 	memberAddress?: string;
 	memberDescription?: string;
 

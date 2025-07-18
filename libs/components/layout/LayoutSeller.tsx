@@ -127,7 +127,7 @@ const withSellerLayout = (Component: ComponentType) => {
 									</MenuItem>
 								</Menu>
 
-								<Box className={'add-list'} onClick={() => router.push('/_seller/add-listing')}>
+								<Box className={'add-list'} onClick={() => router.push('/_seller/addListing')}>
 									<AddCircleOutlineIcon />
 									<p>Add Listing</p>
 								</Box>

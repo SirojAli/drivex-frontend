@@ -17,6 +17,7 @@ export const GET_SELLERS = gql`
 				memberNick
 				memberFullName
 				memberImage
+				memberVideoUrl
 				memberAddress
 				memberDescription
 				memberCars
@@ -60,6 +61,7 @@ export const GET_MEMBER = gql`
 			memberNick
 			memberFullName
 			memberImage
+			memberVideoUrl
 			memberAddress
 			memberDescription
 			memberCars
@@ -105,6 +107,7 @@ export const GET_CAR = gql`
 			carTransmission
 			carColor
 			carImages
+			carVideoUrl
 			carDescription
 			carComments
 			carRank
@@ -136,6 +139,7 @@ export const GET_CAR = gql`
 				memberNick
 				memberFullName
 				memberImage
+				memberVideoUrl
 				memberAddress
 				memberDescription
 				memberCars
@@ -179,6 +183,7 @@ export const GET_CARS = gql`
 				carTransmission
 				carColor
 				carImages
+				carVideoUrl
 				carDescription
 				carComments
 				carRank
@@ -210,6 +215,7 @@ export const GET_CARS = gql`
 					memberNick
 					memberFullName
 					memberImage
+					memberVideoUrl
 					memberAddress
 					memberDescription
 					memberCars
@@ -256,6 +262,7 @@ export const GET_SELLERS_CAR = gql`
 				carTransmission
 				carColor
 				carImages
+				carVideoUrl
 				carDescription
 				carSlug
 				carComments
@@ -301,6 +308,7 @@ export const GET_FAVORITES = gql`
 				carTransmission
 				carColor
 				carImages
+				carVideoUrl
 				carDescription
 				carSlug
 				carComments
@@ -333,6 +341,7 @@ export const GET_FAVORITES = gql`
 					memberNick
 					memberFullName
 					memberImage
+					memberVideoUrl
 					memberAddress
 					memberDescription
 					memberCars
@@ -375,6 +384,7 @@ export const GET_VISITED = gql`
 				carTransmission
 				carColor
 				carImages
+				carVideoUrl
 				carDescription
 				carSlug
 				carComments
@@ -407,6 +417,7 @@ export const GET_VISITED = gql`
 					memberNick
 					memberFullName
 					memberImage
+					memberVideoUrl
 					memberAddress
 					memberDescription
 					memberCars
@@ -464,6 +475,7 @@ export const GET_BOARD_ARTICLE = gql`
 				memberNick
 				memberFullName
 				memberImage
+				memberVideoUrl
 				memberAddress
 				memberDescription
 				memberCars
@@ -523,6 +535,7 @@ export const GET_BOARD_ARTICLES = gql`
 					memberNick
 					memberFullName
 					memberImage
+					memberVideoUrl
 					memberAddress
 					memberDescription
 					memberCars
@@ -575,6 +588,8 @@ export const GET_COMMENTS = gql`
 					memberNick
 					memberFullName
 					memberImage
+					memberVideoUrl
+					memberVideoUrl
 					memberAddress
 					memberDescription
 					memberCars
@@ -634,6 +649,7 @@ export const GET_MEMBER_FOLLOWERS = gql`
 					memberNick
 					memberFullName
 					memberImage
+					memberVideoUrl
 					memberAddress
 					memberDescription
 					memberCars
@@ -678,6 +694,7 @@ export const GET_MEMBER_FOLLOWINGS = gql`
 					memberNick
 					memberFullName
 					memberImage
+					memberVideoUrl
 					memberAddress
 					memberDescription
 					memberCars

@@ -30,6 +30,7 @@ export interface Car {
 	carTransmission: CarTransmission;
 	carColor: string;
 	carImages: string[];
+	carVideoUrl?: string;
 	carDescription?: string;
 	carComments: number;
 	carRank: number;

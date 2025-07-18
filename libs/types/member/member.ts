@@ -14,6 +14,7 @@ export interface Member {
 	memberPassword?: string;
 	memberFullName?: string;
 	memberImage: string;
+	memberVideoUrl?: string;
 	memberAddress?: string;
 	memberDescription?: string;
 	memberCars: number;

@@ -17,6 +17,7 @@ export const GET_ALL_MEMBERS_BY_ADMIN = gql`
 				memberNick
 				memberFullName
 				memberImage
+				memberVideoUrl
 				memberAddress
 				memberDescription
 				memberCars
@@ -62,6 +63,7 @@ export const GET_ALL_CARS_BY_ADMIN = gql`
 				carTransmission
 				carColor
 				carImages
+				carVideoUrl
 				carDescription
 				carComments
 				carRank
@@ -93,6 +95,7 @@ export const GET_ALL_CARS_BY_ADMIN = gql`
 					memberNick
 					memberFullName
 					memberImage
+					memberVideoUrl
 					memberAddress
 					memberDescription
 					memberCars
@@ -150,6 +153,7 @@ export const GET_ALL_BOARD_ARTICLES_BY_ADMIN = gql`
 					memberNick
 					memberFullName
 					memberImage
+					memberVideoUrl
 					memberAddress
 					memberDescription
 					memberCars
@@ -202,6 +206,7 @@ export const GET_COMMENTS = gql`
 					memberNick
 					memberFullName
 					memberImage
+					memberVideoUrl
 					memberAddress
 					memberDescription
 					memberCars

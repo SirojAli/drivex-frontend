@@ -19,6 +19,7 @@ export interface CarInput {
 	carTransmission: CarTransmission;
 	carColor: string;
 	carImages: string[];
+	carVideoUrl?: string;
 	carDescription?: string;
 	carVinNumber: string;
 	carIsNew: boolean;

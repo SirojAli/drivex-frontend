@@ -16,6 +16,7 @@ export const UPDATE_MEMBER_BY_ADMIN = gql`
 			memberNick
 			memberFullName
 			memberImage
+			memberVideoUrl
 			memberAddress
 			memberDescription
 			memberCars
@@ -56,6 +57,7 @@ export const UPDATE_CAR_BY_ADMIN = gql`
 			carTransmission
 			carColor
 			carImages
+			carVideoUrl
 			carDescription
 			carComments
 			carRank
@@ -95,6 +97,7 @@ export const REMOVE_CAR_BY_ADMIN = gql`
 			carTransmission
 			carColor
 			carImages
+			carVideoUrl
 			carDescription
 			carComments
 			carRank
