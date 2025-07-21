@@ -4,274 +4,149 @@
 
 		.container {
 			width: 1320px;
+			margin: 0 auto;
 			display: flex;
 			flex-direction: column;
-			align-items: center;
 
-			.filter-search-box {
+			.brand-grid {
 				width: 100%;
-				padding: 5px;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin: 20px 0;
-				background-color: #f7f7f7;
-
-				.filter-box {
-					width: 500px;
-					height: 50px;
-					display: flex;
-					justify-content: space-between;
-					align-items: center;
-
-					.filter-button {
-						width: 90px;
-						height: 40px;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						background-color: #ffa500;
-						border-radius: 8px;
-						cursor: pointer;
-
-						p {
-							color: #fff;
-							font-family: 'Urbanist', sans-serif;
-							font-size: 15px;
-							font-weight: 700;
-							text-transform: uppercase;
-							margin: 0;
-						}
-					}
-				}
-
-				.search-box {
-					width: 250px;
-					height: 40px;
-					border: 1px solid #ccc;
-					border-radius: 20px;
-					display: flex;
-					align-items: center;
-					background-color: #f9f9f9;
-					box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-					padding: 5px;
-
-					.search-form {
-						width: 100%;
-						display: flex;
-
-						.search-input {
-							flex: 1;
-							border: none;
-							background-color: transparent;
-							padding: 5px;
-							outline: none;
-						}
-
-						.search-btn {
-							width: 40px;
-							height: 40px;
-							background-color: #ffc300;
-							border: none;
-							border-radius: 20px;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							cursor: pointer;
-							margin-left: 5px;
-
-							&:hover {
-								background-color: #ff6b34;
-							}
-
-							&:active {
-								background-color: #e64800;
-							}
-
-							svg {
-								fill: #000;
-								width: 25px;
-								height: 25px;
-							}
-						}
-					}
-				}
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 20px;
+				padding: 20px;
 			}
 
-			.main-config {
+			.car-box {
 				width: 100%;
+				height: 480px;
 				display: flex;
 				flex-direction: column;
-				margin-bottom: 50px;
+				background-color: #fff;
+				border: 1px solid #afafaf;
+				border-radius: 10px;
+				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+				overflow: hidden;
+				cursor: pointer;
 
-				.list-config {
+				.car-img {
 					width: 100%;
-					min-height: 450px;
+					height: 300px;
+					display: block;
+					overflow: hidden;
+					position: relative;
 
-					.brand-config {
+					img {
 						width: 100%;
+						height: 100%;
+						object-fit: contain;
+					}
+				}
+
+				.car-info {
+					display: flex;
+					flex-direction: column;
+					background-color: #f9f9f9;
+					padding: 10px;
+					height: 180px;
+
+					.main-info {
+						flex: 1;
 						display: flex;
 						flex-direction: column;
-						margin-bottom: 50px;
 
-						.car-boxes {
-							width: 100%;
-							display: grid;
-							grid-template-columns: repeat(4, 1fr);
-							gap: 20px;
-							padding: 10px;
+						.main-stage {
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							padding-bottom: 5px;
+							border-bottom: 1px solid #ccc;
 
-							.car-box {
-								width: 300px;
-								height: 480px;
+							.car-name div {
+								font-family: 'Montserrat', sans-serif;
+								font-size: 22px;
+								font-weight: 600;
+								color: #007acc;
+								letter-spacing: 1px;
+							}
+
+							.like-button {
+								width: 35px;
+								height: 35px;
 								display: flex;
-								flex-direction: column;
-								background-color: #fff;
-								border: 1px solid #afafaf;
-								border-radius: 10px;
-								box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-								overflow: hidden;
+								justify-content: center;
+								align-items: center;
+								border-radius: 50%;
+								background-color: #ff7101;
 								cursor: pointer;
 
-								.car-img {
-									width: 300px;
-									height: 300px;
-									display: block;
-									overflow: hidden;
-									position: relative;
+								.like-icon {
+									color: white;
+									transition: 0.3s ease;
+								}
+							}
+						}
 
-									img {
-										width: 100%;
-										height: 100%;
-										object-fit: contain;
-										display: block;
-									}
+						.second-stage {
+							margin-top: 8px;
+							display: flex;
+							flex-direction: column;
+							gap: 6px;
+
+							.car-location,
+							.car-contact {
+								font-family: 'Open Sans', sans-serif;
+								font-size: 15px;
+								font-weight: 500;
+								color: #333;
+							}
+						}
+					}
+
+					.rating-info {
+						display: flex;
+						align-items: center;
+						padding: 10px 0;
+						border-top: 1px solid #ccc;
+
+						.rating {
+							width: 120px;
+							font-size: 16px;
+							font-weight: 500;
+						}
+
+						.rating-meta {
+							margin-left: auto;
+							display: flex;
+							align-items: center;
+							gap: 10px;
+
+							.divider {
+								width: 1px;
+								height: 25px;
+								background-color: #aaa;
+							}
+
+							.like,
+							.view {
+								display: flex;
+								align-items: center;
+								gap: 5px;
+
+								.like-count,
+								.view-count {
+									font-family: 'Open Sans', sans-serif;
+									font-size: 14px;
+									font-weight: 600;
+									color: #333;
 								}
 
-								.car-info {
-									display: flex;
-									flex-direction: column;
-									background-color: #f9f9f9;
-									padding: 10px;
-									height: 180px;
-
-									.main-info {
-										flex: 1;
-										display: flex;
-										flex-direction: column;
-
-										.main-stage {
-											display: flex;
-											justify-content: space-between;
-											align-items: center;
-											padding-bottom: 5px;
-											border-bottom: 1px solid #ccc;
-
-											.car-name div {
-												font-family: 'Montserrat', sans-serif;
-												font-size: 22px;
-												font-weight: 600;
-												color: #007acc;
-												letter-spacing: 1px;
-											}
-
-											.like-button {
-												width: 35px;
-												height: 35px;
-												display: flex;
-												justify-content: center;
-												align-items: center;
-												border-radius: 50%;
-												background-color: #808080;
-												cursor: pointer;
-
-												.like-icon {
-													color: white;
-												}
-											}
-										}
-
-										.second-stage {
-											margin-top: 8px;
-											display: flex;
-											flex-direction: column;
-											gap: 6px;
-
-											.car-location,
-											.car-contact {
-												display: flex;
-												align-items: center;
-
-												div {
-													font-family: 'Open Sans', sans-serif;
-													font-size: 15px;
-													font-weight: 500;
-													color: #333;
-												}
-											}
-										}
-									}
-
-									.rating-info {
-										display: flex;
-										align-items: center;
-										padding: 10px 0;
-										border-top: 1px solid #ccc;
-
-										.rating {
-											width: 120px;
-											font-size: 16px;
-											font-weight: 500;
-										}
-
-										.rating-meta {
-											margin-left: auto;
-											display: flex;
-											align-items: center;
-											gap: 10px;
-
-											.divider {
-												width: 1px;
-												height: 25px;
-												background-color: #aaa;
-											}
-
-											.like,
-											.view {
-												display: flex;
-												align-items: center;
-												gap: 5px;
-
-												.like-count,
-												.view-count {
-													font-family: 'Open Sans', sans-serif;
-													font-size: 14px;
-													font-weight: 600;
-													color: #333;
-												}
-
-												.like-icon-wrapper,
-												.view-icon-wrapper {
-													.mui-icon {
-														color: #666;
-														font-size: 20px;
-													}
-												}
-											}
-										}
-									}
+								.mui-icon {
+									color: #666;
+									font-size: 20px;
 								}
 							}
 						}
 					}
-				}
-
-				.pagination-box {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					margin-bottom: 50px;
-					height: 50px;
 				}
 			}
 		}

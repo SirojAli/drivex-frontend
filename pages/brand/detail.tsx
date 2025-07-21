@@ -1,36 +1,133 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import { NextPage } from 'next';
 import { Stack, Box, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import CarCard from '../../libs/components/car/CarCard';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
+import { CarsInquiry } from '../../libs/types/car/car.input';
+import { Message } from '../../libs/enums/common.enum';
+import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import { useRouter } from 'next/router';
+import { LIKE_TARGET_CAR } from '../../apollo/user/mutation';
+import { Car } from '../../libs/types/car/car';
+import { useMutation, useQuery } from '@apollo/client';
+import { T } from '../../libs/types/common';
+import { GET_CARS } from '../../apollo/user/query';
+import { Direction } from '../../libs/enums/common.enum';
 
-const mockCars = new Array(20).fill({
-	name: 'BMW X7 2020 Super Turbo',
-	type: 'SUV',
-	fuel: 'Petrol',
-	transmission: 'Auto',
-	engine: '3.0 L',
-	price: '$73,000',
-	views: 1540,
-	likes: 320,
-	image: '/img/cars/header1.jpg',
-	logo: '/img/logo/BMW.png',
-	brand: 'BMW',
-});
+interface BrandCarsProps {
+	initialInput: CarsInquiry;
+}
 
-const BrandDetail: NextPage = () => {
+const BrandDetail = (props: BrandCarsProps) => {
+	const { initialInput } = props;
 	const device = useDeviceDetect();
+	const [chosenBrandCars, setChosenBrandCars] = useState<Car[]>([]);
+	const [inputState, setInputState] = useState<CarsInquiry>(initialInput);
+	const router = useRouter();
 	const [searchQuery, setSearchQuery] = useState('');
+	const [brandName, setBrandName] = useState<string>('');
+
+	/** SET BRAND NAME FROM QUERY **/
+	useEffect(() => {
+		const brandFromQuery = router.query.brand;
+		if (brandFromQuery && typeof brandFromQuery === 'string') {
+			setBrandName(brandFromQuery.toUpperCase());
+			setInputState((prev) => ({
+				...prev,
+				search: { ...prev.search, carBrand: brandFromQuery },
+			}));
+		}
+	}, [router.query.brand]);
+
+	/** APOLLO REQUESTS **/
+	const [likeTargetCar] = useMutation(LIKE_TARGET_CAR);
+
+	const {
+		loading: getCarsLoading,
+		data: getCarsData,
+		error: getCarsError,
+		refetch: getCarsRefetch,
+	} = useQuery(GET_CARS, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: inputState },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			if (data?.getCars?.list && Array.isArray(data.getCars.list)) {
+				setChosenBrandCars(data.getCars.list);
+			} else {
+				setChosenBrandCars([]);
+			}
+		},
+	});
+
+	/** HANDLERS **/
+	const likeCarHandler = async (user: T, id: string) => {
+		try {
+			if (!id) return;
+			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
+			await likeTargetCar({ variables: { input: id } });
+			await getCarsRefetch({ input: inputState });
+			await sweetTopSmallSuccessAlert('Success! ', 800);
+		} catch (err: any) {
+			console.log('ERROR, likeCarHandler: ', err.message);
+			sweetMixinErrorAlert(err.message).then();
+		}
+	};
 
 	const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setSearchQuery(e.target.value);
 	};
 
-	const handleSearchSubmit = (e: React.FormEvent) => {
+	const handleSearchSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		// Optional: Filter logic
+		const newInput = {
+			...inputState,
+			search: {
+				...inputState.search,
+				carName: searchQuery,
+			},
+			page: 1,
+		};
+		setInputState(newInput);
+		await getCarsRefetch({ input: newInput });
+	};
+
+	// FILTER TABS
+	const filterMap: Record<string, Partial<CarsInquiry>> = {
+		Featured: { sort: 'carViews', direction: Direction.DESC },
+		Popular: { sort: 'carLikes', direction: Direction.DESC },
+		New: {
+			sort: 'carYear',
+			direction: Direction.DESC,
+			search: { carYear: 2025 },
+		},
+		Upcoming: {
+			sort: 'carYear',
+			direction: Direction.DESC,
+			search: { carYear: 2026 },
+		},
+	};
+
+	const handleFilterClick = async (filterKey: string) => {
+		const update = filterMap[filterKey] || {};
+		const newInput = {
+			...inputState,
+			...update,
+			search: {
+				...inputState.search,
+				...(update.search || {}),
+			},
+		};
+		setInputState(newInput);
+		await getCarsRefetch({ input: newInput });
+	};
+
+	const viewCarHandler = async () => {
+		await router.push({
+			pathname: '/car/detail',
+		});
 	};
 
 	if (device === 'mobile') {
@@ -41,14 +138,14 @@ const BrandDetail: NextPage = () => {
 				<Stack className={'container-box'}>
 					{/* Header */}
 					<Box className={'brand-header'}>
-						<h2 className={'brand-name'}>BMW</h2>
+						<h2 className={'brand-name'}>{chosenBrandCars[0]?.carBrand || 'Brand'}</h2>
 					</Box>
 
 					{/* Filter and Search */}
 					<Box className={'filter-search-box'}>
 						<Box className={'filter-box'}>
-							{['Top', 'Popular', 'New', 'Discount'].map((filter) => (
-								<div key={filter} className={'filter-button'}>
+							{['Featured', 'Popular', 'New', 'Upcoming'].map((filter) => (
+								<div key={filter} className={'filter-button'} onClick={() => handleFilterClick(filter)}>
 									<p>{filter}</p>
 								</div>
 							))}
@@ -72,15 +169,27 @@ const BrandDetail: NextPage = () => {
 					{/* Car Cards */}
 					<Box className={'car-list-box'}>
 						<Stack className={'car-list'}>
-							{mockCars.map((car, index) => (
-								<CarCard key={index} car={car} />
-							))}
+							{chosenBrandCars?.length === 0 ? (
+								<p>No cars found for this brand.</p>
+							) : (
+								chosenBrandCars.map((car, index) => <CarCard key={index} car={car} likeCarHandler={likeCarHandler} />)
+							)}
 						</Stack>
 					</Box>
 				</Stack>
 			</div>
 		);
 	}
+};
+
+BrandDetail.defaultProps = {
+	initialInput: {
+		page: 1,
+		limit: 12,
+		sort: 'carViews',
+		direction: 'DESC',
+		search: {},
+	},
 };
 
 export default withLayoutBasic(BrandDetail);

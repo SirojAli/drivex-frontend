@@ -1,126 +1,166 @@
 import React, { useState } from 'react';
-import { Box, Stack, Modal } from '@mui/material';
+import { Box, Stack, Modal, IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import CompareModalContent from './../../../pages/car/compare';
+import useDeviceDetect from '../../hooks/useDeviceDetect';
+import { useRouter } from 'next/router';
+import { useReactiveVar } from '@apollo/client';
+import { userVar } from '../../../apollo/store';
+import { Car } from '../../types/car/car';
+import { REACT_APP_API_URL } from '../../../libs/config';
 
-const CarCard = ({ car }: any) => {
+interface PopularCarCardProps {
+	car: Car;
+	likeCarHandler: any;
+}
+
+const CarCard = (props: PopularCarCardProps) => {
+	const { car, likeCarHandler } = props;
+	const device = useDeviceDetect();
+	const router = useRouter();
+	const user = useReactiveVar(userVar);
 	const [openCompare, setOpenCompare] = useState(false);
 
 	const handleCompare = (status: boolean) => {
 		setOpenCompare(status);
 	};
 
-	const dummyCars = [
-		{
-			year: 2024,
-			featured: true,
-			image: 'https://via.placeholder.com/300x200',
-			type: 'Sedan',
-			name: '2017 BMV X1 xDrive 20d xline',
-			price: 73000,
-			priceText: new Intl.NumberFormat('en-US').format(73000),
-			fuel: 'Petrol',
-			kms: '20,000 km',
-		},
-		{
-			year: 2024,
-			featured: true,
-			image: 'https://via.placeholder.com/300x200',
-			type: 'Sedan',
-			name: '2017 BMV X1 xDrive 20d xline',
-			price: 83000,
-			priceText: new Intl.NumberFormat('en-US').format(83000),
-			fuel: 'Petrol',
-			kms: '10,000 km',
-		},
-	];
+	/** HANDLERS **/
+	const pushDetailHandler = async (carId: string) => {
+		console.log('carId:', carId);
+		await router.push({
+			pathname: '/car/detail',
+			query: { id: carId },
+		});
+	};
 
-	return (
-		<>
-			<Stack className={'car-box'}>
-				<Stack className={'img-box'}>
-					<img src={car.image || '/img/cars/header1.jpg'} alt={car.name || 'Car'} />
-					<div className={'img-feat'}>
-						<span>Featured</span>
-					</div>
-					<FavoriteIcon className={'like-btn'} color={'primary'} />
-					<CompareArrowsIcon className={'compare-btn'} onClick={() => handleCompare(true)} />
+	const formatPrice = (price: number) => {
+		return `₩${price.toLocaleString('ko-KR')}`;
+	};
+
+	if (device === 'mobile') {
+		return <h1>CAR CARD</h1>;
+	} else {
+		return (
+			<>
+				<Stack className={'car-box'}>
+					<Stack className={'img-box'}>
+						<img src={`${REACT_APP_API_URL}/${car?.carImages[0]}`} alt={'Car'} />
+
+						{(() => {
+							let badge: string | null = null;
+
+							if (car.carYear === 2026) badge = 'Upcoming';
+							else if (car.carYear === 2025) badge = 'New';
+							else if (car.carStatus === 'SOLD') badge = 'Sold';
+							else if (car.carViews && car.carViews > 1000) badge = 'Featured';
+							else if (car.carLikes && car.carLikes > 100) badge = 'Hot';
+
+							if (!badge) return null;
+
+							return (
+								<div className={`img-badge badge-${badge.toLowerCase()}`}>
+									<span>{badge}</span>
+								</div>
+							);
+						})()}
+
+						<div
+							className={`action-btn like-btn ${car?.meLiked && car?.meLiked[0]?.myFavorite ? 'liked' : ''}`}
+							onClick={() => likeCarHandler(user, car?._id)}
+						>
+							<FavoriteIcon className="heart-icon" />
+						</div>
+
+						<div className="action-btn compare-btn" onClick={() => handleCompare(true)}>
+							<CompareArrowsIcon style={{ fill: '#FF7101' }} />
+						</div>
+					</Stack>
+
+					<Stack className={'car-info'}>
+						<Box className={'car-content'}>
+							<span className={'car-type'}>{car.carType || 'Sedan'}</span>
+							<p className={'car-name'}>
+								{car.carYear} {car.carModel}
+							</p>
+							<div className={'car-category'}>
+								<div className={'category'}>
+									<img src={'/img/icons/fuel.png'} alt={'fuel'} />
+									<span>{car.carFuelType}</span>
+								</div>
+								<div className={'category'}>
+									<img src={'/img/icons/auto.png'} alt={'transmission'} />
+									<span>{car.carTransmission}</span>
+								</div>
+								<div className={'category'}>
+									<img src={'/img/icons/speed.png'} alt={'engine'} />
+									<span>{car.carEngineSize} L</span>
+								</div>
+							</div>
+							<div className={'car-price-btn'}>
+								<span className={'price'}>{formatPrice(car.carPrice)}</span>
+								<div className={'view-like-btn'}>
+									<div className={'view-btn'} title={'Views'}>
+										<RemoveRedEyeIcon className={'view'} />
+										<span>{car.carViews}</span>
+									</div>
+									<div className={'like-btn'} title={'Likes'}>
+										<FavoriteIcon className={'like'} color={'error'} />
+										<span>{car.carLikes}</span>
+									</div>
+								</div>
+							</div>
+						</Box>
+						<Box className={'divider'} />
+						<Box className={'car-logo'} sx={{ cursor: 'pointer' }} onClick={() => pushDetailHandler(car._id)}>
+							<Box className={'logo'}>
+								{/* If you have brand logos mapped by carBrand, replace accordingly */}
+								<img
+									src={`/img/logo/${car.carBrand}.png`}
+									alt={'logo'}
+									onError={(e) => {
+										(e.target as HTMLImageElement).src = '/img/logo/default.png';
+									}}
+								/>
+								<span>{car.carBrand}</span>
+							</Box>
+							<Box className={'view-btn'}>
+								<span>View Car</span>
+							</Box>
+						</Box>
+					</Stack>
 				</Stack>
 
-				<Stack className={'car-info'}>
-					<Box className={'car-content'}>
-						<span className={'car-type'}>{car.type || 'Sedan'}</span>
-						<p className={'car-name'}>{car.name || 'BMW X7 2020 Super Turbo'}</p>
-						<div className={'car-category'}>
-							<div className={'category'}>
-								<img src="/img/icons/fuel.png" alt="fuel" />
-								<span>{car.fuel || 'Petrol'}</span>
-							</div>
-							<div className={'category'}>
-								<img src="/img/icons/auto.png" alt="transmission" />
-								<span>{car.transmission || 'Auto'}</span>
-							</div>
-							<div className={'category'}>
-								<img src="/img/icons/speed.png" alt="engine" />
-								<span>{car.engine || '3.0 L'}</span>
-							</div>
-						</div>
-						<div className={'car-price-btn'}>
-							<span className={'price'}>{car.price || '$73,000'}</span>
-							<div className={'view-like-btn'}>
-								<div className={'view-btn'}>
-									<RemoveRedEyeIcon className={'view'} />
-									<span>{car.views || 10}</span>
-								</div>
-								<div className={'like-btn'}>
-									<FavoriteIcon className={'like'} />
-									<span>{car.likes || 20}</span>
-								</div>
-							</div>
-						</div>
-					</Box>
-					<Box className={'divider'}></Box>
-					<Box className={'car-logo'}>
-						<Box className={'logo'}>
-							<img src={car.logo || '/img/logo/BMW.png'} alt="brand" />
-							<span>{car.brand || 'BMW'}</span>
-						</Box>
-						<Box className={'view-btn'}>
-							<span>View Car</span>
-						</Box>
-					</Box>
-				</Stack>
-			</Stack>
-
-			{/* ✅ Compare Cars Modal */}
-			<Modal
-				open={openCompare}
-				onClose={() => handleCompare(false)}
-				aria-labelledby="modal-title"
-				aria-describedby="modal-description"
-			>
-				<Box
-					sx={{
-						position: 'absolute',
-						top: '50%',
-						left: '50%',
-						transform: 'translate(-50%, -50%)',
-						bgcolor: 'background.paper',
-						borderRadius: '12px',
-						boxShadow: 24,
-						p: 3,
-						width: 1120,
-						maxHeight: '500px',
-						overflowY: 'auto',
-					}}
+				{/* Compare Cars Modal */}
+				<Modal
+					open={openCompare}
+					onClose={() => handleCompare(false)}
+					aria-labelledby="modal-title"
+					aria-describedby="modal-description"
 				>
-					<CompareModalContent cars={dummyCars} />
-				</Box>
-			</Modal>
-		</>
-	);
+					<Box
+						sx={{
+							position: 'absolute',
+							top: '50%',
+							left: '50%',
+							transform: 'translate(-50%, -50%)',
+							bgcolor: 'background.paper',
+							borderRadius: '12px',
+							boxShadow: 24,
+							p: 3,
+							width: 1120,
+							maxHeight: '500px',
+							overflowY: 'auto',
+						}}
+					>
+						<CompareModalContent cars={[car]} />
+					</Box>
+				</Modal>
+			</>
+		);
+	}
 };
 
 export default CarCard;

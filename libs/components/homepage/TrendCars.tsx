@@ -13,14 +13,14 @@ import { Message } from '../../enums/common.enum';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { useRouter } from 'next/router';
 
-interface PopularCarsProps {
+interface TrendCarsProps {
 	initialInput: CarsInquiry;
 }
 
-const PopularCars = (props: PopularCarsProps) => {
+const TrendCars = (props: TrendCarsProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
-	const [popularCars, setPopularCars] = useState<Car[]>([]);
+	const [trendCars, setTrendCars] = useState<Car[]>([]);
 	const router = useRouter();
 
 	/** APOLLO REQUESTS **/
@@ -36,11 +36,7 @@ const PopularCars = (props: PopularCarsProps) => {
 		variables: { input: initialInput },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			if (data?.getCars?.list && Array.isArray(data.getCars.list)) {
-				setPopularCars(data.getCars.list);
-			} else {
-				setPopularCars([]);
-			}
+			setTrendCars(data?.getCars?.list);
 		},
 	});
 
@@ -66,17 +62,17 @@ const PopularCars = (props: PopularCarsProps) => {
 		});
 	};
 
-	if (popularCars) console.log('popularCars: +++', popularCars);
-	if (!popularCars) return null;
+	if (trendCars) console.log('trendCars: +++', trendCars);
+	if (!trendCars) return null;
 
 	if (device === 'mobile') {
-		return <h1>HOMEPAGE - POPULAR CARS</h1>;
+		return <h1>HOMEPAGE - TREND CARS</h1>;
 	} else {
 		return (
-			<Stack className={'popular-cars'}>
+			<Stack className={'trend-cars'}>
 				<Stack className={'container'}>
-					<Box className={'popular-text'}>
-						<h2>Popular Cars</h2>
+					<Box className={'trend-text'}>
+						<h2>Trend Cars</h2>
 						<div
 							className={'view-all'}
 							onClick={() => {
@@ -88,11 +84,11 @@ const PopularCars = (props: PopularCarsProps) => {
 						</div>
 					</Box>
 
-					<Stack className={'popular-car-box'}>
-						{popularCars.length === 0 ? (
-							<Box className="empty-list">Popular Cars Empty</Box>
+					<Stack className="trend-car-box">
+						{trendCars.length === 0 ? (
+							<Box className="empty-list">Trend Cars Empty</Box>
 						) : (
-							popularCars.map((car: Car) => <CarCard key={car._id} car={car} likeCarHandler={likeCarHandler} />)
+							trendCars.map((car: Car) => <CarCard key={car._id} car={car} likeCarHandler={likeCarHandler} />)
 						)}
 					</Stack>
 				</Stack>
@@ -101,14 +97,14 @@ const PopularCars = (props: PopularCarsProps) => {
 	}
 };
 
-PopularCars.defaultProps = {
+TrendCars.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 4,
-		sort: 'carViews',
+		sort: 'carLikes',
 		direction: 'DESC',
 		search: {},
 	},
 };
 
-export default PopularCars;
+export default TrendCars;

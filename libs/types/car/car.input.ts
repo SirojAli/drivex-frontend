@@ -1,11 +1,4 @@
-import {
-	CarStatus, //
-	CarBrand,
-	CarType,
-	CarFuelType,
-	CarTransmission,
-	CarDriveType,
-} from '../../enums/car.enum';
+import { CarStatus, CarBrand, CarType, CarFuelType, CarTransmission, CarDriveType } from '../../enums/car.enum';
 import { Direction } from '../../enums/common.enum';
 
 // 1. CAR INPUT (Create Car)
@@ -35,36 +28,37 @@ export interface CarInput {
 }
 
 // 2. RANGE TYPES
-interface PriceRange {
-	start?: number;
-	end?: number;
+export interface PriceRange {
+	start: number;
+	end: number;
 }
 
-interface YearRange {
-	start?: number;
-	end?: number;
+export interface YearRange {
+	start: number;
+	end: number;
 }
 
 // 3. SEARCH FILTERS (Car Inquiry Search)
 export interface CarISearch {
 	memberId?: string;
-	brandList?: CarBrand[];
-	typeList?: CarType[];
-	fuelList?: CarFuelType[];
-	transmissionList?: CarTransmission[];
-	colorList?: string;
-	pricesRange?: PriceRange;
-	yearRange?: YearRange;
+	carBrand?: CarBrand[];
+	carModel?: string;
+	carType?: CarType[];
+	carFuelType?: CarFuelType[];
+	carTransmission?: CarTransmission[];
+	carDriveType?: CarDriveType[];
+	carColor?: string[];
+	carPrice?: PriceRange;
+	carYearRange?: YearRange;
+	carYear?: number;
 	carIsNew?: boolean;
-	minSpecs?: {
-		minSeats?: number;
-		minDoors?: number;
-		minCylinders?: number;
-		minEngineSize?: number;
-		minCityMpg?: number;
-		minHighwayMpg?: number;
-		minMaxSpeed?: number;
-	};
+	carSeats?: number;
+	carDoors?: number;
+	carCylinders?: number;
+	carEngineSize?: number;
+	carCityMpg?: number;
+	carHighwayMpg?: number;
+	carMaxSpeed?: number;
 	text?: string;
 }
 
@@ -80,6 +74,8 @@ export interface CarsInquiry {
 // 5. SELLER CARS INQUIRY
 interface SCISearch {
 	carStatus?: CarStatus;
+	carBrand?: CarBrand[];
+	carYear?: number;
 }
 
 export interface SellerCarsInquiry {
@@ -93,7 +89,8 @@ export interface SellerCarsInquiry {
 // 6. ALL CARS INQUIRY
 interface ALCISearch {
 	carStatus?: CarStatus;
-	carBrandList?: CarBrand[];
+	carBrand?: CarBrand[];
+	carYear?: number;
 }
 
 export interface AllCarsInquiry {
