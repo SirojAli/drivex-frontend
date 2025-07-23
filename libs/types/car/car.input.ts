@@ -36,6 +36,7 @@ export interface PriceRange {
 // 3. SEARCH FILTERS (Car Inquiry Search)
 export interface CarISearch {
 	memberId?: string;
+	carStatus?: CarStatus[];
 	carBrand?: CarBrand[];
 	carType?: CarType[];
 	carFuelType?: CarFuelType[];

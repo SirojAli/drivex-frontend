@@ -29,7 +29,7 @@ const CarCard = (props: PopularCarCardProps) => {
 
 	/** HANDLERS **/
 	const pushDetailHandler = async (carId: string) => {
-		console.log('carId:', carId);
+		if (car.carStatus === 'SOLD') return; // Block routing for SOLD cars
 		await router.push({
 			pathname: '/car/detail',
 			query: { id: carId },
@@ -43,9 +43,19 @@ const CarCard = (props: PopularCarCardProps) => {
 	if (device === 'mobile') {
 		return <h1>CAR CARD</h1>;
 	} else {
+		// Check if sold for styling
+		const isSold = car.carStatus === 'SOLD';
+
 		return (
 			<>
-				<Stack className={'car-box'}>
+				<Stack
+					className={'car-box'}
+					sx={{
+						pointerEvents: isSold ? 'none' : 'auto',
+						cursor: isSold ? 'default' : 'pointer',
+						userSelect: isSold ? 'none' : 'auto',
+					}}
+				>
 					<Stack className={'img-box'}>
 						<img src={`${REACT_APP_API_URL}/${car?.carImages[0]}`} alt={'Car'} />
 
@@ -54,14 +64,14 @@ const CarCard = (props: PopularCarCardProps) => {
 
 							if (car.carYear === 2026) badge = 'Upcoming';
 							else if (car.carYear === 2025) badge = 'New';
-							else if (car.carStatus === 'SOLD') badge = 'Sold';
+							else if (isSold) badge = 'Out of Stock'; // Changed text here
 							else if (car.carViews && car.carViews > 1000) badge = 'Featured';
 							else if (car.carLikes && car.carLikes > 100) badge = 'Hot';
 
 							if (!badge) return null;
 
 							return (
-								<div className={`img-badge badge-${badge.toLowerCase()}`}>
+								<div className={`img-badge badge-${badge.toLowerCase().replace(/\s/g, '-')}`}>
 									<span>{badge}</span>
 								</div>
 							);
@@ -114,9 +124,16 @@ const CarCard = (props: PopularCarCardProps) => {
 							</div>
 						</Box>
 						<Box className={'divider'} />
-						<Box className={'car-logo'} sx={{ cursor: 'pointer' }} onClick={() => pushDetailHandler(car._id)}>
+						<Box
+							className={'car-logo'}
+							sx={{
+								cursor: isSold ? 'not-allowed' : 'pointer',
+								opacity: isSold ? 0.6 : 1,
+								position: 'relative',
+							}}
+							onClick={() => pushDetailHandler(car._id)}
+						>
 							<Box className={'logo'}>
-								{/* If you have brand logos mapped by carBrand, replace accordingly */}
 								<img
 									src={`/img/logo/${car.carBrand}.png`}
 									alt={'logo'}
@@ -126,9 +143,12 @@ const CarCard = (props: PopularCarCardProps) => {
 								/>
 								<span>{car.carBrand}</span>
 							</Box>
+
 							<Box className={'view-btn'}>
 								<span>View Car</span>
 							</Box>
+
+							{/* Removed the "Sold Out" red label below */}
 						</Box>
 					</Stack>
 				</Stack>

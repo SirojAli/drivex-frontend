@@ -129,6 +129,11 @@ export const GET_CAR = gql`
 			deletedAt
 			createdAt
 			updatedAt
+			meLiked {
+				memberId
+				likeRefId
+				myFavorite
+			}
 			memberData {
 				_id
 				memberType
@@ -139,8 +144,8 @@ export const GET_CAR = gql`
 				memberNick
 				memberFullName
 				memberImage
-				memberVideoUrl
 				memberAddress
+				memberVideoUrl
 				memberDescription
 				memberCars
 				memberArticles
@@ -158,11 +163,6 @@ export const GET_CAR = gql`
 				createdAt
 				updatedAt
 				accessToken
-			}
-			meLiked {
-				memberId
-				likeRefId
-				myFavorite
 			}
 		}
 	}
@@ -205,6 +205,11 @@ export const GET_CARS = gql`
 				deletedAt
 				createdAt
 				updatedAt
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
+				}
 				memberData {
 					_id
 					memberType
@@ -215,8 +220,8 @@ export const GET_CARS = gql`
 					memberNick
 					memberFullName
 					memberImage
-					memberVideoUrl
 					memberAddress
+					memberVideoUrl
 					memberDescription
 					memberCars
 					memberArticles
@@ -233,11 +238,6 @@ export const GET_CARS = gql`
 					deletedAt
 					createdAt
 					updatedAt
-				}
-				meLiked {
-					memberId
-					likeRefId
-					myFavorite
 				}
 			}
 			metaCounter {
@@ -284,6 +284,41 @@ export const GET_SELLERS_CAR = gql`
 				deletedAt
 				createdAt
 				updatedAt
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
+				}
+				memberData {
+					_id
+					memberType
+					memberStatus
+					memberAuthType
+					memberEmail
+					memberPhone
+					memberNick
+					memberFullName
+					memberImage
+					memberAddress
+					memberVideoUrl
+					memberDescription
+					memberCars
+					memberArticles
+					memberFollowers
+					memberFollowings
+					memberPoints
+					memberLikes
+					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
+					brandSlug
+					deletedAt
+					createdAt
+					updatedAt
+					accessToken
+				}
 			}
 			metaCounter {
 				total

@@ -96,8 +96,16 @@ const BrandDetail = (props: BrandCarsProps) => {
 
 	// FILTER TABS
 	const filterMap: Record<string, Partial<CarsInquiry>> = {
-		Featured: { sort: 'carViews', direction: Direction.DESC },
-		Popular: { sort: 'carLikes', direction: Direction.DESC },
+		Featured: {
+			sort: 'carViews',
+			direction: Direction.DESC,
+			search: {},
+		},
+		Popular: {
+			sort: 'carLikes',
+			direction: Direction.DESC,
+			search: {},
+		},
 		New: {
 			sort: 'carYear',
 			direction: Direction.DESC,
@@ -112,14 +120,14 @@ const BrandDetail = (props: BrandCarsProps) => {
 
 	const handleFilterClick = async (filterKey: string) => {
 		const update = filterMap[filterKey] || {};
-		const newInput = {
+
+		const newInput: CarsInquiry = {
 			...inputState,
 			...update,
-			search: {
-				...inputState.search,
-				...(update.search || {}),
-			},
+			search: update.search !== undefined ? update.search : inputState.search,
+			page: 1,
 		};
+
 		setInputState(newInput);
 		await getCarsRefetch({ input: newInput });
 	};
@@ -185,10 +193,10 @@ const BrandDetail = (props: BrandCarsProps) => {
 BrandDetail.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 12,
+		limit: 24,
 		sort: 'carViews',
 		direction: 'DESC',
-		search: {},
+		search: { carStatus: ['ACTIVE', 'SOLD'] },
 	},
 };
 
