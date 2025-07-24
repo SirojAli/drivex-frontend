@@ -115,7 +115,7 @@ const CategoryBox = () => {
 					<span>Audi</span>
 				</Stack>
 				<Stack className={'tag'}>
-					<span>Tesla</span>
+					<span>Lexus</span>
 				</Stack>
 				<Stack className={'tag'}>
 					<span>Lamborghini</span>

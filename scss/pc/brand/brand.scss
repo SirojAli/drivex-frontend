@@ -1,12 +1,24 @@
 #pc-wrap {
 	#brand-list-page {
-		background: #fff;
+		background: #f8f8f8;
+		margin-bottom: 100px;
 
 		.container {
 			width: 1320px;
 			margin: 0 auto;
 			display: flex;
 			flex-direction: column;
+
+			.brand-title {
+				text-align: center;
+				margin-top: 40px;
+				margin-bottom: 10px;
+				color: #000;
+				font-family: $font;
+				font-weight: 600;
+				font-size: 28px;
+				letter-spacing: 0.8px;
+			}
 
 			.brand-grid {
 				width: 100%;
@@ -16,9 +28,9 @@
 				padding: 20px;
 			}
 
-			.car-box {
+			.seller-box {
 				width: 100%;
-				height: 480px;
+				height: 420px;
 				display: flex;
 				flex-direction: column;
 				background-color: #fff;
@@ -27,22 +39,27 @@
 				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 				overflow: hidden;
 				cursor: pointer;
+				transition: all 0.25s ease;
 
-				.car-img {
+				.seller-img {
 					width: 100%;
-					height: 300px;
-					display: block;
-					overflow: hidden;
-					position: relative;
+					height: 240px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					background-color: #fff;
+					border-bottom: 1px solid #eee;
+					padding: 15px;
 
 					img {
-						width: 100%;
-						height: 100%;
+						max-width: 100%;
+						max-height: 100%;
 						object-fit: contain;
+						object-position: center;
 					}
 				}
 
-				.car-info {
+				.seller-info {
 					display: flex;
 					flex-direction: column;
 					background-color: #f9f9f9;
@@ -61,43 +78,74 @@
 							padding-bottom: 5px;
 							border-bottom: 1px solid #ccc;
 
-							.car-name div {
-								font-family: 'Montserrat', sans-serif;
-								font-size: 22px;
-								font-weight: 600;
-								color: #007acc;
-								letter-spacing: 1px;
+							.seller-name {
+								.name {
+									font-family: $font;
+									font-size: 24px;
+									font-weight: 600;
+									color: #222;
+									letter-spacing: 0.5px;
+								}
 							}
 
-							.like-button {
-								width: 35px;
-								height: 35px;
+							.like-btn {
+								top: 10px;
+								right: 10px;
+								width: 36px;
+								height: 36px;
+								padding: 6px;
+								border-radius: 50%;
+								background-color: #ffffff;
+								border: 1px solid #ccc;
 								display: flex;
 								justify-content: center;
 								align-items: center;
-								border-radius: 50%;
-								background-color: #ff7101;
-								cursor: pointer;
+								transition: all 0.2s ease;
 
-								.like-icon {
-									color: white;
-									transition: 0.3s ease;
+								.heart-icon {
+									fill: #fff;
+									stroke: #ff7101;
+									stroke-width: 2;
+									width: 20px;
+									height: 20px;
+									transition: all 0.2s ease;
+								}
+
+								&.liked {
+									border-color: #bbb;
+
+									.heart-icon {
+										fill: #dc3545;
+										stroke: #dc3545;
+									}
 								}
 							}
 						}
 
 						.second-stage {
-							margin-top: 8px;
+							margin-top: 10px;
+							padding: 6px;
+							border-radius: 6px;
 							display: flex;
 							flex-direction: column;
-							gap: 6px;
+							justify-content: space-between;
+							gap: 15px;
+							background-color: #fafafa;
 
-							.car-location,
-							.car-contact {
-								font-family: 'Open Sans', sans-serif;
-								font-size: 15px;
+							.seller-location,
+							.seller-contact {
+								display: flex;
+								align-items: center;
+								gap: 8px;
+								font-family: $font;
+								font-size: 14px;
 								font-weight: 500;
-								color: #333;
+								color: #2c2c2c;
+
+								svg {
+									color: #555;
+									font-size: 18px;
+								}
 							}
 						}
 					}
@@ -105,13 +153,14 @@
 					.rating-info {
 						display: flex;
 						align-items: center;
-						padding: 10px 0;
-						border-top: 1px solid #ccc;
+						padding: 8px 0 0;
+						border-top: 1px solid #ccc; // ddd
 
 						.rating {
-							width: 120px;
+							display: flex;
+							gap: 2px;
+							color: #ffc107;
 							font-size: 16px;
-							font-weight: 500;
 						}
 
 						.rating-meta {
@@ -122,8 +171,8 @@
 
 							.divider {
 								width: 1px;
-								height: 25px;
-								background-color: #aaa;
+								height: 20px;
+								background-color: #ccc; // aaa
 							}
 
 							.like,
@@ -134,15 +183,15 @@
 
 								.like-count,
 								.view-count {
-									font-family: 'Open Sans', sans-serif;
-									font-size: 14px;
+									font-family: $font;
+									font-size: 13px;
 									font-weight: 600;
 									color: #333;
 								}
 
 								.mui-icon {
-									color: #666;
-									font-size: 20px;
+									color: #888; // 666
+									font-size: 18px;
 								}
 							}
 						}

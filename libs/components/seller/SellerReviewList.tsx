@@ -43,8 +43,8 @@ const reviews = [
 		text: 'Sed turpis neque, iaculis blandit viverra ut, dapibus eget nisi.',
 		time: '3 days ago',
 		car: {
-			id: 'tesla-model3',
-			name: 'Tesla Model 3 2023',
+			id: 'lexus-model3',
+			name: 'Lexus Model 3 2023',
 		},
 	},
 	{
@@ -54,8 +54,8 @@ const reviews = [
 		text: 'Sed turpis neque, iaculis blandit viverra ut, dapibus eget nisi.',
 		time: '3 days ago',
 		car: {
-			id: 'tesla-model3',
-			name: 'Tesla Model 3 2023',
+			id: 'lexus-model3',
+			name: 'Lexus Model 3 2023',
 		},
 	},
 ];

@@ -2,12 +2,15 @@ import React from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { Stack } from '@mui/material';
+import { Stack, Box, Typography, Tooltip } from '@mui/material';
 import { REACT_APP_API_URL } from '../../config';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { useRouter } from 'next/router';
 import { Member } from '../../types/member/member';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import StarIcon from '@mui/icons-material/Star';
 
 interface BrandCardProps {
 	seller: Member;
@@ -15,7 +18,7 @@ interface BrandCardProps {
 	onClick?: () => void;
 }
 
-const BrandCard = ({ seller, likeMemberHandler, onClick }: BrandCardProps) => {
+const BrandCard = ({ seller, likeMemberHandler }: BrandCardProps) => {
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
 	const router = useRouter();
@@ -25,7 +28,6 @@ const BrandCard = ({ seller, likeMemberHandler, onClick }: BrandCardProps) => {
 		: '/img/profile/defaultUser.png';
 	const isLiked = seller?.meLiked;
 
-	/** ✅ HANDLERS **/
 	const pushDetailHandler = async (memberId: string, brandName: string) => {
 		await router.push({
 			pathname: '/brand/detail',
@@ -40,60 +42,55 @@ const BrandCard = ({ seller, likeMemberHandler, onClick }: BrandCardProps) => {
 		return <div>BRAND CARD</div>;
 	} else {
 		return (
-			<div className="car-box" onClick={() => pushDetailHandler(seller._id, seller.memberNick)}>
-				<div className="car-img">
+			<Stack className={'seller-box'} onClick={() => pushDetailHandler(seller._id, seller.memberNick)}>
+				<Stack className={'seller-img'}>
 					<img src={imagePath} alt="brand-img" />
-				</div>
-				<div className="car-info">
-					<div className="main-info">
-						<div className="main-stage">
-							<div className="car-name">
-								<div>{seller?.memberNick}</div>
+				</Stack>
+				<Stack className={'seller-info'}>
+					<Box className={'main-info'}>
+						<Box className={'main-stage'}>
+							<div className={'seller-name'}>
+								<Typography className={'name'}>{seller?.memberFullName}</Typography>
 							</div>
 							<div
-								className="like-button"
+								className={`action-btn like-btn ${seller?.meLiked && seller?.meLiked[0]?.myFavorite ? 'liked' : ''}`}
 								onClick={(e) => {
 									e.stopPropagation();
 									likeMemberHandler(user, seller._id);
 								}}
 							>
-								<FavoriteIcon
-									className="like-icon"
-									style={{
-										color: isLiked ? '#dc3545' : 'white',
-									}}
-								/>
+								<FavoriteIcon className={'heart-icon'} />
 							</div>
+						</Box>
+						<Box className={'second-stage'}>
+							<div className={'seller-location'}>
+								<LocationOnIcon fontSize="small" /> {seller?.memberAddress}
+							</div>
+							<div className={'seller-contact'}>
+								<PhoneAndroidIcon fontSize="small" /> {seller?.memberPhone}
+							</div>
+						</Box>
+					</Box>
+					<Box className={'rating-info'}>
+						<div className={'rating'}>
+							{[...Array(5)].map((_, idx) => (
+								<StarIcon key={idx} fontSize="small" />
+							))}
 						</div>
-						<div className="second-stage">
-							<div className="car-location">
-								<div>{seller?.memberAddress}</div>
-							</div>
-							<div className="car-contact">
-								<div>{seller?.memberPhone}</div>
-							</div>
-						</div>
-					</div>
-					<div className="rating-info">
-						<div className="rating">⭐⭐⭐⭐⭐</div>
-						<div className="rating-meta">
-							<div className="like">
-								<div className="like-count">{seller?.memberLikes}</div>
-								<div className="like-icon-wrapper">
-									<FavoriteIcon className="mui-icon" />
-								</div>
-							</div>
-							<div className="divider"></div>
-							<div className="view">
-								<div className="view-count">{seller?.memberViews}</div>
-								<div className="view-icon-wrapper">
-									<VisibilityIcon className="mui-icon" />
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+						<Box className={'rating-meta'}>
+							<Box className={'like'}>
+								<Typography className={'like-count'}>{seller?.memberLikes}</Typography>
+								<FavoriteIcon className={'mui-icon'} />
+							</Box>
+							<div className={'divider'}></div>
+							<Box className={'view'}>
+								<Typography className={'view-count'}>{seller?.memberViews}</Typography>
+								<VisibilityIcon className={'mui-icon'} />
+							</Box>
+						</Box>
+					</Box>
+				</Stack>
+			</Stack>
 		);
 	}
 };

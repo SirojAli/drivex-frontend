@@ -118,7 +118,7 @@ const TopFull = () => {
 									</Tooltip>
 									<div className={'divider'} />
 									<div
-										className={'login-user'}
+										className={'profile-img'}
 										onClick={(e) => setLogoutAnchor(e.currentTarget)}
 										style={{ cursor: 'pointer' }}
 									>

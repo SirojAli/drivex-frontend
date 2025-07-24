@@ -147,8 +147,6 @@ const CarCard = (props: PopularCarCardProps) => {
 							<Box className={'view-btn'}>
 								<span>View Car</span>
 							</Box>
-
-							{/* Removed the "Sold Out" red label below */}
 						</Box>
 					</Stack>
 				</Stack>

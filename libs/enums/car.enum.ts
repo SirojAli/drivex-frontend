@@ -12,7 +12,7 @@ export enum CarBrand {
 	MERCEDES_BENZ = 'MERCEDES-BENZ',
 	TOYOTA = 'TOYOTA',
 	AUDI = 'AUDI',
-	TESLA = 'TESLA',
+	LEXUS = 'LEXUS',
 }
 
 export enum CarType {

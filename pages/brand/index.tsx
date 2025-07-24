@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NextPage } from 'next';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import BrandCard from '../../libs/components/brand/BrandCard';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
@@ -21,7 +21,6 @@ const BrandList: NextPage = ({ initialInput }: any) => {
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
 	);
 	const [sellers, setSellers] = useState<Member[]>([]);
-	const [total, setTotal] = useState<number>(0);
 
 	/** APOLLO **/
 	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
@@ -32,7 +31,6 @@ const BrandList: NextPage = ({ initialInput }: any) => {
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			setSellers(data?.getSellers?.list || []);
-			setTotal(data?.getSellers?.metaCounter?.[0]?.total || 0);
 		},
 	});
 
@@ -56,10 +54,13 @@ const BrandList: NextPage = ({ initialInput }: any) => {
 
 	return (
 		<div id="brand-list-page">
-			<Stack className="container">
-				<Stack className="brand-grid">
+			<Stack className={'container'}>
+				<Typography variant="h4" className="brand-title">
+					POPULAR CAR BRANDS
+				</Typography>
+				<Stack className={'brand-grid'}>
 					{sellers?.length === 0 ? (
-						<div className="no-data">
+						<div className={'no-data'}>
 							<img src="/img/icons/icoAlert.svg" alt="no-sellers" />
 							<p>No Sellers found!</p>
 						</div>
