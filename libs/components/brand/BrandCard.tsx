@@ -1,32 +1,31 @@
 import React from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Car } from '../../types/car/car';
-import { Member } from '../../types/member/member';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { Stack, Box, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import { REACT_APP_API_URL } from '../../config';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { useRouter } from 'next/router';
+import { Member } from '../../types/member/member';
 
 interface BrandCardProps {
-	seller: any;
-	likeMemberHandler: any;
+	seller: Member;
+	likeMemberHandler: (user: any, id: string) => Promise<void>;
+	onClick?: () => void;
 }
 
-const BrandCard = (props: BrandCardProps) => {
-	const { seller, likeMemberHandler } = props;
+const BrandCard = ({ seller, likeMemberHandler, onClick }: BrandCardProps) => {
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
 	const router = useRouter();
 
 	const imagePath: string = seller?.memberImage
-		? `${REACT_APP_API_URL}/${seller?.memberImage}`
+		? `${REACT_APP_API_URL}/${seller.memberImage}`
 		: '/img/profile/defaultUser.png';
-	const isLiked = seller?.isLikedByCurrentUser;
+	const isLiked = seller?.meLiked;
 
-	/** HANDLERS **/
+	/** ✅ HANDLERS **/
 	const pushDetailHandler = async (memberId: string, brandName: string) => {
 		await router.push({
 			pathname: '/brand/detail',
@@ -55,7 +54,7 @@ const BrandCard = (props: BrandCardProps) => {
 								className="like-button"
 								onClick={(e) => {
 									e.stopPropagation();
-									likeMemberHandler(user, seller?._id);
+									likeMemberHandler(user, seller._id);
 								}}
 							>
 								<FavoriteIcon

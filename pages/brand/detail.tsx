@@ -15,19 +15,20 @@ import { useMutation, useQuery } from '@apollo/client';
 import { T } from '../../libs/types/common';
 import { GET_CARS } from '../../apollo/user/query';
 import { Direction } from '../../libs/enums/common.enum';
+import { CarBrand } from '../../libs/enums/car.enum';
 
 interface BrandCarsProps {
 	initialInput: CarsInquiry;
 }
 
-const BrandDetail = (props: BrandCarsProps) => {
-	const { initialInput } = props;
+const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
 	const [chosenBrandCars, setChosenBrandCars] = useState<Car[]>([]);
 	const [inputState, setInputState] = useState<CarsInquiry>(initialInput);
 	const router = useRouter();
 	const [searchQuery, setSearchQuery] = useState('');
 	const [brandName, setBrandName] = useState<string>('');
+	const [activeFilter, setActiveFilter] = useState<string>('Featured');
 
 	/** SET BRAND NAME FROM QUERY **/
 	useEffect(() => {
@@ -36,7 +37,7 @@ const BrandDetail = (props: BrandCarsProps) => {
 			setBrandName(brandFromQuery.toUpperCase());
 			setInputState((prev) => ({
 				...prev,
-				search: { ...prev.search, carBrand: brandFromQuery },
+				search: { ...prev.search, carBrand: [brandFromQuery as CarBrand] },
 			}));
 		}
 	}, [router.query.brand]);
@@ -119,17 +120,32 @@ const BrandDetail = (props: BrandCarsProps) => {
 	};
 
 	const handleFilterClick = async (filterKey: string) => {
-		const update = filterMap[filterKey] || {};
+		const filterUpdate = filterMap[filterKey];
+		if (!filterUpdate) return;
 
-		const newInput: CarsInquiry = {
-			...inputState,
-			...update,
-			search: update.search !== undefined ? update.search : inputState.search,
-			page: 1,
-		};
+		// Set the active filter for styling
+		setActiveFilter(filterKey);
 
-		setInputState(newInput);
-		await getCarsRefetch({ input: newInput });
+		// Merge the new filter values with existing ones
+		setInputState((prev) => {
+			const updatedSearch = {
+				...(prev.search || {}),
+				...(filterUpdate.search || {}),
+			};
+
+			const updatedInput: CarsInquiry = {
+				...prev,
+				sort: filterUpdate.sort || prev.sort,
+				direction: filterUpdate.direction || prev.direction,
+				search: updatedSearch,
+				page: 1,
+			};
+
+			// Trigger Apollo refetch
+			getCarsRefetch({ input: updatedInput });
+
+			return updatedInput;
+		});
 	};
 
 	const viewCarHandler = async () => {
@@ -146,18 +162,23 @@ const BrandDetail = (props: BrandCarsProps) => {
 				<Stack className={'container-box'}>
 					{/* Header */}
 					<Box className={'brand-header'}>
-						<h2 className={'brand-name'}>{chosenBrandCars[0]?.carBrand || 'Brand'}</h2>
+						<h2 className={'brand-name'}>{chosenBrandCars[0]?.carBrand || brandName || 'Brand'}</h2>
 					</Box>
 
 					{/* Filter and Search */}
 					<Box className={'filter-search-box'}>
 						<Box className={'filter-box'}>
 							{['Featured', 'Popular', 'New', 'Upcoming'].map((filter) => (
-								<div key={filter} className={'filter-button'} onClick={() => handleFilterClick(filter)}>
+								<div
+									key={filter}
+									className={`filter-button ${activeFilter === filter ? 'active' : ''}`}
+									onClick={() => handleFilterClick(filter)}
+								>
 									<p>{filter}</p>
 								</div>
 							))}
 						</Box>
+
 						<Box className={'search-box'}>
 							<form className={'search-form'} onSubmit={handleSearchSubmit}>
 								<input

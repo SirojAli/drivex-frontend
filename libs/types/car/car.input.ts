@@ -38,6 +38,7 @@ export interface CarISearch {
 	memberId?: string;
 	carStatus?: CarStatus[];
 	carBrand?: CarBrand[];
+	carModel?: string;
 	carType?: CarType[];
 	carFuelType?: CarFuelType[];
 	carTransmission?: CarTransmission[];

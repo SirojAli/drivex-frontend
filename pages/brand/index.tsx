@@ -1,12 +1,9 @@
-import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { NextPage } from 'next';
-import { Stack, Box, Button } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { Stack } from '@mui/material';
 import BrandCard from '../../libs/components/brand/BrandCard';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
-import { Menu, MenuItem } from '@mui/material';
-import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import { useRouter } from 'next/router';
 import { Member } from '../../libs/types/member/member';
 import { LIKE_TARGET_MEMBER } from '../../apollo/user/mutation';
@@ -16,29 +13,22 @@ import { T } from '../../libs/types/common';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import { Messages } from '../../libs/config';
 
-const BrandList: NextPage = ({ initialInput, ...props }: any) => {
+const BrandList: NextPage = ({ initialInput }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
-	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
+
 	const [searchFilter, setSearchFilter] = useState<any>(
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
 	);
 	const [sellers, setSellers] = useState<Member[]>([]);
 	const [total, setTotal] = useState<number>(0);
-	const [currentPage, setCurrentPage] = useState<number>(1);
-	const [searchText, setSearchText] = useState<string>('');
 
-	/** APOLLO REQUESTS **/
+	/** APOLLO **/
 	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
 
-	const {
-		loading: getSellersLoading,
-		data: getSellersData,
-		error: getSellersError,
-		refetch: getSellersRefetch,
-	} = useQuery(GET_SELLERS, {
-		fetchPolicy: 'network-only',
+	const { refetch: getSellersRefetch } = useQuery(GET_SELLERS, {
 		variables: { input: searchFilter },
+		fetchPolicy: 'network-only',
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			setSellers(data?.getSellers?.list || []);
@@ -46,48 +36,55 @@ const BrandList: NextPage = ({ initialInput, ...props }: any) => {
 		},
 	});
 
-	/** LIFECYCLES **/
-
-	/** HANDLERS **/
 	const likeMemberHandler = async (user: any, id: string) => {
 		try {
 			if (!id) return;
 			if (!user._id) throw new Error(Messages.error2);
 
-			await likeTargetMember({
-				variables: { input: id },
-			});
-
+			await likeTargetMember({ variables: { input: id } });
 			await getSellersRefetch({ input: searchFilter });
-			await sweetTopSmallSuccessAlert('Success! ', 800);
+			await sweetTopSmallSuccessAlert('Success!', 800);
 		} catch (err: any) {
-			console.log('ERROR, likeMemberHandler: ', err.message);
-			sweetMixinErrorAlert(err.message).then();
+			console.log('LIKE MEMBER ERROR:', err.message);
+			sweetMixinErrorAlert(err.message);
 		}
 	};
 
 	if (device === 'mobile') {
 		return <Stack>CAR BRAND MOBILE</Stack>;
-	} else {
-		return (
-			<div id="brand-list-page">
-				<Stack className="container">
-					<Stack className="brand-grid">
-						{sellers?.length === 0 ? (
-							<div className="no-data">
-								<img src="/img/icons/icoAlert.svg" alt="" />
-								<p>No Sellers found!</p>
-							</div>
-						) : (
-							sellers.map((seller: Member) => (
-								<BrandCard key={seller._id} seller={seller} likeMemberHandler={likeMemberHandler} />
-							))
-						)}
-					</Stack>
-				</Stack>
-			</div>
-		);
 	}
+
+	return (
+		<div id="brand-list-page">
+			<Stack className="container">
+				<Stack className="brand-grid">
+					{sellers?.length === 0 ? (
+						<div className="no-data">
+							<img src="/img/icons/icoAlert.svg" alt="no-sellers" />
+							<p>No Sellers found!</p>
+						</div>
+					) : (
+						sellers.map((seller: Member) => (
+							<BrandCard
+								key={seller._id}
+								seller={seller}
+								likeMemberHandler={likeMemberHandler}
+								onClick={() =>
+									router.push({
+										pathname: '/brand/detail',
+										query: {
+											id: seller._id,
+											brand: encodeURIComponent(seller.memberNick),
+										},
+									})
+								}
+							/>
+						))
+					)}
+				</Stack>
+			</Stack>
+		</div>
+	);
 };
 
 BrandList.defaultProps = {
