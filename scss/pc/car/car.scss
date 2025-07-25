@@ -9,12 +9,13 @@
 			flex-direction: column;
 			align-items: center;
 			padding: 100px 0px 100px;
+			gap: 40px;
 			// border: 1px solid black;
 
 			.sub-header {
 				width: 100%;
-				height: 60px;
-				padding: 20px 0px;
+				height: 50px;
+				padding: 10px 0px;
 				display: flex;
 				flex-direction: row;
 				align-items: center;
@@ -46,34 +47,6 @@
 				}
 			}
 
-			.car-list-title {
-				width: 100%;
-				height: auto;
-				display: flex;
-				flex-direction: column;
-				gap: 20px;
-				margin: 40px 0px;
-				// border: 1px solid red;
-
-				h2 {
-					color: #000;
-					font-family: $font;
-					font-size: 30px;
-					font-style: normal;
-					font-weight: 500;
-					line-height: normal;
-				}
-
-				p {
-					color: #000;
-					font-family: $font;
-					font-size: 14px;
-					font-style: normal;
-					font-weight: 400;
-					line-height: 20px;
-				}
-			}
-
 			.main-list {
 				width: 100%;
 				height: auto;
@@ -85,7 +58,7 @@
 				.filter-box {
 					width: 320px;
 					display: flex;
-					flex-direction: column;
+					flex-direction: row;
 					padding: 10px;
 					gap: 34px;
 					border-radius: 24px;
@@ -176,275 +149,112 @@
 					}
 				}
 
-				.car-list-box {
+				.main-center {
 					width: 1000px;
 					display: flex;
 					flex-direction: column;
-					// border: 1px solid red;
+					gap: 30px;
+					justify-content: flex-start;
 
-					.empty-list {
+					.filter-search-box {
 						width: 100%;
-						height: 280px;
 						display: flex;
-						justify-content: center;
+						justify-content: space-between;
 						align-items: center;
-					}
+						gap: 20px;
 
-					.car-list {
-						width: 100%;
-						display: grid;
-						grid-template-columns: repeat(3, 300px);
-						gap: 30px;
-						justify-content: end;
-
-						.car-box {
-							width: 300px;
-							height: 460px;
-							position: relative;
+						.filter-box {
 							display: flex;
-							flex-direction: column;
-							align-items: flex-start;
-							border-radius: 20px;
-							cursor: pointer;
-							border: 1px solid #e5e5e5;
-							box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
-							background-color: #fff;
+							flex-direction: row;
+							gap: 10px;
+							border: none !important;
+							box-shadow: none !important;
+							margin-left: 30px;
 
-							.img-box {
-								width: 298px;
-								height: 225px;
-								position: relative;
-								overflow: hidden;
-								border-top-left-radius: 20px;
-								border-top-right-radius: 20px;
+							.filter-button {
+								display: inline-flex; // ✅ Allows it to expand based on content
+								align-items: center; // ✅ Vertically center text
+								justify-content: center; // ✅ Horizontally center text
+								padding: 8px 18px;
+								background-color: #ffffff;
+								color: #333;
+								border: 1px solid #ededed;
+								border-radius: 999px;
+								font-size: 14px;
+								font-weight: 500;
+								cursor: pointer;
+								transition: all 0.25s ease;
+								white-space: nowrap;
 
-								img {
-									width: 100%;
-									height: 100%;
-									object-fit: cover;
-									display: block;
-									border-radius: inherit;
+								&:hover {
+									border-color: #ff7101;
+									color: #ff7101;
+									background-color: #fff7f0;
 								}
 
-								.img-feat {
-									position: absolute;
-									top: 10px;
-									left: 10px;
-									display: flex;
-									padding: 5px 11px;
-									align-items: center;
-									border-radius: 99px;
-									background: #ff7101;
-
-									span {
-										color: #fff;
-										font-family: $font;
-										font-size: 11px;
-										font-style: normal;
-										font-weight: 500;
-										line-height: 15px;
-									}
-								}
-
-								.like-btn,
-								.compare-btn {
-									width: 30px;
-									height: 30px;
-									padding: 8px;
-									position: absolute;
-									top: 10px;
-									opacity: 0;
-									transition: opacity 0.3s ease, transform 0.2s ease;
-									z-index: 2;
-									cursor: pointer;
-									color: rgba(0, 0, 0, 0.3);
-									background-color: rgba(255, 255, 255, 0.85);
-									border-radius: 50%;
-									display: flex;
-									align-items: center;
-									justify-content: center;
-
-									&:hover {
-										transform: scale(1.1);
-									}
-								}
-
-								.like-btn {
-									right: 10px;
-
-									&.liked {
-										color: red;
-									}
-								}
-
-								.compare-btn {
-									right: 45px;
-								}
-
-								&:hover .like-btn,
-								&:hover .compare-btn {
-									opacity: 1;
+								&.active {
+									background-color: #ff7101;
+									color: #fff;
+									border-color: #ff7101;
 								}
 							}
+						}
 
-							.car-info {
-								width: 300px;
-								height: 235px;
-								display: flex;
-								padding: 16px;
-								flex-direction: column;
-								align-items: flex-start;
-								gap: 20px;
+						.sort-right {
+							display: inline-flex;
+							align-items: center;
+							gap: 10px;
+							// border: 1px solid red;
 
-								.car-content {
-									width: 268px;
-									height: 124px;
-									display: flex;
-									flex-direction: column;
-									align-items: flex-start;
-									justify-content: space-between;
-									gap: 8px;
+							span {
+								font-size: 14px;
+								color: #666;
+								font-weight: 500;
+							}
 
-									.car-type {
-										color: #ff7101;
-										font-family: $font;
-										font-size: 14px;
-										font-weight: 500;
-										line-height: 20px;
-									}
-
-									.car-name {
-										color: #24272c;
-										font-family: $font;
-										font-size: 18px;
-										font-weight: 600;
-									}
-
-									.car-category {
-										width: 100%;
-										display: flex;
-										gap: 12px;
-
-										.category {
-											display: flex;
-											align-items: center;
-											gap: 8px;
-
-											img {
-												width: 16px;
-												height: 16px;
-											}
-
-											span {
-												color: #696665;
-												font-family: $font;
-												font-size: 14px;
-												font-weight: 400;
-												line-height: 20px;
-											}
-										}
-									}
-
-									.car-price-btn {
-										width: 100%;
-										display: flex;
-										justify-content: space-between;
-										align-items: center;
-										margin-top: 12px;
-
-										.price {
-											color: #ff7101;
-											font-family: $font;
-											font-size: 26px;
-											font-weight: 600;
-										}
-
-										.view-like-btn {
-											display: flex;
-											align-items: center;
-											gap: 12px;
-
-											.view-btn,
-											.like-btn {
-												display: flex;
-												align-items: center;
-												justify-content: center;
-
-												.view,
-												.like {
-													width: 18px;
-													height: 18px;
-													color: #444;
-												}
-
-												span {
-													font-size: 15px;
-													margin-left: 3px;
-													color: #444;
-												}
-											}
-										}
-									}
-								}
-
-								.divider {
-									width: 268px;
-									height: 1px;
-									background: #ededed;
-								}
-
-								.car-logo {
-									width: 268px;
-									height: 60px;
-									display: flex;
-									justify-content: space-between;
-
-									.logo {
-										display: flex;
-										align-items: center;
-										gap: 10px;
-
-										img {
-											width: 38px;
-											height: 38px;
-										}
-
-										span {
-											color: #24272c;
-											font-family: $font;
-											font-size: 14px;
-											font-weight: 500;
-										}
-									}
-
-									.view-btn {
-										width: 90px;
-										height: 38px;
-										display: flex;
-										justify-content: center;
-										align-items: center;
-										padding: 10px;
-										border-radius: 14px;
-										border: 1px solid #24272c;
-
-										span {
-											color: #24272c;
-											font-family: $font;
-											font-size: 14px;
-											font-weight: 500;
-										}
-									}
-								}
+							button {
+								font-size: 14px;
+								font-weight: 600;
+								color: #181a20;
+								background-color: #f8f8f8;
+								padding: 6px 12px;
+								border-radius: 8px;
+								border: none;
+								cursor: pointer;
+								transition: all 0.2s ease;
 							}
 						}
 					}
 
-					.pagination-box {
+					.car-list-box {
+						width: 100%;
 						display: flex;
-						justify-content: center;
-						align-items: center;
-						margin-top: 50px;
-						height: 50px;
+						flex-direction: column;
+						// border: 1px solid red;
+
+						.empty-list {
+							width: 100%;
+							height: 280px;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+
+						.car-list {
+							width: 100%;
+							display: grid;
+							grid-template-columns: repeat(3, 300px);
+							gap: 30px;
+							justify-content: end;
+						}
+
+						.pagination-box {
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							margin-top: 50px;
+							height: 50px;
+						}
 					}
 				}
 			}

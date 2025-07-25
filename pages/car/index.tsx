@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Stack, Box, Pagination } from '@mui/material';
+import React, { useState, ChangeEvent, MouseEvent, useEffect } from 'react';
+import { Stack, Box, Pagination, Button, Menu, MenuItem } from '@mui/material';
 import { NextPage } from 'next';
 import CarFilter from '../../libs/components/car/Filter';
 import CarCard from '../../libs/components/car/CarCard';
@@ -7,37 +7,153 @@ import withLayoutFull from '../../libs/components/layout/LayoutFull';
 import Link from 'next/link';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
+import { useRouter } from 'next/router';
+import SearchIcon from '@mui/icons-material/Search';
+import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import { CarsInquiry } from '../../libs/types/car/car.input';
+import { Message } from '../../libs/enums/common.enum';
+import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import { LIKE_TARGET_CAR } from '../../apollo/user/mutation';
+import { Car } from '../../libs/types/car/car';
+import { useMutation, useQuery } from '@apollo/client';
+import { T } from '../../libs/types/common';
+import { GET_CARS } from '../../apollo/user/query';
+import { Direction } from '../../libs/enums/common.enum';
+import { CarBrand } from '../../libs/enums/car.enum';
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 
-// Base car object
-const mockCar = {
-	name: 'BMW X7 2022 Super Turbo',
-	type: 'SUV',
-	fuel: 'Petrol',
-	transmission: 'Auto',
-	engine: '3.0 L',
-	price: '$73,000',
-	views: 1000,
-	likes: 100,
-	image: '/img/cars/header1.jpg',
-	logo: '/img/logo/BMW.png',
-	brand: 'BMW',
-};
-
-// Create 55 independent copies of the same car
-const mockCars = new Array(55).fill(null).map(() => ({ ...mockCar }));
-
-const CarList: NextPage = () => {
+const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
+	const router = useRouter();
 
-	const [currentPage, setCurrentPage] = useState(1);
-	const carsPerPage = 12;
-	const totalPages = Math.ceil(mockCars.length / carsPerPage);
+	const [allCars, setAllCars] = useState<Car[]>([]);
+	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(() => {
+		try {
+			return router?.query?.input ? JSON.parse(router.query.input as string) : initialInput;
+		} catch (err) {
+			console.error('Invalid input JSON:', err);
+			return initialInput;
+		}
+	});
 
-	const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {
-		setCurrentPage(page);
+	const [total, setTotal] = useState<number>(0);
+	const [currentPage, setCurrentPage] = useState<number>(searchFilter.page || 1);
+
+	const [activeFilter, setActiveFilter] = useState<string>('All Cars');
+	const [filterSortName, setFilterSortName] = useState('Default');
+
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [sortingOpen, setSortingOpen] = useState(false);
+
+	/** APOLLO REQUESTS **/
+	const [likeTargetCar] = useMutation(LIKE_TARGET_CAR);
+
+	const {
+		loading: getCarsLoading,
+		data: getCarsData,
+		error: getCarsError,
+		refetch: getCarsRefetch,
+	} = useQuery(GET_CARS, {
+		fetchPolicy: 'network-only',
+		variables: { input: searchFilter },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setAllCars(data?.getCars?.list || []);
+			setTotal(data?.getCars?.metaCounter[0]?.total || 0);
+		},
+	});
+
+	/** LIFECYCLES **/
+	useEffect(() => {
+		if (router.query.input) {
+			try {
+				const inputObj = JSON.parse(router.query.input as string);
+				setSearchFilter(inputObj);
+				setCurrentPage(inputObj.page || 1);
+			} catch (err) {
+				console.error('Invalid input in query:', err);
+			}
+		}
+	}, [router.query.input]);
+
+	useEffect(() => {
+		getCarsRefetch({ input: searchFilter });
+	}, [searchFilter]);
+
+	/** HANDLERS **/
+	const handlePaginationChange = async (event: ChangeEvent<unknown>, value: number) => {
+		const updatedFilter = { ...searchFilter, page: value };
+		setSearchFilter(updatedFilter);
+		setCurrentPage(value);
+		await router.push(`/car?input=${JSON.stringify(updatedFilter)}`, undefined, { scroll: false });
 	};
 
-	const currentCars = mockCars.slice((currentPage - 1) * carsPerPage, currentPage * carsPerPage);
+	const sortingClickHandler = (e: MouseEvent<HTMLElement>) => {
+		setAnchorEl(e.currentTarget);
+		setSortingOpen(true);
+	};
+
+	const sortingCloseHandler = () => {
+		setSortingOpen(false);
+		setAnchorEl(null);
+	};
+
+	const sortingHandler = (e: React.MouseEvent<HTMLLIElement>) => {
+		const selected = e.currentTarget.id;
+		const sortingOptions: Record<string, { sort: string; direction: Direction; label: string }> = {
+			default: { sort: 'carViews', direction: Direction.DESC, label: 'Default' },
+			new: { sort: 'createdAt', direction: Direction.DESC, label: 'New' },
+			lowest: { sort: 'carPrice', direction: Direction.ASC, label: 'Lowest Price' },
+			highest: { sort: 'carPrice', direction: Direction.DESC, label: 'Highest Price' },
+		};
+
+		if (sortingOptions[selected]) {
+			const { sort, direction, label } = sortingOptions[selected];
+			setSearchFilter({ ...searchFilter, sort, direction });
+			setFilterSortName(label);
+		}
+
+		sortingCloseHandler();
+	};
+
+	const handleFilterClick = (filterKey: string) => {
+		const filterMap: Record<string, Partial<CarsInquiry>> = {
+			'All Cars': { sort: undefined, direction: undefined, search: {} },
+			Featured: { sort: 'carViews', direction: Direction.DESC, search: {} },
+			Popular: { sort: 'carLikes', direction: Direction.DESC, search: {} },
+			New: { sort: 'carYear', direction: Direction.DESC, search: { carYear: 2025 } },
+			Upcoming: { sort: 'carYear', direction: Direction.DESC, search: { carYear: 2026 } },
+		};
+
+		const filterUpdate = filterMap[filterKey];
+		if (!filterUpdate) return;
+
+		setActiveFilter(filterKey);
+
+		// Replace the entire search with the filter's search, do NOT merge old search
+		const updatedInput: CarsInquiry = {
+			...searchFilter,
+			sort: filterUpdate.sort ?? undefined,
+			direction: filterUpdate.direction ?? undefined,
+			search: filterUpdate.search || {},
+			page: 1,
+		};
+
+		setSearchFilter(updatedInput);
+	};
+
+	const likeCarHandler = async (user: T, id: string) => {
+		try {
+			if (!id) return;
+			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
+			await likeTargetCar({ variables: { input: id } });
+			await getCarsRefetch({ input: searchFilter });
+			await sweetTopSmallSuccessAlert('Success! ', 800);
+		} catch (err: any) {
+			console.log('ERROR, likeCarHandler: ', err.message);
+			sweetMixinErrorAlert(err.message).then();
+		}
+	};
 
 	if (device === 'mobile') {
 		return <Stack>CAR PAGE MOBILE</Stack>;
@@ -53,14 +169,6 @@ const CarList: NextPage = () => {
 						<ArrowForwardIosIcon className={'arrow'} />
 						<span>All Cars</span>
 					</Stack>
-					{/* Title */}
-					<Stack className={'car-list-title'}>
-						<h2>1,000+ Get The Best Deals On Brand New Cars</h2>
-						<p>
-							Explore our selection of high-quality, brand new vehicles. Our inventory includes top brands like BMW,
-							Mercedes, Kia, and more. Find the perfect new car for your needs.
-						</p>
-					</Stack>
 
 					{/* Main */}
 					<Stack className={'main-list'}>
@@ -69,30 +177,101 @@ const CarList: NextPage = () => {
 							<CarFilter />
 						</Stack>
 
-						{/* Car List */}
-						<Stack className={'car-list-box'}>
-							{currentCars.length === 0 ? (
-								<Box className={'empty-list'}>No cars available.</Box>
-							) : (
-								<Stack className={'car-list'}>
-									{currentCars.map((car, index) => (
-										<CarCard key={index} car={car} />
+						<Box className={'main-center'}>
+							{/* Filter and Search */}
+							<Box className={'filter-search-box'}>
+								<Box className={'filter-box'}>
+									{['All Cars', 'Featured', 'Popular', 'New', 'Upcoming'].map((filter) => (
+										<div
+											key={filter}
+											className={`filter-button ${activeFilter === filter ? 'active' : ''}`}
+											onClick={() => handleFilterClick(filter)}
+										>
+											<p>{filter}</p>
+										</div>
 									))}
-								</Stack>
-							)}
-
-							{/* Pagination */}
-							{totalPages > 1 && (
-								<Box className={'pagination-box'}>
-									<Pagination count={totalPages} page={currentPage} onChange={handlePageChange} color="primary" />
 								</Box>
-							)}
-						</Stack>
+
+								<Box className="sort-right">
+									<span>Sort by</span>
+									<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
+										{filterSortName}
+									</Button>
+									<Menu
+										anchorEl={anchorEl}
+										open={sortingOpen}
+										onClose={sortingCloseHandler}
+										anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+										transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+										PaperProps={{
+											sx: {
+												mt: 1,
+												boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 10px',
+											},
+										}}
+									>
+										<MenuItem id="new" onClick={sortingHandler}>
+											New
+										</MenuItem>
+										<MenuItem id="lowest" onClick={sortingHandler}>
+											Lowest Price
+										</MenuItem>
+										<MenuItem id="highest" onClick={sortingHandler}>
+											Highest Price
+										</MenuItem>
+									</Menu>
+								</Box>
+							</Box>
+
+							{/* Car List */}
+							<Stack className={'car-list-box'}>
+								{allCars.length === 0 ? (
+									<Box className="empty-list">No cars available.</Box>
+								) : (
+									<Stack className="car-list">
+										{(activeFilter === 'All Cars' ? [...allCars].sort(() => Math.random() - 0.5) : allCars).map(
+											(car: Car, index: number) => (
+												<CarCard car={car} likeCarHandler={likeCarHandler} key={car._id || `car-${index}`} />
+											),
+										)}
+									</Stack>
+								)}
+
+								<Stack className={'pagination-config'}>
+									{allCars.length > 0 && (
+										<Stack className="pagination-box">
+											<Pagination
+												page={currentPage}
+												count={Math.ceil(total / searchFilter.limit)}
+												onChange={handlePaginationChange}
+												shape="circular"
+												color="primary"
+											/>
+										</Stack>
+									)}
+								</Stack>
+							</Stack>
+						</Box>
 					</Stack>
 				</Stack>
 			</div>
 		);
 	}
+};
+
+CarList.defaultProps = {
+	initialInput: {
+		page: 1,
+		limit: 15,
+		sort: 'carLikes',
+		direction: 'DESC',
+		search: {
+			carPrice: {
+				min: 10000000,
+				max: 300000000,
+			},
+		},
+	},
 };
 
 export default withLayoutFull(CarList);

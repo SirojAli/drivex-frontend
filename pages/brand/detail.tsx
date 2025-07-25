@@ -24,7 +24,7 @@ interface BrandCarsProps {
 const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
 	const [chosenBrandCars, setChosenBrandCars] = useState<Car[]>([]);
-	const [inputState, setInputState] = useState<CarsInquiry>(initialInput);
+	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(initialInput);
 	const router = useRouter();
 	const [searchQuery, setSearchQuery] = useState('');
 	const [brandName, setBrandName] = useState<string>('');
@@ -35,7 +35,7 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 		const brandFromQuery = router.query.brand;
 		if (brandFromQuery && typeof brandFromQuery === 'string') {
 			setBrandName(brandFromQuery.toUpperCase());
-			setInputState((prev) => ({
+			setSearchFilter((prev) => ({
 				...prev,
 				search: { ...prev.search, carBrand: [brandFromQuery as CarBrand] },
 			}));
@@ -52,7 +52,7 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 		refetch: getCarsRefetch,
 	} = useQuery(GET_CARS, {
 		fetchPolicy: 'cache-and-network',
-		variables: { input: inputState },
+		variables: { input: searchFilter },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			if (data?.getCars?.list && Array.isArray(data.getCars.list)) {
@@ -69,7 +69,7 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 			if (!id) return;
 			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
 			await likeTargetCar({ variables: { input: id } });
-			await getCarsRefetch({ input: inputState });
+			await getCarsRefetch({ input: searchFilter });
 			await sweetTopSmallSuccessAlert('Success! ', 800);
 		} catch (err: any) {
 			console.log('ERROR, likeCarHandler: ', err.message);
@@ -84,14 +84,14 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 	const handleSearchSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		const newInput = {
-			...inputState,
+			...searchFilter,
 			search: {
-				...inputState.search,
+				...searchFilter.search,
 				carName: searchQuery,
 			},
 			page: 1,
 		};
-		setInputState(newInput);
+		setSearchFilter(newInput);
 		await getCarsRefetch({ input: newInput });
 	};
 
@@ -127,7 +127,7 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 		setActiveFilter(filterKey);
 
 		// Merge the new filter values with existing ones
-		setInputState((prev) => {
+		setSearchFilter((prev) => {
 			const updatedSearch = {
 				...(prev.search || {}),
 				...(filterUpdate.search || {}),
