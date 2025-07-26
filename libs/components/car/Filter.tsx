@@ -61,9 +61,84 @@ const CarFilter = (props: FilterType) => {
 	]);
 
 	/** LIFECYCLES **/
+	useEffect(() => {
+		// Helper to update the router URL after deleting a filter
+		const updateRouter = () => {
+			router.push(
+				`/car?input=${JSON.stringify({
+					...searchFilter,
+					search: { ...searchFilter.search },
+				})}`,
+				undefined,
+				{ scroll: false },
+			);
+		};
+
+		// For string or arrays: check length === 0
+		if (searchFilter?.search?.carBrand && searchFilter.search.carBrand.length === 0) {
+			delete searchFilter.search.carBrand;
+			updateRouter();
+		}
+		if (searchFilter?.search?.carType && searchFilter.search.carType.length === 0) {
+			delete searchFilter.search.carType;
+			updateRouter();
+		}
+		if (searchFilter?.search?.carFuelType && searchFilter.search.carFuelType.length === 0) {
+			delete searchFilter.search.carFuelType;
+			updateRouter();
+		}
+		if (searchFilter?.search?.carTransmission && searchFilter.search.carTransmission.length === 0) {
+			delete searchFilter.search.carTransmission;
+			updateRouter();
+		}
+		if (searchFilter?.search?.carDriveType && searchFilter.search.carDriveType.length === 0) {
+			delete searchFilter.search.carDriveType;
+			updateRouter();
+		}
+		if (searchFilter?.search?.carColor && searchFilter.search.carColor.length === 0) {
+			delete searchFilter.search.carColor;
+			updateRouter();
+		}
+
+		// For numbers: check if undefined or 0 (or any sentinel for 'empty')
+		if (searchFilter?.search?.carDoors === 0 || searchFilter?.search?.carDoors === undefined) {
+			delete searchFilter.search.carDoors;
+			updateRouter();
+		}
+
+		if (searchFilter?.search?.carSeats === 0 || searchFilter?.search?.carSeats === undefined) {
+			delete searchFilter.search.carSeats;
+			updateRouter();
+		}
+	}, [searchFilter, router]);
 
 	/** HANDLERS **/
 	// const searchCarHandler = useCallback();
+	const searchCarBrandHandler = useCallback(
+		async (e: React.ChangeEvent<HTMLSelectElement>) => {
+			try {
+				const value = e.target.value; // selected brand from dropdown
+
+				await router.push(
+					`/car?input=${JSON.stringify({
+						...searchFilter,
+						search: {
+							...searchFilter.search,
+							carBrand: value || undefined, // if empty string, remove filter
+						},
+					})}`,
+					undefined,
+					{ scroll: false },
+				);
+
+				console.log('searchCarBrandHandler:', value);
+			} catch (err) {
+				console.error('ERROR in searchCarBrandHandler:', err);
+			}
+		},
+		[searchFilter, router],
+	);
+
 	// const carPriceHandler = useCallback();
 	// const carBrandHandler = useCallback();
 	// const carTypeHandler = useCallback();

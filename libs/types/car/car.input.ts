@@ -77,7 +77,7 @@ interface SCISearch {
 	carColor?: string;
 	carIsNew?: boolean;
 	carPrice?: PriceRange;
-	carYear?: number;
+	carYear?: YearRange;
 	text?: string;
 }
 
@@ -98,7 +98,7 @@ interface ALCISearch {
 	carTransmission?: CarTransmission[];
 	carDriveType: CarDriveType[];
 	carPrice?: PriceRange;
-	carYear?: number;
+	carYear?: YearRange;
 	carColor?: string;
 	carIsNew?: boolean;
 	carSeats?: number;
