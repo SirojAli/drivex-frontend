@@ -173,8 +173,8 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 					{/* Main */}
 					<Stack className={'main-list'}>
 						{/* Filter */}
-						<Stack className={'filter-box'}>
-							<CarFilter />
+						<Stack className="filter-box">
+							<CarFilter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
 						</Stack>
 
 						<Box className={'main-center'}>
@@ -269,6 +269,10 @@ CarList.defaultProps = {
 			carPrice: {
 				min: 10000000,
 				max: 300000000,
+			},
+			carYear: {
+				min: 2010,
+				max: 2026,
 			},
 		},
 	},

@@ -33,6 +33,11 @@ export interface PriceRange {
 	max: number;
 }
 
+export interface YearRange {
+	min: number;
+	max: number;
+}
+
 // 3. SEARCH FILTERS (Car Inquiry Search)
 export interface CarISearch {
 	memberId?: string;
@@ -45,7 +50,7 @@ export interface CarISearch {
 	carDriveType?: CarDriveType[];
 	carColor?: string;
 	carPrice?: PriceRange;
-	carYear?: number;
+	carYear?: YearRange;
 	carIsNew?: boolean;
 	carSeats?: number;
 	carDoors?: number;
