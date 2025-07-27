@@ -52,21 +52,26 @@ const Top = () => {
 	if (device == 'mobile') {
 		return (
 			<Stack className={'top'}>
-				<Link href={'/'}>
-					<div>Home</div>
+				<Link href="/">
+					<span>Home</span>
 				</Link>
-				<Link href={'/brand'}>
-					<div>Brands</div>
+				<Link href="/brand">
+					<span>Brands</span>
 				</Link>
-				<Link href={'/car'}>
-					<div>All Cars</div>
+				<Link href="/car">
+					<span>All Cars</span>
 				</Link>
-				<Link href={'/community'}>
-					<div>Community</div>
+				<Link href="/community">
+					<span>Community</span>
 				</Link>
-				<Link href={'/cs'}>
-					<div>CS</div>
+				<Link href="/cs">
+					<span>CS</span>
 				</Link>
+				{user?._id && (
+					<Link href="/mypage">
+						<span>My Page</span>
+					</Link>
+				)}
 			</Stack>
 		);
 	} else {
@@ -76,32 +81,33 @@ const Top = () => {
 					<Stack className={'container'}>
 						<Box component={'div'} className={'logo-box'}>
 							<Link href={'/'} className={'logo'}>
-								<img src="/img/logo/icon.png" alt="logo" />
+								<img src="/img/logo/icon.png" alt="logo" loading="lazy" />
 								<span>DriveX</span>
 							</Link>
 						</Box>
 						<Box component={'div'} className={'router-box'}>
-							<Link href={'/'}>
-								<div>Home</div>
+							<Link href="/">
+								<span>Home</span>
 							</Link>
-							<Link href={'/brand'}>
-								<div>Brands</div>
+							<Link href="/brand">
+								<span>Brands</span>
 							</Link>
-							<Link href={'/car'}>
-								<div>All Cars</div>
+							<Link href="/car">
+								<span>All Cars</span>
 							</Link>
-							<Link href={'/community'}>
-								<div>Community</div>
+							<Link href="/community">
+								<span>Community</span>
 							</Link>
-							<Link href={'/cs'}>
-								<div>CS</div>
+							<Link href="/cs">
+								<span>CS</span>
 							</Link>
 							{user?._id && (
-								<Link href={'/mypage'}>
-									<div>My Page</div>
+								<Link href="/mypage">
+									<span>My Page</span>
 								</Link>
 							)}
 						</Box>
+
 						<Box component="div" className={'user-box'}>
 							{user?._id ? (
 								<>
@@ -128,6 +134,7 @@ const Top = () => {
 												user.memberImage ? `${REACT_APP_API_URL}/${user.memberImage}` : '/img/profile/defaultUser.png'
 											}
 											alt="user"
+											loading="lazy"
 										/>
 									</div>
 

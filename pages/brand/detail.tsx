@@ -81,7 +81,7 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 		setSearchQuery(e.target.value);
 	};
 
-	const handleSearchSubmit = async (e: React.FormEvent) => {
+	const searchHandler = async (e: React.FormEvent) => {
 		e.preventDefault();
 		const newInput = {
 			...searchFilter,
@@ -110,42 +110,31 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 		New: {
 			sort: 'carYear',
 			direction: Direction.DESC,
-			search: { carYear: 2025 },
+			search: { carYear: { min: 2025, max: 2025 } },
 		},
 		Upcoming: {
 			sort: 'carYear',
 			direction: Direction.DESC,
-			search: { carYear: 2026 },
+			search: { carYear: { min: 2026, max: 2026 } },
 		},
 	};
 
-	const handleFilterClick = async (filterKey: string) => {
+	const handleFilterClick = (filterKey: string) => {
 		const filterUpdate = filterMap[filterKey];
 		if (!filterUpdate) return;
 
-		// Set the active filter for styling
 		setActiveFilter(filterKey);
 
-		// Merge the new filter values with existing ones
-		setSearchFilter((prev) => {
-			const updatedSearch = {
-				...(prev.search || {}),
-				...(filterUpdate.search || {}),
-			};
+		const updatedInput: CarsInquiry = {
+			...searchFilter,
+			sort: filterUpdate.sort ?? searchFilter.sort,
+			direction: filterUpdate.direction ?? searchFilter.direction,
+			search: filterUpdate.search ?? {},
+			page: 1,
+		};
 
-			const updatedInput: CarsInquiry = {
-				...prev,
-				sort: filterUpdate.sort || prev.sort,
-				direction: filterUpdate.direction || prev.direction,
-				search: updatedSearch,
-				page: 1,
-			};
-
-			// Trigger Apollo refetch
-			getCarsRefetch({ input: updatedInput });
-
-			return updatedInput;
-		});
+		setSearchFilter(updatedInput);
+		getCarsRefetch({ input: updatedInput });
 	};
 
 	const viewCarHandler = async () => {
@@ -180,7 +169,7 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 						</Box>
 
 						<Box className={'search-box'}>
-							<form className={'search-form'} onSubmit={handleSearchSubmit}>
+							<form className={'search-form'} onSubmit={searchHandler}>
 								<input
 									type="search"
 									placeholder="Search car"

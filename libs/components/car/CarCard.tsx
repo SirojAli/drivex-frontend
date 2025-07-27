@@ -57,7 +57,7 @@ const CarCard = (props: PopularCarCardProps) => {
 					}}
 				>
 					<Stack className={'img-box'}>
-						<img src={`${REACT_APP_API_URL}/${car?.carImages[0]}`} alt={'Car'} />
+						<img src={`${REACT_APP_API_URL}/${car?.carImages[0]}`} alt={'Car'} loading="lazy" />
 
 						{(() => {
 							let badge: string | null = null;

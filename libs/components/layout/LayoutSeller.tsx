@@ -152,7 +152,7 @@ const withSellerLayout = (Component: ComponentType) => {
 					>
 						<Stack sx={{ flexDirection: 'column', alignItems: 'flexStart' }}>
 							<Stack className={'logo-box'}>
-								<img src={'/img/logo/logo.png'} alt={'logo'} />
+								<img src={'/img/logo/logo.png'} alt={'logo'} loading="lazy" />
 								<span>DriveX</span>
 							</Stack>
 							<Stack className={'user'} direction={'column'}>

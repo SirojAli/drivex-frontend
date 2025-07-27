@@ -12,6 +12,7 @@ import {
 	Slider,
 	Tooltip,
 	IconButton,
+	Box,
 } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
@@ -19,27 +20,21 @@ import { CarsInquiry } from '../../types/car/car.input';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
 import { CarBrand, CarType, CarFuelType, CarTransmission, CarDriveType } from '../../enums/car.enum';
+import SearchIcon from '@mui/icons-material/Search';
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_CARS } from '../../../apollo/user/query';
+import { T } from '../../types/common';
 
 type FilterType = {
 	searchFilter: CarsInquiry;
-	setSearchFilter: React.Dispatch<React.SetStateAction<CarsInquiry>>;
+	setSearchFilter: any;
 	initialInput: CarsInquiry;
 };
 
 const carColors = ['WHITE', 'BLACK', 'GRAY', 'BLUE', 'RED', 'BROWN', 'GREEN', 'YELLOW', 'ORANGE', 'PURPLE', 'OTHER'];
 
-const defaultSearchFilter: CarsInquiry = {
-	search: {
-		text: '',
-		carPrice: { min: 10, max: 300 },
-		carYear: { min: 2010, max: 2026 },
-	},
-	page: 1,
-	limit: 15,
-};
-
 const CarFilter = (props: FilterType) => {
-	const { searchFilter = defaultSearchFilter, setSearchFilter, initialInput } = props;
+	const { searchFilter, setSearchFilter, initialInput } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 
@@ -49,152 +44,54 @@ const CarFilter = (props: FilterType) => {
 	const [carTransmissions, setCarTransmissions] = useState<CarTransmission[]>(Object.values(CarTransmission));
 	const [carDriveTypes, setCarDriveTypes] = useState<CarDriveType[]>(Object.values(CarDriveType));
 
-	const [search, setSearch] = useState('');
-	const [price, setPrice] = useState<number[]>([
-		initialInput.search?.carPrice?.min || 10000000,
-		initialInput.search?.carPrice?.max || 300000000,
-	]);
+	const [searchText, setSearchText] = useState<string>('');
 
-	const [year, setYear] = useState<number[]>([
-		initialInput.search?.carYear?.min || 2010,
-		initialInput.search?.carYear?.max || 2026,
-	]);
-
-	/** LIFECYCLES **/
-	useEffect(() => {
-		// Helper to update the router URL after deleting a filter
-		const updateRouter = () => {
-			router.push(
-				`/car?input=${JSON.stringify({
-					...searchFilter,
-					search: { ...searchFilter.search },
-				})}`,
-				undefined,
-				{ scroll: false },
-			);
-		};
-
-		// For string or arrays: check length === 0
-		if (searchFilter?.search?.carBrand && searchFilter.search.carBrand.length === 0) {
-			delete searchFilter.search.carBrand;
-			updateRouter();
-		}
-		if (searchFilter?.search?.carType && searchFilter.search.carType.length === 0) {
-			delete searchFilter.search.carType;
-			updateRouter();
-		}
-		if (searchFilter?.search?.carFuelType && searchFilter.search.carFuelType.length === 0) {
-			delete searchFilter.search.carFuelType;
-			updateRouter();
-		}
-		if (searchFilter?.search?.carTransmission && searchFilter.search.carTransmission.length === 0) {
-			delete searchFilter.search.carTransmission;
-			updateRouter();
-		}
-		if (searchFilter?.search?.carDriveType && searchFilter.search.carDriveType.length === 0) {
-			delete searchFilter.search.carDriveType;
-			updateRouter();
-		}
-		if (searchFilter?.search?.carColor && searchFilter.search.carColor.length === 0) {
-			delete searchFilter.search.carColor;
-			updateRouter();
-		}
-
-		// For numbers: check if undefined or 0 (or any sentinel for 'empty')
-		if (searchFilter?.search?.carDoors === 0 || searchFilter?.search?.carDoors === undefined) {
-			delete searchFilter.search.carDoors;
-			updateRouter();
-		}
-
-		if (searchFilter?.search?.carSeats === 0 || searchFilter?.search?.carSeats === undefined) {
-			delete searchFilter.search.carSeats;
-			updateRouter();
-		}
-	}, [searchFilter, router]);
-
-	/** HANDLERS **/
-	// const searchCarHandler = useCallback();
-	const searchCarBrandHandler = useCallback(
-		async (e: React.ChangeEvent<HTMLSelectElement>) => {
-			try {
-				const value = e.target.value; // selected brand from dropdown
-
-				await router.push(
-					`/car?input=${JSON.stringify({
-						...searchFilter,
-						search: {
-							...searchFilter.search,
-							carBrand: value || undefined, // if empty string, remove filter
-						},
-					})}`,
-					undefined,
-					{ scroll: false },
-				);
-
-				console.log('searchCarBrandHandler:', value);
-			} catch (err) {
-				console.error('ERROR in searchCarBrandHandler:', err);
+	/** APOLLO REQUESTS **/
+	const {
+		loading: getCarsLoading,
+		data: getCarsData,
+		error: getCarsError,
+		refetch: getCarsRefetch,
+	} = useQuery(GET_CARS, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: searchFilter },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			if (data?.getCars?.list && Array.isArray(data.getCars.list)) {
+				setCarBrands(data.getCars.list);
+			} else {
+				setCarBrands([]);
 			}
 		},
-		[searchFilter, router],
-	);
+	});
 
-	// const carPriceHandler = useCallback();
-	// const carBrandHandler = useCallback();
-	// const carTypeHandler = useCallback();
-	// const carYearHandler = useCallback();
-	// const carFuelTypeHandler = useCallback();
-	// const carTransmissionHandler = useCallback();
-	// const carDriveTypeHandler = useCallback();
-	// const carDoorHandler = useCallback();
-	// const carSeatHandler = useCallback();
-	// const carColorHandler = useCallback();
+	/** LIFECYCLES **/
 
-	const updateSearchFilter = useCallback(
-		(updatedFields: Partial<CarsInquiry['search']>) => {
-			setSearchFilter((prev: CarsInquiry) => ({
-				...prev,
-				search: {
-					...prev.search,
-					...updatedFields,
-				},
-			}));
-		},
-		[setSearchFilter],
-	);
-
-	const handleSearch = () => {
-		updateSearchFilter({ text: search });
+	/** HANDLERS **/
+	const refreshHandler = async () => {
+		try {
+			setSearchText('');
+			await router.push(`/car?input=${JSON.stringify(initialInput)}`, `/car?input=${JSON.stringify(initialInput)}`, {
+				scroll: false,
+			});
+		} catch (err: any) {
+			console.log('ERROR, refreshHandler:', err);
+		}
 	};
 
-	const handlePriceChange = (_: any, val: number[]) => {
-		setPrice(val);
-		updateSearchFilter({ carPrice: { min: val[0], max: val[1] } });
-	};
-
-	const handleYearChange = (_: any, val: number[]) => {
-		setYear(val);
-		updateSearchFilter({ carYear: { min: val[0], max: val[1] } });
-	};
-
-	// Reset filters to initial input
-	const handleClear = () => {
-		setSearch('');
-		setPrice([initialInput.search?.carPrice?.min || 10000000, initialInput.search?.carPrice?.max || 300000000]);
-		setYear([initialInput.search?.carYear?.min || 2010, initialInput.search?.carYear?.max || 2026]);
-		setSearchFilter(initialInput);
-	};
-
-	useEffect(() => {
-		setSearchFilter((prev: any) => ({
-			...prev,
+	const searchHandler = async (e: React.FormEvent) => {
+		e.preventDefault();
+		const newInput = {
+			...searchFilter,
 			search: {
-				...prev.search,
-				carPrice: { min: price[0], max: price[1] },
-				carYear: { min: year[0], max: year[1] },
+				...searchFilter.search,
+				carName: searchText,
 			},
-		}));
-	}, [price, year]);
+			page: 1,
+		};
+		setSearchFilter(newInput);
+		await getCarsRefetch({ input: newInput });
+	};
 
 	if (device === 'mobile') {
 		return <Stack>CARS FILTER</Stack>;
@@ -202,30 +99,28 @@ const CarFilter = (props: FilterType) => {
 		return (
 			<Stack className="filter-box">
 				{/* Header */}
-				<Stack className="filter-box__header" direction="row" justifyContent="space-between" alignItems="center">
-					<Typography variant="h6">Filters and Sort</Typography>
-					<Button size="small" onClick={handleClear}>
-						Clear
-					</Button>
-				</Stack>
-
-				{/* Search */}
-				<Stack className="filter-box__search" direction="row" spacing={1}>
-					<OutlinedInput
-						fullWidth
-						size="small"
-						placeholder="Search"
-						value={search}
-						onChange={(e) => setSearch(e.target.value)}
-						endAdornment={search && <CancelRoundedIcon style={{ cursor: 'pointer' }} onClick={() => setSearch('')} />}
-					/>
-					<Button variant="contained">Search</Button>
+				<Stack className={'find-your-car'} mb={'40px'}>
+					<Typography className={'title-main'}>Find Your Car</Typography>
+					<Box className={'search-box'}>
+						<form className={'search-form'} onSubmit={searchHandler}>
+							<input
+								type="search"
+								placeholder="Search car"
+								className={'search-input'}
+								value={searchText}
+								onChange={(e) => setSearchText(e.target.value)}
+							/>
+							<Button type="submit" className={'search-btn'}>
+								<SearchIcon />
+							</Button>
+						</form>
+					</Box>
 				</Stack>
 
 				{/* Dropdown Filters */}
 				<Stack spacing={2} className="filter-box__dropdowns">
 					{/* Price */}
-					<FormControl fullWidth size="small">
+					{/* <FormControl fullWidth size="small">
 						<Typography fontWeight={500}>Price (in MLN)</Typography>
 						<Slider
 							value={price}
@@ -235,7 +130,7 @@ const CarFilter = (props: FilterType) => {
 							max={300_000_000}
 							step={1_000_000}
 						/>
-					</FormControl>
+					</FormControl> */}
 
 					{/* Make */}
 					<FormControl fullWidth size="small">
@@ -262,7 +157,7 @@ const CarFilter = (props: FilterType) => {
 					</FormControl>
 
 					{/* Year */}
-					<Typography fontWeight={500}>Year</Typography>
+					{/* <Typography fontWeight={500}>Year</Typography>
 					<Slider
 						value={year}
 						onChange={(e, val) => setYear(val as number[])}
@@ -270,7 +165,7 @@ const CarFilter = (props: FilterType) => {
 						min={2010}
 						max={2026}
 						step={1}
-					/>
+					/> */}
 
 					{/* Fuel Type */}
 					<FormControl fullWidth size="small">
@@ -343,15 +238,6 @@ const CarFilter = (props: FilterType) => {
 							))}
 						</Select>
 					</FormControl>
-				</Stack>
-
-				{/* Reset */}
-				<Stack alignItems="flex-end" className="filter-box__reset">
-					<Tooltip title="Reset Filters">
-						<IconButton onClick={handleClear}>
-							<RefreshIcon />
-						</IconButton>
-					</Tooltip>
 				</Stack>
 			</Stack>
 		);

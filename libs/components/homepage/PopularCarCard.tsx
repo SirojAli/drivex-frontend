@@ -7,7 +7,7 @@ const PopularCarCard = ({ car }: any) => {
 	return (
 		<Stack className={'car-box'}>
 			<Stack className={'img-box'}>
-				<img src={car.image || '/img/cars/header1.jpg'} alt={car.name || 'Car'} />
+				<img src={car.image || '/img/cars/header1.jpg'} alt={car.name || 'Car'} loading="lazy" />
 				<div className={'img-feat'}>
 					<span>Featured</span>
 				</div>
@@ -20,15 +20,15 @@ const PopularCarCard = ({ car }: any) => {
 					<p className={'car-name'}>{car.name || 'BMW X7 2020 Super Turbo'}</p>
 					<div className={'car-category'}>
 						<div className={'category'}>
-							<img src="/img/icons/fuel.png" alt="fuel" />
+							<img src="/img/icons/fuel.png" alt="fuel" loading="lazy" />
 							<span>{car.fuel || 'Petrol'}</span>
 						</div>
 						<div className={'category'}>
-							<img src="/img/icons/auto.png" alt="transmission" />
+							<img src="/img/icons/auto.png" alt="transmission" loading="lazy" />
 							<span>{car.transmission || 'Auto'}</span>
 						</div>
 						<div className={'category'}>
-							<img src="/img/icons/speed.png" alt="engine" />
+							<img src="/img/icons/speed.png" alt="engine" loading="lazy" />
 							<span>{car.engine || '3.0 L'}</span>
 						</div>
 					</div>
@@ -49,7 +49,7 @@ const PopularCarCard = ({ car }: any) => {
 				<Box className={'divider'}></Box>
 				<Box className={'car-logo'}>
 					<Box className={'logo'}>
-						<img src={car.logo || '/img/logo/BMW.png'} alt="brand" />
+						<img src={car.logo || '/img/logo/BMW.png'} alt="brand" loading="lazy" />
 						<span>{car.brand || 'BMW'}</span>
 					</Box>
 					<Box className={'view-btn'}>

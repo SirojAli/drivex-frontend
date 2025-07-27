@@ -44,7 +44,7 @@ const BrandCard = ({ seller, likeMemberHandler }: BrandCardProps) => {
 		return (
 			<Stack className={'seller-box'} onClick={() => pushDetailHandler(seller._id, seller.memberNick)}>
 				<Stack className={'seller-img'}>
-					<img src={imagePath} alt="brand-img" />
+					<img src={imagePath} alt="brand-img" loading="lazy" />
 				</Stack>
 				<Stack className={'seller-info'}>
 					<Box className={'main-info'}>

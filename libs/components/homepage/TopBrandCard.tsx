@@ -43,6 +43,7 @@ const TopBrandCard = (props: TopBrandCardProps) => {
 						<img
 							src={seller?.memberImage ? `${REACT_APP_API_URL}/${seller?.memberImage}` : '/img/profile/defaultUser.png'}
 							alt="brand-name"
+							loading="lazy"
 						/>
 					</div>
 					<Box className={'brand-info'}>

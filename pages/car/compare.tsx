@@ -40,7 +40,7 @@ const ComparePage = () => {
 							<span className={'cover__badge'}>Featured</span>
 							<span className={'cover__badge'}>{car.year}</span>
 						</Box>
-						<img src={car.image} className={'cover__image'} alt={car.name} />
+						<img src={car.image} className={'cover__image'} alt={car.name} loading="lazy" />
 						<Box className={'cover__info'}>
 							<Typography className={'cover__type'}>{car.type}</Typography>
 							<Typography className={'cover__name'}>{car.name}</Typography>

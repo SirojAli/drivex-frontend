@@ -13,7 +13,7 @@ const Footer = () => {
 			<Stack className={'footer-top'}>
 				<Stack className={'top'}>
 					<Box className={'icon'}>
-						<img src="/img/icons/cup.png" alt="icon" />
+						<img src="/img/icons/cup.png" alt="icon" loading="lazy" />
 					</Box>
 					<Box className={'text'}>
 						<h5>Korean Number 1</h5>
@@ -22,7 +22,7 @@ const Footer = () => {
 				</Stack>
 				<Stack className={'top'}>
 					<Box className={'icon'}>
-						<img src="/img/icons/sold.png" alt="icon" />
+						<img src="/img/icons/sold.png" alt="icon" loading="lazy" />
 					</Box>
 					<Box className={'text'}>
 						<h5>Car Sold</h5>
@@ -31,7 +31,7 @@ const Footer = () => {
 				</Stack>
 				<Stack className={'top'}>
 					<Box className={'icon'}>
-						<img src="/img/icons/offer.png" alt="icon" />
+						<img src="/img/icons/offer.png" alt="icon" loading="lazy" />
 					</Box>
 					<Box className={'text'}>
 						<h5>Offers</h5>
@@ -40,7 +40,7 @@ const Footer = () => {
 				</Stack>
 				<Stack className={'top'}>
 					<Box className={'icon'}>
-						<img src="/img/icons/compare.png" alt="icon" />
+						<img src="/img/icons/compare.png" alt="icon" loading="lazy" />
 					</Box>
 					<Box className={'text'}>
 						<h5>Compare</h5>
@@ -106,7 +106,7 @@ const Footer = () => {
 			{/* Footer End */}
 			<Stack className={'footer-end'}>
 				<Box className={'logo-box'}>
-					<img src="/img/logo/icon.png" alt="logo" />
+					<img src="/img/logo/icon.png" alt="logo" loading="lazy" />
 					<span>DriveX</span>
 				</Box>
 				<Box className={'info-social'}>

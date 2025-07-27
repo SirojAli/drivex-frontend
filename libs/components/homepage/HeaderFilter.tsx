@@ -213,7 +213,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							{carBrand.map((brand: string) => {
 								return (
 									<div onClick={() => carBrandSelectHandler(brand)} key={brand}>
-										<img src={`img/banner/brands/${brand}.png`} alt="" />
+										<img src={`img/banner/brands/${brand}.png`} alt="" loading="lazy" />
 										<span>{brand}</span>
 									</div>
 								);
@@ -266,7 +266,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							{ name: 'Sedan', image: 'sedan.png' },
 						].map((item) => (
 							<Box key={item.name} className={'logo'} onClick={() => carTypeQuickSelectHandler(item.name)}>
-								<img src={`/img/types/${item.image}`} alt={item.name} />
+								<img src={`/img/types/${item.image}`} alt={item.name} loading="lazy" />
 								<span>{item.name}</span>
 							</Box>
 						))}

@@ -61,7 +61,7 @@ const BrandList: NextPage = ({ initialInput }: any) => {
 				<Stack className={'brand-grid'}>
 					{sellers?.length === 0 ? (
 						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="no-sellers" />
+							<img src="/img/icons/icoAlert.svg" alt="no-sellers" loading="lazy" />
 							<p>No Sellers found!</p>
 						</div>
 					) : (

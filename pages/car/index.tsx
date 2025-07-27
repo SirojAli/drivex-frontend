@@ -27,19 +27,14 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	const router = useRouter();
 
 	const [allCars, setAllCars] = useState<Car[]>([]);
-	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(() => {
-		try {
-			return router?.query?.input ? JSON.parse(router.query.input as string) : initialInput;
-		} catch (err) {
-			console.error('Invalid input JSON:', err);
-			return initialInput;
-		}
-	});
+	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(
+		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
+	);
 
 	const [total, setTotal] = useState<number>(0);
-	const [currentPage, setCurrentPage] = useState<number>(searchFilter.page || 1);
+	const [currentPage, setCurrentPage] = useState<number>(1);
 
-	const [activeFilter, setActiveFilter] = useState<string>('All Cars');
+	const [activeFilter, setActiveFilter] = useState<string>('Featured');
 	const [filterSortName, setFilterSortName] = useState('Default');
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -58,34 +53,24 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 		variables: { input: searchFilter },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setAllCars(data?.getCars?.list || []);
-			setTotal(data?.getCars?.metaCounter[0]?.total || 0);
+			setAllCars(data?.getCars?.list);
+			setTotal(data?.getCars?.metaCounter[0]?.total);
 		},
 	});
 
 	/** LIFECYCLES **/
-	useEffect(() => {
-		if (router.query.input) {
-			try {
-				const inputObj = JSON.parse(router.query.input as string);
-				setSearchFilter(inputObj);
-				setCurrentPage(inputObj.page || 1);
-			} catch (err) {
-				console.error('Invalid input in query:', err);
-			}
-		}
-	}, [router.query.input]);
-
-	useEffect(() => {
-		getCarsRefetch({ input: searchFilter });
-	}, [searchFilter]);
 
 	/** HANDLERS **/
-	const handlePaginationChange = async (event: ChangeEvent<unknown>, value: number) => {
-		const updatedFilter = { ...searchFilter, page: value };
-		setSearchFilter(updatedFilter);
+	const paginationHandler = async (event: ChangeEvent<unknown>, value: number) => {
+		searchFilter.page = value;
+		await router.push(
+			`/car?input=${JSON.stringify(searchFilter)}`, //
+			`/car?input=${JSON.stringify(searchFilter)}`,
+			{
+				scroll: false,
+			},
+		);
 		setCurrentPage(value);
-		await router.push(`/car?input=${JSON.stringify(updatedFilter)}`, undefined, { scroll: false });
 	};
 
 	const sortingClickHandler = (e: MouseEvent<HTMLElement>) => {
@@ -116,21 +101,18 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 		sortingCloseHandler();
 	};
 
-	const handleFilterClick = (filterKey: string) => {
+	const filterHandler = (filterKey: string) => {
 		const filterMap: Record<string, Partial<CarsInquiry>> = {
-			'All Cars': { sort: undefined, direction: undefined, search: {} },
 			Featured: { sort: 'carViews', direction: Direction.DESC, search: {} },
 			Popular: { sort: 'carLikes', direction: Direction.DESC, search: {} },
-			New: { sort: 'carYear', direction: Direction.DESC, search: { carYear: 2025 } },
-			Upcoming: { sort: 'carYear', direction: Direction.DESC, search: { carYear: 2026 } },
+			New: { sort: 'carYear', direction: Direction.DESC, search: { carYear: { min: 2025, max: 2025 } } },
+			Upcoming: { sort: 'carYear', direction: Direction.DESC, search: { carYear: { min: 2026, max: 2026 } } },
 		};
 
 		const filterUpdate = filterMap[filterKey];
 		if (!filterUpdate) return;
-
 		setActiveFilter(filterKey);
 
-		// Replace the entire search with the filter's search, do NOT merge old search
 		const updatedInput: CarsInquiry = {
 			...searchFilter,
 			sort: filterUpdate.sort ?? undefined,
@@ -146,7 +128,11 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 		try {
 			if (!id) return;
 			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
+
+			// execution: likeTargetCar Mutation
 			await likeTargetCar({ variables: { input: id } });
+
+			// execution: getCarsRefetch
 			await getCarsRefetch({ input: searchFilter });
 			await sweetTopSmallSuccessAlert('Success! ', 800);
 		} catch (err: any) {
@@ -181,11 +167,11 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 							{/* Filter and Search */}
 							<Box className={'filter-search-box'}>
 								<Box className={'filter-box'}>
-									{['All Cars', 'Featured', 'Popular', 'New', 'Upcoming'].map((filter) => (
+									{['Featured', 'Popular', 'New', 'Upcoming'].map((filter) => (
 										<div
 											key={filter}
 											className={`filter-button ${activeFilter === filter ? 'active' : ''}`}
-											onClick={() => handleFilterClick(filter)}
+											onClick={() => filterHandler(filter)}
 										>
 											<p>{filter}</p>
 										</div>
@@ -229,11 +215,9 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 									<Box className="empty-list">No cars available.</Box>
 								) : (
 									<Stack className="car-list">
-										{(activeFilter === 'All Cars' ? [...allCars].sort(() => Math.random() - 0.5) : allCars).map(
-											(car: Car, index: number) => (
-												<CarCard car={car} likeCarHandler={likeCarHandler} key={car._id || `car-${index}`} />
-											),
-										)}
+										{allCars.map((car: Car, index: number) => (
+											<CarCard car={car} likeCarHandler={likeCarHandler} key={car._id || `car-${index}`} />
+										))}
 									</Stack>
 								)}
 
@@ -243,7 +227,7 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 											<Pagination
 												page={currentPage}
 												count={Math.ceil(total / searchFilter.limit)}
-												onChange={handlePaginationChange}
+												onChange={paginationHandler}
 												shape="circular"
 												color="primary"
 											/>
@@ -263,7 +247,7 @@ CarList.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 15,
-		sort: 'carLikes',
+		sort: 'carViews',
 		direction: 'DESC',
 		search: {
 			carPrice: {
