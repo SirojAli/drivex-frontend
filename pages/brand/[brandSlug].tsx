@@ -23,9 +23,10 @@ interface BrandCarsProps {
 
 const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
+	const router = useRouter();
+
 	const [chosenBrandCars, setChosenBrandCars] = useState<Car[]>([]);
 	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(initialInput);
-	const router = useRouter();
 	const [searchQuery, setSearchQuery] = useState('');
 	const [brandName, setBrandName] = useState<string>('');
 	const [activeFilter, setActiveFilter] = useState<string>('Featured');
@@ -87,7 +88,7 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 			...searchFilter,
 			search: {
 				...searchFilter.search,
-				carName: searchQuery,
+				carModel: searchQuery,
 			},
 			page: 1,
 		};

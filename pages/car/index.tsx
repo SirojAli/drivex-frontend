@@ -32,7 +32,7 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	);
 
 	const [total, setTotal] = useState<number>(0);
-	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [currentPage, setCurrentPage] = useState<number>(searchFilter.page ?? 1);
 
 	const [activeFilter, setActiveFilter] = useState<string>('Featured');
 	const [filterSortName, setFilterSortName] = useState('Default');
@@ -62,15 +62,13 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 
 	/** HANDLERS **/
 	const paginationHandler = async (event: ChangeEvent<unknown>, value: number) => {
-		searchFilter.page = value;
-		await router.push(
-			`/car?input=${JSON.stringify(searchFilter)}`, //
-			`/car?input=${JSON.stringify(searchFilter)}`,
-			{
-				scroll: false,
-			},
-		);
+		const updatedFilter = { ...searchFilter, page: value };
+		setSearchFilter(updatedFilter);
 		setCurrentPage(value);
+
+		await router.push(`/car?input=${JSON.stringify(updatedFilter)}`, `/car?input=${JSON.stringify(updatedFilter)}`, {
+			scroll: false,
+		});
 	};
 
 	const sortingClickHandler = (e: MouseEvent<HTMLElement>) => {
@@ -159,7 +157,7 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 					{/* Main */}
 					<Stack className={'main-list'}>
 						{/* Filter */}
-						<Stack className="filter-box">
+						<Stack>
 							<CarFilter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
 						</Stack>
 

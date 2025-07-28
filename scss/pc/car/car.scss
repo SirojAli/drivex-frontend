@@ -69,21 +69,57 @@
 						position: relative;
 						width: 100%;
 						gap: 10px;
+						display: flex;
+						flex-direction: column;
+
+						> .MuiStack-root {
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							margin-bottom: 20px;
+						}
 
 						.title-main {
 							width: 100%;
 							height: 25px;
 							color: #181a20;
-							font-family: $font;
+							font-family: $font; // replace with your actual font or variable
 							font-size: 15px;
 							font-style: normal;
 							font-weight: 600;
 							line-height: normal;
 						}
 
-						.search-box {
-							// border: 1px solid red;
+						button {
+							border-radius: 4px;
+							font-size: 14px;
+							padding: 6px;
+							border: 1px solid #ff7101;
+							color: #ff7101;
+							background-color: transparent;
+							cursor: pointer;
+							min-width: 36px;
+							height: 36px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							transition: background-color 0.3s ease, color 0.3s ease;
 
+							svg {
+								font-size: 20px; // adjust icon size if needed
+							}
+
+							&:hover {
+								background-color: #ff7101;
+								color: #fff;
+
+								svg {
+									color: #fff;
+								}
+							}
+						}
+
+						.search-box {
 							.search-form {
 								display: flex;
 								align-items: center;
@@ -133,66 +169,6 @@
 										background-color: darken(#ff7101, 5%);
 									}
 								}
-							}
-						}
-					}
-
-					&__search {
-						margin-bottom: 24px;
-						display: flex;
-						gap: 8px;
-
-						input {
-							background-color: #fafafa;
-						}
-
-						button {
-							background-color: #ff7101;
-							color: #fff;
-							text-transform: none;
-
-							&:hover {
-								background-color: #e66400;
-							}
-						}
-					}
-
-					&__dropdowns {
-						display: flex;
-						flex-direction: column;
-						gap: 16px;
-						margin-bottom: 24px;
-
-						.MuiFormControl-root {
-							label {
-								font-size: 14px;
-								color: #666;
-							}
-						}
-
-						.MuiSelect-select {
-							font-weight: 500;
-							background-color: #fafafa;
-						}
-
-						.MuiSlider-root {
-							margin-top: 8px;
-							color: #ff7101;
-						}
-					}
-
-					&__reset {
-						display: flex;
-						justify-content: flex-end;
-						margin-top: 16px;
-
-						button {
-							color: #666;
-
-							&:hover {
-								color: #000;
-								transform: rotate(90deg);
-								transition: transform 0.3s ease;
 							}
 						}
 					}

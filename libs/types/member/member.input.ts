@@ -20,6 +20,7 @@ export interface LoginInput {
 // 3. Search input for Sellers
 export interface SISearch {
 	text?: string;
+	brandSlug?: string;
 }
 
 // 4. Seller Inquiry

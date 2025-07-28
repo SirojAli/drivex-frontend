@@ -43,3 +43,6 @@ export enum CarDriveType {
 	AWD = 'AWD', // All-Wheel Drive
 	FOURWD = '4WD', // Four-Wheel Drive
 }
+
+// locationList typeList roomsList bedsList options
+// pricesRange periodsRange squaresRange

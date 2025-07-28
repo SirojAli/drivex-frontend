@@ -10,13 +10,13 @@ import {
 	Select,
 	MenuItem,
 	Slider,
-	Tooltip,
 	IconButton,
 	Box,
+	SelectChangeEvent,
 } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { CarsInquiry } from '../../types/car/car.input';
+import { CarISearch, CarsInquiry } from '../../types/car/car.input';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
 import { CarBrand, CarType, CarFuelType, CarTransmission, CarDriveType } from '../../enums/car.enum';
@@ -24,6 +24,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_CARS } from '../../../apollo/user/query';
 import { T } from '../../types/common';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import Tooltip from '@mui/material/Tooltip';
 
 type FilterType = {
 	searchFilter: CarsInquiry;
@@ -66,6 +68,44 @@ const CarFilter = (props: FilterType) => {
 	});
 
 	/** LIFECYCLES **/
+	useEffect(() => {
+		if (!searchFilter?.search) return;
+
+		const keysToCheck = [
+			'brandList',
+			'typeList',
+			'fuelTypeList',
+			'transmissionList',
+			'driveTypeList',
+			'doorsList',
+			'seatsList',
+			'colorList',
+		] as const;
+
+		type Key = typeof keysToCheck[number]; // 'brandList' | 'typeList' | ...
+
+		// Explicitly type cleanedSearch so TypeScript knows what it is
+		const cleanedSearch: CarISearch = { ...searchFilter.search };
+
+		let hasDeleted = false;
+
+		keysToCheck.forEach((key: Key) => {
+			const value = cleanedSearch[key];
+			if (Array.isArray(value) && value.length === 0) {
+				delete cleanedSearch[key];
+				hasDeleted = true;
+			}
+		});
+
+		if (hasDeleted) {
+			const cleanedFilter: CarsInquiry = {
+				...searchFilter,
+				search: cleanedSearch,
+			};
+
+			router.push(`/car?input=${encodeURIComponent(JSON.stringify(cleanedFilter))}`, undefined, { scroll: false });
+		}
+	}, [searchFilter, router]);
 
 	/** HANDLERS **/
 	const refreshHandler = async () => {
@@ -85,12 +125,35 @@ const CarFilter = (props: FilterType) => {
 			...searchFilter,
 			search: {
 				...searchFilter.search,
-				carName: searchText,
+				text: searchText.trim(),
 			},
 			page: 1,
 		};
 		setSearchFilter(newInput);
 		await getCarsRefetch({ input: newInput });
+	};
+
+	const resetAllFiltersHandler = () => {
+		setSearchText('');
+		setSearchFilter(initialInput); // Reset filters to initial input state
+		getCarsRefetch({ input: initialInput }); // Optional: reload with default filters
+	};
+
+	const carBrandSelectHandler = (event: SelectChangeEvent<string>) => {
+		const selected = event.target.value;
+
+		const updatedFilter: CarsInquiry = {
+			...searchFilter,
+			search: {
+				...searchFilter.search,
+				brandList: selected ? [selected as CarBrand] : [], // empty array if cleared
+			},
+			page: 1,
+		};
+
+		setSearchFilter(updatedFilter);
+
+		router.push(`/car?input=${encodeURIComponent(JSON.stringify(updatedFilter))}`, undefined, { scroll: false });
 	};
 
 	if (device === 'mobile') {
@@ -100,7 +163,19 @@ const CarFilter = (props: FilterType) => {
 			<Stack className="filter-box">
 				{/* Header */}
 				<Stack className={'find-your-car'} mb={'40px'}>
-					<Typography className={'title-main'}>Find Your Car</Typography>
+					<Stack direction="row" justifyContent="space-between" alignItems="center" mb="20px">
+						<Typography className="title-main">Find Your Car</Typography>
+						<Tooltip title="Reset All">
+							<Button
+								variant="outlined"
+								color="secondary"
+								onClick={resetAllFiltersHandler}
+								aria-label="Reset All Filters"
+							>
+								<RestartAltIcon />
+							</Button>
+						</Tooltip>
+					</Stack>
 					<Box className={'search-box'}>
 						<form className={'search-form'} onSubmit={searchHandler}>
 							<input
@@ -109,6 +184,18 @@ const CarFilter = (props: FilterType) => {
 								className={'search-input'}
 								value={searchText}
 								onChange={(e) => setSearchText(e.target.value)}
+								onKeyDown={async (event) => {
+									if (event.key === 'Enter') {
+										event.preventDefault();
+										const newInput = {
+											...searchFilter,
+											search: { ...searchFilter.search, text: searchText.trim() },
+											page: 1,
+										};
+										setSearchFilter(newInput);
+										await getCarsRefetch({ input: newInput });
+									}
+								}}
 							/>
 							<Button type="submit" className={'search-btn'}>
 								<SearchIcon />
@@ -133,10 +220,15 @@ const CarFilter = (props: FilterType) => {
 					</FormControl> */}
 
 					{/* Make */}
-					<FormControl fullWidth size="small">
-						<InputLabel>Make</InputLabel>
-						<Select defaultValue="">
-							{carBrands.map((brand) => (
+					<FormControl fullWidth>
+						<Select
+							labelId="car-brand-label"
+							value={searchFilter.search.brandList?.[0] ?? ''}
+							onChange={carBrandSelectHandler}
+							displayEmpty
+						>
+							<MenuItem value="">All Brands</MenuItem>
+							{Object.values(CarBrand).map((brand) => (
 								<MenuItem key={brand} value={brand}>
 									{brand}
 								</MenuItem>

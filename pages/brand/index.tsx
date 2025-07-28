@@ -70,15 +70,13 @@ const BrandList: NextPage = ({ initialInput }: any) => {
 								key={seller._id}
 								seller={seller}
 								likeMemberHandler={likeMemberHandler}
-								onClick={() =>
-									router.push({
-										pathname: '/brand/detail',
-										query: {
-											id: seller._id,
-											brand: encodeURIComponent(seller.memberNick),
-										},
-									})
-								}
+								onClick={() => {
+									if (!seller.brandSlug) {
+										console.warn('Brand slug missing for seller:', seller);
+										return;
+									}
+									router.push(`/brand/${seller.brandSlug}`);
+								}}
 							/>
 						))
 					)}

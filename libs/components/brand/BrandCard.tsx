@@ -30,7 +30,7 @@ const BrandCard = ({ seller, likeMemberHandler }: BrandCardProps) => {
 
 	const pushDetailHandler = async (memberId: string, brandName: string) => {
 		await router.push({
-			pathname: '/brand/detail',
+			pathname: '/brand/${brandSlug}',
 			query: {
 				id: memberId,
 				brand: brandName,

@@ -34,27 +34,27 @@ export interface PriceRange {
 }
 
 export interface YearRange {
-	min: number;
-	max: number;
+	min: Date | number;
+	max: Date | number;
 }
 
 // 3. SEARCH FILTERS (Car Inquiry Search)
 export interface CarISearch {
 	memberId?: string;
 	carStatus?: CarStatus[];
-	carBrand?: CarBrand[];
+	brandList?: CarBrand[];
 	carModel?: string;
-	carType?: CarType[];
-	carFuelType?: CarFuelType[];
-	carTransmission?: CarTransmission[];
-	carDriveType?: CarDriveType[];
-	carColor?: string;
+	typeList?: CarType[];
+	fuelTypeList?: CarFuelType[];
+	transmissionList?: CarTransmission[];
+	driveTypeList?: CarDriveType[];
+	colorList?: string[];
 	carPrice?: PriceRange;
 	carYear?: YearRange;
 	carIsNew?: boolean;
-	carSeats?: number;
-	carDoors?: number;
-	carEngineSize?: number;
+	seatsList?: Number[];
+	doorsList?: Number[];
+	engineSizeList?: Number[];
 	text?: string;
 }
 
@@ -92,20 +92,7 @@ export interface SellerCarsInquiry {
 // 6. ALL CARS INQUIRY
 interface ALCISearch {
 	carStatus?: CarStatus;
-	carBrand?: CarBrand[];
-	carType?: CarType[];
-	carFuelType?: CarFuelType[];
-	carTransmission?: CarTransmission[];
-	carDriveType: CarDriveType[];
-	carPrice?: PriceRange;
-	carYear?: YearRange;
-	carColor?: string;
-	carIsNew?: boolean;
-	carSeats?: number;
-	carDoors?: number;
-	carEngineSize?: number;
-	memberId?: string;
-	text?: string;
+	carBrandList?: CarBrand[];
 }
 
 export interface AllCarsInquiry {

@@ -19,12 +19,9 @@ const TopBrandCard = (props: TopBrandCardProps) => {
 	const user = useReactiveVar(userVar);
 
 	/** HANDLERS **/
-	const pushDetailHandler = async (memberId: string) => {
-		console.log('memberId:', memberId);
-		await router.push({
-			pathname: '/brand/detail',
-			query: { id: memberId },
-		});
+	const pushDetailHandler = async (brandSlug?: string) => {
+		if (!brandSlug) return;
+		await router.push(`/brand/${brandSlug}`);
 	};
 
 	if (device === 'mobile') {
@@ -32,13 +29,7 @@ const TopBrandCard = (props: TopBrandCardProps) => {
 	} else {
 		return (
 			<Stack className={'top-brand-card'}>
-				<Stack
-					className={'brand-box'}
-					key={seller._id}
-					onClick={() => {
-						pushDetailHandler(seller._id);
-					}}
-				>
+				<Stack className={'brand-box'} key={seller._id} onClick={() => pushDetailHandler(seller.brandSlug)}>
 					<div className={'brand-logo-wrapper'}>
 						<img
 							src={seller?.memberImage ? `${REACT_APP_API_URL}/${seller?.memberImage}` : '/img/profile/defaultUser.png'}

@@ -92,7 +92,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					...searchFilter,
 					search: {
 						...searchFilter.search,
-						carBrand: [value],
+						brandList: [value],
 					},
 				});
 				typeStateChangeHandler();
@@ -110,7 +110,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					...searchFilter,
 					search: {
 						...searchFilter.search,
-						carType: [value],
+						typeList: [value],
 					},
 				});
 				fuelStateChangeHandler();
@@ -128,7 +128,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					...searchFilter,
 					search: {
 						...searchFilter.search,
-						carFuelType: [value],
+						fuelTypeList: [value],
 					},
 				});
 				disableAllStateHandler();
@@ -144,7 +144,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 			...initialInput,
 			search: {
 				...initialInput.search,
-				carType: [type as CarType],
+				typeList: [type as CarType],
 			},
 		};
 
@@ -158,16 +158,16 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 
 	const pushSearchHandler = async () => {
 		try {
-			if (searchFilter?.search?.carBrand?.length == 0) {
-				delete searchFilter.search.carBrand;
+			if (searchFilter?.search?.brandList?.length == 0) {
+				delete searchFilter.search.brandList;
 			}
 
-			if (searchFilter?.search?.carType?.length == 0) {
-				delete searchFilter.search.carType;
+			if (searchFilter?.search?.typeList?.length == 0) {
+				delete searchFilter.search.typeList;
 			}
 
-			if (searchFilter?.search?.carFuelType?.length == 0) {
-				delete searchFilter.search.carFuelType;
+			if (searchFilter?.search?.fuelTypeList?.length == 0) {
+				delete searchFilter.search.fuelTypeList;
 			}
 
 			await router.push(`/car?input=${JSON.stringify(searchFilter)}`, `/car?input=${JSON.stringify(searchFilter)}`);
@@ -192,18 +192,18 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				<Stack className={'search-box'}>
 					<Stack className={'select-box'}>
 						<Box component={'div'} className={`box ${openBrand ? 'on' : ''}`} onClick={brandStateChangeHandler}>
-							<span>{searchFilter?.search?.carBrand ? searchFilter?.search?.carBrand[0] : 'Car Make'} </span>
+							<span>{searchFilter?.search?.brandList ? searchFilter?.search?.brandList[0] : 'Car Make'} </span>
 							<ExpandMoreIcon />
 						</Box>
 
 						<Box className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler}>
-							<span> {searchFilter?.search?.carType ? searchFilter?.search?.carType[0] : 'Car type'} </span>
+							<span> {searchFilter?.search?.typeList ? searchFilter?.search?.typeList[0] : 'Car type'} </span>
 							<ExpandMoreIcon />
 						</Box>
 
 						<Box className={`box ${openFuelType ? 'on' : ''}`} onClick={fuelStateChangeHandler}>
 							<span>
-								{searchFilter?.search?.carFuelType ? `${searchFilter?.search?.carFuelType[0]}}` : 'Fuel Type'}
+								{searchFilter?.search?.fuelTypeList ? `${searchFilter?.search?.fuelTypeList[0]}}` : 'Fuel Type'}
 							</span>
 							<ExpandMoreIcon />
 						</Box>
