@@ -1,4 +1,12 @@
-import { CarStatus, CarBrand, CarType, CarFuelType, CarTransmission, CarDriveType } from '../../enums/car.enum';
+import {
+	CarStatus,
+	CarBrand,
+	CarType,
+	CarFuelType,
+	CarTransmission,
+	CarDriveType,
+	CarColor,
+} from '../../enums/car.enum';
 import { Direction } from '../../enums/common.enum';
 
 // 1. CAR INPUT (Create Car)
@@ -10,7 +18,7 @@ export interface CarInput {
 	carPrice: number;
 	carFuelType: CarFuelType;
 	carTransmission: CarTransmission;
-	carColor: string;
+	carColor: CarColor;
 	carImages: string[];
 	carVideoUrl?: string;
 	carDescription?: string;
@@ -48,7 +56,7 @@ export interface CarISearch {
 	fuelTypeList?: CarFuelType[];
 	transmissionList?: CarTransmission[];
 	driveTypeList?: CarDriveType[];
-	colorList?: string[];
+	colorList?: CarColor[];
 	carPrice?: PriceRange;
 	carYear?: YearRange;
 	carIsNew?: boolean;
@@ -74,7 +82,7 @@ interface SCISearch {
 	carType?: CarType[];
 	carFuelType?: CarFuelType[];
 	carTransmission?: CarTransmission[];
-	carColor?: string;
+	carColor?: CarColor[];
 	carIsNew?: boolean;
 	carPrice?: PriceRange;
 	carYear?: YearRange;

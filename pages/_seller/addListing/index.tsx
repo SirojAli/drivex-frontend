@@ -11,7 +11,7 @@ import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { sweetErrorHandling, sweetMixinErrorAlert, sweetMixinSuccessAlert } from '../../../libs/sweetAlert';
 import { CREATE_CAR, UPDATE_CAR } from '../../../apollo/user/mutation';
 import { CarInput } from '../../../libs/types/car/car.input';
-import { CarBrand, CarDriveType, CarFuelType, CarTransmission, CarType } from '../../../libs/enums/car.enum';
+import { CarBrand, CarColor, CarDriveType, CarFuelType, CarTransmission, CarType } from '../../../libs/enums/car.enum';
 import { GET_CAR } from '../../../apollo/user/query';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -28,6 +28,7 @@ const AddListing: NextPage = ({ initialValues, ...props }: any) => {
 	const [carFuelType, setCarFuelType] = useState<CarFuelType[]>(Object.values(CarFuelType));
 	const [carTransmission, setCarTransmission] = useState<CarTransmission[]>(Object.values(CarTransmission));
 	const [carDriveType, setCarDriveType] = useState<CarDriveType[]>(Object.values(CarDriveType));
+	const [carColor, setCarColor] = useState<CarColor[]>(Object.values(CarColor));
 
 	/** APOLLO REQUESTS **/
 	const [createCar] = useMutation(CREATE_CAR);

@@ -19,7 +19,7 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { CarISearch, CarsInquiry } from '../../types/car/car.input';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
-import { CarBrand, CarType, CarFuelType, CarTransmission, CarDriveType } from '../../enums/car.enum';
+import { CarBrand, CarType, CarFuelType, CarTransmission, CarDriveType, CarColor } from '../../enums/car.enum';
 import SearchIcon from '@mui/icons-material/Search';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_CARS } from '../../../apollo/user/query';
@@ -33,8 +33,6 @@ type FilterType = {
 	initialInput: CarsInquiry;
 };
 
-const carColors = ['WHITE', 'BLACK', 'GRAY', 'BLUE', 'RED', 'BROWN', 'GREEN', 'YELLOW', 'ORANGE', 'PURPLE', 'OTHER'];
-
 const CarFilter = (props: FilterType) => {
 	const { searchFilter, setSearchFilter, initialInput } = props;
 	const device = useDeviceDetect();
@@ -45,6 +43,7 @@ const CarFilter = (props: FilterType) => {
 	const [carFuelTypes, setCarFuelTypes] = useState<CarFuelType[]>(Object.values(CarFuelType));
 	const [carTransmissions, setCarTransmissions] = useState<CarTransmission[]>(Object.values(CarTransmission));
 	const [carDriveTypes, setCarDriveTypes] = useState<CarDriveType[]>(Object.values(CarDriveType));
+	const [carColor, setCarColor] = useState<CarColor[]>(Object.values(CarColor));
 
 	const [searchText, setSearchText] = useState<string>('');
 
@@ -156,6 +155,113 @@ const CarFilter = (props: FilterType) => {
 		router.push(`/car?input=${encodeURIComponent(JSON.stringify(updatedFilter))}`, undefined, { scroll: false });
 	};
 
+	const carTypeSelectHandler = (event: SelectChangeEvent<string>) => {
+		const selected = event.target.value;
+
+		const updatedFilter: CarsInquiry = {
+			...searchFilter,
+			search: {
+				...searchFilter.search,
+				typeList: selected ? [selected as CarType] : [],
+			},
+			page: 1,
+		};
+
+		setSearchFilter(updatedFilter);
+
+		router.push(`/car?input=${encodeURIComponent(JSON.stringify(updatedFilter))}`, undefined, { scroll: false });
+	};
+
+	const carFuelTypeSelectHandler = (event: SelectChangeEvent<string>) => {
+		const selected = event.target.value;
+		const updatedFilter: CarsInquiry = {
+			...searchFilter,
+			search: {
+				...searchFilter.search,
+				fuelTypeList: selected ? [selected as CarFuelType] : [],
+			},
+			page: 1,
+		};
+		setSearchFilter(updatedFilter);
+		router.push(`/car?input=${encodeURIComponent(JSON.stringify(updatedFilter))}`, undefined, { scroll: false });
+	};
+
+	const carTransmissionSelectHandler = (event: SelectChangeEvent<string>) => {
+		const selected = event.target.value;
+		const updatedFilter: CarsInquiry = {
+			...searchFilter,
+			search: {
+				...searchFilter.search,
+				transmissionList: selected ? [selected as CarTransmission] : [],
+			},
+			page: 1,
+		};
+		setSearchFilter(updatedFilter);
+		router.push(`/car?input=${encodeURIComponent(JSON.stringify(updatedFilter))}`, undefined, { scroll: false });
+	};
+
+	const carDriveTypeSelectHandler = (event: SelectChangeEvent<string>) => {
+		const selected = event.target.value;
+		const updatedFilter: CarsInquiry = {
+			...searchFilter,
+			search: {
+				...searchFilter.search,
+				driveTypeList: selected ? [selected as CarDriveType] : [],
+			},
+			page: 1,
+		};
+		setSearchFilter(updatedFilter);
+		router.push(`/car?input=${encodeURIComponent(JSON.stringify(updatedFilter))}`, undefined, { scroll: false });
+	};
+
+	const doorsSelectHandler = (event: SelectChangeEvent<string>) => {
+		const selected = event.target.value;
+		const updatedFilter: CarsInquiry = {
+			...searchFilter,
+			search: {
+				...searchFilter.search,
+				doorsList: selected ? [Number(selected)] : [],
+			},
+			page: 1,
+		};
+		setSearchFilter(updatedFilter);
+		router.push(`/car?input=${encodeURIComponent(JSON.stringify(updatedFilter))}`, undefined, { scroll: false });
+	};
+
+	const seatsSelectHandler = (event: SelectChangeEvent<string>) => {
+		const selected = event.target.value;
+		const updatedFilter: CarsInquiry = {
+			...searchFilter,
+			search: {
+				...searchFilter.search,
+				seatsList: selected ? [Number(selected)] : [],
+			},
+			page: 1,
+		};
+		setSearchFilter(updatedFilter);
+		router.push(`/car?input=${encodeURIComponent(JSON.stringify(updatedFilter))}`, undefined, { scroll: false });
+	};
+
+	const colorSelectHandler = (event: SelectChangeEvent<string>) => {
+		const selected = event.target.value as CarColor;
+
+		const updatedFilter: CarsInquiry = {
+			...searchFilter,
+			search: {
+				...searchFilter.search,
+				colorList: selected ? [selected] : [],
+			},
+			page: 1,
+		};
+
+		setSearchFilter(updatedFilter);
+
+		// Push to URL for filtering
+		router.push(`/car?input=${encodeURIComponent(JSON.stringify(updatedFilter))}`, undefined, {
+			scroll: false,
+		});
+	};
+
 	if (device === 'mobile') {
 		return <Stack>CARS FILTER</Stack>;
 	} else {
@@ -227,7 +333,7 @@ const CarFilter = (props: FilterType) => {
 							onChange={carBrandSelectHandler}
 							displayEmpty
 						>
-							<MenuItem value="">All Brands</MenuItem>
+							<MenuItem value="">Brands</MenuItem>
 							{Object.values(CarBrand).map((brand) => (
 								<MenuItem key={brand} value={brand}>
 									{brand}
@@ -238,8 +344,13 @@ const CarFilter = (props: FilterType) => {
 
 					{/* Body Type */}
 					<FormControl fullWidth size="small">
-						<InputLabel>Body Type</InputLabel>
-						<Select defaultValue="">
+						<Select
+							labelId="car-type-label"
+							value={searchFilter.search.typeList?.[0] ?? ''}
+							onChange={carTypeSelectHandler}
+							displayEmpty
+						>
+							<MenuItem value="">Body Types</MenuItem>
 							{carTypes.map((type) => (
 								<MenuItem key={type} value={type}>
 									{type}
@@ -261,8 +372,13 @@ const CarFilter = (props: FilterType) => {
 
 					{/* Fuel Type */}
 					<FormControl fullWidth size="small">
-						<InputLabel>Fuel</InputLabel>
-						<Select defaultValue="">
+						<Select
+							label="Fuel"
+							value={searchFilter.search.fuelTypeList?.[0] ?? ''}
+							onChange={carFuelTypeSelectHandler}
+							displayEmpty
+						>
+							<MenuItem value="">Fuel Types</MenuItem>
 							{carFuelTypes.map((fuel) => (
 								<MenuItem key={fuel} value={fuel}>
 									{fuel}
@@ -273,8 +389,13 @@ const CarFilter = (props: FilterType) => {
 
 					{/* Transmission */}
 					<FormControl fullWidth size="small">
-						<InputLabel>Transmission</InputLabel>
-						<Select defaultValue="">
+						<Select
+							label="Transmission"
+							value={searchFilter.search.transmissionList?.[0] ?? ''}
+							onChange={carTransmissionSelectHandler}
+							displayEmpty
+						>
+							<MenuItem value="">Transmissions</MenuItem>
 							{carTransmissions.map((trans) => (
 								<MenuItem key={trans} value={trans}>
 									{trans}
@@ -285,8 +406,13 @@ const CarFilter = (props: FilterType) => {
 
 					{/* Drive Type */}
 					<FormControl fullWidth size="small">
-						<InputLabel>Drive</InputLabel>
-						<Select defaultValue="">
+						<Select
+							label="Drive"
+							value={searchFilter.search.driveTypeList?.[0] ?? ''}
+							onChange={carDriveTypeSelectHandler}
+							displayEmpty
+						>
+							<MenuItem value="">Drive Types</MenuItem>
 							{carDriveTypes.map((drive) => (
 								<MenuItem key={drive} value={drive}>
 									{drive}
@@ -297,10 +423,15 @@ const CarFilter = (props: FilterType) => {
 
 					{/* Doors */}
 					<FormControl fullWidth size="small">
-						<InputLabel>Doors</InputLabel>
-						<Select defaultValue="">
+						<Select
+							label="Doors"
+							value={searchFilter.search.doorsList?.[0]?.toString() ?? ''}
+							onChange={doorsSelectHandler}
+							displayEmpty
+						>
+							<MenuItem value="">Doors</MenuItem>
 							{[2, 3, 4, 5].map((num) => (
-								<MenuItem key={num} value={num}>
+								<MenuItem key={num} value={num.toString()}>
 									{num}
 								</MenuItem>
 							))}
@@ -309,10 +440,15 @@ const CarFilter = (props: FilterType) => {
 
 					{/* Seats */}
 					<FormControl fullWidth size="small">
-						<InputLabel>Seats</InputLabel>
-						<Select defaultValue="">
+						<Select
+							label="Seats"
+							value={searchFilter.search.seatsList?.[0]?.toString() ?? ''}
+							onChange={seatsSelectHandler}
+							displayEmpty
+						>
+							<MenuItem value="">Seats</MenuItem>
 							{[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
-								<MenuItem key={num} value={num}>
+								<MenuItem key={num} value={num.toString()}>
 									{num}
 								</MenuItem>
 							))}
@@ -321,9 +457,14 @@ const CarFilter = (props: FilterType) => {
 
 					{/* Color */}
 					<FormControl fullWidth size="small">
-						<InputLabel>Color</InputLabel>
-						<Select defaultValue="">
-							{carColors.map((color) => (
+						<Select
+							label="Color"
+							value={searchFilter.search.colorList?.[0] ?? ''}
+							onChange={colorSelectHandler}
+							displayEmpty
+						>
+							<MenuItem value="">Colors</MenuItem>
+							{carColor.map((color) => (
 								<MenuItem key={color} value={color}>
 									{color}
 								</MenuItem>

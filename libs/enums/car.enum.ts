@@ -44,5 +44,16 @@ export enum CarDriveType {
 	FOURWD = '4WD', // Four-Wheel Drive
 }
 
-// locationList typeList roomsList bedsList options
-// pricesRange periodsRange squaresRange
+export enum CarColor {
+	WHITE = 'WHITE',
+	BLACK = 'BLACK',
+	GRAY = 'GRAY',
+	BLUE = 'BLUE',
+	RED = 'RED',
+	BROWN = 'BROWN',
+	GREEN = 'GREEN',
+	YELLOW = 'YELLOW',
+	ORANGE = 'ORANGE',
+	PURPLE = 'PURPLE',
+	OTHER = 'OTHER',
+}

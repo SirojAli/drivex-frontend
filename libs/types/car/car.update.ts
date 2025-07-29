@@ -5,6 +5,7 @@ import {
 	CarFuelType,
 	CarTransmission,
 	CarDriveType,
+	CarColor,
 } from '../../enums/car.enum';
 
 export interface CarUpdate {
@@ -17,7 +18,7 @@ export interface CarUpdate {
 	carPrice?: number;
 	carFuelType?: CarFuelType;
 	carTransmission?: CarTransmission;
-	carColor?: string;
+	carColor?: CarColor;
 	carImages?: string[];
 	carVideoUrl?: string;
 	carDescription?: string;

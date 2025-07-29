@@ -56,66 +56,61 @@
 				// border: 1px solid black;
 
 				.filter-box {
-					padding: 20px;
+					padding: 24px;
 					background-color: #fff;
-					border: 1px solid #ededed;
+					border: 1px solid #ddd;
 					border-radius: 12px;
 					max-width: 320px;
 					width: 100%;
 					display: flex;
 					flex-direction: column;
+					font-family: 'Inter', sans-serif;
+					color: #222;
 
 					.find-your-car {
-						position: relative;
 						width: 100%;
-						gap: 10px;
 						display: flex;
 						flex-direction: column;
+						gap: 12px;
 
 						> .MuiStack-root {
 							display: flex;
 							justify-content: space-between;
 							align-items: center;
-							margin-bottom: 20px;
+							margin-bottom: 24px;
 						}
 
 						.title-main {
-							width: 100%;
-							height: 25px;
-							color: #181a20;
-							font-family: $font; // replace with your actual font or variable
-							font-size: 15px;
-							font-style: normal;
-							font-weight: 600;
-							line-height: normal;
+							font-weight: 700;
+							font-size: 18px;
+							color: #111;
+							line-height: 1.2;
+							user-select: none;
 						}
 
 						button {
-							border-radius: 4px;
+							border-radius: 6px;
 							font-size: 14px;
 							padding: 6px;
-							border: 1px solid #ff7101;
-							color: #ff7101;
+							border: 1.5px solid #ff7300;
+							color: #ff7300;
 							background-color: transparent;
 							cursor: pointer;
-							min-width: 36px;
-							height: 36px;
+							min-width: 38px;
+							height: 38px;
 							display: flex;
 							align-items: center;
 							justify-content: center;
-							transition: background-color 0.3s ease, color 0.3s ease;
+							transition: background-color 0.25s ease, color 0.25s ease;
 
 							svg {
-								font-size: 20px; // adjust icon size if needed
+								font-size: 22px;
+								color: inherit;
 							}
 
-							&:hover {
-								background-color: #ff7101;
-								color: #fff;
-
-								svg {
-									color: #fff;
-								}
+							&:focus-visible {
+								outline: 2px solid #ff7300;
+								outline-offset: 2px;
 							}
 						}
 
@@ -123,38 +118,38 @@
 							.search-form {
 								display: flex;
 								align-items: center;
-								background-color: #fff;
-								border: 1px solid #ededed;
-								border-radius: 999px;
-								padding: 4px 8px;
-								box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-								transition: box-shadow 0.3s ease;
+								background-color: #fafafa;
+								border: 1px solid #ccc;
+								border-radius: 9999px;
+								padding: 6px 12px;
+								box-shadow: none;
+								transition: border-color 0.3s ease;
 
 								&:focus-within {
-									box-shadow: 0 0 0 2px rgba(255, 113, 1, 0.3);
+									border-color: #ff7300;
 								}
 
 								.search-input {
 									flex: 1;
 									border: none;
 									background: transparent;
-									font-size: 14px;
-									padding: 10px 0 10px 12px;
-									color: #333;
+									font-size: 15px;
+									padding: 10px 0 10px 14px;
+									color: #222;
 									outline: none;
 
 									&::placeholder {
-										color: #aaa;
+										color: #999;
 									}
 								}
 
 								.search-btn {
 									flex-shrink: 0;
-									background-color: #ff7101;
+									background-color: #ff7300;
 									border: none;
 									border-radius: 50%;
-									width: 36px;
-									height: 36px;
+									width: 38px;
+									height: 38px;
 									display: flex;
 									align-items: center;
 									justify-content: center;
@@ -163,12 +158,43 @@
 
 									svg {
 										color: #fff;
+										font-size: 20px;
 									}
 
-									&:hover {
-										background-color: darken(#ff7101, 5%);
+									&:focus-visible {
+										outline: 2px solid #ff7300;
+										outline-offset: 2px;
 									}
 								}
+							}
+						}
+					}
+
+					/* Dropdown Filters */
+					.filter-box__dropdowns {
+						display: flex;
+						flex-direction: column;
+						gap: 16px;
+
+						.MuiFormControl-root {
+							width: 100%;
+
+							.MuiSelect-root {
+								font-size: 15px;
+								padding: 10px 12px;
+								border-radius: 8px;
+								background-color: #fafafa;
+								border: 1px solid #ccc;
+
+								&:focus {
+									background-color: #fff;
+									border-color: #ff7300;
+									box-shadow: 0 0 4px rgba(255, 115, 0, 0.4);
+								}
+							}
+
+							.MuiSelect-icon {
+								color: #999;
 							}
 						}
 					}

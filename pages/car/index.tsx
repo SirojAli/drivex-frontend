@@ -59,6 +59,12 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	});
 
 	/** LIFECYCLES **/
+	useEffect(() => {
+		if (!router.query.input) {
+			const stringifiedInput = JSON.stringify(initialInput);
+			router.replace(`/car?input=${stringifiedInput}`, undefined, { shallow: true });
+		}
+	}, []);
 
 	/** HANDLERS **/
 	const paginationHandler = async (event: ChangeEvent<unknown>, value: number) => {
