@@ -4,7 +4,6 @@ import { MeLiked } from '../like/meLiked';
 
 export interface Member {
 	_id: string;
-
 	memberType: MemberType;
 	memberStatus: MemberStatus;
 	memberAuthType: MemberAuthType;

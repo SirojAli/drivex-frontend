@@ -28,21 +28,18 @@ const BrandCard = ({ seller, likeMemberHandler }: BrandCardProps) => {
 		: '/img/profile/defaultUser.png';
 	const isLiked = seller?.meLiked;
 
-	const pushDetailHandler = async (memberId: string, brandName: string) => {
-		await router.push({
-			pathname: '/brand/${brandSlug}',
-			query: {
-				id: memberId,
-				brand: brandName,
-			},
-		});
+	const pushDetailHandler = async (memberId: string, brandSlug: string) => {
+		await router.push(`/brand/${seller.brandSlug}`);
 	};
 
 	if (device === 'mobile') {
 		return <div>BRAND CARD</div>;
 	} else {
 		return (
-			<Stack className={'seller-box'} onClick={() => pushDetailHandler(seller._id, seller.memberNick)}>
+			<Stack
+				className={'seller-box'}
+				onClick={() => seller.brandSlug && pushDetailHandler(seller._id, seller.brandSlug)}
+			>
 				<Stack className={'seller-img'}>
 					<img src={imagePath} alt="brand-img" loading="lazy" />
 				</Stack>

@@ -11,7 +11,7 @@ import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/swee
 import { useRouter } from 'next/router';
 import { LIKE_TARGET_CAR } from '../../apollo/user/mutation';
 import { Car } from '../../libs/types/car/car';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { T } from '../../libs/types/common';
 import { GET_CARS } from '../../apollo/user/query';
 import { Direction } from '../../libs/enums/common.enum';
@@ -24,6 +24,7 @@ interface BrandCarsProps {
 const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const { brandSlug } = router.query;
 
 	const [chosenBrandCars, setChosenBrandCars] = useState<Car[]>([]);
 	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(initialInput);
@@ -31,29 +32,12 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 	const [brandName, setBrandName] = useState<string>('');
 	const [activeFilter, setActiveFilter] = useState<string>('Featured');
 
-	/** SET BRAND NAME FROM QUERY **/
-	useEffect(() => {
-		const brandFromQuery = router.query.brand;
-		if (brandFromQuery && typeof brandFromQuery === 'string') {
-			setBrandName(brandFromQuery.toUpperCase());
-			setSearchFilter((prev) => ({
-				...prev,
-				search: { ...prev.search, carBrand: [brandFromQuery as CarBrand] },
-			}));
-		}
-	}, [router.query.brand]);
-
 	/** APOLLO REQUESTS **/
 	const [likeTargetCar] = useMutation(LIKE_TARGET_CAR);
 
-	const {
-		loading: getCarsLoading,
-		data: getCarsData,
-		error: getCarsError,
-		refetch: getCarsRefetch,
-	} = useQuery(GET_CARS, {
-		fetchPolicy: 'cache-and-network',
-		variables: { input: searchFilter },
+	// ✅ CHANGED FROM useQuery TO useLazyQuery
+	const [getCars, { loading: getCarsLoading, data: getCarsData, error: getCarsError }] = useLazyQuery(GET_CARS, {
+		fetchPolicy: 'network-only',
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			if (data?.getCars?.list && Array.isArray(data.getCars.list)) {
@@ -64,13 +48,40 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 		},
 	});
 
+	// ✅ UPDATED: Extract brand name from slug and trigger car query
+	useEffect(() => {
+		if (!router.isReady || typeof brandSlug !== 'string') return;
+
+		const brandCode = brandSlug.split('-')[0].toUpperCase(); // e.g. 'bmw-KR' => 'BMW'
+		setBrandName(brandCode);
+
+		const newInput: CarsInquiry = {
+			...searchFilter,
+			page: 1,
+			search: {
+				...searchFilter.search,
+				brandList: [brandCode as CarBrand],
+			},
+		};
+
+		setSearchFilter(newInput);
+		getCars({ variables: { input: newInput } }); // ✅ Execute Apollo query
+	}, [brandSlug, router.isReady]);
+
+	// ✅ UPDATED: Trigger search when filter changes
+	useEffect(() => {
+		if (searchFilter?.search?.brandList?.length) {
+			getCars({ variables: { input: searchFilter } });
+		}
+	}, [searchFilter]);
+
 	/** HANDLERS **/
 	const likeCarHandler = async (user: T, id: string) => {
 		try {
 			if (!id) return;
 			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
 			await likeTargetCar({ variables: { input: id } });
-			await getCarsRefetch({ input: searchFilter });
+			await getCars({ variables: { input: searchFilter } });
 			await sweetTopSmallSuccessAlert('Success! ', 800);
 		} catch (err: any) {
 			console.log('ERROR, likeCarHandler: ', err.message);
@@ -93,7 +104,7 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 			page: 1,
 		};
 		setSearchFilter(newInput);
-		await getCarsRefetch({ input: newInput });
+		getCars({ variables: { input: newInput } });
 	};
 
 	// FILTER TABS
@@ -130,12 +141,15 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 			...searchFilter,
 			sort: filterUpdate.sort ?? searchFilter.sort,
 			direction: filterUpdate.direction ?? searchFilter.direction,
-			search: filterUpdate.search ?? {},
+			search: {
+				...searchFilter.search,
+				...(filterUpdate.search ?? {}),
+			},
 			page: 1,
 		};
 
 		setSearchFilter(updatedInput);
-		getCarsRefetch({ input: updatedInput });
+		getCars({ variables: { input: updatedInput } });
 	};
 
 	const viewCarHandler = async () => {
