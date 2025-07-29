@@ -26,6 +26,7 @@ import { GET_CARS } from '../../../apollo/user/query';
 import { T } from '../../types/common';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import Tooltip from '@mui/material/Tooltip';
+import { Divider } from '@mui/material';
 
 type FilterType = {
 	searchFilter: CarsInquiry;
@@ -46,6 +47,18 @@ const CarFilter = (props: FilterType) => {
 	const [carColor, setCarColor] = useState<CarColor[]>(Object.values(CarColor));
 
 	const [searchText, setSearchText] = useState<string>('');
+
+	const getInitialPriceRange = (input: CarsInquiry): number[] => [
+		input.search.carPrice?.min ? input.search.carPrice.min / 1_000_000 : 10,
+		input.search.carPrice?.max ? input.search.carPrice.max / 1_000_000 : 300,
+	];
+	const [priceRange, setPriceRange] = useState<number[]>(getInitialPriceRange(searchFilter));
+
+	const getInitialYearRange = (input: CarsInquiry): number[] => [
+		input.search.carYear?.min ? Number(input.search.carYear.min) : 2010,
+		input.search.carYear?.max ? Number(input.search.carYear.max) : 2026,
+	];
+	const [yearRange, setYearRange] = useState<number[]>(getInitialYearRange(searchFilter));
 
 	/** APOLLO REQUESTS **/
 	const {
@@ -107,6 +120,53 @@ const CarFilter = (props: FilterType) => {
 	}, [searchFilter, router]);
 
 	/** HANDLERS **/
+
+	const handlePriceChange = (event: Event, newValue: number | number[]) => {
+		const [min, max] = newValue as number[];
+
+		setPriceRange([min, max]);
+
+		const updatedFilter: CarsInquiry = {
+			...searchFilter,
+			search: {
+				...searchFilter.search,
+				carPrice: {
+					min: min * 1_000_000,
+					max: max * 1_000_000,
+				},
+			},
+			page: 1,
+		};
+
+		setSearchFilter(updatedFilter);
+		router.push(`/car?input=${encodeURIComponent(JSON.stringify(updatedFilter))}`, undefined, {
+			scroll: false,
+		});
+	};
+
+	const handleYearChange = (event: Event, newValue: number | number[]) => {
+		const [min, max] = newValue as number[];
+
+		setYearRange([min, max]);
+
+		const updatedFilter: CarsInquiry = {
+			...searchFilter,
+			search: {
+				...searchFilter.search,
+				carYear: {
+					min,
+					max,
+				},
+			},
+			page: 1,
+		};
+
+		setSearchFilter(updatedFilter);
+		router.push(`/car?input=${encodeURIComponent(JSON.stringify(updatedFilter))}`, undefined, {
+			scroll: false,
+		});
+	};
+
 	const refreshHandler = async () => {
 		try {
 			setSearchText('');
@@ -134,8 +194,10 @@ const CarFilter = (props: FilterType) => {
 
 	const resetAllFiltersHandler = () => {
 		setSearchText('');
-		setSearchFilter(initialInput); // Reset filters to initial input state
-		getCarsRefetch({ input: initialInput }); // Optional: reload with default filters
+		setSearchFilter(initialInput);
+		setPriceRange(getInitialPriceRange(initialInput));
+		setYearRange(getInitialYearRange(initialInput));
+		getCarsRefetch({ input: initialInput });
 	};
 
 	const carBrandSelectHandler = (event: SelectChangeEvent<string>) => {
@@ -313,18 +375,41 @@ const CarFilter = (props: FilterType) => {
 				{/* Dropdown Filters */}
 				<Stack spacing={2} className="filter-box__dropdowns">
 					{/* Price */}
-					{/* <FormControl fullWidth size="small">
-						<Typography fontWeight={500}>Price (in MLN)</Typography>
+					<FormControl fullWidth size="small">
+						<Typography fontWeight={500} gutterBottom>
+							Price (₩10M ~ ₩300M)
+						</Typography>
 						<Slider
-							value={price}
-							onChange={(e, val) => setPrice(val as number[])}
+							value={priceRange}
+							onChange={handlePriceChange}
 							valueLabelDisplay="auto"
-							min={10_000_000}
-							max={300_000_000}
-							step={1_000_000}
+							min={10}
+							max={300}
+							step={1}
+							valueLabelFormat={(value) => `₩${value.toLocaleString()}M`}
 						/>
-					</FormControl> */}
+					</FormControl>
 
+					{/* Year */}
+					<FormControl fullWidth size="small" sx={{ mt: 3 }}>
+						<Typography fontWeight={500} gutterBottom>
+							Year (2010 ~ 2026)
+						</Typography>
+						<Slider
+							value={yearRange}
+							onChange={handleYearChange}
+							valueLabelDisplay="auto"
+							min={2010}
+							max={2026}
+							step={1}
+							valueLabelFormat={(value) => value.toString()}
+						/>
+					</FormControl>
+
+					<Divider sx={{ my: 2 }} />
+					<Typography variant="subtitle2" color="textSecondary" gutterBottom>
+						Make & Body Type
+					</Typography>
 					{/* Make */}
 					<FormControl fullWidth>
 						<Select
@@ -359,17 +444,10 @@ const CarFilter = (props: FilterType) => {
 						</Select>
 					</FormControl>
 
-					{/* Year */}
-					{/* <Typography fontWeight={500}>Year</Typography>
-					<Slider
-						value={year}
-						onChange={(e, val) => setYear(val as number[])}
-						valueLabelDisplay="auto"
-						min={2010}
-						max={2026}
-						step={1}
-					/> */}
-
+					<Divider sx={{ my: 2 }} />
+					<Typography variant="subtitle2" color="textSecondary" gutterBottom>
+						Technical Specs
+					</Typography>
 					{/* Fuel Type */}
 					<FormControl fullWidth size="small">
 						<Select
@@ -421,6 +499,10 @@ const CarFilter = (props: FilterType) => {
 						</Select>
 					</FormControl>
 
+					<Divider sx={{ my: 2 }} />
+					<Typography variant="subtitle2" color="textSecondary" gutterBottom>
+						Physical Specs
+					</Typography>
 					{/* Doors */}
 					<FormControl fullWidth size="small">
 						<Select

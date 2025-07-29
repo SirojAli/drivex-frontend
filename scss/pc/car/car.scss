@@ -197,6 +197,47 @@
 								color: #999;
 							}
 						}
+
+						// ✅ Added: Price Slider Styles
+						.MuiSlider-root {
+							color: #ff7300;
+							padding: 10px 0;
+							height: 4px;
+
+							.MuiSlider-rail {
+								background-color: #ccc;
+								opacity: 0.3;
+							}
+
+							.MuiSlider-track {
+								background-color: #ff7300;
+							}
+
+							.MuiSlider-thumb {
+								width: 20px;
+								height: 20px;
+								background-color: #ff7300;
+								border: 2px solid #fff;
+								box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+								&:hover {
+									box-shadow: 0 0 0 8px rgba(255, 115, 0, 0.2);
+								}
+
+								&.Mui-focusVisible {
+									outline: 2px solid #ff7300;
+									outline-offset: 2px;
+								}
+							}
+
+							.MuiSlider-valueLabel {
+								background-color: #ff7300;
+								color: white;
+								font-size: 12px;
+								border-radius: 4px;
+								padding: 4px 6px;
+							}
+						}
 					}
 				}
 
