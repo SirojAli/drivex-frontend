@@ -80,103 +80,122 @@
 					justify-content: flex-start;
 					gap: 50px;
 					margin: 0;
-					// border: 1px solid red;
 
 					.blog-card-box {
 						width: 100%;
-						height: auto;
-						display: flex;
-						flex-direction: row;
-						gap: 30px;
-						// border: 1px solid black;
+						display: grid;
+						grid-template-columns: repeat(2, 1fr);
+						gap: 30px 20px;
 
 						.blog-boxes {
-							width: auto;
-							height: auto;
-							display: flex;
-							flex-direction: row;
-							gap: 30px;
-							flex-wrap: wrap;
+							display: contents;
 
 							.blog-box {
-								width: 410px;
+								width: 100%;
 								height: 440px;
 								display: flex;
 								flex-direction: column;
-								gap: 20px;
 								border-radius: 16px;
 								cursor: pointer;
 								overflow: hidden;
-								// box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
-								// transition: transform 0.3s ease, box-shadow 0.3s ease;
+								transition: box-shadow 0.3s ease;
 
 								&:hover {
-									border: 1px solid rgba(0, 0, 0, 0.12);
-									// transform: translateY(-4px);
-									// box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+									box-shadow: 0 4px 12px rgba(0, 0, 0, 0.09);
 								}
 
 								.img-box {
-									width: 408px;
+									width: 100%;
 									height: 270px;
 									position: relative;
 
 									img {
 										width: 100%;
 										height: 100%;
-										border-radius: 16px;
+										object-fit: cover;
+										border-radius: 16px 0 0;
 									}
 
 									.date {
 										position: absolute;
-										display: inline-flex;
-										top: 20px;
-										left: 20px;
-										padding: 6px 12px;
+										top: 15px;
+										left: 15px;
+										display: flex;
 										align-items: center;
-										gap: 10px;
-										border-radius: 99px;
+										padding: 4px 12px;
 										background: #ff7101;
+										border-radius: 99px;
+										color: white;
 										box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-										transition: background 0.3s ease;
 
-										p {
-											color: #fff;
+										.full-date {
 											font-family: $font;
 											font-size: 14px;
-											font-style: normal;
-											font-weight: 400;
-											line-height: 20px;
+											font-weight: 500;
+											color: #fff;
 										}
+									}
+
+									// LIKE BUTTON: initially hidden
+									.action-btn {
+										width: 34px;
+										height: 34px;
+										position: absolute;
+										top: 15px;
+										right: 15px;
+										display: flex;
+										align-items: center;
+										justify-content: center;
+										background-color: #fff;
+										border-radius: 50%;
+										padding: 6px;
+										cursor: pointer;
+										opacity: 0;
+										pointer-events: none;
+										transition: opacity 0.3s ease;
+										z-index: 2;
+
+										.heart-icon {
+											width: 20px;
+											height: 20px;
+											fill: #fff;
+											stroke: #ff7101;
+											stroke-width: 2;
+											transition: all 0.2s ease;
+										}
+
+										&.liked .heart-icon {
+											fill: red;
+											stroke: red;
+										}
+									}
+
+									// ⏫ Hover logic here
+									&:hover .action-btn {
+										opacity: 1;
+										pointer-events: auto;
 									}
 								}
 
 								.content-box {
-									width: 410px;
+									padding: 10px 5px 0;
 									display: flex;
 									flex-direction: column;
 									gap: 12px;
-									padding-left: 5px;
-									// border: 1px solid navy;
 
 									.heading {
 										display: flex;
 										flex-direction: column;
-										gap: 8px;
+										gap: 6px;
 
 										.content {
 											display: flex;
-											flex-direction: row;
 											align-items: center;
 											gap: 8px;
 
 											p {
-												color: #24272c;
-												font-family: $font;
-												font-size: 14px;
-												font-style: normal;
 												font-weight: 700;
-												line-height: normal;
+												font-size: 14px;
 											}
 
 											.dvr {
@@ -187,32 +206,28 @@
 
 											span {
 												color: #ff7101;
-												font-family: $font;
 												font-size: 14px;
-												font-style: normal;
-												font-weight: 400;
-												line-height: 20px;
+												font-weight: 500;
 											}
 										}
 
 										h3 {
+											font-size: 18px;
+											font-weight: 600;
+											line-height: 1.3;
 											color: #24272c;
-											font-family: $font;
-											font-size: 20px;
-											font-style: normal;
-											font-weight: 500;
-											line-height: normal;
 										}
 									}
 
 									span {
-										align-items: center;
-										color: #696665;
-										font-family: $font;
 										font-size: 14px;
-										font-style: normal;
-										font-weight: 400;
-										line-height: 20px;
+										color: #696665;
+										line-height: 1.4;
+										overflow: hidden;
+										text-overflow: ellipsis;
+										display: -webkit-box;
+										-webkit-line-clamp: 3;
+										-webkit-box-orient: vertical;
 									}
 								}
 							}

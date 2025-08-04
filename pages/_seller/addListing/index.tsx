@@ -132,7 +132,7 @@ const AddListing: NextPage = ({ initialValues, ...props }: any) => {
 			insertCarData.carType === '' || // @ts-ignore
 			insertCarData.carPrice === 0 || // @ts-ignore
 			insertCarData.carFuelType === '' || // @ts-ignore
-			insertCarData.carTransmission === '' ||
+			insertCarData.carTransmission === '' || // @ts-ignore
 			insertCarData.carColor === '' ||
 			insertCarData.carImages.length === 0 ||
 			insertCarData.carDescription === '' ||

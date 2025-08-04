@@ -112,22 +112,22 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 		Featured: {
 			sort: 'carViews',
 			direction: Direction.DESC,
-			search: {},
+			search: { brandList: searchFilter.search.brandList }, // add brandList here
 		},
 		Popular: {
 			sort: 'carLikes',
 			direction: Direction.DESC,
-			search: {},
+			search: { brandList: searchFilter.search.brandList }, // add brandList here
 		},
 		New: {
 			sort: 'carYear',
 			direction: Direction.DESC,
-			search: { carYear: { min: 2025, max: 2025 } },
+			search: { brandList: searchFilter.search.brandList, carYear: { min: 2025, max: 2025 } },
 		},
 		Upcoming: {
 			sort: 'carYear',
 			direction: Direction.DESC,
-			search: { carYear: { min: 2026, max: 2026 } },
+			search: { brandList: searchFilter.search.brandList, carYear: { min: 2026, max: 2026 } },
 		},
 	};
 
@@ -137,14 +137,17 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 
 		setActiveFilter(filterKey);
 
+		// Preserve brandList and other needed keys from previous search
+		const preservedSearch = {
+			brandList: searchFilter.search.brandList,
+			...filterUpdate.search,
+		};
+
 		const updatedInput: CarsInquiry = {
 			...searchFilter,
 			sort: filterUpdate.sort ?? searchFilter.sort,
 			direction: filterUpdate.direction ?? searchFilter.direction,
-			search: {
-				...searchFilter.search,
-				...(filterUpdate.search ?? {}),
-			},
+			search: preservedSearch,
 			page: 1,
 		};
 
