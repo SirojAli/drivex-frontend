@@ -262,46 +262,51 @@
 							width: 100%;
 							display: flex;
 							flex-direction: column;
-							gap: 24px;
-							// border: 1px solid black;
+							gap: 16px;
 
 							h3 {
 								color: #000;
 								font-family: $font;
-								font-size: 24px;
-								font-style: normal;
-								font-weight: 500;
-								line-height: normal;
+								font-size: 22px;
+								font-weight: 600;
 							}
 
 							.input-box {
 								width: 100%;
 								height: 54px;
 								display: flex;
-								flex-direction: row;
-								padding: 16px 18px;
 								align-items: center;
-								gap: 10px;
+								gap: 12px;
+								padding: 0 18px;
 								border-radius: 14px;
-								border: 1px solid #ededed;
+								border: 1px solid #e2e2e2;
 								background: #fff;
+								box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+								transition: all 0.25s ease;
+
+								&:hover,
+								&:focus-within {
+									border-color: #ff7101;
+									box-shadow: 0 2px 6px rgba(0, 122, 255, 0.1);
+								}
 
 								.icon {
 									width: 20px;
 									height: 20px;
+									color: #888;
 								}
 
 								.search-input {
-									color: #696665;
-									font-family: $font;
-									font-size: 14px;
-									font-style: normal;
-									font-weight: 400;
-									line-height: 20px;
+									flex: 1;
 									border: none;
 									outline: none;
 									background: transparent;
-									width: 100%;
+									font-size: 14px;
+									color: #333;
+									font-family: $font;
+									&::placeholder {
+										color: #aaa;
+									}
 								}
 							}
 						}
@@ -310,52 +315,59 @@
 							width: 100%;
 							display: flex;
 							flex-direction: column;
-							gap: 20px;
-							// border: 1px solid black;
+							gap: 18px;
 
 							h3 {
 								color: #000;
 								font-family: $font;
-								font-size: 24px;
-								font-style: normal;
-								font-weight: 500;
-								line-height: normal;
+								font-size: 22px;
+								font-weight: 600;
 							}
 
 							.type-box {
 								display: flex;
 								flex-direction: column;
-								gap: 10px;
+								gap: 8px;
 
 								.catg {
 									display: flex;
-									padding: 15px 5px;
+									padding: 15px 10px;
 									align-items: center;
-									gap: 10px;
 									cursor: pointer;
 									border-bottom: 1px solid #ededed;
+									transition: background-color 0.3s ease;
 
-									p {
-										width: 80%;
-										color: #24272c;
-										font-family: $font;
-										font-size: 16px;
-										font-style: normal;
-										font-weight: 500;
-										line-height: 22.4px;
-										// border: 1px solid black;
+									&:hover {
+										background-color: #ff71011a;
+										border-radius: 12px;
 									}
 
-									span {
-										width: 20%;
-										text-align: right;
-										color: #696665;
+									&.active {
+										background-color: #ff71011a;
+										font-weight: 600;
+										color: #ff7101;
+										border-radius: 12px;
+									}
+
+									.catg-content {
+										display: flex;
+										justify-content: space-between;
+										align-items: center;
+										width: 100%;
+									}
+
+									.label {
+										font-family: $font; // replace with your font variable or actual font
+										font-size: 16px;
+										font-weight: 500;
+										color: #24272c;
+									}
+
+									.count {
 										font-family: $font;
 										font-size: 16px;
-										font-style: normal;
 										font-weight: 400;
-										line-height: 22.4px;
-										// border: 1px solid black;
+										color: #888;
 									}
 								}
 							}
