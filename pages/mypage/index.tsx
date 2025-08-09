@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import { Stack } from '@mui/material';
@@ -23,6 +23,7 @@ const MyPage: NextPage = () => {
 	const user = useReactiveVar(userVar);
 	const router = useRouter();
 	const category: any = router.query?.category ?? 'myProfile';
+	const [userLoading, setUserLoading] = useState(true);
 
 	/** APOLLO REQUESTS **/
 	const [subscribe] = useMutation(SUBSCRIBE);
@@ -30,9 +31,19 @@ const MyPage: NextPage = () => {
 	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
 
 	/** LIFECYCLES **/
+	// Detect when userVar has initialized (not empty)
 	useEffect(() => {
-		if (!user._id) router.push('/').then();
+		if (user && Object.keys(user).length > 0) {
+			setUserLoading(false);
+		}
 	}, [user]);
+
+	// Redirect if user data loaded but no _id (not authenticated)
+	useEffect(() => {
+		if (!userLoading && (!user || !user._id)) {
+			router.push('/').then();
+		}
+	}, [userLoading, user, router]);
 
 	/** HANDLERS **/
 	const subscribeHandler = async (id: string, refetch: any, query: any) => {

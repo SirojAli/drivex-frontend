@@ -26,10 +26,11 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 		setUpdateData({
 			...updateData,
 			memberNick: user.memberNick,
-			memberPhone: user.memberPhone,
+			memberEmail: user.memberEmail,
 			memberAddress: user.memberAddress,
 			memberImage: user.memberImage,
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 
 	/** HANDLERS **/
@@ -78,7 +79,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 		}
 	};
 
-	const updatePropertyHandler = useCallback(async () => {
+	const updateMemberHandler = useCallback(async () => {
 		try {
 			if (!user._id) throw new Error(Messages.error2);
 
@@ -95,17 +96,18 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
 		}
-	}, [updateData]);
+	}, [updateData, updateMember, user._id]);
 
 	const doDisabledCheck = () => {
 		if (
 			updateData.memberNick === '' ||
-			updateData.memberPhone === '' ||
+			updateData.memberEmail === '' ||
 			updateData.memberAddress === '' ||
 			updateData.memberImage === ''
 		) {
 			return true;
 		}
+		return false;
 	};
 
 	console.log('+updateData', updateData);
@@ -122,6 +124,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 					</Stack>
 				</Stack>
 				<Stack className="top-box">
+					{/* Member Photo */}
 					<Stack className="photo-box">
 						<Typography className="title">Photo</Typography>
 						<Stack className="image-big-box">
@@ -129,11 +132,14 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 								<Avatar
 									src={updateData?.memberImage ? `${REACT_APP_API_URL}/${updateData.memberImage}` : undefined}
 									alt="profile-photo"
-									sx={{ width: 194, height: 157, borderRadius: 2, fontSize: 40 }}
+									variant="rounded"
+									imgProps={{ style: { objectFit: 'cover' } }}
+									className="profile-avatar"
 								>
 									{updateData?.memberNick ? updateData.memberNick[0].toUpperCase() : <PersonIcon fontSize="large" />}
 								</Avatar>
 							</Stack>
+
 							<Stack className="upload-big-box">
 								<input
 									type="file"
@@ -149,6 +155,8 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 							</Stack>
 						</Stack>
 					</Stack>
+
+					{/* Member NicName & Member Email */}
 					<Stack className="small-input-box">
 						<Stack className="input-box">
 							<Typography className="title">Username</Typography>
@@ -160,15 +168,17 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 							/>
 						</Stack>
 						<Stack className="input-box">
-							<Typography className="title">Phone</Typography>
+							<Typography className="title">Email</Typography>
 							<input
-								type="text"
-								placeholder="Your Phone"
-								value={updateData.memberPhone}
-								onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberPhone: value })}
+								type="email"
+								placeholder="Your Email"
+								value={updateData.memberEmail}
+								onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberEmail: value })}
 							/>
 						</Stack>
 					</Stack>
+
+					{/* Member Address */}
 					<Stack className="address-box">
 						<Typography className="title">Address</Typography>
 						<input
@@ -178,14 +188,18 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 							onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberAddress: value })}
 						/>
 					</Stack>
+
+					{/* Submit Button */}
 					<Stack className="about-me-box">
-						<Button className="update-button" onClick={updatePropertyHandler} disabled={doDisabledCheck()}>
+						<Button className="update-button" onClick={updateMemberHandler} disabled={doDisabledCheck()}>
 							<Typography>Update Profile</Typography>
 							<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
 								<g clipPath="url(#clip0_7065_6985)">
 									<path
 										d="M12.6389 0H4.69446C4.49486 0 4.33334 0.161518 4.33334 0.361122C4.33334 0.560727 4.49486 0.722245 4.69446 0.722245H11.7672L0.105803 12.3836C-0.0352676 12.5247 -0.0352676 12.7532 0.105803 12.8942C0.176321 12.9647 0.268743 13 0.361131 13C0.453519 13 0.545907 12.9647 0.616459 12.8942L12.2778 1.23287V8.30558C12.2778 8.50518 12.4393 8.6667 12.6389 8.6667C12.8385 8.6667 13 8.50518 13 8.30558V0.361122C13 0.161518 12.8385 0 12.6389 0Z"
 										fill="white"
+										stroke="#fff"
+										strokeWidth="1.5"
 									/>
 								</g>
 								<defs>
@@ -206,7 +220,7 @@ MyProfile.defaultProps = {
 		_id: '',
 		memberImage: '',
 		memberNick: '',
-		memberPhone: '',
+		memberEmail: '',
 		memberAddress: '',
 	},
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Stack, Modal, IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
@@ -14,14 +14,27 @@ import { REACT_APP_API_URL } from '../../../libs/config';
 interface PopularCarCardProps {
 	car: Car;
 	likeCarHandler: any;
+	myFavorites?: boolean;
+	recentlyVisited?: boolean;
 }
 
 const CarCard = (props: PopularCarCardProps) => {
-	const { car, likeCarHandler } = props;
+	const { car, likeCarHandler, myFavorites, recentlyVisited } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const [openCompare, setOpenCompare] = useState(false);
+	const isLiked = myFavorites || (car?.meLiked && car?.meLiked[0]?.myFavorite);
+	const [liked, setLiked] = useState(isLiked);
+
+	useEffect(() => {
+		setLiked(isLiked); // Sync if props change
+	}, [isLiked]);
+
+	const onLikeClick = () => {
+		setLiked(!liked); // Instant UI change
+		likeCarHandler(user, car?._id); // Still call the mutation
+	};
 
 	const handleCompare = (status: boolean) => {
 		setOpenCompare(status);
@@ -43,7 +56,6 @@ const CarCard = (props: PopularCarCardProps) => {
 	if (device === 'mobile') {
 		return <h1>CAR CARD</h1>;
 	} else {
-		// Check if sold for styling
 		const isSold = car.carStatus === 'SOLD';
 
 		return (
@@ -77,15 +89,8 @@ const CarCard = (props: PopularCarCardProps) => {
 							);
 						})()}
 
-						<div
-							className={`action-btn like-btn ${car?.meLiked && car?.meLiked[0]?.myFavorite ? 'liked' : ''}`}
-							onClick={() => likeCarHandler(user, car?._id)}
-						>
-							<FavoriteIcon className="heart-icon" />
-						</div>
-
-						<div className="action-btn compare-btn" onClick={() => handleCompare(true)}>
-							<CompareArrowsIcon style={{ fill: '#FF7101' }} />
+						<div className={`action-btn like-btn ${liked ? 'liked' : ''}`} onClick={onLikeClick}>
+							{liked ? <FavoriteIcon className="heart-icon" color="error" /> : <FavoriteIcon className="heart-icon" />}
 						</div>
 					</Stack>
 
@@ -111,16 +116,23 @@ const CarCard = (props: PopularCarCardProps) => {
 							</div>
 							<div className={'car-price-btn'}>
 								<span className={'price'}>{formatPrice(car.carPrice)}</span>
-								<div className={'view-like-btn'}>
-									<div className={'view-btn'} title={'Views'}>
-										<RemoveRedEyeIcon className={'view'} />
-										<span>{car.carViews}</span>
+
+								{!recentlyVisited && (
+									<div className={'view-like-btn'}>
+										<div className={'view-btn'} title={'Views'}>
+											<RemoveRedEyeIcon className={'view'} />
+											<span>{car.carViews}</span>
+										</div>
+										<div className={'like-btn'} title={'Likes'}>
+											{isLiked ? (
+												<FavoriteIcon className={'like'} color={'error'} />
+											) : (
+												<FavoriteIcon className={'like'} />
+											)}
+											<span>{car.carLikes}</span>
+										</div>
 									</div>
-									<div className={'like-btn'} title={'Likes'}>
-										<FavoriteIcon className={'like'} color={'error'} />
-										<span>{car.carLikes}</span>
-									</div>
-								</div>
+								)}
 							</div>
 						</Box>
 						<Box className={'divider'} />

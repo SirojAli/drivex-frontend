@@ -26,7 +26,7 @@
 						position: relative;
 						padding: 0 0 0 0;
 						width: 266px;
-						height: 700px;
+						height: 610px;
 						border-radius: 12px;
 						background: #fff;
 						border: 1px solid rgba(196, 196, 196, 0.79);
@@ -38,23 +38,21 @@
 							position: relative;
 							display: flex;
 							flex-direction: row;
+							align-items: center;
+							// border: 1px solid red;
 
-							.profile-img {
-								//
-								img {
-									width: 79px;
-									height: 79px;
-									border-radius: 50%;
-									right: 30px;
-									bottom: 12px;
-									object-fit: cover;
-								}
+							.MuiAvatar-img {
+								width: 64px !important;
+								height: 64px !important;
+								border-radius: 50% !important;
+								object-fit: cover !important;
 							}
 
 							.user-info {
 								margin-left: 20px;
 								display: flex;
 								flex-direction: column;
+								gap: 6px;
 
 								.user-name {
 									color: #181a20;
@@ -67,13 +65,19 @@
 
 								.user-phone {
 									display: flex;
-									flex-direction: row;
+									align-items: center;
+									gap: 4px;
 
-									img {
-										margin-top: 7px;
-										margin-right: 4px;
+									svg {
 										width: 16px;
 										height: 16px;
+										color: inherit;
+									}
+
+									.p-number {
+										margin: 0;
+										font-size: 14px;
+										color: #444;
 									}
 								}
 
@@ -117,11 +121,16 @@
 
 									.focus {
 										height: 50px;
-										background: #000000;
+										background: #ff7101;
 										border-radius: 10px;
 
 										p {
 											font-size: 14px;
+											color: #ffffff;
+										}
+
+										.com-icon {
+											font-size: 20px;
 											color: #ffffff;
 										}
 									}
