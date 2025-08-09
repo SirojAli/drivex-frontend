@@ -103,7 +103,7 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const [popularCars, setPopularCars] = useState<Car[]>([]);
 
 	const [slideImage, setSlideImage] = useState<string>('');
-	const brandImagePath = car?.memberData?.memberImage
+	const imagePath = car?.memberData?.memberImage
 		? `${REACT_APP_API_URL}/${car.memberData?.memberImage}`
 		: '/img/logo/default.png';
 
@@ -541,7 +541,7 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 											<Box className="avatar-name-wrapper">
 												<Box className="avatar">
 													{r.memberData?.memberImage?.[0] ? (
-														<img src={brandImagePath} alt="user-avatar" className="avatar-img" />
+														<img src={imagePath} alt="user-avatar" className="avatar-img" />
 													) : (
 														<span>{r.memberData?.memberNick?.[0] ?? 'U'}</span>
 													)}
@@ -649,7 +649,7 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 								<Stack className={'seller-contact'}>
 									<Stack className={'main'}>
 										<Box className={'info'} onClick={() => pushBrandPageHandler(car?.memberData?.brandSlug)}>
-											<img src={brandImagePath} />
+											<img src={imagePath} />
 											<Box className={'content'}>
 												<h4>{car?.carBrand ?? 'Unknown Dealer'}</h4>
 												<div className={'verify'}>

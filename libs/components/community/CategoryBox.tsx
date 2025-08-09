@@ -101,7 +101,12 @@ const CategoryBox = () => {
 				<h3>Top Blogs</h3>
 				<Box className={'top-blogs'}>
 					{topArticles.map((article: BoardArticle) => (
-						<Box className={'blog'} key={article._id}>
+						<Box
+							className={'blog'}
+							key={article._id}
+							style={{ cursor: 'pointer' }}
+							onClick={() => router.push(`/community/${article._id}`)}
+						>
 							<img src={`${REACT_APP_API_URL}/${article.articleImage}`} alt={'article'} loading="lazy" />
 							<Box className={'content'}>
 								<p>{article.articleTitle}</p>

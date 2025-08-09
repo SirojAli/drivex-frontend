@@ -28,11 +28,14 @@ const MemberPage: NextPage = () => {
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (!router.isReady) return;
-		if (!category) {
+
+		// If you also want to clean the URL when `category` exists, do this:
+		if (category) {
+			const { category, ...rest } = router.query;
 			router.replace(
 				{
 					pathname: router.pathname,
-					query: { ...router.query, category: 'properties' },
+					query: rest,
 				},
 				undefined,
 				{ shallow: true },

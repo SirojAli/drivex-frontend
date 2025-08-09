@@ -1,6 +1,6 @@
 import { Stack, TextField, Button, Checkbox, FormControlLabel, Typography, Box, Avatar } from '@mui/material';
 import { NextPage } from 'next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import withLayoutFull from '../../libs/components/layout/LayoutFull';
@@ -18,64 +18,197 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import XIcon from '@mui/icons-material/X';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
+import { useRouter } from 'next/router';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import { CommentInput, CommentsInquiry } from '../../libs/types/comment/comment.input';
+import { Comment } from '../../libs/types/comment/comment';
+import { userVar } from '../../apollo/store';
+import { BoardArticle } from '../../libs/types/board-article/board-article';
+import { T } from '../../libs/types/common';
+import { GET_COMMENTS } from '../../apollo/admin/query';
+import { Messages, REACT_APP_API_URL } from '../../libs/config';
+import { GET_BOARD_ARTICLE } from '../../apollo/user/query';
+import { CREATE_COMMENT, LIKE_TARGET_BOARD_ARTICLE, UPDATE_COMMENT } from '../../apollo/user/mutation';
+import { BoardArticlesInquiry } from '../../libs/types/board-article/board-article.input';
+import {
+	sweetConfirmAlert,
+	sweetMixinErrorAlert,
+	sweetMixinSuccessAlert,
+	sweetTopSmallSuccessAlert,
+} from '../../libs/sweetAlert';
+import { CommentGroup, CommentStatus } from '../../libs/enums/comment.enum';
+import { CommentUpdate } from '../../libs/types/comment/comment.update';
 
-const reviews = [
-	{
-		id: 1,
-		name: 'Leslie Alexander',
-		date: 'August 13, 2025',
-		comment:
-			"It's really easy to use and it is exactly what I am looking for. A lot of good looking templates & it's highly customizable. Live support is helpful, solved my issue in no time.",
-	},
-	{
-		id: 2,
-		name: 'Arlene McCoy',
-		date: 'August 13, 2025',
-		comment:
-			"It's really easy to use and it is exactly what I am looking for. A lot of good looking templates & it's highly customizable. Live support is helpful, solved my issue in no time.",
-	},
-	{
-		id: 3,
-		name: 'Jane Cooper',
-		date: 'August 13, 2025',
-		comment:
-			"It's really easy to use and it is exactly what I am looking for. A lot of good looking templates & it's highly customizable. Live support is helpful, solved my issue in no time.",
-	},
-];
-
-const context =
-	'Lorem ipsum dolor sit amet, Nunc id viverra erat, quis viverra elit consectetur adipiscing elit Nunc id viverra erat, quis viverra elit. Morbi lacinia sit amet elit sed molestie. Sed neque enim, iaculis id viverra in, scelerisque vitae nulla. Nulla egestas augue vitae mollis semper. Phasellus congue neque et pulvinar gravida. Nam placerat, massa a consequat scelerisque, lacus enim mattis felis, pellentesque volutpat risus nisl et sapien. Proin ac elit vitae velit iaculis varius non quis massa. Nunc fringilla nulla sit amet mattis viverra. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut hendrerit non nisl auctor sollicitudin. Nunc id viverra erat, quis viverra elit.Lorem ipsum dolor sit amet, Nunc id viverra erat, quis viverra elit consectetur adipiscing elit Nunc id viverra erat, quis viverra elit. Morbi lacinia sit amet elit sed molestie. Sed neque enim, iaculis id viverra in, scelerisque vitae nulla. Nulla egestas augue vitae mollis semper. Phasellus congue neque et pulvinar gravida. Nam placerat, massa a consequat scelerisque, lacus enim mattis felis, pellentesque volutpat risus nisl et sapien. Proin ac elit vitae velit iaculis varius non quis massa. Nunc fringilla nulla sit amet mattis viverra. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut hendrerit non nisl auctor sollicitudin. Nunc id viverra erat, quis viverra elit.';
-
-const ArticleDetail: NextPage = () => {
+const CommunityDetail: NextPage = ({ initialComment, ...props }: T) => {
 	const device = useDeviceDetect();
+	const router = useRouter();
+	const { query } = router;
 
-	const [firstSentence, ...rest] = context.split('.');
-	const restText = rest.join('.').trim();
+	const articleId = query?.id as string;
+	const articleCategory = query?.articleCategory as string;
 
-	const [helpful, setHelpful] = useState<{ [key: number]: boolean | null }>({});
-	const handleHelpful = (id: number, value: boolean) => {
-		setHelpful((prev) => ({ ...prev, [id]: value }));
-	};
+	const [comment, setComment] = useState<string>('');
+	const user = useReactiveVar(userVar);
 
-	const [replyForm, setReplyForm] = useState({
-		name: '',
-		email: '',
-		message: '',
-		remember: false,
+	const [boardArticle, setBoardArticle] = useState<BoardArticle>();
+	const [memberImage, setMemberImage] = useState<string>('/img/community/articleImg.png');
+
+	// Comment related states
+	const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>({
+		...initialComment,
+		limit: initialComment?.limit ?? 5,
+		page: initialComment?.page ?? 1,
+		search: {
+			commentRefId: initialComment?.search?.commentRefId ?? '',
+		},
+	});
+	const [articleComments, setArticleComments] = useState<Comment[]>([]);
+	const [commentTotal, setCommentTotal] = useState<number>(0);
+	const [insertCommentData, setInsertCommentData] = useState<CommentInput>({
+		commentGroup: CommentGroup.ARTICLE,
+		commentContent: '',
+		commentRefId: '',
 	});
 
-	const handleReplyChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-		const { name, value } = e.target;
-		setReplyForm((prev) => ({ ...prev, [name]: value }));
+	/** APOLLO REQUESTS **/
+	const [likeTargetBoardArticle] = useMutation(LIKE_TARGET_BOARD_ARTICLE);
+	const [createComment] = useMutation(CREATE_COMMENT);
+	const [updateComment] = useMutation(UPDATE_COMMENT);
+
+	// Chosen Article Rendering
+	const {
+		loading: boardArticleLoading,
+		data: boardArticleData,
+		error: getBoardArticleError,
+		refetch: boardArticleRefetch,
+	} = useQuery(GET_BOARD_ARTICLE, {
+		fetchPolicy: 'network-only',
+		variables: { input: articleId },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setBoardArticle(data?.getBoardArticle);
+			if (data?.getBoardArticle?.memberData?.memberImage) {
+				setMemberImage(`${process.env.REACT_APP_API_URL}/${data?.getBoardArticle?.memberData?.memberImage}`);
+			}
+		},
+	});
+
+	// Comment Rendering
+	const {
+		loading: getCommentsLoading,
+		data: getCommentsData,
+		error: getCommentsError,
+		refetch: getCommentsRefetch,
+	} = useQuery(GET_COMMENTS, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: commentInquiry },
+		skip: !commentInquiry?.search?.commentRefId,
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data) => {
+			if (data?.getComments?.list) {
+				setArticleComments(data.getComments.list);
+			} else {
+				setArticleComments([]);
+			}
+			setCommentTotal(data?.getComments?.metaCounter?.[0]?.total ?? 0);
+		},
+	});
+
+	/** LIFECYCLES **/
+	// Update commentRefId and insertCommentData when articleIdFromQuery changes
+	useEffect(() => {
+		if (articleId) {
+			setCommentInquiry((prev) => ({
+				...prev,
+				search: {
+					...prev.search,
+					commentRefId: articleId,
+				},
+			}));
+
+			setInsertCommentData((prev) => ({
+				...prev,
+				commentRefId: articleId,
+			}));
+		}
+	}, [articleId]);
+
+	// Refetch comments when commentInquiry changes
+	useEffect(() => {
+		if (commentInquiry.search.commentRefId) {
+			getCommentsRefetch({ input: commentInquiry });
+		}
+	}, [commentInquiry, getCommentsRefetch]);
+
+	/** HANDLERS **/
+	// Handle comment input change
+	const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setInsertCommentData((prev) => ({
+			...prev,
+			commentContent: e.target.value,
+		}));
 	};
 
-	const handleRememberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setReplyForm((prev) => ({ ...prev, remember: e.target.checked }));
+	// Create new comment
+	const createCommentHandler = async () => {
+		try {
+			if (!user?._id) throw new Error(Messages.error2);
+			if (!insertCommentData.commentContent?.trim()) {
+				await sweetMixinErrorAlert('Comment cannot be empty.');
+				return;
+			}
+			await createComment({ variables: { input: insertCommentData } });
+
+			// Clear comment input
+			setInsertCommentData((prev) => ({
+				...prev,
+				commentContent: '',
+			}));
+
+			// Refresh comments
+			await getCommentsRefetch({ input: commentInquiry });
+			await boardArticleRefetch({ input: articleId });
+
+			await sweetTopSmallSuccessAlert('Your comment was submitted successfully!');
+		} catch (err: any) {
+			await sweetMixinErrorAlert(err.message || 'Failed to submit comment.');
+		}
 	};
 
-	const handlePostComment = () => {
-		console.log('Reply submitted:', replyForm);
-		// Add real submission logic here if needed
+	// Handle pressing Enter to submit comment
+	const handleKeyPress = (e: React.KeyboardEvent) => {
+		if (e.key === 'Enter' && !e.shiftKey) {
+			e.preventDefault();
+			createCommentHandler();
+		}
+	};
+
+	const commentPaginationChangeHandler = async () => {
+		const updatedInquiry = {
+			...commentInquiry,
+			limit: 15,
+		};
+
+		setCommentInquiry(updatedInquiry);
+
+		await getCommentsRefetch({ input: updatedInquiry });
+	};
+
+	const goMemberPage = (id?: string) => {
+		if (!id) return; // ignore if no id
+
+		if (id === user?._id) {
+			router.push('/mypage');
+		} else {
+			router.push(`/member?memberId=${id}`);
+		}
+	};
+
+	const handleShare = () => {
+		const carUrl = window.location.href;
+		navigator.clipboard.writeText(carUrl).then(() => {
+			alert('🔗 Link copied to clipboard!');
+		});
 	};
 
 	if (device === 'mobile') {
@@ -92,26 +225,35 @@ const ArticleDetail: NextPage = () => {
 						<ArrowForwardIosIcon className={'arrow'} />
 						<span>Blog Detail</span>
 					</Stack>
+
 					{/* Title */}
 					<Stack className={'car-list-title'}>
 						<Stack className={'blog-title'}>
-							<h1>The BMW skytop could go into production after all</h1>
+							<h1>{boardArticle?.articleTitle}</h1>
 							<Stack className={'title-box'}>
 								<Box className={'t-box'}>
 									<AccountCircleIcon className={'icon'} />
-									<p>Sam William</p>
+									<p onClick={() => goMemberPage(boardArticle?.memberData?._id)} style={{ cursor: 'pointer' }}>
+										{boardArticle?.memberData?.memberNick}
+									</p>
 								</Box>
 								<Box className={'t-box'}>
 									<FolderOpenIcon className={'icon'} />
-									<p>News</p>
+									<p className={'catg'}>{boardArticle?.articleCategory}</p>
 								</Box>
 								<Box className={'t-box'}>
 									<ChatIcon className={'icon2'} />
-									<span>0 comments</span>
+									<span>{boardArticle?.articleComments ?? 0} comments</span>
 								</Box>
 								<Box className={'t-box'}>
 									<CalendarTodayIcon className={'icon2'} />
-									<span>February 16, 2024</span>
+									<span>
+										{new Date(boardArticle?.createdAt || '').toLocaleDateString('en-US', {
+											year: 'numeric',
+											month: 'long',
+											day: 'numeric',
+										})}
+									</span>
 								</Box>
 							</Stack>
 						</Stack>
@@ -120,21 +262,42 @@ const ArticleDetail: NextPage = () => {
 
 					{/* Main */}
 					<Stack className={'main-box'}>
-						{/* Left Box */}
 						<Stack className={'left-box'}>
 							<Stack className={'blog-content'}>
 								{/* Blog Img */}
 								<Stack className={'img-box'}>
-									<img src="/img/cars/header1.jpg" alt="" />
+									<img src={`${REACT_APP_API_URL}/${boardArticle?.articleImage}`} alt={'article'} loading="lazy" />
 								</Stack>
+
 								{/* Blog Content */}
 								<Stack className={'content-box'}>
 									<span>
-										<p>{firstSentence}.</p>
-										<p>{restText}</p>
+										{boardArticle?.articleContent &&
+											(() => {
+												// Split content into sentences
+												const sentences = boardArticle.articleContent
+													.split('.')
+													.map((s) => s.trim())
+													.filter(Boolean);
+
+												// Group sentences similar to the car description
+												const first = sentences[0] || '';
+												const second = sentences.slice(1, 4).join('. ') || '';
+												const third = sentences.slice(4).join('. ') || '';
+
+												return (
+													<>
+														<p>{first}.</p>
+														{second && <p>{second}.</p>}
+														{third && <p>{third}.</p>}
+													</>
+												);
+											})()}
 									</span>
 								</Stack>
+
 								<div className={'divider'}></div>
+
 								{/* Tag & Share */}
 								<Stack className={'tag-share'}>
 									<Box className={'tags'}>
@@ -143,139 +306,141 @@ const ArticleDetail: NextPage = () => {
 											<span>DriveX</span>
 										</Box>
 										<Box className={'tag'}>
-											<span>News</span>
+											<span className={'catg'}>{boardArticle?.articleCategory}</span>
 										</Box>
 										<Box className={'tag'}>
-											<span>BMW</span>
+											<span>Car Culture</span>
 										</Box>
 									</Box>
+
 									<Box className={'share'}>
 										<p>Share this post:</p>
-										<Box className={'social'}>
+										<Box className={'social'} onClick={handleShare}>
 											<FacebookIcon className={'icon'} />
 										</Box>
-										<Box className={'social'}>
+										<Box className={'social'} onClick={handleShare}>
 											<LinkedInIcon className={'icon'} />
 										</Box>
-										<Box className={'social'}>
+										<Box className={'social'} onClick={handleShare}>
 											<XIcon className={'icon'} />
 										</Box>
-										<Box className={'social'}>
+										<Box className={'social'} onClick={handleShare}>
 											<InstagramIcon className={'icon'} />
 										</Box>
 									</Box>
 								</Stack>
+								<div className={'divider'}></div>
+
 								{/* Reviews */}
-								<Stack className={'reviews'}>
-									<h2>Comments (4)</h2>
-									{reviews.map((r) => (
-										<Box key={r.id} className={'review'}>
-											<Box className={'avatar-name-wrapper'}>
-												<Box className={'avatar'}>{r.name[0]}</Box>
-												<Box className={'avatar-name'}>
-													<Typography className={'user-name'}>{r.name}</Typography>
-													<Typography className={'date'}>{r.date}</Typography>
+								<Stack id="review" className="reviews">
+									<Typography className="section-title">Comments ({commentTotal})</Typography>
+
+									{articleComments.length === 0 && <Typography>No reviews yet. Be the first to leave one!</Typography>}
+
+									{articleComments.map((r, idx) => {
+										const imagePath = r.memberData?.memberImage
+											? `${REACT_APP_API_URL}/${r.memberData.memberImage}`
+											: '/img/logo/default.png';
+
+										return (
+											<Box key={r._id ?? idx} className="review">
+												<Box className="avatar-name-wrapper">
+													<Box
+														className="avatar"
+														onClick={() => {
+															if (r.memberData?._id) {
+																goMemberPage(r.memberData._id);
+															}
+														}}
+														style={{ cursor: 'pointer' }}
+													>
+														{r.memberData?.memberImage?.[0] ? (
+															<img src={imagePath} alt="user-avatar" className="avatar-img" />
+														) : (
+															<span>{r.memberData?.memberNick?.[0] ?? 'U'}</span>
+														)}
+													</Box>
+													<Box
+														className="avatar-name"
+														onClick={() => {
+															if (r.memberData?._id) {
+																goMemberPage(r.memberData._id);
+															}
+														}}
+														style={{ cursor: 'pointer' }}
+													>
+														<Typography className="user-name">{r.memberData?.memberFullName ?? 'User'}</Typography>
+													</Box>
+													<Typography className="date">{new Date(r.createdAt).toLocaleDateString()}</Typography>
+												</Box>
+
+												<Box className="content">
+													<Typography className="comment">{r.commentContent}</Typography>
 												</Box>
 											</Box>
-											<Box className={'content'}>
-												<Typography className={'comment'}>{r.comment}</Typography>
-												<Box className={'footer'}>
-													<Typography className={'helpful-label'}>Is this review helpful?</Typography>
-													<Button
-														className={`helpful-btn ${helpful[r.id] === true ? 'selected' : ''}`}
-														onClick={() => handleHelpful(r.id, true)}
-													>
-														<ThumbUpAltOutlinedIcon fontSize="small" />
-														Yes
-													</Button>
-													<Button
-														className={`helpful-btn ${helpful[r.id] === false ? 'selected' : ''}`}
-														onClick={() => handleHelpful(r.id, false)}
-													>
-														<ThumbDownAltOutlinedIcon fontSize="small" />
-														No
-													</Button>
-												</Box>
+										);
+									})}
+
+									{commentTotal > (commentInquiry.limit ?? 5) && commentInquiry.limit !== 15 && (
+										<Box className="show-more" onClick={commentPaginationChangeHandler}>
+											<Typography className="more-link">View more reviews</Typography>
+											<Box className="arrow">
+												<ArrowDownwardIcon className="icon" />
 											</Box>
 										</Box>
-									))}
-									<Box className={'show-more'}>
-										<Typography className={'more-link'}>View more reviews</Typography>
-										<Box className={'arrow'}>
-											<ArrowDownwardIcon className={'icon'} />
+									)}
+								</Stack>
+
+								{/* Post Comment */}
+								{user?._id ? (
+									<Stack className={'leave-comment'}>
+										<Typography className={'main-title'}>Leave A Review</Typography>
+										{/* <Typography className={'review-title'}>Review</Typography> */}
+
+										<textarea
+											value={insertCommentData.commentContent}
+											onChange={({ target: { value } }) =>
+												setInsertCommentData((prev) => ({ ...prev, commentContent: value }))
+											}
+											onKeyDown={handleKeyPress}
+										/>
+
+										<Box className={'submit-btn'} component={'div'}>
+											<Button
+												className={'submit-review'}
+												disabled={!insertCommentData.commentContent.trim()}
+												onClick={createCommentHandler}
+											>
+												<Typography className={'title'}>Submit Comment</Typography>
+												<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
+													<g clipPath="url(#clip0_6975_3642)">
+														<path
+															d="M16.1571 0.5H6.37936C6.1337 0.5 5.93491 0.698792 5.93491 0.944458C5.93491 1.19012 6.1337 1.38892 6.37936 1.38892H15.0842L0.731781 15.7413C0.558156 15.915 0.558156 16.1962 0.731781 16.3698C0.818573 16.4566 0.932323 16.5 1.04603 16.5C1.15974 16.5 1.27345 16.4566 1.36028 16.3698L15.7127 2.01737V10.7222C15.7127 10.9679 15.9115 11.1667 16.1572 11.1667C16.4028 11.1667 16.6016 10.9679 16.6016 10.7222V0.944458C16.6016 0.698792 16.4028 0.5 16.1571 0.5Z"
+															fill="#fff"
+															stroke="#fff"
+															strokeWidth="1.5"
+														/>
+													</g>
+													<defs>
+														<clipPath id="clip0_6975_3642">
+															<rect width="16" height="16" fill="white" transform="translate(0.601562 0.5)" />
+														</clipPath>
+													</defs>
+												</svg>
+											</Button>
 										</Box>
-									</Box>
-								</Stack>
-								{/* Leave a Comment */}
-								<Stack className={'comment'}>
-									<Typography className={'reply-title'}>Leave a Comment</Typography>
-									<Typography className={'reply-note'}>Your email address will not be published</Typography>
-
-									<Box className={'input-row'}>
-										<TextField
-											label="Your name"
-											name="name"
-											value={replyForm.name}
-											onChange={handleReplyChange}
-											className={'text-field'}
-										/>
-										<TextField
-											label="Your email"
-											name="email"
-											value={replyForm.email}
-											onChange={handleReplyChange}
-											className={'text-field'}
-										/>
-									</Box>
-
-									<FormControlLabel
-										control={<Checkbox checked={replyForm.remember} onChange={handleRememberChange} name="remember" />}
-										label="Save your name, email for the next time review"
-									/>
-
-									<Box className={'input-text'}>
-										<TextField
-											label="Your Message"
-											name="message"
-											value={replyForm.message}
-											onChange={handleReplyChange}
-											multiline
-											fullWidth
-											InputProps={{
-												sx: {
-													height: '130px', // Total height of the TextField
-													alignItems: 'flex-start', // Align text to top
-												},
-											}}
-											InputLabelProps={{
-												shrink: true, // Keeps the label up
-											}}
-											sx={{
-												'& .MuiInputBase-root': {
-													height: '130px',
-													alignItems: 'flex-start',
-												},
-												'& .MuiInputBase-inputMultiline': {
-													padding: '12px',
-													height: '100% !important',
-													boxSizing: 'border-box',
-													resize: 'none',
-												},
-											}}
-										/>
-									</Box>
-
-									<Button onClick={handlePostComment} className={'submit-btn'}>
-										<span>Post Comment</span>
-									</Button>
-								</Stack>
-							</Stack>
-						</Stack>
-
-						{/* Right Box */}
-						<Stack className={'right-box'}>
-							<Stack className={'category-box'}>
-								<CategoryBox />
+									</Stack>
+								) : (
+									<Stack className={'leave-comment'}>
+										<Typography className={'main-title'}>Leave A Review</Typography>
+										<Typography className={'review-title'}>
+											You must <strong>log in</strong> to leave a comment.
+										</Typography>
+										<Button variant="outlined" href="/account/join" sx={{ mt: 2 }}>
+											Login to Comment
+										</Button>
+									</Stack>
+								)}
 							</Stack>
 						</Stack>
 					</Stack>
@@ -285,4 +450,14 @@ const ArticleDetail: NextPage = () => {
 	}
 };
 
-export default withLayoutFull(ArticleDetail);
+CommunityDetail.defaultProps = {
+	initialInput: {
+		page: 1,
+		limit: 5,
+		sort: 'createdAt',
+		direction: 'DESC',
+		search: { commentRefId: '' },
+	},
+};
+
+export default withLayoutFull(CommunityDetail);

@@ -21,10 +21,20 @@ const BlogCard = (props: BlogCardProps) => {
 	const user = useReactiveVar(userVar);
 
 	/** HANDLERS **/
+	const viewBlogDetail = (e: React.SyntheticEvent, article: BoardArticle) => {
+		router.push(
+			{
+				pathname: '/community/detail',
+				query: { articleCategory: article?.articleCategory, id: article?._id },
+			},
+			undefined,
+			{ shallow: true },
+		);
+	};
 
 	return (
 		<Stack className={'blog-boxes'}>
-			<Stack className={'blog-box'}>
+			<Stack className={'blog-box'} onClick={(e: any) => viewBlogDetail(e, article)}>
 				<Stack className={'img-box'}>
 					<img src={`${REACT_APP_API_URL}/${article?.articleImage}`} alt={'article'} loading="lazy" />
 					<Stack className="date">

@@ -74,6 +74,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 
 	/** Like Handler **/
 	const [likeTargetBoardArticle] = useMutation(LIKE_TARGET_BOARD_ARTICLE);
+
 	const likeArticleHandler = async (user: T, id: string) => {
 		try {
 			if (!user?._id) throw new Error(Messages.error2);
