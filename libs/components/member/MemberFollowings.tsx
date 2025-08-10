@@ -65,7 +65,7 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>NESTAR FOLLOWS MOBILE</div>;
+		return <div>DRIVEX - FOLLOWINGSS MOBILE</div>;
 	} else {
 		return (
 			<div id="member-follows-page">
@@ -183,7 +183,7 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 MemberFollowings.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 5,
+		limit: 10,
 		search: {
 			followerId: '',
 		},

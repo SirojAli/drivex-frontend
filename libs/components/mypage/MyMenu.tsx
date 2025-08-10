@@ -40,14 +40,13 @@ const MyMenu = () => {
 	} else {
 		return (
 			<Stack width={'100%'} padding={'30px 24px'}>
-				{/* Profile Info */}
 				<Stack className={'profile'}>
 					<Box component="div" className="profile-img">
 						<Avatar
 							src={user?.memberImage ? `${REACT_APP_API_URL}/${user.memberImage}` : undefined}
 							imgProps={{ loading: 'lazy' }}
 							alt="member-photo"
-							sx={{ width: 64, height: 64, borderRadius: '50%', objectFit: 'cover' }}
+							sx={{ width: 64, height: 64 }}
 						>
 							{user?.memberNick ? user.memberNick[0].toUpperCase() : <PersonIcon fontSize="small" />}
 						</Avatar>
@@ -67,15 +66,62 @@ const MyMenu = () => {
 						)}
 					</Stack>
 				</Stack>
-
-				{/* Profile Categories */}
 				<Stack className={'sections'}>
 					<Stack className={'section'} style={{ height: user.memberType === 'AGENT' ? '228px' : '153px' }}>
 						<Typography className="title" variant={'h5'}>
 							MANAGE LISTINGS
 						</Typography>
 						<List className={'sub-section'}>
-							{/* My Favorites */}
+							{user.memberType === 'AGENT' && (
+								<>
+									<ListItem className={pathname === 'addProperty' ? 'focus' : ''}>
+										<Link
+											href={{
+												pathname: '/mypage',
+												query: { category: 'addProperty' },
+											}}
+											scroll={false}
+										>
+											<div className={'flex-box'}>
+												{category === 'addProperty' ? (
+													<img className={'com-icon'} src={'/img/icons/whiteTab.svg'} alt={'com-icon'} />
+												) : (
+													<img className={'com-icon'} src={'/img/icons/newTab.svg'} alt={'com_icon'} />
+												)}
+												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+													Add Property
+												</Typography>
+												<IconButton aria-label="delete" sx={{ ml: '40px' }}>
+													<PortraitIcon style={{ color: 'red' }} />
+												</IconButton>
+											</div>
+										</Link>
+									</ListItem>
+									<ListItem className={pathname === 'myProperties' ? 'focus' : ''}>
+										<Link
+											href={{
+												pathname: '/mypage',
+												query: { category: 'myProperties' },
+											}}
+											scroll={false}
+										>
+											<div className={'flex-box'}>
+												{category === 'myProperties' ? (
+													<img className={'com-icon'} src={'/img/icons/homeWhite.svg'} alt={'com-icon'} />
+												) : (
+													<img className={'com-icon'} src={'/img/icons/home.svg'} alt={'com-icon'} />
+												)}
+												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+													My Properties
+												</Typography>
+												<IconButton aria-label="delete" sx={{ ml: '36px' }}>
+													<PortraitIcon style={{ color: 'red' }} />
+												</IconButton>
+											</div>
+										</Link>
+									</ListItem>
+								</>
+							)}
 							<ListItem className={pathname === 'myFavorites' ? 'focus' : ''}>
 								<Link
 									href={{
@@ -97,8 +143,6 @@ const MyMenu = () => {
 									</div>
 								</Link>
 							</ListItem>
-
-							{/* My Visited */}
 							<ListItem className={pathname === 'recentlyVisited' ? 'focus' : ''}>
 								<Link
 									href={{
@@ -120,8 +164,6 @@ const MyMenu = () => {
 									</div>
 								</Link>
 							</ListItem>
-
-							{/* My Followers */}
 							<ListItem className={pathname === 'followers' ? 'focus' : ''}>
 								<Link
 									href={{
@@ -169,8 +211,6 @@ const MyMenu = () => {
 									</div>
 								</Link>
 							</ListItem>
-
-							{/* My Followings */}
 							<ListItem className={pathname === 'followings' ? 'focus' : ''}>
 								<Link
 									href={{

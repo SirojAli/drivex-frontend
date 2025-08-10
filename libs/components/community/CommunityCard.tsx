@@ -7,15 +7,15 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
-import { REACT_APP_API_URL } from '../../../libs/config';
+import { REACT_APP_API_URL } from '../../config';
 import Moment from 'react-moment';
 
-interface BlogCardProps {
+interface CommunityCardProps {
 	article: BoardArticle;
 	likeArticleHandler: any;
 }
 
-const BlogCard = (props: BlogCardProps) => {
+const CommunityCard = (props: CommunityCardProps) => {
 	const { article, likeArticleHandler } = props;
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -44,7 +44,10 @@ const BlogCard = (props: BlogCardProps) => {
 					</Stack>
 					<div
 						className={`action-btn like-btn ${article?.meLiked?.[0]?.myFavorite ? 'liked' : ''}`}
-						onClick={() => likeArticleHandler(user, article?._id)}
+						onClick={(e) => {
+							e.stopPropagation();
+							likeArticleHandler(e, user, article?._id);
+						}}
 					>
 						<FavoriteIcon className="heart-icon" />
 					</div>
@@ -65,4 +68,4 @@ const BlogCard = (props: BlogCardProps) => {
 	);
 };
 
-export default BlogCard;
+export default CommunityCard;

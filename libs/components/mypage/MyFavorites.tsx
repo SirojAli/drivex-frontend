@@ -95,9 +95,7 @@ const MyFavorites: NextPage = () => {
 						/>
 					</Stack>
 					<Stack className="total-result">
-						<Typography>
-							Total {total} favorite car{total > 1 ? 'ies' : 'y'}
-						</Typography>
+						<Typography>Total {total} favorite cars</Typography>
 					</Stack>
 				</Stack>
 			)}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
@@ -17,7 +17,8 @@ import MemberFollowings from '../../libs/components/member/MemberFollowings';
 const MemberPage: NextPage = () => {
 	const device = useDeviceDetect();
 	const router = useRouter();
-	const category: any = router.query?.category;
+	const category = router.query?.category as string | undefined;
+	const memberId = router.query?.memberId as string | undefined;
 	const user = useReactiveVar(userVar);
 
 	/** APOLLO REQUESTS **/
@@ -25,34 +26,13 @@ const MemberPage: NextPage = () => {
 	const [unsubscribe] = useMutation(UNSUBSCRIBE);
 	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
 
-	/** LIFECYCLES **/
-	useEffect(() => {
-		if (!router.isReady) return;
-
-		// If you also want to clean the URL when `category` exists, do this:
-		if (category) {
-			const { category, ...rest } = router.query;
-			router.replace(
-				{
-					pathname: router.pathname,
-					query: rest,
-				},
-				undefined,
-				{ shallow: true },
-			);
-		}
-	}, [category, router]);
-
 	/** HANDLERS **/
-	const subscribeHandler = async (id: string, refetch: any, query: any) => {
+	const subscribeHandler = async (id: string, refetch: any, query: string) => {
 		try {
 			if (!id) throw new Error(Messages.error1);
-			if (!user._id) throw new Error(Messages.error2);
+			if (!user?._id) throw new Error(Messages.error2);
 
-			await subscribe({
-				variables: { input: id },
-			});
-
+			await subscribe({ variables: { input: id } });
 			await sweetTopSmallSuccessAlert('Followed!', 800);
 			await refetch({ input: query });
 		} catch (err: any) {
@@ -60,15 +40,12 @@ const MemberPage: NextPage = () => {
 		}
 	};
 
-	const unsubscribeHandler = async (id: string, refetch: any, query: any) => {
+	const unsubscribeHandler = async (id: string, refetch: any, query: string) => {
 		try {
 			if (!id) throw new Error(Messages.error1);
-			if (!user._id) throw new Error(Messages.error2);
+			if (!user?._id) throw new Error(Messages.error2);
 
-			await unsubscribe({
-				variables: { input: id },
-			});
-
+			await unsubscribe({ variables: { input: id } });
 			await sweetTopSmallSuccessAlert('Unfollowed!', 800);
 			await refetch({ input: query });
 		} catch (err: any) {
@@ -76,16 +53,13 @@ const MemberPage: NextPage = () => {
 		}
 	};
 
-	const likeMemberHandler = async (id: string, refetch: any, query: any) => {
+	const likeMemberHandler = async (id: string, refetch: any, query: string) => {
 		try {
 			if (!id) return;
-			if (!user._id) throw new Error(Messages.error2);
+			if (!user?._id) throw new Error(Messages.error2);
 
-			await likeTargetMember({
-				variables: { input: id },
-			});
-
-			await sweetTopSmallSuccessAlert('Success! ', 800);
+			await likeTargetMember({ variables: { input: id } });
+			await sweetTopSmallSuccessAlert('Success!', 800);
 			await refetch({ input: query });
 		} catch (err: any) {
 			console.log('ERROR, likeMemberHandler: ', err.message);
@@ -93,10 +67,13 @@ const MemberPage: NextPage = () => {
 		}
 	};
 
-	const redirectToMemberPageHandler = async (memberId: string) => {
+	const redirectToMemberPageHandler = async (targetId: string) => {
 		try {
-			if (memberId === user?._id) await router.push(`/mypage?memberId=${memberId}`);
-			else await router.push(`/member?memberId=${memberId}`);
+			if (targetId === user?._id) {
+				await router.push(`/mypage?memberId=${targetId}`);
+			} else {
+				await router.push(`/member?memberId=${targetId}`);
+			}
 		} catch (error) {
 			await sweetErrorHandling(error);
 		}
@@ -104,42 +81,42 @@ const MemberPage: NextPage = () => {
 
 	if (device === 'mobile') {
 		return <>MEMBER PAGE MOBILE</>;
-	} else {
-		return (
-			<div id="member-page" style={{ position: 'relative' }}>
-				<div className={'container'}>
-					<Stack className={'member-page'}>
-						<Stack className={'back-frame'}>
-							<Stack className={'left-config'}>
-								<MemberMenu subscribeHandler={subscribeHandler} unsubscribeHandler={unsubscribeHandler} />
-							</Stack>
-							<Stack className={'main-config'} mb={'76px'}>
-								<Stack className={'list-config'}>
-									{category === 'followers' && (
-										<MemberFollowers
-											subscribeHandler={subscribeHandler}
-											unsubscribeHandler={unsubscribeHandler}
-											likeMemberHandler={likeMemberHandler}
-											redirectToMemberPageHandler={redirectToMemberPageHandler}
-										/>
-									)}
-									{category === 'followings' && (
-										<MemberFollowings
-											subscribeHandler={subscribeHandler}
-											unsubscribeHandler={unsubscribeHandler}
-											likeMemberHandler={likeMemberHandler}
-											redirectToMemberPageHandler={redirectToMemberPageHandler}
-										/>
-									)}
-									{category === 'articles' && <MemberArticles />}
-								</Stack>
+	}
+
+	return (
+		<div id="member-page" style={{ position: 'relative' }}>
+			<div className="container">
+				<Stack className="member-page">
+					<Stack className="back-frame">
+						<Stack className="left-config">
+							<MemberMenu subscribeHandler={subscribeHandler} unsubscribeHandler={unsubscribeHandler} />
+						</Stack>
+						<Stack className="main-config" mb="76px">
+							<Stack className="list-config">
+								{category === 'followers' && (
+									<MemberFollowers
+										subscribeHandler={subscribeHandler}
+										unsubscribeHandler={unsubscribeHandler}
+										likeMemberHandler={likeMemberHandler}
+										redirectToMemberPageHandler={redirectToMemberPageHandler}
+									/>
+								)}
+								{category === 'followings' && (
+									<MemberFollowings
+										subscribeHandler={subscribeHandler}
+										unsubscribeHandler={unsubscribeHandler}
+										likeMemberHandler={likeMemberHandler}
+										redirectToMemberPageHandler={redirectToMemberPageHandler}
+									/>
+								)}
+								{category === 'articles' && <MemberArticles />}
 							</Stack>
 						</Stack>
 					</Stack>
-				</div>
+				</Stack>
 			</div>
-		);
-	}
+		</div>
+	);
 };
 
 export default withLayoutBasic(MemberPage);

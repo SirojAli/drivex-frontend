@@ -1,45 +1,57 @@
-import React, { useMemo, useRef, useState } from 'react';
-import { Box, Button, FormControl, MenuItem, Stack, Typography, Select, TextField } from '@mui/material';
+import React, { useRef, useState } from 'react';
+import {
+	Box,
+	Button,
+	FormControl,
+	MenuItem,
+	Stack,
+	Typography,
+	Select,
+	TextField,
+	SelectChangeEvent,
+} from '@mui/material';
 import { BoardArticleCategory } from '../../enums/board-article.enum';
-import { articleCategoryLabels } from '../../enums/board-article.enum';
 import { Editor } from '@toast-ui/react-editor';
 import { getJwtToken } from '../../auth';
 import { REACT_APP_API_URL } from '../../config';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { T } from '../../types/common';
 import { useMutation } from '@apollo/client';
 import { CREATE_BOARD_ARTICLE } from '../../../apollo/user/mutation';
 import { Message } from '../../enums/common.enum';
 import { sweetErrorHandling, sweetTopSuccessAlert } from '../../sweetAlert';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
-const TuiEditor = () => {
-	const editorRef = useRef<Editor>(null),
-		token = getJwtToken(),
-		router = useRouter();
-	const [articleCategory, setArticleCategory] = useState<BoardArticleCategory>(BoardArticleCategory.NEWS);
+const articleCategoryLabels: Record<BoardArticleCategory, string> = {
+	[BoardArticleCategory.NEWS]: 'NEWS',
+	[BoardArticleCategory.REVIEWS]: 'REVIEWS',
+	[BoardArticleCategory.EVENT]: 'EVENT',
+	[BoardArticleCategory.GUIDE]: 'GUIDE',
+	[BoardArticleCategory.PROMOTION]: 'PROMOTION',
+	[BoardArticleCategory.ANNOUNCEMENT]: 'ANNOUNCEMENT',
+};
 
-	/** APOLLO REQUESTS **/
+const TuiEditor = () => {
+	const editorRef = useRef<Editor>(null);
+	const token = getJwtToken();
+	const router = useRouter();
+
+	const [articleCategory, setArticleCategory] = useState<BoardArticleCategory>(BoardArticleCategory.NEWS);
+	const [articleTitle, setArticleTitle] = useState('');
+	const [articleImage, setArticleImage] = useState('');
+
+	/** Apollo mutation **/
 	const [createBoardArticle] = useMutation(CREATE_BOARD_ARTICLE);
 
-	const memoizedValues = useMemo(() => {
-		const articleTitle = '',
-			articleContent = '',
-			articleImage = '';
-
-		return { articleTitle, articleContent, articleImage };
-	}, []);
-
-	/** HANDLERS **/
-	const uploadImage = async (image: any) => {
+	/** Upload image handler **/
+	const uploadImage = async (image: Blob): Promise<string | undefined> => {
 		try {
 			const formData = new FormData();
 			formData.append(
 				'operations',
 				JSON.stringify({
 					query: `mutation ImageUploader($file: Upload!, $target: String!) {
-            imageUploader(file: $file, target: $target) 
+            imageUploader(file: $file, target: $target)
           }`,
 					variables: {
 						file: null,
@@ -55,45 +67,51 @@ const TuiEditor = () => {
 			);
 			formData.append('0', image);
 
-			const response = await axios.post(`${process.env.REACT_APP_API_GRAPHQL_URL}`, formData, {
+			const response = await axios.post(process.env.REACT_APP_API_GRAPHQL_URL || '', formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					'apollo-require-preflight': true,
+					'apollo-require-preflight': 'true',
 					Authorization: `Bearer ${token}`,
 				},
 			});
 
 			const responseImage = response.data.data.imageUploader;
-			console.log('=responseImage: ', responseImage);
-			memoizedValues.articleImage = responseImage;
+			setArticleImage(responseImage);
 
 			return `${REACT_APP_API_URL}/${responseImage}`;
 		} catch (err) {
-			console.log('ERROR, uploadImage:', err);
+			console.error('ERROR, uploadImage:', err);
+			return undefined;
 		}
 	};
 
-	const changeCategoryHandler = (e: any) => {
-		setArticleCategory(e.target.value);
+	/** Handlers **/
+	const changeCategoryHandler = (e: SelectChangeEvent<BoardArticleCategory>) => {
+		setArticleCategory(e.target.value as BoardArticleCategory);
 	};
 
-	const articleTitleHandler = (e: T) => {
-		console.log(e.target.value);
-		memoizedValues.articleTitle = e.target.value;
+	const articleTitleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setArticleTitle(e.target.value);
 	};
 
-	const createBlogHandler = async () => {
+	const handleRegisterButton = async () => {
 		try {
 			const editor = editorRef.current;
-			const articleContent = editor?.getInstance().getHTML() as string;
-			memoizedValues.articleContent = articleContent;
+			const articleContent = editor?.getInstance().getHTML() || '';
 
-			if (memoizedValues.articleContent === '' && memoizedValues.articleTitle === '') {
+			if (!articleTitle.trim() || !articleContent.trim()) {
 				throw new Error(Message.INSERT_ALL_INPUTS);
 			}
 
 			await createBoardArticle({
-				variables: { input: { ...memoizedValues, articleCategory } },
+				variables: {
+					input: {
+						articleTitle: articleTitle.trim(),
+						articleContent,
+						articleImage,
+						articleCategory,
+					},
+				},
 			});
 
 			await sweetTopSuccessAlert('Article is created successfully!', 700);
@@ -102,30 +120,27 @@ const TuiEditor = () => {
 				query: { category: 'myArticles' },
 			});
 		} catch (err: any) {
-			console.log(err);
-			sweetErrorHandling(new Error(Message.INSERT_ALL_INPUTS)).then();
+			console.error(err);
+			await sweetErrorHandling(new Error(Message.INSERT_ALL_INPUTS));
 		}
 	};
 
-	const doDisabledCheck = () => {
-		if (memoizedValues.articleContent === '' || memoizedValues.articleTitle === '') {
-			return true;
-		}
-	};
+	/** Disable button if title or content empty **/
+	const isDisabled = !articleTitle.trim() || !editorRef.current?.getInstance().getHTML().trim();
 
 	return (
-		<Stack className={'tui-editor-container'}>
-			<Stack direction="row" className={'tui-editor-form-row'} justifyContent="space-evenly">
-				<Box component={'div'} className={'form_row category-select'}>
-					<Typography className={'label'} variant="h3">
+		<Stack>
+			<Stack direction="row" justifyContent="space-evenly" sx={{ margin: '40px' }}>
+				<Box sx={{ width: '300px' }} className="form_row">
+					<Typography sx={{ color: '#7f838d', margin: '10px' }} variant="h3">
 						Category
 					</Typography>
-					<FormControl className={'select-control'}>
+					<FormControl sx={{ width: '100%', background: 'white' }}>
 						<Select
 							value={articleCategory}
 							onChange={changeCategoryHandler}
 							displayEmpty
-							inputProps={{ 'aria-label': 'Without label' }}
+							inputProps={{ 'aria-label': 'Select category' }}
 						>
 							{Object.values(BoardArticleCategory).map((category) => (
 								<MenuItem key={category} value={category}>
@@ -135,15 +150,17 @@ const TuiEditor = () => {
 						</Select>
 					</FormControl>
 				</Box>
-				<Box component={'div'} className={'form_row title-input'}>
-					<Typography className={'label'} variant="h3">
+
+				<Box sx={{ width: '300px', display: 'flex', flexDirection: 'column' }}>
+					<Typography sx={{ color: '#7f838d', margin: '10px' }} variant="h3">
 						Title
 					</Typography>
 					<TextField
 						onChange={articleTitleHandler}
-						id="filled-basic"
-						label="Blog Title"
-						className={'title-textfield'}
+						label="Type Title"
+						variant="outlined"
+						sx={{ width: '300px', background: 'white' }}
+						value={articleTitle}
 					/>
 				</Box>
 			</Stack>
@@ -174,10 +191,24 @@ const TuiEditor = () => {
 				}}
 			/>
 
-			<Stack className={'save-button'}>
-				<button type="button" className={'save-listing-btn'} onClick={createBlogHandler} disabled={doDisabledCheck()}>
-					Save Blog
-				</button>
+			<Stack direction="row" justifyContent="center" mt={3}>
+				<Button
+					variant="contained"
+					sx={{
+						margin: '30px',
+						width: '250px',
+						height: '45px',
+						backgroundColor: '#FF7101',
+						color: '#FFF',
+						'&:hover': {
+							backgroundColor: '#e06500', // slightly darker on hover
+						},
+					}}
+					onClick={handleRegisterButton}
+					disabled={isDisabled}
+				>
+					Register
+				</Button>
 			</Stack>
 		</Stack>
 	);

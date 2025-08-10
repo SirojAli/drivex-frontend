@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Stack, Box, Button } from '@mui/material';
-import CommunityCard from './CommunityCard';
+import CommunityHome from './CommunityHome';
 
 const CommunityBoards = () => {
 	return (
@@ -10,7 +10,7 @@ const CommunityBoards = () => {
 					<h2>News to help choose your car</h2>
 				</Box>
 				<Stack>
-					<CommunityCard />
+					<CommunityHome />
 				</Stack>
 			</Stack>
 		</Stack>

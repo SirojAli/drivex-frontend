@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Stack, Modal, IconButton } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Stack, Modal } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
@@ -24,23 +24,11 @@ const CarCard = (props: PopularCarCardProps) => {
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const [openCompare, setOpenCompare] = useState(false);
-	const isLiked = myFavorites || (car?.meLiked && car?.meLiked[0]?.myFavorite);
-	const [liked, setLiked] = useState(isLiked);
-
-	useEffect(() => {
-		setLiked(isLiked); // Sync if props change
-	}, [isLiked]);
-
-	const onLikeClick = () => {
-		setLiked(!liked); // Instant UI change
-		likeCarHandler(user, car?._id); // Still call the mutation
-	};
 
 	const handleCompare = (status: boolean) => {
 		setOpenCompare(status);
 	};
 
-	/** HANDLERS **/
 	const pushDetailHandler = async (carId: string) => {
 		if (car.carStatus === 'SOLD') return; // Block routing for SOLD cars
 		await router.push({
@@ -76,7 +64,7 @@ const CarCard = (props: PopularCarCardProps) => {
 
 							if (car.carYear === 2026) badge = 'Upcoming';
 							else if (car.carYear === 2025) badge = 'New';
-							else if (isSold) badge = 'Out of Stock'; // Changed text here
+							else if (isSold) badge = 'Out of Stock';
 							else if (car.carViews && car.carViews > 1000) badge = 'Featured';
 							else if (car.carLikes && car.carLikes > 100) badge = 'Hot';
 
@@ -89,8 +77,22 @@ const CarCard = (props: PopularCarCardProps) => {
 							);
 						})()}
 
-						<div className={`action-btn like-btn ${liked ? 'liked' : ''}`} onClick={onLikeClick}>
-							{liked ? <FavoriteIcon className="heart-icon" color="error" /> : <FavoriteIcon className="heart-icon" />}
+						<div
+							className={`action-btn like-btn ${
+								myFavorites || (car?.meLiked && car?.meLiked[0]?.myFavorite) ? 'liked' : ''
+							}`}
+							onClick={() => likeCarHandler(user, car?._id)}
+							style={{ cursor: 'pointer' }}
+							title="Like"
+						>
+							<FavoriteIcon
+								className="heart-icon"
+								color={myFavorites || (car?.meLiked && car?.meLiked[0]?.myFavorite) ? 'error' : 'inherit'}
+							/>
+						</div>
+
+						<div className="action-btn compare-btn" onClick={() => handleCompare(true)} title="Compare">
+							<CompareArrowsIcon style={{ fill: '#FF7101' }} />
 						</div>
 					</Stack>
 
@@ -123,12 +125,16 @@ const CarCard = (props: PopularCarCardProps) => {
 											<RemoveRedEyeIcon className={'view'} />
 											<span>{car.carViews}</span>
 										</div>
-										<div className={'like-btn'} title={'Likes'}>
-											{isLiked ? (
-												<FavoriteIcon className={'like'} color={'error'} />
-											) : (
-												<FavoriteIcon className={'like'} />
-											)}
+										<div
+											className={'like-btn'}
+											title={'Likes'}
+											onClick={() => likeCarHandler(user, car?._id)}
+											style={{ cursor: 'pointer' }}
+										>
+											<FavoriteIcon
+												className={'like'}
+												color={myFavorites || (car?.meLiked && car?.meLiked[0]?.myFavorite) ? 'error' : 'inherit'}
+											/>
 											<span>{car.carLikes}</span>
 										</div>
 									</div>

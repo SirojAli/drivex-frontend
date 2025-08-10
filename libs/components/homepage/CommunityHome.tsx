@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Stack, Box } from '@mui/material';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
-const CommunityCard = ({ initialInput, ...props }: any) => {
+const CommunityHome = ({ initialInput, ...props }: any) => {
 	return (
 		<Stack className={'main-blog'}>
 			<Stack className={'post'}>
@@ -82,4 +82,4 @@ const CommunityCard = ({ initialInput, ...props }: any) => {
 	);
 };
 
-export default CommunityCard;
+export default CommunityHome;

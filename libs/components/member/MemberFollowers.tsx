@@ -65,7 +65,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>NESTAR FOLLOWS MOBILE</div>;
+		return <div>DRIVEX - FOLLOWERS MOBILE</div>;
 	} else {
 		return (
 			<div id="member-follows-page">
@@ -134,7 +134,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 												<Typography>Following</Typography>
 												<Button
 													variant="outlined"
-													sx={{ background: '#ed5858', ':hover': { background: '#ee7171' } }}
+													className="unfollow-btn"
 													onClick={() =>
 														unsubscribeHandler(follower?.followerData?._id, getMemberFollowersRefetch, followInquiry)
 													}
@@ -145,7 +145,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 										) : (
 											<Button
 												variant="contained"
-												sx={{ background: '#60eb60d4', ':hover': { background: '#60eb60d4' } }}
+												className="follow-btn" // <-- Add this
 												onClick={() =>
 													subscribeHandler(follower?.followerData?._id, getMemberFollowersRefetch, followInquiry)
 												}
@@ -183,7 +183,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 MemberFollowers.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 5,
+		limit: 10,
 		search: {
 			followingId: '',
 		},

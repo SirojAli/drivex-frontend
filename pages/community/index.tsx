@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import withLayoutFull from '../../libs/components/layout/LayoutFull';
 import Link from 'next/link';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import BlogCard from '../../libs/components/community/BlogCard';
+import CommunityCard from '../../libs/components/community/CommunityCard';
 import CategoryBox from '../../libs/components/community/CategoryBox';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
@@ -112,7 +112,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 						<Stack className={'left-box'}>
 							<Stack className={'blog-card-box'}>
 								{boardArticles.map((article: BoardArticle) => (
-									<BlogCard key={article._id} article={article} likeArticleHandler={likeArticleHandler} />
+									<CommunityCard key={article._id} article={article} likeArticleHandler={likeArticleHandler} />
 								))}
 							</Stack>
 

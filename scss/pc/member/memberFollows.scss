@@ -5,13 +5,16 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+
 		.main-title-box {
 			width: 100%;
 			height: auto;
 			flex-direction: row;
 			justify-content: space-between;
+
 			.right-box {
 				width: 315px;
+
 				.main-title {
 					color: #181a20;
 					font-family: $font;
@@ -24,10 +27,12 @@
 				}
 			}
 		}
+
 		.follows-list-box {
 			width: 100%;
 			margin-top: 85px;
 			gap: 15px;
+
 			.listing-title-box {
 				width: 100%;
 				height: auto;
@@ -37,6 +42,7 @@
 				border-radius: 12px;
 				background: #f6f6f6;
 				justify-content: space-between;
+
 				.title-text {
 					color: #181a20;
 					font-family: $font;
@@ -46,6 +52,7 @@
 					line-height: normal;
 				}
 			}
+
 			.follows-card-box {
 				padding-right: 30px;
 				padding-bottom: 5px;
@@ -55,28 +62,48 @@
 				align-items: center;
 				gap: 10px;
 				border-bottom: 1px solid #ddd;
+				transition: background-color 0.2s ease;
+
+				&:hover {
+					background-color: #fafafa;
+				}
+
 				.info {
 					width: 300px;
 					display: flex;
 					flex-direction: row;
 					align-items: center;
 					cursor: pointer;
+					gap: 20px;
+
 					.image-box {
 						width: 110px;
 						height: 110px;
+						border-radius: 50%;
 						overflow: hidden;
-						margin-right: 25px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						background-color: #eee;
+						font-weight: 600;
+						color: #000;
+						font-size: 1rem;
+						box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
 						img {
-							width: 100%;
-							height: 100%;
+							max-width: 100%;
+							max-height: 100%;
 							object-fit: cover;
-							border-radius: 50%;
+							object-position: center;
+							display: block;
 						}
 					}
+
 					.information-box {
 						width: auto;
 						height: auto;
 						padding: 5px 0px;
+
 						.name {
 							color: #181a20;
 							font-family: $font;
@@ -84,26 +111,40 @@
 							font-style: normal;
 							font-weight: 600;
 							line-height: normal;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							max-width: 150px;
 						}
 					}
 				}
+
 				.details-box {
 					width: 300px;
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
+
 					.info-box {
 						display: flex;
 						align-items: center;
+
 						img {
 							width: 24px;
 							height: 24px;
 						}
+
 						svg {
 							width: 24px;
 							height: 24px;
 							cursor: pointer;
+							transition: transform 0.15s ease;
+
+							&:hover {
+								transform: scale(1.15);
+							}
 						}
+
 						p {
 							color: #181a20;
 							font-family: $font;
@@ -112,6 +153,7 @@
 							font-weight: 600;
 							line-height: normal;
 						}
+
 						span {
 							margin-left: 4px;
 							color: #181a20;
@@ -123,6 +165,7 @@
 						}
 					}
 				}
+
 				.action-box {
 					width: 300px;
 					height: 100%;
@@ -130,15 +173,46 @@
 					align-items: center;
 					justify-content: flex-end;
 					gap: 20px;
+
 					button {
-						border: 1px solid #b9b9b9;
-						color: #181a20;
 						font-family: $font;
 						font-size: 14px;
-						font-style: normal;
-						font-weight: 400;
+						font-weight: 500;
+						border-radius: 6px;
+						transition: all 0.2s ease;
+						cursor: pointer;
+						padding: 6px 16px;
+						min-width: 100px;
 						line-height: normal;
 					}
+
+					// Follow button style
+					.follow-btn {
+						background-color: #1da1f2; // Twitter blue
+						color: #fff;
+						border: none;
+
+						&:hover {
+							background-color: #0d8ddb;
+							box-shadow: 0 2px 8px rgba(29, 161, 242, 0.4);
+							transform: translateY(-1px);
+						}
+					}
+
+					// Unfollow button style
+					.unfollow-btn {
+						background-color: #b71c1c; // Dark red
+						color: #fff; // White text
+						border: 1px solid #b71c1c;
+
+						&:hover {
+							background-color: #b71c1c;
+							color: #fff; // Keep text white on hover
+							box-shadow: 0 2px 8px rgba(183, 28, 28, 0.4);
+							transform: translateY(-1px);
+						}
+					}
+
 					p {
 						color: #b9b9b9;
 						font-family: $font;
@@ -150,12 +224,14 @@
 				}
 			}
 		}
+
 		.pagination-config {
 			width: 100%;
 			height: auto;
 			justify-content: center;
 			align-items: center;
 			margin-top: 30px;
+
 			.total-result {
 				p {
 					color: #181a20;

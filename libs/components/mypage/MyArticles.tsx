@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Pagination, Stack, Typography } from '@mui/material';
-import CommunityCard from '../common/CommunityCard';
 import { userVar } from '../../../apollo/store';
 import { T } from '../../types/common';
 import { BoardArticle } from '../../types/board-article/board-article';
@@ -11,16 +10,37 @@ import { LIKE_TARGET_BOARD_ARTICLE } from '../../../apollo/user/mutation';
 import { GET_BOARD_ARTICLES } from '../../../apollo/user/query';
 import { Messages } from '../../config';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
+import CommunityCard from '../community/CommunityCard';
+
+// ✅ Define type for searchCommunity state
+interface SearchCommunity {
+	page: number;
+	limit: number;
+	sort: string;
+	direction: string;
+	search: { memberId?: string };
+}
 
 const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
-	const [searchCommunity, setSearchCommunity] = useState({
+
+	const [searchCommunity, setSearchCommunity] = useState<SearchCommunity>({
 		...initialInput,
 		search: { memberId: user._id },
 	});
 	const [boardArticles, setBoardArticles] = useState<BoardArticle[]>([]);
 	const [totalCount, setTotalCount] = useState<number>(0);
+
+	// ✅ Update memberId after user loads
+	useEffect(() => {
+		if (user?._id) {
+			setSearchCommunity((prev) => ({
+				...prev,
+				search: { memberId: user._id },
+			}));
+		}
+	}, [user]);
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetBoardArticle] = useMutation(LIKE_TARGET_BOARD_ARTICLE);
@@ -32,22 +52,31 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 		refetch: boardArticlesRefetch,
 	} = useQuery(GET_BOARD_ARTICLES, {
 		fetchPolicy: 'network-only',
-		variables: { searchCommunity },
+		variables: { input: searchCommunity },
 		notifyOnNetworkStatusChange: true,
 		onCompleted(data: T) {
-			setBoardArticles(data?.getBoardArticles?.list);
-			setTotalCount(data?.getBoardArticles?.metaCounter[0]?.total);
+			setBoardArticles(data?.getBoardArticles?.list ?? []);
+			setTotalCount(data?.getBoardArticles?.metaCounter?.[0]?.total ?? 0);
 		},
+		skip: !user?._id, // ✅ Optional: Wait until user is loaded
 	});
 
+	// ✅ Refetch whenever searchCommunity changes
+	useEffect(() => {
+		if (user?._id) {
+			boardArticlesRefetch({ input: searchCommunity });
+		}
+	}, [searchCommunity, user?._id]);
+
 	/** HANDLERS **/
-	const paginationHandler = (e: T, value: number) => {
+	const paginationHandler = (_: any, value: number) => {
 		setSearchCommunity({ ...searchCommunity, page: value });
 	};
 
-	const likeBoArticleHandler = async (e: any, user: any, id: string) => {
+	// ✅ Match CommunityCard call signature
+	const likeArticleHandler = async (e: React.MouseEvent, user: any, id: string) => {
 		try {
-			e.stopPropagination();
+			e.stopPropagation(); // ✅ Prevent going to article detail
 			if (!id) return;
 			if (!user?._id) throw new Error(Messages.error2);
 
@@ -56,16 +85,16 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 			});
 
 			await boardArticlesRefetch({ input: searchCommunity });
-			await sweetTopSmallSuccessAlert('Success! ', 800);
+			await sweetTopSmallSuccessAlert('Success!', 800);
 		} catch (err: any) {
-			console.log('ERROR, likeBoArticleHandler: ', err.message);
-			sweetMixinErrorAlert(err.message).then();
+			console.error('ERROR, likeArticleHandler:', err.message);
+			sweetMixinErrorAlert(err.message);
 		}
 	};
 
 	if (device === 'mobile') {
 		return <>ARTICLE PAGE MOBILE</>;
-	} else
+	} else {
 		return (
 			<div id="my-articles-page">
 				<Stack className={'main-title-box'}>
@@ -76,16 +105,9 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 				</Stack>
 				<Stack className={'article-list-box'}>
 					{boardArticles?.length > 0 ? (
-						boardArticles?.map((boardArticle: BoardArticle) => {
-							return (
-								<CommunityCard
-									boardArticle={boardArticle}
-									key={boardArticle?._id}
-									size={'small'}
-									likeArticleHandler={likeBoArticleHandler}
-								/>
-							);
-						})
+						boardArticles.map((boardArticle: BoardArticle) => (
+							<CommunityCard key={boardArticle._id} article={boardArticle} likeArticleHandler={likeArticleHandler} />
+						))
 					) : (
 						<div className={'no-data'}>
 							<img src="/img/icons/icoAlert.svg" alt="" />
@@ -106,12 +128,13 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 							/>
 						</Stack>
 						<Stack className={'total'}>
-							<Typography>Total {totalCount ?? 0} article(s) available</Typography>
+							<Typography>Total {totalCount} articles available</Typography>
 						</Stack>
 					</Stack>
 				)}
 			</div>
 		);
+	}
 };
 
 MyArticles.defaultProps = {
