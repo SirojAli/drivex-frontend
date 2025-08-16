@@ -11,7 +11,7 @@ import { BoardArticle } from '../../types/board-article/board-article';
 import { BoardArticleCategory } from '../../enums/board-article.enum';
 
 const categoryLabels: { [key: string]: string } = {
-	ALL: 'All Blogs', // Custom tab
+	ALL: 'All Blogs',
 	[BoardArticleCategory.NEWS]: 'News',
 	[BoardArticleCategory.REVIEWS]: 'Reviews',
 	[BoardArticleCategory.EVENT]: 'Event',
@@ -82,7 +82,6 @@ const CategoryBox = () => {
 				<Stack className={'type-box'}>
 					{Object.entries(categoryLabels).map(([key, label]) => {
 						const isActive = articleCategory === key;
-						// Assuming categoryCountsMap keys are uppercase strings matching BoardArticleCategory enums
 						const count = key === 'ALL' ? undefined : categoryCountsMap[key.toUpperCase()] ?? 0;
 						return (
 							<Box className={`catg ${isActive ? 'active' : ''}`} key={key} onClick={() => handleCategoryClick(key)}>

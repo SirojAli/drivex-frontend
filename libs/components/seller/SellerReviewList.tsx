@@ -1,100 +1,74 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Box, Stack, Avatar, Typography, Rating, Pagination } from '@mui/material';
+import { Box, Stack, Avatar, Typography, Pagination, Rating } from '@mui/material';
 
-const reviews = [
+const mockReviews = [
+	{ id: '1', carId: 'car1', content: 'Amazing car!', date: new Date('2025-08-03'), memberName: 'John Doe' },
+	{ id: '2', carId: 'car2', content: 'Really smooth ride.', date: new Date('2025-08-05'), memberName: 'Jane Smith' },
 	{
-		name: 'Bessie Cooper',
-		avatar: '/img/avatars/bessie.jpg',
-		rating: 5,
-		text: 'Maecenas eu lorem et urna accumsan vestibulum vel vitae magna.',
-		time: '3 days ago',
-		car: {
-			id: 'bmw-x1',
-			name: 'BMW X1 2022',
-		},
+		id: '3',
+		carId: 'car3',
+		content: 'Highly recommend this car.',
+		date: new Date('2025-08-08'),
+		memberName: 'Alice Johnson',
 	},
 	{
-		name: 'Annette Black',
-		avatar: '/img/avatars/annette.jpg',
-		rating: 4,
-		text: 'Nullam rhoncus dolor arcu, et commodo tellus semper vitae.',
-		time: '3 days ago',
-		car: {
-			id: 'audi-a6',
-			name: 'Audi A6 2021',
-		},
+		id: '4',
+		carId: 'car1',
+		content: 'Good condition and well maintained.',
+		date: new Date('2025-08-10'),
+		memberName: 'Bob Brown',
 	},
+	{ id: '5', carId: 'car2', content: 'Loved the experience!', date: new Date('2025-08-12'), memberName: 'Clara Lee' },
 	{
-		name: 'Ralph Edwards',
-		avatar: '/img/avatars/ralph.jpg',
-		rating: 5,
-		text: 'Vivamus viverra semper convallis. Integer vestibulum tempus tincidunt.',
-		time: '3 days ago',
-		car: {
-			id: 'mercedes-c300',
-			name: 'Mercedes C300 2020',
-		},
+		id: '6',
+		carId: 'car3',
+		content: 'Excellent seller communication.',
+		date: new Date('2025-08-14'),
+		memberName: 'David Kim',
 	},
+	{ id: '7', carId: 'car1', content: 'Smooth transaction.', date: new Date('2025-08-16'), memberName: 'Eva Green' },
+	{ id: '8', carId: 'car2', content: 'Car was as described.', date: new Date('2025-08-18'), memberName: 'Frank White' },
 	{
-		name: 'Jerome Bell',
-		avatar: '/img/avatars/jerome.jpg',
-		rating: 5,
-		text: 'Sed turpis neque, iaculis blandit viverra ut, dapibus eget nisi.',
-		time: '3 days ago',
-		car: {
-			id: 'lexus-model3',
-			name: 'Lexus Model 3 2023',
-		},
+		id: '9',
+		carId: 'car3',
+		content: 'Very satisfied with the purchase.',
+		date: new Date('2025-08-19'),
+		memberName: 'Grace Hall',
 	},
-	{
-		name: 'Jerome Bell',
-		avatar: '/img/avatars/jerome.jpg',
-		rating: 5,
-		text: 'Sed turpis neque, iaculis blandit viverra ut, dapibus eget nisi.',
-		time: '3 days ago',
-		car: {
-			id: 'lexus-model3',
-			name: 'Lexus Model 3 2023',
-		},
-	},
+	{ id: '10', carId: 'car1', content: 'Would buy again!', date: new Date('2025-08-20'), memberName: 'Henry Young' },
 ];
 
+const ITEMS_PER_PAGE = 5;
+
 const SellerReviewList = () => {
-	const totalPages = 5;
-	const [currentPage, setCurrentPage] = useState(1);
-	const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {
-		setCurrentPage(page);
-	};
+	const [page, setPage] = useState(1);
+	const pageCount = Math.ceil(mockReviews.length / ITEMS_PER_PAGE);
+
+	const handleChange = (_: any, value: number) => setPage(value);
+
+	const displayedReviews = mockReviews.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
 	return (
-		<Box className={'review-boxes'}>
-			<h3>Reviews</h3>
-			<Stack className={'review-list'} spacing={3}>
-				{reviews.map((review, index) => (
-					<Box className={'review-item'} key={index}>
-						<Avatar src={review.avatar} className={'avatar'} />
-						<Box className={'review-content'}>
-							<Box className={'header'}>
-								<Typography className={'name'}>{review.name}</Typography>
-								<Typography className={'time'}>{review.time}</Typography>
+		<Box className="review-list-box">
+			<Stack spacing={3} className="review-list">
+				{displayedReviews.map((review) => (
+					<Box key={review.id} className="review-item" display="flex" gap={2}>
+						<Avatar>{review.memberName[0]}</Avatar>
+						<Box className="review-content">
+							<Box className="header" display="flex" justifyContent="space-between">
+								<Typography className="name">{review.memberName}</Typography>
+								<Typography className="time">{review.date.toLocaleDateString()}</Typography>
 							</Box>
-							<Rating value={review.rating} readOnly size="small" className={'custom-rating'} />
-							<Typography className={'text'}>{review.text}</Typography>
-							<Typography className={'car'}>
-								Reviewed:&nbsp;
-								<Link href={`/cars/${review.car.id}`}>{review.car.name}</Link>
-							</Typography>
+							<Rating value={5} readOnly size="small" />
+							<Typography className="text">{review.content}</Typography>
 						</Box>
 					</Box>
 				))}
 			</Stack>
-
-			{totalPages > 1 && (
-				<Box className={'pagination-box'}>
-					<Pagination count={totalPages} page={currentPage} onChange={handlePageChange} color="primary" />
-				</Box>
-			)}
+			<Box className="pagination-box">
+				<Pagination count={pageCount} page={page} onChange={handleChange} color="primary" />
+			</Box>
 		</Box>
 	);
 };

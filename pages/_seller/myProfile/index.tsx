@@ -116,8 +116,9 @@ const EditProfile: NextPage = ({ initialValues, ...props }: any) => {
 
 	return (
 		<div className={'my-profile'}>
-			<h3>Edit Profile</h3>
-
+			<h2 className={'dash-title'} style={{ marginBottom: '20px', fontSize: '30px', fontWeight: 600 }}>
+				Edit Profile
+			</h2>
 			<Stack className={'profile-boxes'}>
 				{/* Avatar Section */}
 				<Stack className={'avatar-section'}>

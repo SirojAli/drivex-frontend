@@ -30,7 +30,6 @@ const TopBrands = (props: TopSellerProps) => {
 	const [topSellers, setTopSellers] = useState<Member[]>([]);
 	const router = useRouter();
 
-	// DEBUG: log initial input received
 	console.log('initialInput:', initialInput);
 
 	/** APOLLO REQUESTS **/
@@ -58,14 +57,11 @@ const TopBrands = (props: TopSellerProps) => {
 			if (!id) return;
 			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
 
-			// execution: likeTargetSeller Mutation
 			await likeTargetMember({
 				variables: { input: id },
 			});
 
-			// execution: getSellersRefetch
 			await getSellersRefetch({ input: initialInput });
-
 			await sweetTopSmallSuccessAlert('Success! ', 800);
 		} catch (err: any) {
 			console.log('ERROR, likeSellerdHandler: ', err.message);
@@ -79,10 +75,7 @@ const TopBrands = (props: TopSellerProps) => {
 		});
 	};
 
-	// if (topSellers) console.log('topSellers: +++', topSellers);
-	// if (!topSellers) return null;
-
-	console.log('🔥 Rendering topSellers:', topSellers.length);
+	console.log('Rendering topSellers:', topSellers.length);
 	console.table(topSellers);
 
 	if (device === 'mobile') {

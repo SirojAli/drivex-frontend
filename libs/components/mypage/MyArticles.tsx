@@ -12,7 +12,6 @@ import { Messages } from '../../config';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import CommunityCard from '../community/CommunityCard';
 
-// ✅ Define type for searchCommunity state
 interface SearchCommunity {
 	page: number;
 	limit: number;
@@ -32,7 +31,6 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 	const [boardArticles, setBoardArticles] = useState<BoardArticle[]>([]);
 	const [totalCount, setTotalCount] = useState<number>(0);
 
-	// ✅ Update memberId after user loads
 	useEffect(() => {
 		if (user?._id) {
 			setSearchCommunity((prev) => ({
@@ -58,10 +56,9 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 			setBoardArticles(data?.getBoardArticles?.list ?? []);
 			setTotalCount(data?.getBoardArticles?.metaCounter?.[0]?.total ?? 0);
 		},
-		skip: !user?._id, // ✅ Optional: Wait until user is loaded
+		skip: !user?._id,
 	});
 
-	// ✅ Refetch whenever searchCommunity changes
 	useEffect(() => {
 		if (user?._id) {
 			boardArticlesRefetch({ input: searchCommunity });
@@ -73,10 +70,9 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 		setSearchCommunity({ ...searchCommunity, page: value });
 	};
 
-	// ✅ Match CommunityCard call signature
 	const likeArticleHandler = async (e: React.MouseEvent, user: any, id: string) => {
 		try {
-			e.stopPropagation(); // ✅ Prevent going to article detail
+			e.stopPropagation();
 			if (!id) return;
 			if (!user?._id) throw new Error(Messages.error2);
 

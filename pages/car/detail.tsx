@@ -111,10 +111,9 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const [liked, setLiked] = useState(car?.meLiked && car?.meLiked[0]?.myFavorite);
 	const features = [...baseFeatures, ...(car?.carType ? carTypeFeaturesMap[car.carType] || [] : [])];
 
-	// const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>(initialComment);
 	const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>({
 		...initialComment,
-		limit: initialComment?.limit ?? 5, // Default limit
+		limit: initialComment?.limit ?? 5,
 		page: initialComment?.page ?? 1,
 		search: {
 			commentRefId: initialComment?.search?.commentRefId ?? '',
@@ -268,7 +267,7 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 			await likeTargetCar({ variables: { input: id } });
 			setLiked((prev) => !prev);
 
-			// ✅ Refetch GET_CARS with the correct input object (prevents $input error)
+			// Refetch GET_CARS with the correct input object (prevents $input error)
 			await getCarsRefetch({
 				input: {
 					page: 1,
@@ -439,7 +438,6 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 											onClick={() => {
 												setActiveTab(tab);
 
-												// Scroll to the tab section by ID
 												const section = document.getElementById(tab.toLowerCase());
 												if (section) {
 													section.scrollIntoView({ behavior: 'smooth' });
@@ -999,7 +997,7 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 								onChange={(e) => setReplyForm({ ...replyForm, message: e.target.value })}
 								InputProps={{
 									sx: {
-										alignItems: 'flex-start', // Ensures text starts from the top
+										alignItems: 'flex-start',
 										paddingTop: '12px',
 									},
 								}}
@@ -1013,7 +1011,7 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 									color: '#fff',
 									fontWeight: 600,
 									borderRadius: 2,
-									alignSelf: 'center', // Center it if used inside a Stack
+									alignSelf: 'center',
 									':hover': { backgroundColor: '#6bc01c' },
 								}}
 								onClick={async () => {

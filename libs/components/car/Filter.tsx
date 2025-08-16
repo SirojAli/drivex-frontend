@@ -94,9 +94,8 @@ const CarFilter = (props: FilterType) => {
 			'colorList',
 		] as const;
 
-		type Key = typeof keysToCheck[number]; // 'brandList' | 'typeList' | ...
+		type Key = typeof keysToCheck[number];
 
-		// Explicitly type cleanedSearch so TypeScript knows what it is
 		const cleanedSearch: CarISearch = { ...searchFilter.search };
 
 		let hasDeleted = false;
@@ -207,7 +206,7 @@ const CarFilter = (props: FilterType) => {
 			...searchFilter,
 			search: {
 				...searchFilter.search,
-				brandList: selected ? [selected as CarBrand] : [], // empty array if cleared
+				brandList: selected ? [selected as CarBrand] : [],
 			},
 			page: 1,
 		};
@@ -318,7 +317,6 @@ const CarFilter = (props: FilterType) => {
 
 		setSearchFilter(updatedFilter);
 
-		// Push to URL for filtering
 		router.push(`/car?input=${encodeURIComponent(JSON.stringify(updatedFilter))}`, undefined, {
 			scroll: false,
 		});

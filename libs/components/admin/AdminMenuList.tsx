@@ -69,10 +69,8 @@ const AdminMenuList = (props: any) => {
 	/** HANDLERS **/
 	const subMenuChangeHandler = (target: string) => {
 		if (clickMenu.find((item: string) => item === target)) {
-			// setOpenSubMenu('');
 			setClickMenu(clickMenu.filter((menu: string) => target !== menu));
 		} else {
-			// setOpenSubMenu(target);
 			setClickMenu([...clickMenu, target]);
 		}
 	};

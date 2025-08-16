@@ -8,7 +8,9 @@ const TuiEditor = dynamic(() => import('../.././../libs/components/community/Ted
 const AddBlog: NextPage = ({ initialInquiry, ...props }: any) => {
 	return (
 		<div className={'add-blog'}>
-			<h3>Write Blog</h3>
+			<h2 className={'dash-title'} style={{ marginBottom: '20px', fontSize: '30px', fontWeight: 600 }}>
+				Write Blog
+			</h2>
 			<Stack className={'blog-boxes'}>
 				<TuiEditor />
 			</Stack>

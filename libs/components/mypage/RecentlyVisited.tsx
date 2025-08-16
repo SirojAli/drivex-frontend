@@ -73,9 +73,6 @@ const RecentlyVisited: NextPage = () => {
 			<Stack className="favorites-list-box">
 				{recentlyVisited.length ? (
 					recentlyVisited.map((car: Car) => (
-						// Notice: We DON'T pass myFavorites here.
-						// CarCard will use car?.meLiked to determine like icon color.
-						// <CarCard key={car._id} car={car} likeCarHandler={likeCarHandler} recentlyVisited={true} />
 						<CarCard
 							key={`${car._id}-${car.meLiked?.[0]?.myFavorite ? 'liked' : 'unliked'}`}
 							car={car}

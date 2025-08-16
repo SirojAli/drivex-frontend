@@ -35,7 +35,7 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 	/** APOLLO REQUESTS **/
 	const [likeTargetCar] = useMutation(LIKE_TARGET_CAR);
 
-	// ✅ CHANGED FROM useQuery TO useLazyQuery
+	// CHANGED FROM useQuery TO useLazyQuery
 	const [getCars, { loading: getCarsLoading, data: getCarsData, error: getCarsError }] = useLazyQuery(GET_CARS, {
 		fetchPolicy: 'network-only',
 		notifyOnNetworkStatusChange: true,
@@ -48,7 +48,7 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 		},
 	});
 
-	// ✅ UPDATED: Extract brand name from slug and trigger car query
+	// UPDATED: Extract brand name from slug and trigger car query
 	useEffect(() => {
 		if (!router.isReady || typeof brandSlug !== 'string') return;
 
@@ -65,10 +65,10 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 		};
 
 		setSearchFilter(newInput);
-		getCars({ variables: { input: newInput } }); // ✅ Execute Apollo query
+		getCars({ variables: { input: newInput } });
 	}, [brandSlug, router.isReady]);
 
-	// ✅ UPDATED: Trigger search when filter changes
+	// UPDATED: Trigger search when filter changes
 	useEffect(() => {
 		if (searchFilter?.search?.brandList?.length) {
 			getCars({ variables: { input: searchFilter } });
@@ -112,12 +112,12 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 		Featured: {
 			sort: 'carViews',
 			direction: Direction.DESC,
-			search: { brandList: searchFilter.search.brandList }, // add brandList here
+			search: { brandList: searchFilter.search.brandList },
 		},
 		Popular: {
 			sort: 'carLikes',
 			direction: Direction.DESC,
-			search: { brandList: searchFilter.search.brandList }, // add brandList here
+			search: { brandList: searchFilter.search.brandList },
 		},
 		New: {
 			sort: 'carYear',
@@ -137,7 +137,6 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 
 		setActiveFilter(filterKey);
 
-		// Preserve brandList and other needed keys from previous search
 		const preservedSearch = {
 			brandList: searchFilter.search.brandList,
 			...filterUpdate.search,

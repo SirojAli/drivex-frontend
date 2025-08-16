@@ -195,7 +195,7 @@ const CommunityDetail: NextPage = ({ initialComment, ...props }: T) => {
 	};
 
 	const goMemberPage = (id?: string) => {
-		if (!id) return; // ignore if no id
+		if (!id) return;
 
 		if (id === user?._id) {
 			router.push('/mypage');
@@ -274,13 +274,11 @@ const CommunityDetail: NextPage = ({ initialComment, ...props }: T) => {
 									<span>
 										{boardArticle?.articleContent &&
 											(() => {
-												// Split content into sentences
 												const sentences = boardArticle.articleContent
 													.split('.')
 													.map((s) => s.trim())
 													.filter(Boolean);
 
-												// Group sentences similar to the car description
 												const first = sentences[0] || '';
 												const second = sentences.slice(1, 4).join('. ') || '';
 												const third = sentences.slice(4).join('. ') || '';

@@ -6,7 +6,9 @@ import { Box, Stack, Typography } from '@mui/material';
 const Message: NextPage = () => {
 	return (
 		<div className={'message-blog'}>
-			<h3>Messages</h3>
+			<h2 className={'dash-title'} style={{ marginBottom: '20px', fontSize: '30px', fontWeight: 600 }}>
+				Messages
+			</h2>
 			<Stack className={'message-container'}>
 				<Stack className={'message-sidebar'}>
 					<Box className={'search-bar'}>

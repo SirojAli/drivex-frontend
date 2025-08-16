@@ -192,7 +192,9 @@ const AddListing: NextPage = ({ initialValues, ...props }: any) => {
 
 	return (
 		<div className={'add-listing'}>
-			<h3>Add Listing</h3>
+			<h2 className={'dash-title'} style={{ marginBottom: '20px', fontSize: '30px', fontWeight: 600 }}>
+				Add Listing
+			</h2>
 			<Stack className={'adding-boxes'}>
 				{/* UPLOAD IMAGE */}
 				<Stack className={'upload-photos'}>

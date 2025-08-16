@@ -37,16 +37,14 @@
 			}
 		}
 		.article-list-box {
-			width: 890px; // fixed width container
+			width: 890px;
 			display: grid;
-			grid-template-columns: repeat(2, 1fr); // 2 equal columns
-			gap: 20px 20px; // same gap between rows and columns for consistency
-			margin: 0 auto; // center horizontally in case parent is wider
+			grid-template-columns: repeat(2, 1fr);
+			gap: 20px 20px;
+			margin: 0 auto;
 			box-sizing: border-box;
 
 			.blog-boxes {
-				// display: contents;
-
 				.blog-box {
 					width: 100%;
 					height: 440px;
@@ -93,7 +91,6 @@
 							}
 						}
 
-						// LIKE BUTTON: initially hidden
 						.action-btn {
 							width: 34px;
 							height: 34px;
@@ -127,7 +124,6 @@
 							}
 						}
 
-						// ⏫ Hover logic here
 						&:hover .action-btn {
 							opacity: 1;
 							pointer-events: auto;

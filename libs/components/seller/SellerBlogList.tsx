@@ -7,257 +7,102 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 import EditIcon from '@mui/icons-material/Edit';
 import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { BoardArticle } from '../../types/board-article/board-article';
+import { REACT_APP_API_URL } from '../../config';
+import Moment from 'react-moment';
+import { BoardArticleStatus } from '../../enums/board-article.enum';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-const SellerBlogList = (props: any) => {
-	const totalPages = 3;
-	const [currentPage, setCurrentPage] = useState(1);
-	const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {
-		setCurrentPage(page);
+interface SellerArticleProps {
+	article: BoardArticle;
+	onStatusChange?: (id: string, status: BoardArticleStatus) => void;
+}
+
+const SellerBlogList = (props: SellerArticleProps) => {
+	const router = useRouter();
+
+	const { article, onStatusChange } = props;
+	const [status, setStatus] = useState<BoardArticleStatus>(article.articleStatus);
+
+	const isActive = article.articleStatus === BoardArticleStatus.ACTIVE;
+	const isDeleted = article.articleStatus === BoardArticleStatus.DELETE;
+
+	/** HANDLERS **/
+	const viewBlogDetail = (e: React.SyntheticEvent, article: BoardArticle) => {
+		router.push(
+			{
+				pathname: '/community/detail',
+				query: { articleCategory: article?.articleCategory, id: article?._id },
+			},
+			undefined,
+			{ shallow: true },
+		);
+	};
+
+	const handleChangeStatus = (newStatus: BoardArticleStatus) => {
+		setStatus(newStatus);
+		if (onStatusChange) onStatusChange(article._id, newStatus);
 	};
 
 	return (
-		<div className={'list-boxes'}>
-			<h3>Blog Listing</h3>
-			<Stack className={'blog-box'}>
-				<Box className={'title-bar'}>
-					<p className={'list'}>Listing</p>
+		<div className={'blog-list-boxes'}>
+			<Stack className={'blog-list'}>
+				<Box className={'blog-items'}>
+					{/* CAR NAME */}
+					<Box className={'blog-content'} onClick={(e: any) => viewBlogDetail(e, article)}>
+						<Box className={'blog-img'}>
+							<img src={`${REACT_APP_API_URL}/${article?.articleImage}`} alt={'article'} loading="lazy" />
+						</Box>
+						<Box className={'blog-info'}>
+							<h5>{article.articleTitle}</h5>
+							<p>{article.articleCategory}</p>
+						</Box>
+					</Box>
 					<div className={'divr'}></div>
-					<p className={'stat'}>Status</p>
+
+					{/* CAR STATUS */}
+					<Box className={'blog-status'}>
+						{status === BoardArticleStatus.ACTIVE && (
+							<Box className="status-active">
+								<p className="active">Active</p>
+							</Box>
+						)}
+						{status === BoardArticleStatus.DELETE && (
+							<Box className="status-delete">
+								<p className="delete">Delete</p>
+							</Box>
+						)}
+					</Box>
 					<div className={'divr'}></div>
-					<p className={'date'}>Date</p>
+
+					{/* DATE */}
+					<Box className={'blog-date'}>
+						<Moment format="MMMM D, YYYY">{article.createdAt}</Moment>
+					</Box>
 					<div className={'divr'}></div>
-					<p className={'act'}>Action</p>
+
+					{/* ACTIONS */}
+					<Box className={'blog-action'}>
+						<Box
+							className="blog-edit"
+							onClick={() => handleChangeStatus(BoardArticleStatus.ACTIVE)}
+							style={{ cursor: 'pointer' }}
+						>
+							<CheckCircleOutlineIcon className="icon" />
+							<p>Active</p>
+						</Box>
+						<Box
+							className="blog-delete"
+							onClick={() => handleChangeStatus(BoardArticleStatus.DELETE)}
+							style={{ cursor: 'pointer' }}
+						>
+							<DeleteIcon className="icon" />
+							<p>Delete</p>
+						</Box>
+					</Box>
 				</Box>
-				<Stack className={'blog-listing'}>
-					<Box className={'blog-items'}>
-						{/* CAR NAME */}
-						<Box className={'blog-content'}>
-							<Box className={'blog-img'}>
-								<img src="/img/cars/header1.jpg" alt="blog-img" />
-							</Box>
-							<Box className={'blog-info'}>
-								<h5>How to choose BMW X1 Drive</h5>
-								<span>The BMW X1 blends luxury, performance, and BMW X1 blends luxury, performance, and...</span>
-								<p>NEWS</p>
-							</Box>
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* CAR STATUS */}
-						<Box className={'blog-status'}>
-							<Box className={'status-active'}>
-								<p className={'active'}>Active</p>
-							</Box>
-							{/* <Box className={'status-delete'}>
-								<p className={'delete'}>Delete</p>
-							</Box> */}
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* DATE */}
-						<Box className={'blog-date'}>
-							<p>July 25, 2025</p>
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* ACTIONS */}
-						<Box className={'blog-action'}>
-							<Box className={'blog-edit'}>
-								<EditIcon className={'icon'} />
-								<p>Edit</p>
-							</Box>
-							<Box className={'blog-delete'}>
-								<DeleteIcon className={'icon'} />
-								<p>Delete</p>
-							</Box>
-						</Box>
-					</Box>
-					<div className={'divider'}></div>
-
-					<Box className={'blog-items'}>
-						{/* CAR NAME */}
-						<Box className={'blog-content'}>
-							<Box className={'blog-img'}>
-								<img src="/img/cars/header1.jpg" alt="blog-img" />
-							</Box>
-							<Box className={'blog-info'}>
-								<h5>How to choose BMW X1 Drive</h5>
-								<span>The BMW X1 blends luxury, performance, and BMW X1 blends luxury, performance, and...</span>
-								<p>NEWS</p>
-							</Box>
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* CAR STATUS */}
-						<Box className={'blog-status'}>
-							{/* <Box className={'status-active'}>
-								<p className={'active'}>Active</p>
-							</Box> */}
-							<Box className={'status-delete'}>
-								<p className={'delete'}>Delete</p>
-							</Box>
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* DATE */}
-						<Box className={'blog-date'}>
-							<p>July 25, 2025</p>
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* ACTIONS */}
-						<Box className={'blog-action'}>
-							<Box className={'blog-edit'}>
-								<EditIcon className={'icon'} />
-								<p>Edit</p>
-							</Box>
-							<Box className={'blog-delete'}>
-								<DeleteIcon className={'icon'} />
-								<p>Delete</p>
-							</Box>
-						</Box>
-					</Box>
-					<div className={'divider'}></div>
-
-					<Box className={'blog-items'}>
-						{/* CAR NAME */}
-						<Box className={'blog-content'}>
-							<Box className={'blog-img'}>
-								<img src="/img/cars/header1.jpg" alt="blog-img" />
-							</Box>
-							<Box className={'blog-info'}>
-								<h5>How to choose BMW X1 Drive</h5>
-								<span>The BMW X1 blends luxury, performance, and BMW X1 blends luxury, performance, and...</span>
-								<p>NEWS</p>
-							</Box>
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* CAR STATUS */}
-						<Box className={'blog-status'}>
-							<Box className={'status-active'}>
-								<p className={'active'}>Active</p>
-							</Box>
-							{/* <Box className={'status-delete'}>
-								<p className={'delete'}>Delete</p>
-							</Box> */}
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* DATE */}
-						<Box className={'blog-date'}>
-							<p>July 25, 2025</p>
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* ACTIONS */}
-						<Box className={'blog-action'}>
-							<Box className={'blog-edit'}>
-								<EditIcon className={'icon'} />
-								<p>Edit</p>
-							</Box>
-							<Box className={'blog-delete'}>
-								<DeleteIcon className={'icon'} />
-								<p>Delete</p>
-							</Box>
-						</Box>
-					</Box>
-					<div className={'divider'}></div>
-
-					<Box className={'blog-items'}>
-						{/* CAR NAME */}
-						<Box className={'blog-content'}>
-							<Box className={'blog-img'}>
-								<img src="/img/cars/header1.jpg" alt="blog-img" />
-							</Box>
-							<Box className={'blog-info'}>
-								<h5>How to choose BMW X1 Drive</h5>
-								<span>The BMW X1 blends luxury, performance, and BMW X1 blends luxury, performance, and...</span>
-								<p>NEWS</p>
-							</Box>
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* CAR STATUS */}
-						<Box className={'blog-status'}>
-							<Box className={'status-active'}>
-								<p className={'active'}>Active</p>
-							</Box>
-							{/* <Box className={'status-delete'}>
-								<p className={'delete'}>Delete</p>
-							</Box> */}
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* DATE */}
-						<Box className={'blog-date'}>
-							<p>July 25, 2025</p>
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* ACTIONS */}
-						<Box className={'blog-action'}>
-							<Box className={'blog-edit'}>
-								<EditIcon className={'icon'} />
-								<p>Edit</p>
-							</Box>
-							<Box className={'blog-delete'}>
-								<DeleteIcon className={'icon'} />
-								<p>Delete</p>
-							</Box>
-						</Box>
-					</Box>
-					<div className={'divider'}></div>
-
-					<Box className={'blog-items'}>
-						{/* CAR NAME */}
-						<Box className={'blog-content'}>
-							<Box className={'blog-img'}>
-								<img src="/img/cars/header1.jpg" alt="blog-img" />
-							</Box>
-							<Box className={'blog-info'}>
-								<h5>How to choose BMW X1 Drive</h5>
-								<span>The BMW X1 blends luxury, performance, and BMW X1 blends luxury, performance, and...</span>
-								<p>NEWS</p>
-							</Box>
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* CAR STATUS */}
-						<Box className={'blog-status'}>
-							<Box className={'status-delete'}>
-								<p className={'delete'}>Delete</p>
-							</Box>
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* DATE */}
-						<Box className={'blog-date'}>
-							<p>July 25, 2025</p>
-						</Box>
-						<div className={'divr'}></div>
-
-						{/* ACTIONS */}
-						<Box className={'blog-action'}>
-							<Box className={'blog-edit'}>
-								<EditIcon className={'icon'} />
-								<p>Edit</p>
-							</Box>
-							<Box className={'blog-delete'}>
-								<DeleteIcon className={'icon'} />
-								<p>Delete</p>
-							</Box>
-						</Box>
-					</Box>
-					<div className={'divider'}></div>
-				</Stack>
+				<div className={'divider'}></div>
 			</Stack>
-			{/* Pagination */}
-			{totalPages > 1 && (
-				<Box className={'pagination-box'}>
-					<Pagination count={totalPages} page={currentPage} onChange={handlePageChange} color="primary" />
-				</Box>
-			)}
 		</div>
 	);
 };

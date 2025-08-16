@@ -26,7 +26,6 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: T) => {
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 
-	// Use memberId from URL if viewing another user's profile
 	const profileMemberId = router.query?.memberId as string | undefined;
 
 	const [searchCommunity, setSearchCommunity] = useState<SearchCommunity>({
@@ -36,7 +35,6 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: T) => {
 	const [boardArticles, setBoardArticles] = useState<BoardArticle[]>([]);
 	const [totalCount, setTotalCount] = useState<number>(0);
 
-	// Update when profileMemberId changes
 	useEffect(() => {
 		if (profileMemberId || user?._id) {
 			setSearchCommunity((prev) => ({
@@ -65,7 +63,6 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: T) => {
 		skip: !(profileMemberId || user?._id),
 	});
 
-	// Refetch when search params change
 	useEffect(() => {
 		if (profileMemberId || user?._id) {
 			boardArticlesRefetch({ input: searchCommunity });

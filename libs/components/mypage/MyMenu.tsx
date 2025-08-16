@@ -15,7 +15,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ArticleIcon from '@mui/icons-material/Article';
-import EditNoteIcon from '@mui/icons-material/EditNote'; // More specific
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 

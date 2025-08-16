@@ -1,5 +1,5 @@
 import {
-	CarStatus, //
+	CarStatus,
 	CarBrand,
 	CarType,
 	CarFuelType,

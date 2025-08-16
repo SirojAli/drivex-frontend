@@ -13,11 +13,11 @@ export const userVar = makeVar<CustomJwtPayload>({
 	memberNick: '',
 
 	// Optional fields can be undefined or initialized properly
-	memberFullName: '', // undefined,
-	memberImage: '', // undefined,
-	memberVideoUrl: '', // undefined,
-	memberAddress: '', // undefined,
-	memberDescription: '', // undefined,
+	memberFullName: '',
+	memberImage: '',
+	memberVideoUrl: '',
+	memberAddress: '',
+	memberDescription: '',
 	memberRank: 0,
 	memberArticles: 0,
 	memberPoints: 0,

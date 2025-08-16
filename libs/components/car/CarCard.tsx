@@ -30,7 +30,7 @@ const CarCard = (props: PopularCarCardProps) => {
 	};
 
 	const pushDetailHandler = async (carId: string) => {
-		if (car.carStatus === 'SOLD') return; // Block routing for SOLD cars
+		if (car.carStatus === 'SOLD') return;
 		await router.push({
 			pathname: '/car/detail',
 			query: { id: carId },

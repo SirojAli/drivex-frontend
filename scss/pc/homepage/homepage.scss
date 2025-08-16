@@ -16,7 +16,6 @@
 			display: flex;
 			flex-direction: row;
 			padding: 50px 0px 50px;
-			// border: 1px solid red;
 
 			.container {
 				width: 1290px;
@@ -26,7 +25,6 @@
 				align-items: flex-start;
 				gap: 40px;
 				flex-wrap: wrap;
-				// border: 1px solid red;
 
 				.empty-list {
 					width: 100%;
@@ -42,11 +40,10 @@
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
-					// border: 1px solid black;
 
 					h2 {
 						align-items: center;
-						color: #000; // figma: 24272c
+						color: #000;
 						font-family: $font;
 						font-size: 30px;
 						font-style: normal;
@@ -116,7 +113,6 @@
 			padding: 50px 0px 50px;
 			display: flex;
 			flex-direction: row;
-			// border: 1px solid red;
 
 			.container {
 				width: 1290px;
@@ -126,7 +122,6 @@
 				flex-direction: column;
 				align-items: flex-start;
 				gap: 40px;
-				// border: 1px solid red;
 
 				.empty-list {
 					width: 100%;
@@ -142,11 +137,10 @@
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
-					// border: 1px solid black;
 
 					h2 {
 						align-items: center;
-						color: #000; // figma: 24272c
+						color: #000;
 						font-family: $font;
 						font-size: 30px;
 						font-style: normal;
@@ -201,7 +195,6 @@
 
 				.brand-car-swiper {
 					width: 100%;
-					// border: 1px solid red;
 					justify-content: space-between;
 
 					.brand-slide {
@@ -283,7 +276,6 @@
 								width: 140px;
 								height: 80px;
 								border-radius: 16px;
-								// background: #d9d9d9;
 							}
 
 							.brand-info {
@@ -335,7 +327,6 @@
 			padding: 50px 0px 50px;
 			display: flex;
 			flex-direction: row;
-			// border: 1px solid red;
 
 			.container {
 				width: 1290px;
@@ -345,7 +336,6 @@
 				align-items: flex-start;
 				gap: 40px;
 				flex-wrap: wrap;
-				// border: 1px solid red;
 
 				.empty-list {
 					width: 100%;
@@ -361,11 +351,10 @@
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
-					// border: 1px solid black;
 
 					h2 {
 						align-items: center;
-						color: #000; // figma: 24272c
+						color: #000;
 						font-family: $font;
 						font-size: 30px;
 						font-style: normal;
@@ -433,7 +422,6 @@
 			width: 100%;
 			height: auto;
 			padding: 50px 0px 50px;
-			// border: 1px solid red;
 
 			.container {
 				width: 1290px;
@@ -442,7 +430,6 @@
 				flex-direction: column;
 				align-items: flex-start;
 				gap: 40px;
-				// border: 1px solid red;
 
 				.compare-text {
 					width: auto;
@@ -462,25 +449,23 @@
 
 				.compare-car-box {
 					width: 100%;
-					height: 350px; // auto
+					height: 350px;
 					display: flex;
 					align-items: flex-start;
 					gap: 30px;
 					flex-direction: row;
-					// border: 1px solid green;
 
 					.compare-box {
-						width: auto; // 410px
+						width: auto;
 						height: 100%;
 						display: flex;
 						flex-direction: column;
 						align-items: flex-start;
 						border-radius: 20px;
-						// border: 1px solid red;
 
 						.all-img {
 							width: 410px;
-							height: auto; // 150px
+							height: auto;
 							display: flex;
 							flex-direction: row;
 							align-items: flex-start;
@@ -562,7 +547,7 @@
 
 									.title {
 										width: 100%;
-										height: auto; //  51px
+										height: auto;
 										display: flex;
 										flex-direction: column;
 										align-items: flex-start;
@@ -608,7 +593,7 @@
 
 									.title {
 										width: 100%;
-										height: auto; //  51px
+										height: auto;
 										display: flex;
 										flex-direction: column;
 										align-items: flex-end;
@@ -678,7 +663,6 @@
 			width: 100%;
 			height: 700px;
 			padding: 50px 0px 50px;
-			// border: 1px solid red;
 
 			.container {
 				width: 1290px;
@@ -702,11 +686,10 @@
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
-					// border: 1px solid black;
 
 					h2 {
 						align-items: center;
-						color: #000; // figma: 24272c
+						color: #000;
 						font-family: $font;
 						font-size: 30px;
 						font-style: normal;
@@ -815,7 +798,6 @@
 						top: 60px;
 						left: 40px;
 						background: rgba(0, 0, 0, 0.2);
-						// backdrop-filter: blur(6px);
 						border-radius: 16px;
 						padding: 28px 32px;
 						max-width: 500px;
@@ -867,7 +849,6 @@
 			height: 100%;
 			background: rgba(255, 113, 1, 0.06);
 			padding: 50px 0px 100px;
-			// border: 1px solid red;
 
 			.container {
 				width: 1290px;
@@ -883,7 +864,6 @@
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
-					// border: 1px solid black;
 
 					h2 {
 						align-items: center;
@@ -927,7 +907,6 @@
 							img {
 								width: 100%;
 								height: 100%;
-								// border-radius: 16px;
 							}
 
 							.date {
@@ -1036,7 +1015,6 @@
 						display: flex;
 						flex-direction: column;
 						gap: 25px;
-						// border: 1px solid red;
 
 						.dvr {
 							width: 100%;

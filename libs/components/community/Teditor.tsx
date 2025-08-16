@@ -201,7 +201,7 @@ const TuiEditor = () => {
 						backgroundColor: '#FF7101',
 						color: '#FFF',
 						'&:hover': {
-							backgroundColor: '#e06500', // slightly darker on hover
+							backgroundColor: '#e06500',
 						},
 					}}
 					onClick={handleRegisterButton}

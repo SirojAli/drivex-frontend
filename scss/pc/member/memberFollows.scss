@@ -186,9 +186,8 @@
 						line-height: normal;
 					}
 
-					// Follow button style
 					.follow-btn {
-						background-color: #1da1f2; // Twitter blue
+						background-color: #1da1f2;
 						color: #fff;
 						border: none;
 
@@ -199,15 +198,14 @@
 						}
 					}
 
-					// Unfollow button style
 					.unfollow-btn {
-						background-color: #b71c1c; // Dark red
-						color: #fff; // White text
+						background-color: #b71c1c;
+						color: #fff;
 						border: 1px solid #b71c1c;
 
 						&:hover {
 							background-color: #b71c1c;
-							color: #fff; // Keep text white on hover
+							color: #fff;
 							box-shadow: 0 2px 8px rgba(183, 28, 28, 0.4);
 							transform: translateY(-1px);
 						}
