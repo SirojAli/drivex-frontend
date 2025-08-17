@@ -63,7 +63,7 @@ const withLayoutBasic = (Component: any) => {
 						<Stack
 							className={`header-basic`}
 							style={{
-								backgroundImage: `url/img/cars/header1.jpg`,
+								backgroundImage: `/img/cars/head.jpg`,
 								backgroundSize: 'cover',
 								boxShadow: 'inset 10px 40px 150px 40px rgb(24 22 36)',
 							}}

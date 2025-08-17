@@ -66,7 +66,7 @@ const RecentlyVisited: NextPage = () => {
 			<Stack className="main-title-box">
 				<Stack className="right-box">
 					<Typography className="main-title">Recently Visited</Typography>
-					<Typography className="sub-title">We are glad to see you again!</Typography>
+					{/* <Typography className="sub-title">We are glad to see you again!</Typography> */}
 				</Stack>
 			</Stack>
 

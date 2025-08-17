@@ -18,7 +18,66 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { REACT_APP_API_URL } from '../../config';
 import { MemberType } from '../../enums/member.enum';
+
 const drawerWidth = 280;
+
+/* ========== STYLES ========== */
+const styles = `
+  body {
+    background: #f9fafb; /* main dashboard background */
+    font-family: 'Inter', sans-serif;
+  }
+
+  .admin .MuiAppBar-root {
+    background: #ffffff !important; /* clean white appbar */
+    color: #1f2937;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .aside .MuiDrawer-paper {
+    background: #1e293b !important; /* navy sidebar */
+    color: #e5e7eb !important;
+    border-right: none;
+    box-shadow: 2px 0 6px rgba(0,0,0,0.2);
+  }
+
+  .logo-box img {
+    width: 160px;
+    margin: 16px auto;
+    display: block;
+  }
+
+  .user {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    margin-top: 12px;
+    color: #e5e7eb;
+  }
+
+  .user .MuiAvatar-root {
+    border: 2px solid #2563eb;
+  }
+
+  .user p {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #cbd5e1;
+  }
+
+  .pop-menu {
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  }
+
+  #bunker {
+    background: #f9fafb;
+    min-height: 100vh;
+    padding: 24px;
+  }
+`;
 
 const withAdminLayout = (Component: ComponentType) => {
 	return (props: object) => {
@@ -62,17 +121,17 @@ const withAdminLayout = (Component: ComponentType) => {
 
 		return (
 			<main id="pc-wrap" className={'admin'}>
+				<style jsx>{styles}</style>
 				<Box component={'div'} sx={{ display: 'flex' }}>
+					{/* TOP BAR */}
 					<AppBar
 						position="fixed"
 						sx={{
 							width: `calc(100% - ${drawerWidth}px)`,
 							ml: `${drawerWidth}px`,
-							boxShadow: 'rgb(100 116 139 / 12%) 0px 1px 4px',
-							background: 'none',
 						}}
 					>
-						<Toolbar>
+						<Toolbar sx={{ display: 'flex', justifyContent: 'flex-end' }}>
 							<Tooltip title="Open settings">
 								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 									<Avatar
@@ -127,6 +186,7 @@ const withAdminLayout = (Component: ComponentType) => {
 						</Toolbar>
 					</AppBar>
 
+					{/* SIDEBAR */}
 					<Drawer
 						sx={{
 							width: drawerWidth,
@@ -140,37 +200,44 @@ const withAdminLayout = (Component: ComponentType) => {
 						anchor="left"
 						className={'aside'}
 					>
-						<Toolbar sx={{ flexDirection: 'column', alignItems: 'flexStart' }}>
+						<Toolbar sx={{ flexDirection: 'column', alignItems: 'flexStart', width: '100%' }}>
 							<Stack className={'logo-box'}>
-								<img src={'/img/logo/logoText.svg'} alt={'logo'} loading="lazy" />
+								<img style={{ width: '80px', height: '80px' }} src={'/img/logo/icon.png'} alt={'logo'} loading="lazy" />
 							</Stack>
 
-							<Stack
+							<div
 								className={'user'}
-								direction={'row'}
-								alignItems={'center'}
-								sx={{
-									bgcolor: openMenu ? 'rgba(255, 255, 255, 0.04)' : 'none',
-									borderRadius: '8px',
-									px: '24px',
-									py: '11px',
+								style={{
+									display: 'flex',
+									flexDirection: 'row',
+									alignItems: 'center',
+									padding: '10px 14px',
+									background: '#2c3e50',
+									gap: '12px',
 								}}
 							>
-								<Avatar
-									src={user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'}
-								/>
-								<Typography variant={'body2'} p={1} ml={1}>
-									{user?.memberNick} <br />
-									{user?.memberPhone}
-								</Typography>
-							</Stack>
+								<Box sx={{ width: '40px', height: '40px' }}>
+									<img
+										style={{ width: '100%', height: '100%' }}
+										src={user.memberImage ? `${REACT_APP_API_URL}/${user.memberImage}` : '/img/profile/defaultUser.png'}
+										alt="user"
+										loading="lazy"
+									/>
+								</Box>
+
+								<Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<p>{user?.memberNick} </p>
+									<span>{user?.memberPhone}</span>
+								</Box>
+							</div>
 						</Toolbar>
 
-						<Divider />
+						<Divider sx={{ borderColor: '#334155' }} />
 
 						<MenuList />
 					</Drawer>
 
+					{/* MAIN CONTENT */}
 					<Box component={'div'} id="bunker" sx={{ flexGrow: 1 }}>
 						{/*@ts-ignore*/}
 						<Component {...props} setSnackbar={setSnackbar} setTitle={setTitle} />

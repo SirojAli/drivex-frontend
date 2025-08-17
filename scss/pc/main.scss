@@ -334,7 +334,7 @@
 		position: relative;
 		width: 100%;
 		height: 860px;
-		background-image: url('/img/cars/header1.jpg');
+		background-image: url('/img/cars/head1.jpg');
 		background-size: cover;
 
 		.container {
@@ -664,11 +664,17 @@
 		flex-direction: row;
 		justify-content: center;
 		background: black;
+		position: relative;
+		width: 100%;
+		background-image: url('/img/cars/head.jpg');
+		background-size: cover;
+
 		&.auth {
 			height: 300px;
 		}
 		.container {
 			margin-top: 175px;
+
 			strong {
 				color: #fff;
 				font-family: $font;

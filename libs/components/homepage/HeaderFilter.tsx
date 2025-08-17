@@ -261,9 +261,9 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					<Stack className={'search-logo'}>
 						{[
 							{ name: 'SUV', image: 'suv.png' },
-							{ name: 'Coupe', image: 'convertible.png' },
-							{ name: 'Crossover', image: 'crossover.png' },
-							{ name: 'Sedan', image: 'sedan.png' },
+							{ name: 'COUPE', image: 'convertible.png' },
+							{ name: 'CROSSOVER', image: 'crossover.png' },
+							{ name: 'SEDAN', image: 'sedan.png' },
 						].map((item) => (
 							<Box key={item.name} className={'logo'} onClick={() => carTypeQuickSelectHandler(item.name)}>
 								<img src={`/img/types/${item.image}`} alt={item.name} loading="lazy" />

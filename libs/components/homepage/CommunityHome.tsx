@@ -1,82 +1,107 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Stack, Box } from '@mui/material';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import { useQuery } from '@apollo/client';
+import { GET_BOARD_ARTICLES } from '../../../apollo/user/query';
+import { REACT_APP_API_URL } from '../../../libs/config';
+import Link from 'next/link';
+import Moment from 'react-moment';
+import { BoardArticleCategory } from '../../enums/board-article.enum';
+import { useRouter } from 'next/router';
+import { BoardArticle } from '../../types/board-article/board-article';
 
-const CommunityHome = ({ initialInput, ...props }: any) => {
+const CommunityHome = () => {
+	const router = useRouter();
+
+	const { data, loading, error } = useQuery(GET_BOARD_ARTICLES, {
+		variables: {
+			input: {
+				page: 1,
+				limit: 4, // 1 featured + 3 in listing
+				sort: 'articleLikes',
+				direction: 'DESC',
+				search: {
+					articleCategory: BoardArticleCategory.NEWS, // home section only news
+				},
+			},
+		},
+		fetchPolicy: 'cache-first',
+	});
+
+	if (loading) return <p>Loading...</p>;
+	if (error) return <p>Error loading community posts</p>;
+
+	const articles: BoardArticle[] = data?.getBoardArticles?.list || [];
+	if (!articles.length) return null;
+
+	const [featured, ...rest] = articles;
+
+	/** Navigate to detail page (same logic as CommunityCard) */
+	const goToDetail = (article: BoardArticle) => {
+		router.push({
+			pathname: '/community/detail',
+			query: { articleCategory: article?.articleCategory, id: article?._id },
+		});
+	};
+
 	return (
 		<Stack className={'main-blog'}>
-			<Stack className={'post'}>
+			{/* Featured Post */}
+			<Stack className={'post'} onClick={() => goToDetail(featured)} style={{ cursor: 'pointer' }}>
 				<Stack className={'img-box'}>
-					<img src="/img/cars/header1.jpg" alt="" />
+					<img src={`${REACT_APP_API_URL}/${featured.articleImage}`} alt={featured.articleTitle} />
 					<Box className={'date'}>
-						<p>July 7, 2025</p>
+						<p>
+							<Moment format="MMMM D, YYYY">{featured.createdAt}</Moment>
+						</p>
 					</Box>
 				</Stack>
 				<Stack className={'content'}>
 					<Box className={'heading'}>
 						<Box className={'name-type'}>
-							<p className={'name'}>William Sam</p>
+							<p className={'name'}>{featured?.memberData?.memberNick ?? 'Unknown Author'}</p>
 							<div className={'dvr'}></div>
-							<span className={'type'}>Guide</span>
+							<span className={'type'}>{featured.articleCategory}</span>
 						</Box>
-						<h2>Get Ready For A Diesel Toyota Fortuner In...</h2>
+						<h2>{featured.articleTitle}</h2>
 					</Box>
-					<span>
-						The sub-4 metre SUV segment has been quite active over the last six months or so, with the launch of various
-						facelifted...
-					</span>
+					<span>{(featured.articleContent || '').slice(0, 120)}...</span>
 				</Stack>
 			</Stack>
+
 			<div className={'divider'}></div>
+
+			{/* Listing Posts */}
 			<Stack className={'listing'}>
-				<Box className={'blog'}>
-					<img src="/img/cars/header1.jpg" alt="" />
-					<Stack className={'content'}>
-						<Box className={'heading'}>
-							<Box className={'name-type'}>
-								<p className={'name'}>William Sam</p>
-								<div className={'dvr'}></div>
-								<span className={'type'}>Guide</span>
+				{rest.map((article: BoardArticle) => (
+					<Box className={'blog'} key={article._id} onClick={() => goToDetail(article)} style={{ cursor: 'pointer' }}>
+						<img src={`${REACT_APP_API_URL}/${article.articleImage}`} alt={article.articleTitle} />
+						<Stack className={'content'}>
+							<Box className={'heading'}>
+								<Box className={'name-type'}>
+									<p className={'name'}>{article?.memberData?.memberNick ?? 'Unknown Author'}</p>
+									<div className={'dvr'}></div>
+									<span className={'type'}>{article.articleCategory}</span>
+								</Box>
+								<h2>{article.articleTitle}</h2>
 							</Box>
-							<h2>Get Ready For A Diesel Toyota Fortuner In...</h2>
-						</Box>
-						<span>The sub-4 metre SUV segment has been quite with the launch of various facelifted...</span>
-					</Stack>
-				</Box>
-				<div className={'dvr'}></div>
-				<Box className={'blog'}>
-					<img src="/img/cars/header1.jpg" alt="" />
-					<Stack className={'content'}>
-						<Box className={'heading'}>
-							<Box className={'name-type'}>
-								<p className={'name'}>William Sam</p>
-								<div className={'dvr'}></div>
-								<span className={'type'}>Guide</span>
-							</Box>
-							<h2>Get Ready For A Diesel Toyota Fortuner In...</h2>
-						</Box>
-						<span>The sub-4 metre SUV segment has been quite with the launch of various facelifted...</span>
-					</Stack>
-				</Box>
-				<div className={'dvr'}></div>
-				<Box className={'blog'}>
-					<img src="/img/cars/header1.jpg" alt="" />
-					<Stack className={'content'}>
-						<Box className={'heading'}>
-							<Box className={'name-type'}>
-								<p className={'name'}>William Sam</p>
-								<div className={'dvr'}></div>
-								<span className={'type'}>Guide</span>
-							</Box>
-							<h2>Get Ready For A Diesel Toyota Fortuner In...</h2>
-						</Box>
-						<span>The sub-4 metre SUV segment has been quite with the launch of various facelifted...</span>
-					</Stack>
-				</Box>
-				<Box className={'see-more'}>
-					<span>View all news</span>
-					<ArrowRightAltIcon className={'arrow'} />
-				</Box>
+							<span>{(article.articleContent || '').slice(0, 80)}...</span>
+						</Stack>
+					</Box>
+				))}
+
+				<Link
+					href={{
+						pathname: '/community',
+						query: { articleCategory: 'NEWS' },
+					}}
+					passHref
+				>
+					<Box className={'see-more'} style={{ cursor: 'pointer' }}>
+						<span>View all news</span>
+						<ArrowRightAltIcon className={'arrow'} />
+					</Box>
+				</Link>
 			</Stack>
 		</Stack>
 	);

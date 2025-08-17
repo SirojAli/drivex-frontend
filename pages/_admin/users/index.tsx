@@ -20,6 +20,7 @@ import { T } from '../../../libs/types/common';
 import { sweetErrorHandling } from '../../../libs/sweetAlert';
 import { UPDATE_MEMBER_BY_ADMIN } from '../../../apollo/admin/mutation';
 import { GET_ALL_MEMBERS_BY_ADMIN } from '../../../apollo/admin/query';
+import SearchIcon from '@mui/icons-material/Search';
 
 const AdminUsers: NextPage = ({ initialInquiry, ...props }: any) => {
 	const [anchorEl, setAnchorEl] = useState<[] | HTMLElement[]>([]);
@@ -229,7 +230,8 @@ const AdminUsers: NextPage = ({ initialInquiry, ...props }: any) => {
 												/>
 											)}
 											<InputAdornment position="end" onClick={() => searchTextHandler()}>
-												<img src="/img/icons/search_icon.png" alt={'searchIcon'} />
+												{/* <img src="/img/icons/search_icon.png" alt={'searchIcon'} /> */}
+												<SearchIcon />
 											</InputAdornment>
 										</>
 									}
@@ -241,8 +243,8 @@ const AdminUsers: NextPage = ({ initialInquiry, ...props }: any) => {
 									<MenuItem value={'USER'} onClick={() => searchTypeHandler('USER')}>
 										User
 									</MenuItem>
-									<MenuItem value={'AGENT'} onClick={() => searchTypeHandler('AGENT')}>
-										Agent
+									<MenuItem value={'SELLER'} onClick={() => searchTypeHandler('SELLER')}>
+										Seller
 									</MenuItem>
 									<MenuItem value={'ADMIN'} onClick={() => searchTypeHandler('ADMIN')}>
 										Admin
@@ -279,7 +281,7 @@ AdminUsers.defaultProps = {
 	initialInquiry: {
 		page: 1,
 		limit: 10,
-		sort: 'createdAt',
+		sort: 'memberViews',
 		search: {},
 	},
 };

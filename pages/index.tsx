@@ -21,8 +21,8 @@ const Home: NextPage = () => {
 				<TopBrands />
 				<Advertisement />
 				<TrendCars />
-				<CompareCars />
 				<CarReview />
+				<CompareCars />
 				<CommunityBoards />
 			</Stack>
 		);
@@ -33,8 +33,8 @@ const Home: NextPage = () => {
 				<TopBrands />
 				<Advertisement />
 				<TrendCars />
-				<CompareCars />
 				<CarReview />
+				<CompareCars />
 				<CommunityBoards />
 			</Stack>
 		);

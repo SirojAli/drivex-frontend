@@ -848,7 +848,7 @@
 			width: 100%;
 			height: 100%;
 			background: rgba(255, 113, 1, 0.06);
-			padding: 50px 0px 100px;
+			padding: 50px 0px 120px;
 
 			.container {
 				width: 1290px;
@@ -878,12 +878,13 @@
 
 				.main-blog {
 					width: 1290px;
-					height: 549px;
+					height: auto; // 549px;
 					display: flex;
 					width: 1290px;
 					gap: 30px;
 					display: flex;
 					flex-direction: row;
+					// border: 1px solid red;
 
 					.post {
 						width: 630px;
@@ -1014,7 +1015,9 @@
 						height: 100%;
 						display: flex;
 						flex-direction: column;
+						justify-content: space-around;
 						gap: 25px;
+						// border: 1px solid red;
 
 						.dvr {
 							width: 100%;
@@ -1034,6 +1037,7 @@
 							box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
 							transition: transform 0.3s ease, box-shadow 0.3s ease;
 							cursor: pointer;
+							height: auto;
 
 							&:hover {
 								transform: translateY(-4px);

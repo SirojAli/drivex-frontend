@@ -118,7 +118,7 @@ const Top = () => {
 									</Tooltip>
 									<div className={'divider'} />
 									<Tooltip title="Favorites">
-										<IconButton>
+										<IconButton component="a" href="/mypage?category=myFavorites">
 											<FavoriteBorderIcon className={'icon'} />
 										</IconButton>
 									</Tooltip>

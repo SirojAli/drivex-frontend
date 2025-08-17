@@ -96,7 +96,7 @@ const headCells: readonly HeadCell[] = [
 
 interface EnhancedTableProps {
 	numSelected: number;
-	onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+	onRequestSort: (event: React.MouseEvent<unknown>, car: keyof Data) => void;
 	onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	rowCount: number;
 }
@@ -186,7 +186,7 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 									<TableCell align="center">{article?.articleViews}</TableCell>
 									<TableCell align="center">{article?.articleLikes}</TableCell>
 									<TableCell align="left">
-										<Moment format={'DD.MM.YY HH:mm'}>{article?.createdAt}</Moment>
+										<Moment format={'DD.MM.YY'}>{article?.createdAt}</Moment>
 									</TableCell>
 									<TableCell align="center">
 										{article.articleStatus === BoardArticleStatus.DELETE ? (

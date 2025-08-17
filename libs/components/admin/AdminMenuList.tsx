@@ -10,6 +10,73 @@ import { ChatsCircle, Headset, User, UserCircleGear } from 'phosphor-react';
 import cookies from 'js-cookie';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 
+/* ================= STYLES ================= */
+const styles = `
+  .menu_wrap {
+    background: #1e293b; /* sidebar background */
+    border-radius: 12px;
+    margin: 6px 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .menu {
+    color: #e5e7eb; /* light gray text */
+    font-size: 15px;
+    font-weight: 500;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .menu:hover {
+    background: #2563eb; /* blue hover */
+    color: #ffffff;
+  }
+
+  .menu.on {
+    background: #2563eb; /* blue active */
+    color: #ffffff;
+  }
+
+  .menu .MuiListItemIcon-root {
+    color: inherit;
+    transition: color 0.3s;
+  }
+
+  .menu-list {
+    background: #1e293b; /* same sidebar color for submenu */
+    padding-left: 12px;
+  }
+
+  .menu-list .li {
+    color: #e5e7eb;
+    font-size: 14px;
+    border-radius: 8px;
+    margin: 4px 6px;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .menu-list .li:hover {
+    background: #2563eb; /* blue hover */
+    color: #fff;
+  }
+
+  .menu-list .li.on {
+    background: #2563eb; /* blue active */
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .menu-list .li span {
+    font-size: 14px;
+    padding-left: 4px;
+  }
+
+  /* Optional: overall background */
+  body {
+    background: #f9fafb; /* main dashboard background */
+  }
+`;
+
 const AdminMenuList = (props: any) => {
 	const router = useRouter();
 	const device = useDeviceDetect();
@@ -22,7 +89,6 @@ const AdminMenuList = (props: any) => {
 	const {
 		router: { pathname },
 	} = props;
-
 	const pathnames = pathname.split('/').filter((x: any) => x);
 
 	/** LIFECYCLES **/
@@ -30,8 +96,8 @@ const AdminMenuList = (props: any) => {
 		if (device === 'mobile') setMobileLayout(true);
 
 		switch (pathnames[1]) {
-			case 'properties':
-				setClickMenu(['Properties']);
+			case 'cars':
+				setClickMenu(['Cars']);
 				break;
 			case 'community':
 				setClickMenu(['Community']);
@@ -78,29 +144,29 @@ const AdminMenuList = (props: any) => {
 	const menu_set = [
 		{
 			title: 'Users',
-			icon: <User size={20} color="#bdbdbd" weight="fill" />,
+			icon: <User size={20} color="#e5e7eb" weight="fill" />,
 			on_click: () => subMenuChangeHandler('Users'),
 		},
 		{
-			title: 'Properties',
-			icon: <UserCircleGear size={20} color="#bdbdbd" weight="fill" />,
-			on_click: () => subMenuChangeHandler('Properties'),
+			title: 'Cars',
+			icon: <UserCircleGear size={20} color="#e5e7eb" weight="fill" />,
+			on_click: () => subMenuChangeHandler('Cars'),
 		},
 		{
 			title: 'Community',
-			icon: <ChatsCircle size={20} color="#bdbdbd" weight="fill" />,
+			icon: <ChatsCircle size={20} color="#e5e7eb" weight="fill" />,
 			on_click: () => subMenuChangeHandler('Community'),
 		},
 		{
 			title: 'Cs',
-			icon: <Headset size={20} color="#bdbdbd" weight="fill" />,
+			icon: <Headset size={20} color="#e5e7eb" weight="fill" />,
 			on_click: () => subMenuChangeHandler('Cs'),
 		},
 	];
 
 	const sub_menu_set: any = {
 		Users: [{ title: 'List', url: '/_admin/users' }],
-		Properties: [{ title: 'List', url: '/_admin/properties' }],
+		Cars: [{ title: 'List', url: '/_admin/cars' }],
 		Community: [{ title: 'List', url: '/_admin/community' }],
 		Cs: [
 			{ title: 'FAQ', url: '/_admin/cs/faq' },
@@ -110,6 +176,7 @@ const AdminMenuList = (props: any) => {
 
 	return (
 		<>
+			<style jsx>{styles}</style>
 			{menu_set.map((item, index) => (
 				<List className={'menu_wrap'} key={index} disablePadding>
 					<ListItemButton
@@ -149,7 +216,7 @@ const AdminMenuList = (props: any) => {
 											component="li"
 											className={clickMenu[0] === item.title && clickSubMenu === sub.title ? 'li on' : 'li'}
 										>
-											<Typography variant={sub.title} component={'span'}>
+											<Typography variant={'body2'} component={'span'}>
 												{sub.title}
 											</Typography>
 										</ListItemButton>
