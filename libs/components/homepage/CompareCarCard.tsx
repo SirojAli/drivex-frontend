@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, Typography, Grid } from '@mui/material';
-import { Car } from '../../libs/types/car/car';
-import { REACT_APP_API_URL } from '../../libs/config';
+import { Car } from '../../types/car/car';
+import { REACT_APP_API_URL } from '../../config';
 import { useRouter } from 'next/router';
 
-interface CompareCarPageProps {
+interface CompareCarCardProps {
 	car1: Car;
 	car2: Car;
 }
@@ -22,12 +22,12 @@ const fields = [
 	{ key: 'carDoors', label: 'Doors' },
 ];
 
-const CompareCarPage = ({ car1, car2 }: CompareCarPageProps) => {
+const CompareCarCard: React.FC<CompareCarCardProps> = ({ car1, car2 }) => {
 	const router = useRouter();
 	const cars = [car1, car2];
 
-	const pushDetailHandler = async (carId: string) => {
-		await router.push({
+	const pushDetailHandler = (carId: string) => {
+		router.push({
 			pathname: '/car/detail',
 			query: { id: carId },
 		});
@@ -36,7 +36,7 @@ const CompareCarPage = ({ car1, car2 }: CompareCarPageProps) => {
 	return (
 		<Box sx={{ p: 1, maxWidth: '1200px', mx: 'auto', fontFamily: 'Poppins, sans-serif' }}>
 			<Typography variant="h2" gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
-				Compare Cars
+				Car Comparison
 			</Typography>
 
 			{/* Car Cards */}
@@ -166,4 +166,4 @@ const CompareCarPage = ({ car1, car2 }: CompareCarPageProps) => {
 	);
 };
 
-export default CompareCarPage;
+export default CompareCarCard;

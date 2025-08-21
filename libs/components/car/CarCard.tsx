@@ -3,7 +3,7 @@ import { Box, Stack, Modal } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
-import CompareModalContent from './../../../pages/car/compare';
+import CompareCarPage from './../../../pages/car/compare';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
@@ -13,17 +13,34 @@ import { REACT_APP_API_URL } from '../../../libs/config';
 
 interface PopularCarCardProps {
 	car: Car;
+	allCars: Car[];
 	likeCarHandler: any;
 	myFavorites?: boolean;
 	recentlyVisited?: boolean;
 }
 
 const CarCard = (props: PopularCarCardProps) => {
-	const { car, likeCarHandler, myFavorites, recentlyVisited } = props;
+	const { car, allCars, likeCarHandler, myFavorites, recentlyVisited } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const [openCompare, setOpenCompare] = useState(false);
+
+	const getNearestPriceCar = (currentCar: Car, allCars: Car[]): Car | null => {
+		let nearestCar: Car | null = null;
+		let minDiff = Infinity;
+
+		for (const car of allCars) {
+			if (car._id === currentCar._id) continue;
+			const diff = Math.abs(car.carPrice - currentCar.carPrice);
+			if (diff < minDiff) {
+				minDiff = diff;
+				nearestCar = car;
+			}
+		}
+
+		return nearestCar;
+	};
 
 	const handleCompare = (status: boolean) => {
 		setOpenCompare(status);
@@ -177,6 +194,7 @@ const CarCard = (props: PopularCarCardProps) => {
 					aria-describedby="modal-description"
 				>
 					<Box
+						className={'compare-car-box'}
 						sx={{
 							position: 'absolute',
 							top: '50%',
@@ -187,11 +205,16 @@ const CarCard = (props: PopularCarCardProps) => {
 							boxShadow: 24,
 							p: 3,
 							width: 1120,
-							maxHeight: '500px',
+							maxHeight: '650px',
 							overflowY: 'auto',
 						}}
 					>
-						<CompareModalContent cars={[car]} />
+						{getNearestPriceCar(car, allCars) && (
+							<CompareCarPage
+								car1={car}
+								car2={getNearestPriceCar(car, allCars)!} // the ! tells TS it's not null
+							/>
+						)}
 					</Box>
 				</Modal>
 			</>

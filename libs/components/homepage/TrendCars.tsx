@@ -88,7 +88,9 @@ const TrendCars = (props: TrendCarsProps) => {
 						{trendCars.length === 0 ? (
 							<Box className="empty-list">Trend Cars Empty</Box>
 						) : (
-							trendCars.map((car: Car) => <CarCard key={car._id} car={car} likeCarHandler={likeCarHandler} />)
+							trendCars.map((car: Car) => (
+								<CarCard key={car._id} car={car} allCars={trendCars} likeCarHandler={likeCarHandler} />
+							))
 						)}
 					</Stack>
 				</Stack>

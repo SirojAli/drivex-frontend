@@ -17,11 +17,11 @@ const CommunityHome = () => {
 		variables: {
 			input: {
 				page: 1,
-				limit: 4, // 1 featured + 3 in listing
+				limit: 4,
 				sort: 'articleLikes',
 				direction: 'DESC',
 				search: {
-					articleCategory: BoardArticleCategory.NEWS, // home section only news
+					articleCategory: BoardArticleCategory.NEWS,
 				},
 			},
 		},

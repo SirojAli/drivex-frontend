@@ -425,11 +425,12 @@
 
 			.container {
 				width: 1290px;
-				height: 427px;
+				height: 450px;
 				display: flex;
 				flex-direction: column;
 				align-items: flex-start;
 				gap: 40px;
+				// border: 1px solid red;
 
 				.compare-text {
 					width: auto;
@@ -451,17 +452,15 @@
 					width: 100%;
 					height: 350px;
 					display: flex;
-					align-items: flex-start;
-					gap: 30px;
+					justify-content: space-between;
 					flex-direction: row;
 
 					.compare-box {
-						width: auto;
 						height: 100%;
 						display: flex;
 						flex-direction: column;
-						align-items: flex-start;
 						border-radius: 20px;
+						// border: 1px solid red;
 
 						.all-img {
 							width: 410px;

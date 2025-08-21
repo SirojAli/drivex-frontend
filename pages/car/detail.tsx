@@ -97,6 +97,7 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const [openCompare, setOpenCompare] = useState(false);
 	const [openCall, setOpenCall] = useState(false);
 	const [openMessage, setOpenMessage] = useState(false);
+	const [nearestCar, setNearestCar] = useState<Car | null>(null);
 
 	const [carId, setCarId] = useState<string | null>(null);
 	const [car, setCar] = useState<Car | null>(null);
@@ -247,9 +248,33 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 	};
 
 	// Modal Logics
-	const handleCompare = (status: boolean) => {
-		setOpenCompare(status);
+	const getNearestPriceCar = (currentCar: Car | null, cars: Car[]): Car | null => {
+		if (!currentCar || !cars.length) return null;
+
+		let nearest: Car | null = null;
+		let minDiff = Infinity;
+
+		cars.forEach((c) => {
+			if (c._id === currentCar._id) return; // skip current car
+			const diff = Math.abs(c.carPrice - currentCar.carPrice);
+			if (diff < minDiff) {
+				minDiff = diff;
+				nearest = c;
+			}
+		});
+
+		return nearest;
 	};
+
+	const handleCompare = () => {
+		if (!car || !popularCars.length) return;
+
+		const nearest = getNearestPriceCar(car, popularCars);
+		setNearestCar(nearest);
+		setOpenCompare(true);
+	};
+
+	const handleCompareClose = () => setOpenCompare(false);
 
 	const handlePhoneNumber = (status: boolean) => {
 		setOpenCall(status);
@@ -400,7 +425,7 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 									<ShareIcon className="icon" />
 								</div>
 
-								<div className="action" onClick={() => setOpenCompare(true)}>
+								<div className="action" onClick={handleCompare}>
 									<CompareArrowsIcon className="icon" />
 								</div>
 							</Box>
@@ -879,14 +904,14 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 					</Stack>
 				</div>
 
-				{/* Compare Cars Modal */}
 				<Modal
 					open={openCompare}
-					onClose={() => handleCompare(false)}
-					aria-labelledby="modal-title"
-					aria-describedby="modal-description"
+					onClose={handleCompareClose}
+					aria-labelledby="compare-modal-title"
+					aria-describedby="compare-modal-description"
 				>
 					<Box
+						className={'compare-car-box'}
 						sx={{
 							position: 'absolute',
 							top: '50%',
@@ -897,11 +922,15 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 							boxShadow: 24,
 							p: 3,
 							width: 1120,
-							maxHeight: '500px',
+							maxHeight: '650px',
 							overflowY: 'auto',
 						}}
 					>
-						<CompareModalContent cars={[car]} />
+						{car && nearestCar ? (
+							<CompareModalContent car1={car} car2={nearestCar} />
+						) : (
+							<Typography>No similar car found for comparison.</Typography>
+						)}
 					</Box>
 				</Modal>
 

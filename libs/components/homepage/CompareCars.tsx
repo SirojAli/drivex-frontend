@@ -1,111 +1,142 @@
 import React, { useState } from 'react';
-import { Stack, Box } from '@mui/material';
+import { useQuery } from '@apollo/client';
+import { Stack, Box, CircularProgress, Modal, Typography } from '@mui/material';
+import { REACT_APP_API_URL } from '../../config';
+import { GET_CAR } from '../../../apollo/user/query';
+import { Car } from '../../types/car/car';
+import CompareCarCard from './CompareCarCard';
 
-const CompareCars = () => {
+const comparePairs = [
+	{
+		car1Id: '687a437bbabb53337ddda2a6',
+		car2Id: '687a46fbbabb53337ddda2a9',
+	},
+	{
+		car1Id: '687a5016babb53337ddda2b5',
+		car2Id: '687a5127babb53337ddda2b8',
+	},
+	{
+		car1Id: '687a3389babb53337ddda291',
+		car2Id: '687a2782babb53337ddda28e',
+	},
+];
+
+interface CarCompareBoxProps {
+	car1Id: string;
+	car2Id: string;
+	onOpenCompare: (cars: Car[]) => void;
+}
+
+const CarCompareBox: React.FC<CarCompareBoxProps> = ({ car1Id, car2Id, onOpenCompare }) => {
+	const {
+		data: car1Data,
+		loading: loading1,
+		error: error1,
+	} = useQuery<{ getCar: Car }>(GET_CAR, { variables: { input: car1Id } });
+
+	const {
+		data: car2Data,
+		loading: loading2,
+		error: error2,
+	} = useQuery<{ getCar: Car }>(GET_CAR, { variables: { input: car2Id } });
+
+	if (loading1 || loading2) return <CircularProgress />;
+	if (error1 || error2) return <p>Error loading car data</p>;
+
+	const car1 = car1Data?.getCar;
+	const car2 = car2Data?.getCar;
+
+	if (!car1 || !car2) return null;
+
 	return (
-		<Stack className={'compare-cars'}>
-			<Stack className={'container'}>
-				<Box className={'compare-text'}>
+		<Stack className="compare-box">
+			{/* Images */}
+			<Box className="all-img">
+				<img src={`${REACT_APP_API_URL}/${car1?.carImages[0]}`} alt={'Car'} loading="lazy" className="img-1" />
+				<img src={`${REACT_APP_API_URL}/${car2?.carImages[0]}`} alt={'Car'} loading="lazy" className="img-2" />
+				<div className="icon">
+					<span>VS</span>
+				</div>
+			</Box>
+
+			{/* Summary content */}
+			<Stack className="main-box">
+				<Box className="content">
+					<Box className="left">
+						<Box className="title">
+							<span>{car1.carBrand}</span>
+							<p>{car1.carModel}</p>
+						</Box>
+						<p>${car1.carPrice.toLocaleString()}</p>
+					</Box>
+					<Box className="right">
+						<Box className="title">
+							<span>{car2.carBrand}</span>
+							<p>{car2.carModel}</p>
+						</Box>
+						<p>${car2.carPrice.toLocaleString()}</p>
+					</Box>
+				</Box>
+
+				{/* Compare button */}
+				<Box className="compare-btn" onClick={() => onOpenCompare([car1, car2])} sx={{ cursor: 'pointer' }}>
+					<p>
+						{car1.carBrand} {car1.carModel} vs {car2.carBrand} {car2.carModel}
+					</p>
+				</Box>
+			</Stack>
+		</Stack>
+	);
+};
+
+const CompareCars: React.FC = () => {
+	const [openCompare, setOpenCompare] = useState(false);
+	const [selectedCars, setSelectedCars] = useState<Car[]>([]);
+
+	const handleOpenCompare = (cars: Car[]) => {
+		setSelectedCars(cars);
+		setOpenCompare(true);
+	};
+
+	const handleCloseCompare = () => {
+		setOpenCompare(false);
+		setSelectedCars([]);
+	};
+
+	return (
+		<Stack className="compare-cars">
+			<Stack className="container">
+				<Box className="compare-text">
 					<h2>Compare to buy the right car</h2>
 				</Box>
-				<Stack className={'compare-car-box'}>
-					<Stack className={'compare-box'}>
-						<Box className={'all-img'}>
-							<img src="/img/cars/header1.jpg" alt="" className={'img-1'} />
-							<img src="/img/cars/header1.jpg" alt="" className={'img-2'} />
-							<div className={'icon'}>
-								<span>VS</span>
-							</div>
-						</Box>
 
-						<Stack className={'main-box'}>
-							<Box className={'content'}>
-								<Box className={'left'}>
-									<Box className={'title'}>
-										<span>Kia</span>
-										<p>XUV-700</p>
-									</Box>
-									<p>$73,000</p>
-								</Box>
-								<Box className={'right'}>
-									<Box className={'title'}>
-										<span>Hyundai</span>
-										<p>Creta</p>
-									</Box>
-									<p>$97,000</p>
-								</Box>
-							</Box>
-							<Box className={'compare-btn'}>
-								<p>Kia XUV-700 vs Hyundai Creta</p>
-							</Box>
-						</Stack>
-					</Stack>
-
-					<Stack className={'compare-box'}>
-						<Box className={'all-img'}>
-							<img src="/img/cars/header1.jpg" alt="" className={'img-1'} />
-							<img src="/img/cars/header1.jpg" alt="" className={'img-2'} />
-							<div className={'icon'}>
-								<span>VS</span>
-							</div>
-						</Box>
-
-						<Stack className={'main-box'}>
-							<Box className={'content'}>
-								<Box className={'left'}>
-									<Box className={'title'}>
-										<span>Kia</span>
-										<p>XUV-700</p>
-									</Box>
-									<p>$73,000</p>
-								</Box>
-								<Box className={'right'}>
-									<Box className={'title'}>
-										<span>Hyundai</span>
-										<p>Creta</p>
-									</Box>
-									<p>$97,000</p>
-								</Box>
-							</Box>
-							<Box className={'compare-btn'}>
-								<p>Kia XUV-700 vs Hyundai Creta</p>
-							</Box>
-						</Stack>
-					</Stack>
-
-					<Stack className={'compare-box'}>
-						<Box className={'all-img'}>
-							<img src="/img/cars/header1.jpg" alt="" className={'img-1'} />
-							<img src="/img/cars/header1.jpg" alt="" className={'img-2'} />
-							<div className={'icon'}>
-								<span>VS</span>
-							</div>
-						</Box>
-
-						<Stack className={'main-box'}>
-							<Box className={'content'}>
-								<Box className={'left'}>
-									<Box className={'title'}>
-										<span>Kia</span>
-										<p>XUV-700</p>
-									</Box>
-									<p>$73,000</p>
-								</Box>
-								<Box className={'right'}>
-									<Box className={'title'}>
-										<span>Hyundai</span>
-										<p>Creta</p>
-									</Box>
-									<p>$97,000</p>
-								</Box>
-							</Box>
-							<Box className={'compare-btn'}>
-								<p>Kia XUV-700 vs Hyundai Creta</p>
-							</Box>
-						</Stack>
-					</Stack>
+				<Stack className="compare-car-box">
+					{comparePairs.map((pair, idx) => (
+						<CarCompareBox key={idx} car1Id={pair.car1Id} car2Id={pair.car2Id} onOpenCompare={handleOpenCompare} />
+					))}
 				</Stack>
 			</Stack>
+
+			{/* Compare Cars Modal */}
+			<Modal open={openCompare} onClose={handleCloseCompare}>
+				<Box
+					sx={{
+						position: 'absolute',
+						top: '50%',
+						left: '50%',
+						transform: 'translate(-50%, -50%)',
+						bgcolor: 'background.paper',
+						borderRadius: '12px',
+						boxShadow: 24,
+						p: 3,
+						width: 1120,
+						maxHeight: '650px',
+						overflowY: 'auto',
+					}}
+				>
+					{selectedCars.length === 2 && <CompareCarCard car1={selectedCars[0]} car2={selectedCars[1]} />}
+				</Box>
+			</Modal>
 		</Stack>
 	);
 };

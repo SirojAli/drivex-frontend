@@ -220,7 +220,12 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 								) : (
 									<Stack className="car-list">
 										{allCars.map((car: Car, index: number) => (
-											<CarCard car={car} likeCarHandler={likeCarHandler} key={car._id || `car-${index}`} />
+											<CarCard
+												car={car}
+												likeCarHandler={likeCarHandler}
+												allCars={allCars}
+												key={car._id || `car-${index}`}
+											/>
 										))}
 									</Stack>
 								)}

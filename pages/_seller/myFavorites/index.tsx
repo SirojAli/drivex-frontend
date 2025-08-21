@@ -76,7 +76,13 @@ const MyFavorites: NextPage = ({ initialInquiry, ...props }: any) => {
 				<Stack className="favorites-list-box">
 					{myFavorites.length ? (
 						myFavorites.map((car: Car) => (
-							<CarCard key={car._id} car={car} likeCarHandler={likeCarHandler} myFavorites={true} />
+							<CarCard
+								key={car._id}
+								car={car}
+								allCars={myFavorites}
+								likeCarHandler={likeCarHandler}
+								myFavorites={true}
+							/>
 						))
 					) : (
 						<div className="no-data">

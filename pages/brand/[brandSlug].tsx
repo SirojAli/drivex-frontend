@@ -207,7 +207,9 @@ const BrandDetail: NextPage = ({ initialInput, ...props }: any) => {
 							{chosenBrandCars?.length === 0 ? (
 								<p>No cars found for this brand.</p>
 							) : (
-								chosenBrandCars.map((car, index) => <CarCard key={index} car={car} likeCarHandler={likeCarHandler} />)
+								chosenBrandCars.map((car, index) => (
+									<CarCard key={index} car={car} allCars={chosenBrandCars} likeCarHandler={likeCarHandler} />
+								))
 							)}
 						</Stack>
 					</Box>

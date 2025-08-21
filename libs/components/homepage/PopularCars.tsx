@@ -92,7 +92,9 @@ const PopularCars = (props: PopularCarsProps) => {
 						{popularCars.length === 0 ? (
 							<Box className="empty-list">Popular Cars Empty</Box>
 						) : (
-							popularCars.map((car: Car) => <CarCard key={car._id} car={car} likeCarHandler={likeCarHandler} />)
+							popularCars.map((car: Car) => (
+								<CarCard key={car._id} car={car} allCars={popularCars} likeCarHandler={likeCarHandler} />
+							))
 						)}
 					</Stack>
 				</Stack>

@@ -76,6 +76,7 @@ const RecentlyVisited: NextPage = () => {
 						<CarCard
 							key={`${car._id}-${car.meLiked?.[0]?.myFavorite ? 'liked' : 'unliked'}`}
 							car={car}
+							allCars={recentlyVisited}
 							likeCarHandler={likeCarHandler}
 							recentlyVisited={true}
 						/>
