@@ -67,6 +67,11 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 		setSearchCommunity(newSearch);
 	}, [articleCategory]);
 
+	/** Refetch when searchCommunity changes **/
+	useEffect(() => {
+		boardArticlesRefetch({ input: searchCommunity });
+	}, [searchCommunity, boardArticlesRefetch]);
+
 	/** Pagination handler **/
 	const paginationHandler = (_: T, page: number) => {
 		setSearchCommunity({ ...searchCommunity, page });

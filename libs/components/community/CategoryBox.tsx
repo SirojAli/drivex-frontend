@@ -104,7 +104,12 @@ const CategoryBox = () => {
 							className={'blog'}
 							key={article._id}
 							style={{ cursor: 'pointer' }}
-							onClick={() => router.push(`/community/${article._id}`)}
+							onClick={() =>
+								router.push({
+									pathname: '/community/detail', // your detail page
+									query: { id: article._id, articleCategory: article.articleCategory },
+								})
+							}
 						>
 							<img src={`${REACT_APP_API_URL}/${article.articleImage}`} alt={'article'} loading="lazy" />
 							<Box className={'content'}>
@@ -121,7 +126,7 @@ const CategoryBox = () => {
 
 			{/* Tags */}
 			<Stack className={'tag-box'}>
-				{['KIA', 'BMW', 'News', 'Event', 'Audi', 'Lexus', 'Genesis'].map((tag) => (
+				{['KIA', 'BMW', 'News', 'Event', 'Audi', 'Lexus', 'Hyundai'].map((tag) => (
 					<Stack className={'tag'} key={tag}>
 						<span>{tag}</span>
 					</Stack>

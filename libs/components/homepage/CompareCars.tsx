@@ -8,16 +8,16 @@ import CompareCarCard from './CompareCarCard';
 
 const comparePairs = [
 	{
-		car1Id: '687a437bbabb53337ddda2a6',
-		car2Id: '687a46fbbabb53337ddda2a9',
+		car1Id: '68aef8bd65f8de2d81627b01', // bmw 3-series
+		car2Id: '68afaf18dad6c5df3f7ac79f', // merc cla
 	},
 	{
-		car1Id: '687a5016babb53337ddda2b5',
-		car2Id: '687a5127babb53337ddda2b8',
+		car1Id: '68ae844b65f8de2d816279b3', // kia ev4
+		car2Id: '68aeb95d65f8de2d81627a3f', // hyundai ioniq6
 	},
 	{
-		car1Id: '687a3389babb53337ddda291',
-		car2Id: '687a2782babb53337ddda28e',
+		car1Id: '68b03df2dad6c5df3f7ac84f', // toyota grand high
+		car2Id: '68b15bfe92a765155f7ce23f', // audi q5 sport
 	},
 ];
 
@@ -81,7 +81,7 @@ const CarCompareBox: React.FC<CarCompareBoxProps> = ({ car1Id, car2Id, onOpenCom
 				{/* Compare button */}
 				<Box className="compare-btn" onClick={() => onOpenCompare([car1, car2])} sx={{ cursor: 'pointer' }}>
 					<p>
-						{car1.carBrand} {car1.carModel} vs {car2.carBrand} {car2.carModel}
+						{car1.carModel} vs {car2.carModel}
 					</p>
 				</Box>
 			</Stack>

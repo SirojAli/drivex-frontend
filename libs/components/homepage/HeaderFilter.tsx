@@ -180,9 +180,14 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 		<>
 			<Stack className={'header-box'}>
 				<Stack className={'header-text'}>
-					<p className={'bold'}>Find Your Perfect Car Today</p>
-					{/* <span className={'short'}>Explore Cars from Leading Global Brands</span> */}
-					<span className={'short'}>Discover New Models from Brands You Love</span>
+					{/* <p className={'bold'}>Find Your Perfect Car Today</p> */}
+					{/* <p className={'bold'}>Drive Your Dream Today</p> */}
+					<p className={'bold'}>Drive Beyond Limits</p>
+
+					{/* <span className={'short'}>Discover New Models from Brands You Love</span> */}
+					{/* <span className={'short'}>Browse, Compare, and Drive with Confidence</span> */}
+					<span className={'short'}>Explore the Cars that Move You</span>
+
 					<Box className={'detail'}>
 						<Link href={'/car'} className={'p'}>
 							Get Started

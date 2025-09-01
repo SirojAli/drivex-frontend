@@ -171,11 +171,16 @@ const CarCard = (props: PopularCarCardProps) => {
 							<Box className={'logo'}>
 								<img
 									src={`/img/logo/${car.carBrand}.png`}
-									alt={'logo'}
+									alt="logo"
 									onError={(e) => {
-										(e.target as HTMLImageElement).src = '/img/logo/default.png';
+										const target = e.target as HTMLImageElement;
+										if (!target.dataset.fallback) {
+											target.src = '/img/logo/default.png';
+											target.dataset.fallback = 'true';
+										}
 									}}
 								/>
+
 								<span>{car.carBrand}</span>
 							</Box>
 

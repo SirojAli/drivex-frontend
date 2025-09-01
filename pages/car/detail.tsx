@@ -536,8 +536,8 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 								<div className={'divider'}></div>
 
 								{/* Video */}
-								<CarVideoPlayer videoUrl={car?.carVideoUrl} />
-								<div className={'divider'}></div>
+								{/* <CarVideoPlayer videoUrl={car?.carVideoUrl} />
+								<div className={'divider'}></div> */}
 
 								{/* Reviews */}
 								<Stack id="review" className="reviews">
@@ -549,14 +549,13 @@ const CarDetail: NextPage = ({ initialComment, ...props }: any) => {
 										<Typography className="score">4.8</Typography>
 										<Box className="total">
 											<Typography className="rating-label">Overall Rating</Typography>
-											<Typography className="total-reviews">
+											{/* <Typography className="total-reviews">
 												Based on <strong>{commentTotal} Reviews</strong>
-											</Typography>
+											</Typography> */}
 										</Box>
 									</Box>
 
-									<Typography className="section-title">{commentTotal} Ratings and Reviews</Typography>
-
+									{/* <Typography className="section-title">{commentTotal} Ratings and Reviews</Typography> */}
 									{carComments.length === 0 && <Typography>No reviews yet. Be the first to leave one!</Typography>}
 
 									{carComments.map((r, idx) => (

@@ -10,24 +10,22 @@ import Link from 'next/link';
 const CarReviewCard = ({ index }: { index: number }) => {
 	const router = useRouter();
 
-	/** Query only "REVIEWS" articles */
+	/** Query ALL articles, sorted by views */
 	const { data, loading, error } = useQuery(GET_BOARD_ARTICLES, {
 		variables: {
 			input: {
 				page: 1,
 				limit: 3,
-				sort: 'createdAt',
+				sort: 'articleViews',
 				direction: 'DESC',
-				search: {
-					articleCategory: BoardArticleCategory.REVIEWS,
-				},
+				search: {}, // removed category filter
 			},
 		},
 		fetchPolicy: 'cache-first',
 	});
 
 	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error loading reviews</p>;
+	if (error) return <p>Error loading articles</p>;
 
 	const articles = data?.getBoardArticles?.list || [];
 	const article = articles[index - 1];
@@ -37,7 +35,7 @@ const CarReviewCard = ({ index }: { index: number }) => {
 	const detailHref = {
 		pathname: '/community/detail',
 		query: {
-			articleCategory: article.articleCategory ?? BoardArticleCategory.REVIEWS,
+			articleCategory: article.articleCategory ?? BoardArticleCategory.NEWS,
 			id: article._id,
 		},
 	};
@@ -48,7 +46,8 @@ const CarReviewCard = ({ index }: { index: number }) => {
 			sx={{
 				backgroundImage: `url(${REACT_APP_API_URL}/${article.articleImage})`,
 				backgroundSize: 'cover',
-				backgroundPosition: 'center',
+				backgroundPosition: 'center center',
+				backgroundRepeat: 'no-repeat',
 			}}
 		>
 			<Box className={'review-card-content'}>
@@ -56,7 +55,7 @@ const CarReviewCard = ({ index }: { index: number }) => {
 				<p>{article.articleContent?.slice(0, 100)}...</p>
 				<div className={'review-btn'}>
 					<Link href={detailHref}>
-						<p>Review detail</p>
+						<p>View detail</p>
 					</Link>
 				</div>
 			</Box>

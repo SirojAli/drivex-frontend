@@ -7,12 +7,12 @@ export enum CarStatus {
 export enum CarBrand {
 	KIA = 'KIA',
 	HYUNDAI = 'HYUNDAI',
-	GENESIS = 'GENESIS',
 	BMW = 'BMW',
-	MERCEDES_BENZ = 'MERCEDES-BENZ',
+	MERCEDES = 'MERCEDES',
 	TOYOTA = 'TOYOTA',
 	AUDI = 'AUDI',
 	LEXUS = 'LEXUS',
+	HONDA = 'HONDA',
 }
 
 export enum CarType {
