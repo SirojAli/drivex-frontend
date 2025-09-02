@@ -81,8 +81,7 @@ const TopFull = () => {
 					<Stack className={'container'}>
 						<Box component={'div'} className={'logo-box'}>
 							<Link href={'/'} className={'logo'}>
-								<img src="/img/logo/icon.png" alt="logo" loading="lazy" />
-								<span>DriveX</span>
+								<img src="/img/logo/logo2.png" alt="logo" loading="lazy" />
 							</Link>
 						</Box>
 						<Box component={'div'} className={'router-box'}>

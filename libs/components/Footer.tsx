@@ -65,15 +65,15 @@ const Footer = () => {
 					</Box>
 				</Stack>
 				<Stack className={'main'}>
-					<h3>Popular Cars</h3>
+					<h3>Car Brands</h3>
 					<Box className={'info'}>
+						<span>Kia</span>
 						<span>BMW</span>
 						<span>Mercedes-Benz</span>
-						<span>Kia</span>
 						<span>Hyundai</span>
-						<span>Lamborghini</span>
-						<span>Bugatti</span>
-						<span>Ferrari</span>
+						<span>Toyota</span>
+						<span>Audi</span>
+						<span>Lexus</span>
 					</Box>
 				</Stack>
 				<Stack className={'main'}>
@@ -106,11 +106,10 @@ const Footer = () => {
 			{/* Footer End */}
 			<Stack className={'footer-end'}>
 				<Box className={'logo-box'}>
-					<img src="/img/logo/icon.png" alt="logo" loading="lazy" />
-					<span>DriveX</span>
+					<img src="/img/logo/logo3.png" alt="logo" loading="lazy" />
 				</Box>
 				<Box className={'info-social'}>
-					<span>© 2025 Drivex. All rights reserved</span>
+					<span>© 2025 DriveX. All rights reserved</span>
 					<div className={'media-box'}>
 						<FacebookOutlinedIcon className={'icon'} />
 						<TelegramIcon className={'icon'} />

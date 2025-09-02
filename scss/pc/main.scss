@@ -77,17 +77,12 @@
 							align-items: center;
 
 							img {
-								width: 40px;
-								height: 40px;
+								width: 100px;
+								height: auto;
+								object-fit: contain;
 								cursor: pointer;
-							}
-							span {
-								color: #fff;
-								font-family: $font;
-								font-size: 30px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: 25px;
+								display: block;
+								// border: 1px solid #fff;
 							}
 						}
 					}
@@ -215,17 +210,12 @@
 							align-items: center;
 
 							img {
-								width: 40px;
-								height: 40px;
+								width: 100px;
+								height: auto;
+								object-fit: contain;
 								cursor: pointer;
-							}
-							span {
-								color: #000;
-								font-family: $font;
-								font-size: 30px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: 25px;
+								display: block;
+								// border: 1px solid #fff;
 							}
 						}
 					}
@@ -903,17 +893,12 @@
 					cursor: pointer;
 
 					img {
-						width: 40px;
-						height: 40px;
+						width: 100px;
+						height: auto;
+						object-fit: contain;
 						cursor: pointer;
-					}
-					span {
-						color: #fff;
-						font-family: $font;
-						font-size: 30px;
-						font-style: normal;
-						font-weight: 500;
-						line-height: 26px;
+						display: block;
+						// border: 1px solid #fff;
 					}
 				}
 
