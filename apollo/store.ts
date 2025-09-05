@@ -29,4 +29,6 @@ export const userVar = makeVar<CustomJwtPayload>({
 	brandSlug: '',
 });
 
-export const socketVar = makeVar<WebSocket | null>(null);
+// @ts-ignore
+export const socketVar = makeVar<WebSocket>();
+// export const socketVar = makeVar<WebSocket | null>(null);

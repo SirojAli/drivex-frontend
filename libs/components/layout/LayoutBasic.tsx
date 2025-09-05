@@ -8,8 +8,8 @@ import Footer from '../Footer';
 import { getJwtToken, updateUserInfo } from '../../auth';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import Chat from '../Chat';
 
-// import Chat from '../Chat';
 // import 'swiper/css';
 // import 'swiper/css/pagination';
 // import 'swiper/css/navigation';
@@ -79,7 +79,7 @@ const withLayoutBasic = (Component: any) => {
 						</Stack>
 
 						{/* {user?._id && <Chat />} */}
-						{/* <Chat /> */}
+						<Chat />
 
 						<Stack id="footer">
 							<Footer />

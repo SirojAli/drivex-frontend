@@ -8,8 +8,8 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { getJwtToken, updateUserInfo } from '../../auth';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import Chat from '../Chat';
 
-// import Chat from '../Chat';
 // import 'swiper/css';
 // import 'swiper/css/pagination';
 // import 'swiper/css/navigation';
@@ -62,6 +62,9 @@ const withLayoutFull = (Component: any) => {
 						<Stack id="main">
 							<Component {...props} />
 						</Stack>
+
+						<Chat />
+
 						<Stack id="footer">
 							<Footer />
 						</Stack>
