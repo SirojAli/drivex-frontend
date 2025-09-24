@@ -12,6 +12,8 @@ import { T } from '../../types/common';
 import { Message } from '../../enums/common.enum';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { useRouter } from 'next/router';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper';
 
 interface TrendCarsProps {
 	initialInput: CarsInquiry;
@@ -66,7 +68,35 @@ const TrendCars = (props: TrendCarsProps) => {
 	if (!trendCars) return null;
 
 	if (device === 'mobile') {
-		return <h1>HOMEPAGE - TREND CARS</h1>;
+		return (
+			<Stack className={'trend-cars'}>
+				<Stack className={'container'}>
+					<Box className={'trend-text'}>
+						<h2>Trend Cars</h2>
+					</Box>
+
+					<Stack className="trend-car-box">
+						{trendCars.length === 0 ? (
+							<Box className="empty-list">Trend Cars Empty</Box>
+						) : (
+							<Swiper
+								className={'trend-car-swiper'}
+								slidesPerView={1}
+								centeredSlides={true}
+								spaceBetween={15}
+								modules={[Autoplay]}
+							>
+								{trendCars.map((car: Car) => (
+									<SwiperSlide key={car._id} className={'trend-car-slide'}>
+										<CarCard car={car} allCars={trendCars} likeCarHandler={likeCarHandler} />
+									</SwiperSlide>
+								))}
+							</Swiper>
+						)}
+					</Stack>
+				</Stack>
+			</Stack>
+		);
 	} else {
 		return (
 			<Stack className={'trend-cars'}>

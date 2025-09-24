@@ -21,8 +21,6 @@ const Home: NextPage = () => {
 				<TopBrands />
 				<Advertisement />
 				<TrendCars />
-				<CarReview />
-				<CompareCars />
 				<CommunityBoards />
 			</Stack>
 		);

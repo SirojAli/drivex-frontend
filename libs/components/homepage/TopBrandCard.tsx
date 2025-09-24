@@ -25,7 +25,23 @@ const TopBrandCard = (props: TopBrandCardProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <h1>HOMEPAGE - TOP BRANDS</h1>;
+		// return <h1>HOMEPAGE - TOP BRANDS</h1>;
+		return (
+			<Stack className={'top-brand-card'}>
+				<Stack className={'brand-box'} key={seller._id}>
+					<div className={'brand-logo-wrapper'}>
+						<img
+							src={seller?.memberImage ? `${REACT_APP_API_URL}/${seller?.memberImage}` : '/img/profile/defaultUser.png'}
+							alt="brand-name"
+							loading="lazy"
+						/>
+					</div>
+					<Box className={'brand-info'}>
+						<p className={'brand-name'}>{seller.memberNick}</p>
+					</Box>
+				</Stack>
+			</Stack>
+		);
 	} else {
 		return (
 			<Stack className={'top-brand-card'}>

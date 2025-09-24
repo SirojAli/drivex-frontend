@@ -12,6 +12,8 @@ import { T } from '../../types/common';
 import { Message } from '../../enums/common.enum';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { useRouter } from 'next/router';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper';
 
 interface PopularCarsProps {
 	initialInput: CarsInquiry;
@@ -70,7 +72,34 @@ const PopularCars = (props: PopularCarsProps) => {
 	if (!popularCars) return null;
 
 	if (device === 'mobile') {
-		return <h1>HOMEPAGE - POPULAR CARS</h1>;
+		return (
+			<Stack className={'popular-cars'}>
+				<Stack className={'container'}>
+					<Box className={'popular-text'}>
+						<h2>Popular Cars</h2>
+					</Box>
+					<Stack className={'popular-car-box'}>
+						{popularCars.length === 0 ? (
+							<Box className="empty-list">Popular Cars Empty</Box>
+						) : (
+							<Swiper
+								className={'popular-car-swiper'}
+								slidesPerView={1}
+								centeredSlides={true}
+								spaceBetween={15}
+								modules={[Autoplay]}
+							>
+								{popularCars.map((car: Car) => (
+									<SwiperSlide key={car._id} className={'popular-car-slide'}>
+										<CarCard car={car} allCars={popularCars} likeCarHandler={likeCarHandler} />
+									</SwiperSlide>
+								))}
+							</Swiper>
+						)}
+					</Stack>
+				</Stack>
+			</Stack>
+		);
 	} else {
 		return (
 			<Stack className={'popular-cars'}>

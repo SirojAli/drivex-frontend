@@ -7,7 +7,7 @@ const CommunityBoards = () => {
 		<Stack className={'community-board'}>
 			<Stack className={'container'}>
 				<Box className={'blog-text'}>
-					<h2>News to help choose your car</h2>
+					<h2>Top Blogs</h2>
 				</Box>
 				<Stack>
 					<CommunityHome />

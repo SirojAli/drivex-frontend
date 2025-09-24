@@ -59,10 +59,62 @@ const CarCard = (props: PopularCarCardProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <h1>CAR CARD</h1>;
+		// return <h1>CAR CARD</h1>;
+		return (
+			<Stack className="car-box">
+				<Box className={'img-box'}>
+					<img src={`${REACT_APP_API_URL}/${car?.carImages[0]}`} alt={'Car'} loading="lazy" />
+				</Box>
+				<Stack className={'car-info'}>
+					<Box className={'car-content'}>
+						<span className={'car-type'}>{car.carType || 'Sedan'}</span>
+						<p className={'car-name'}>
+							{car.carBrand} {car.carModel}
+						</p>
+						<div className={'car-category'}>
+							<div className={'category'}>
+								<img src={'/img/icons/fuel.png'} alt={'fuel'} />
+								<span>{car.carFuelType}</span>
+							</div>
+							<div className={'category'}>
+								<img src={'/img/icons/auto.png'} alt={'transmission'} />
+								<span>{car.carTransmission}</span>
+							</div>
+							<div className={'category'}>
+								<img src={'/img/icons/speed.png'} alt={'engine'} />
+								<span>{car.carEngineSize} L</span>
+							</div>
+						</div>
+						<div className={'car-price-btn'}>
+							<span className={'price'}>{formatPrice(car.carPrice)}</span>
+
+							{!recentlyVisited && (
+								<div className={'view-like-btn'}>
+									<div className={'view-btn'} title={'Views'}>
+										<RemoveRedEyeIcon className={'view'} />
+										<span>{car.carViews}</span>
+									</div>
+									<div
+										className={'like-btn'}
+										title={'Likes'}
+										onClick={() => likeCarHandler(user, car?._id)}
+										style={{ cursor: 'pointer' }}
+									>
+										<FavoriteIcon
+											className={'like'}
+											color={myFavorites || (car?.meLiked && car?.meLiked[0]?.myFavorite) ? 'error' : 'inherit'}
+										/>
+										<span>{car.carLikes}</span>
+									</div>
+								</div>
+							)}
+						</div>
+					</Box>
+				</Stack>
+			</Stack>
+		);
 	} else {
 		const isSold = car.carStatus === 'SOLD';
-
 		return (
 			<>
 				<Stack
@@ -82,8 +134,8 @@ const CarCard = (props: PopularCarCardProps) => {
 							if (car.carYear === 2026) badge = 'Upcoming';
 							else if (car.carYear === 2025) badge = 'New';
 							else if (isSold) badge = 'Out of Stock';
-							else if (car.carViews && car.carViews > 1000) badge = 'Featured';
-							else if (car.carLikes && car.carLikes > 100) badge = 'Hot';
+							else if (car.carViews && car.carViews > 7000) badge = 'Featured';
+							// else if (car.carLikes && car.carLikes > 100) badge = 'Hot';
 
 							if (!badge) return null;
 

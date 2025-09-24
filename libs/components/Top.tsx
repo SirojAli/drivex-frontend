@@ -53,25 +53,20 @@ const Top = () => {
 		return (
 			<Stack className={'top'}>
 				<Link href="/">
-					<span>Home</span>
+					<div>Home</div>
 				</Link>
 				<Link href="/brand">
-					<span>Brands</span>
+					<div>Brands</div>
 				</Link>
 				<Link href="/car">
-					<span>All Cars</span>
+					<div>All Cars</div>
 				</Link>
 				<Link href="/community">
-					<span>Community</span>
+					<div>Community</div>
 				</Link>
 				<Link href="/cs">
-					<span>CS</span>
+					<div>CS</div>
 				</Link>
-				{user?._id && (
-					<Link href="/mypage">
-						<span>My Page</span>
-					</Link>
-				)}
 			</Stack>
 		);
 	} else {

@@ -3,7 +3,7 @@ import { Stack, Box } from '@mui/material';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper';
+import { Autoplay, Navigation, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -79,7 +79,38 @@ const TopBrands = (props: TopSellerProps) => {
 	console.table(topSellers);
 
 	if (device === 'mobile') {
-		return <h1>HOMEPAGE - TOP BRANDS</h1>;
+		return (
+			<Stack className={'top-brands'}>
+				<Box className="brand-text">
+					<h2>Top Brands</h2>
+				</Box>
+
+				<Stack className="brands-list" spacing={2}>
+					{topSellers.length === 0 ? (
+						<Box className="empty-list">Top Brands Empty</Box>
+					) : (
+						<Swiper
+							className={'top-brand-swiper'}
+							// slidesPerView={3}
+							centeredSlides={true}
+							spaceBetween={15}
+							modules={[Autoplay]}
+							breakpoints={{
+								320: { slidesPerView: 1 }, // very small mobile
+								480: { slidesPerView: 2 }, // medium mobile
+								768: { slidesPerView: 3 }, // tablet + desktop
+							}}
+						>
+							{topSellers.map((seller: Member) => (
+								<SwiperSlide key={seller._id} className={'top-brand-slide'}>
+									<TopBrandCard seller={seller} likeMemberdHandler={likeMemberdHandler} />
+								</SwiperSlide>
+							))}
+						</Swiper>
+					)}
+				</Stack>
+			</Stack>
+		);
 	} else {
 		return (
 			<Stack className={'top-brands'}>
