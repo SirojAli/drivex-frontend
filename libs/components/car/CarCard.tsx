@@ -97,7 +97,7 @@ const CarCard = (props: PopularCarCardProps) => {
 									<div
 										className={'like-btn'}
 										title={'Likes'}
-										onClick={() => likeCarHandler(user, car?._id)}
+										// onClick={() => likeCarHandler(user, car?._id)}
 										style={{ cursor: 'pointer' }}
 									>
 										<FavoriteIcon

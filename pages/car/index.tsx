@@ -146,7 +146,7 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	};
 
 	if (device === 'mobile') {
-		return <Stack>CAR PAGE MOBILE</Stack>;
+		return <Stack>ALL CARS PAGE MOBILE</Stack>;
 	} else {
 		return (
 			<div id="car-list-page">

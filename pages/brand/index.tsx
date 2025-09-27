@@ -49,14 +49,14 @@ const BrandList: NextPage = ({ initialInput }: any) => {
 	};
 
 	if (device === 'mobile') {
-		return <Stack>CAR BRAND MOBILE</Stack>;
+		return <Stack>CAR BRANDS PAGE MOBILE</Stack>;
 	}
 
 	return (
 		<div id="brand-list-page">
 			<Stack className={'container'}>
 				<Typography variant="h4" className="brand-title">
-					POPULAR CAR BRANDS
+					CAR BRANDS MOBILE
 				</Typography>
 				<Stack className={'brand-grid'}>
 					{sellers?.length === 0 ? (
