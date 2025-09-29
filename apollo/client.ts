@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { ApolloClient, ApolloLink, InMemoryCache, split, from, NormalizedCacheObject } from '@apollo/client';
-import createUploadLink from 'apollo-upload-client/public/createUploadLink.js';
+// import createUploadLink from 'apollo-upload-client/public/createUploadLink.js';
+import { createUploadLink } from 'apollo-upload-client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { onError } from '@apollo/client/link/error';
@@ -79,7 +80,7 @@ function createIsomorphicLink() {
 
 		/* WEBSOCKET SUBSCRIPTION LINK */
 		const wsLink = new WebSocketLink({
-			uri: process.env.REACT_APP_API_WS ?? 'ws://127.0.0.1:3011',
+			uri: process.env.REACT_APP_API_WS ?? 'ws://127.0.0.1:3007',
 			options: {
 				reconnect: false,
 				timeout: 30000,
@@ -144,7 +145,7 @@ import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 // No Subscription required for develop process
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: "http://localhost:3007/graphql",
 });
 
 const client = new ApolloClient({

@@ -13,134 +13,138 @@ import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAler
 import CommunityCard from '../community/CommunityCard';
 
 interface SearchCommunity {
-	page: number;
-	limit: number;
-	sort: string;
-	direction: string;
-	search: { memberId?: string };
+  page: number;
+  limit: number;
+  sort: string;
+  direction: string;
+  search: { memberId?: string };
 }
 
 const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
-	const device = useDeviceDetect();
-	const user = useReactiveVar(userVar);
+  const device = useDeviceDetect();
+  const user = useReactiveVar(userVar);
 
-	const [searchCommunity, setSearchCommunity] = useState<SearchCommunity>({
-		...initialInput,
-		search: { memberId: user._id },
-	});
-	const [boardArticles, setBoardArticles] = useState<BoardArticle[]>([]);
-	const [totalCount, setTotalCount] = useState<number>(0);
+  const [searchCommunity, setSearchCommunity] = useState<SearchCommunity>({
+    ...initialInput,
+    search: { memberId: user._id },
+  });
+  const [boardArticles, setBoardArticles] = useState<BoardArticle[]>([]);
+  const [totalCount, setTotalCount] = useState<number>(0);
 
-	useEffect(() => {
-		if (user?._id) {
-			setSearchCommunity((prev) => ({
-				...prev,
-				search: { memberId: user._id },
-			}));
-		}
-	}, [user]);
+  useEffect(() => {
+    if (user?._id) {
+      setSearchCommunity((prev) => ({
+        ...prev,
+        search: { memberId: user._id },
+      }));
+    }
+  }, [user]);
 
-	/** APOLLO REQUESTS **/
-	const [likeTargetBoardArticle] = useMutation(LIKE_TARGET_BOARD_ARTICLE);
+  /** APOLLO REQUESTS **/
+  const [likeTargetBoardArticle] = useMutation(LIKE_TARGET_BOARD_ARTICLE);
 
-	const {
-		loading: boardArticlesLoading,
-		data: boardArticlesData,
-		error: getBoardArticlesError,
-		refetch: boardArticlesRefetch,
-	} = useQuery(GET_BOARD_ARTICLES, {
-		fetchPolicy: 'network-only',
-		variables: { input: searchCommunity },
-		notifyOnNetworkStatusChange: true,
-		onCompleted(data: T) {
-			setBoardArticles(data?.getBoardArticles?.list ?? []);
-			setTotalCount(data?.getBoardArticles?.metaCounter?.[0]?.total ?? 0);
-		},
-		skip: !user?._id,
-	});
+  const {
+    loading: boardArticlesLoading,
+    data: boardArticlesData,
+    error: getBoardArticlesError,
+    refetch: boardArticlesRefetch,
+  } = useQuery(GET_BOARD_ARTICLES, {
+    fetchPolicy: 'network-only',
+    variables: { input: searchCommunity },
+    notifyOnNetworkStatusChange: true,
+    onCompleted(data: T) {
+      setBoardArticles(data?.getBoardArticles?.list ?? []);
+      setTotalCount(data?.getBoardArticles?.metaCounter?.[0]?.total ?? 0);
+    },
+    skip: !user?._id,
+  });
 
-	useEffect(() => {
-		if (user?._id) {
-			boardArticlesRefetch({ input: searchCommunity });
-		}
-	}, [searchCommunity, user?._id]);
+  useEffect(() => {
+    if (user?._id) {
+      boardArticlesRefetch({ input: searchCommunity });
+    }
+  }, [searchCommunity, user?._id]);
 
-	/** HANDLERS **/
-	const paginationHandler = (_: any, value: number) => {
-		setSearchCommunity({ ...searchCommunity, page: value });
-	};
+  /** HANDLERS **/
+  const paginationHandler = (_: any, value: number) => {
+    setSearchCommunity({ ...searchCommunity, page: value });
+  };
 
-	const likeArticleHandler = async (e: React.MouseEvent, user: any, id: string) => {
-		try {
-			e.stopPropagation();
-			if (!id) return;
-			if (!user?._id) throw new Error(Messages.error2);
+  const likeArticleHandler = async (e: React.MouseEvent, user: any, id: string) => {
+    try {
+      e.stopPropagation();
+      if (!id) return;
+      if (!user?._id) throw new Error(Messages.error2);
 
-			await likeTargetBoardArticle({
-				variables: { input: id },
-			});
+      await likeTargetBoardArticle({
+        variables: { input: id },
+      });
 
-			await boardArticlesRefetch({ input: searchCommunity });
-			await sweetTopSmallSuccessAlert('Success!', 800);
-		} catch (err: any) {
-			console.error('ERROR, likeArticleHandler:', err.message);
-			sweetMixinErrorAlert(err.message);
-		}
-	};
+      await boardArticlesRefetch({ input: searchCommunity });
+      await sweetTopSmallSuccessAlert('Success!', 800);
+    } catch (err: any) {
+      console.error('ERROR, likeArticleHandler:', err.message);
+      sweetMixinErrorAlert(err.message);
+    }
+  };
 
-	if (device === 'mobile') {
-		return <>ARTICLE PAGE MOBILE</>;
-	} else {
-		return (
-			<div id="my-articles-page">
-				<Stack className={'main-title-box'}>
-					<Stack className={'right-box'}>
-						<Typography className={'main-title'}>Article</Typography>
-						{/* <Typography className={'sub-title'}>We are glad to see you again!</Typography> */}
-					</Stack>
-				</Stack>
-				<Stack className={'article-list-box'}>
-					{boardArticles?.length > 0 ? (
-						boardArticles.map((boardArticle: BoardArticle) => (
-							<CommunityCard key={boardArticle._id} article={boardArticle} likeArticleHandler={likeArticleHandler} />
-						))
-					) : (
-						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="" />
-							<p>No Articles found!</p>
-						</div>
-					)}
-				</Stack>
+  if (device === 'mobile') {
+    return <>ARTICLE PAGE MOBILE</>;
+  } else {
+    return (
+      <div id="my-articles-page">
+        <Stack className={'main-title-box'}>
+          <Stack className={'right-box'}>
+            <Typography className={'main-title'}>Article</Typography>
+            {/* <Typography className={'sub-title'}>We are glad to see you again!</Typography> */}
+          </Stack>
+        </Stack>
+        <Stack className={'article-list-box'}>
+          {boardArticles?.length > 0 ? (
+            boardArticles.map((boardArticle: BoardArticle) => (
+              <CommunityCard
+                key={boardArticle._id}
+                article={boardArticle}
+                likeArticleHandler={likeArticleHandler}
+              />
+            ))
+          ) : (
+            <div className={'no-data'}>
+              <img src="/img/icons/icoAlert.svg" alt="" />
+              <p>No Articles found!</p>
+            </div>
+          )}
+        </Stack>
 
-				{boardArticles?.length > 0 && (
-					<Stack className={'pagination-conf'}>
-						<Stack className={'pagination-box'}>
-							<Pagination
-								count={Math.ceil(totalCount / searchCommunity.limit)}
-								page={searchCommunity.page}
-								shape="circular"
-								color="primary"
-								onChange={paginationHandler}
-							/>
-						</Stack>
-						<Stack className={'total'}>
-							<Typography>Total {totalCount} articles available</Typography>
-						</Stack>
-					</Stack>
-				)}
-			</div>
-		);
-	}
+        {boardArticles?.length > 0 && (
+          <Stack className={'pagination-conf'}>
+            <Stack className={'pagination-box'}>
+              <Pagination
+                count={Math.ceil(totalCount / searchCommunity.limit)}
+                page={searchCommunity.page}
+                shape="circular"
+                color="primary"
+                onChange={paginationHandler}
+              />
+            </Stack>
+            <Stack className={'total'}>
+              <Typography>Total {totalCount} articles available</Typography>
+            </Stack>
+          </Stack>
+        )}
+      </div>
+    );
+  }
 };
 
 MyArticles.defaultProps = {
-	initialInput: {
-		page: 1,
-		limit: 6,
-		sort: 'createdAt',
-		direction: 'DESC',
-		search: {},
-	},
+  initialInput: {
+    page: 1,
+    limit: 6,
+    sort: 'createdAt',
+    direction: 'DESC',
+    search: {},
+  },
 };
 
 export default MyArticles;

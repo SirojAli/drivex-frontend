@@ -80,172 +80,183 @@ const styles = `
 `;
 
 const withAdminLayout = (Component: ComponentType) => {
-	return (props: object) => {
-		const router = useRouter();
-		const user = useReactiveVar(userVar);
-		const [settingsState, setSettingsStateState] = useState(false);
-		const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-		const [openMenu, setOpenMenu] = useState(false);
-		const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
-		const [title, setTitle] = useState('admin');
-		const [loading, setLoading] = useState(true);
+  return (props: object) => {
+    const router = useRouter();
+    const user = useReactiveVar(userVar);
+    const [settingsState, setSettingsStateState] = useState(false);
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [openMenu, setOpenMenu] = useState(false);
+    const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+    const [title, setTitle] = useState('admin');
+    const [loading, setLoading] = useState(true);
 
-		/** LIFECYCLES **/
-		useEffect(() => {
-			const jwt = getJwtToken();
-			if (jwt) updateUserInfo(jwt);
-			setLoading(false);
-		}, []);
+    /** LIFECYCLES **/
+    useEffect(() => {
+      const jwt = getJwtToken();
+      if (jwt) updateUserInfo(jwt);
+      setLoading(false);
+    }, []);
 
-		useEffect(() => {
-			if (!loading && user.memberType !== MemberType.ADMIN) {
-				router.push('/').then();
-			}
-		}, [loading, user, router]);
+    useEffect(() => {
+      if (!loading && user.memberType !== MemberType.ADMIN) {
+        router.push('/').then();
+      }
+    }, [loading, user, router]);
 
-		/** HANDLERS **/
-		const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-			setAnchorElUser(event.currentTarget);
-		};
+    /** HANDLERS **/
+    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorElUser(event.currentTarget);
+    };
 
-		const handleCloseUserMenu = () => {
-			setAnchorElUser(null);
-		};
+    const handleCloseUserMenu = () => {
+      setAnchorElUser(null);
+    };
 
-		const logoutHandler = () => {
-			logOut();
-			router.push('/').then();
-		};
+    const logoutHandler = () => {
+      logOut();
+      router.push('/').then();
+    };
 
-		if (!user || user?.memberType !== MemberType.ADMIN) return null;
+    if (!user || user?.memberType !== MemberType.ADMIN) return null;
 
-		return (
-			<main id="pc-wrap" className={'admin'}>
-				<style jsx>{styles}</style>
-				<Box component={'div'} sx={{ display: 'flex' }}>
-					{/* TOP BAR */}
-					<AppBar
-						position="fixed"
-						sx={{
-							width: `calc(100% - ${drawerWidth}px)`,
-							ml: `${drawerWidth}px`,
-						}}
-					>
-						<Toolbar sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-							<Tooltip title="Open settings">
-								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-									<Avatar
-										src={
-											user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'
-										}
-									/>
-								</IconButton>
-							</Tooltip>
-							<Menu
-								sx={{ mt: '45px' }}
-								id="menu-appbar"
-								className={'pop-menu'}
-								anchorEl={anchorElUser}
-								anchorOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								open={Boolean(anchorElUser)}
-								onClose={handleCloseUserMenu}
-							>
-								<Box
-									component={'div'}
-									onClick={handleCloseUserMenu}
-									sx={{
-										width: '200px',
-									}}
-								>
-									<Stack sx={{ px: '20px', my: '12px' }}>
-										<Typography variant={'h6'} component={'h6'} sx={{ mb: '4px' }}>
-											{user?.memberNick}
-										</Typography>
-										<Typography variant={'subtitle1'} component={'p'} color={'#757575'}>
-											{user?.memberPhone}
-										</Typography>
-									</Stack>
-									<Divider />
-									<Box component={'div'} sx={{ p: 1, py: '6px' }} onClick={logoutHandler}>
-										<MenuItem sx={{ px: '16px', py: '6px' }}>
-											<Typography variant={'subtitle1'} component={'span'}>
-												Logout
-											</Typography>
-										</MenuItem>
-									</Box>
-								</Box>
-							</Menu>
-						</Toolbar>
-					</AppBar>
+    return (
+      <main id="pc-wrap" className={'admin'}>
+        <style jsx>{styles}</style>
+        <Box component={'div'} sx={{ display: 'flex' }}>
+          {/* TOP BAR */}
+          <AppBar
+            position="fixed"
+            sx={{
+              width: `calc(100% - ${drawerWidth}px)`,
+              ml: `${drawerWidth}px`,
+            }}
+          >
+            <Toolbar sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar
+                    src={
+                      user?.memberImage
+                        ? `${REACT_APP_API_URL}/${user?.memberImage}`
+                        : '/img/profile/defaultUser.svg'
+                    }
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                className={'pop-menu'}
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <Box
+                  component={'div'}
+                  onClick={handleCloseUserMenu}
+                  sx={{
+                    width: '200px',
+                  }}
+                >
+                  <Stack sx={{ px: '20px', my: '12px' }}>
+                    <Typography variant={'h6'} component={'h6'} sx={{ mb: '4px' }}>
+                      {user?.memberNick}
+                    </Typography>
+                    <Typography variant={'subtitle1'} component={'p'} color={'#757575'}>
+                      {user?.memberPhone}
+                    </Typography>
+                  </Stack>
+                  <Divider />
+                  <Box component={'div'} sx={{ p: 1, py: '6px' }} onClick={logoutHandler}>
+                    <MenuItem sx={{ px: '16px', py: '6px' }}>
+                      <Typography variant={'subtitle1'} component={'span'}>
+                        Logout
+                      </Typography>
+                    </MenuItem>
+                  </Box>
+                </Box>
+              </Menu>
+            </Toolbar>
+          </AppBar>
 
-					{/* SIDEBAR */}
-					<Drawer
-						sx={{
-							width: drawerWidth,
-							flexShrink: 0,
-							'& .MuiDrawer-paper': {
-								width: drawerWidth,
-								boxSizing: 'border-box',
-							},
-						}}
-						variant="permanent"
-						anchor="left"
-						className={'aside'}
-					>
-						<Toolbar sx={{ flexDirection: 'column', alignItems: 'flexStart', width: '100%' }}>
-							<Stack className={'logo-box'}>
-								<img style={{ width: '80px', height: '80px' }} src={'/img/logo/icon.png'} alt={'logo'} loading="lazy" />
-							</Stack>
+          {/* SIDEBAR */}
+          <Drawer
+            sx={{
+              width: drawerWidth,
+              flexShrink: 0,
+              '& .MuiDrawer-paper': {
+                width: drawerWidth,
+                boxSizing: 'border-box',
+              },
+            }}
+            variant="permanent"
+            anchor="left"
+            className={'aside'}
+          >
+            <Toolbar sx={{ flexDirection: 'column', alignItems: 'flexStart', width: '100%' }}>
+              <Stack className={'logo-box'}>
+                <img
+                  style={{ width: '80px', height: '80px' }}
+                  src={'/img/logo/icon.png'}
+                  alt={'logo'}
+                  loading="lazy"
+                />
+              </Stack>
 
-							<div
-								className={'user'}
-								style={{
-									display: 'flex',
-									flexDirection: 'row',
-									alignItems: 'center',
-									padding: '10px 14px',
-									background: '#2c3e50',
-									gap: '12px',
-								}}
-							>
-								<Box sx={{ width: '40px', height: '40px' }}>
-									<img
-										style={{ width: '100%', height: '100%' }}
-										src={user.memberImage ? `${REACT_APP_API_URL}/${user.memberImage}` : '/img/profile/defaultUser.png'}
-										alt="user"
-										loading="lazy"
-									/>
-								</Box>
+              <div
+                className={'user'}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: '10px 14px',
+                  background: '#2c3e50',
+                  gap: '12px',
+                }}
+              >
+                <Box sx={{ width: '40px', height: '40px' }}>
+                  <img
+                    style={{ width: '100%', height: '100%' }}
+                    src={
+                      user.memberImage
+                        ? `${REACT_APP_API_URL}/${user.memberImage}`
+                        : '/img/profile/defaultUser.png'
+                    }
+                    alt="user"
+                    loading="lazy"
+                  />
+                </Box>
 
-								<Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<p>{user?.memberNick} </p>
-									<span>{user?.memberPhone}</span>
-								</Box>
-							</div>
-						</Toolbar>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <p>{user?.memberNick} </p>
+                  <span>{user?.memberPhone}</span>
+                </Box>
+              </div>
+            </Toolbar>
 
-						<Divider sx={{ borderColor: '#334155' }} />
+            <Divider sx={{ borderColor: '#334155' }} />
 
-						<MenuList />
-					</Drawer>
+            <MenuList />
+          </Drawer>
 
-					{/* MAIN CONTENT */}
-					<Box component={'div'} id="bunker" sx={{ flexGrow: 1 }}>
-						{/*@ts-ignore*/}
-						<Component {...props} setSnackbar={setSnackbar} setTitle={setTitle} />
-					</Box>
-				</Box>
-			</main>
-		);
-	};
+          {/* MAIN CONTENT */}
+          <Box component={'div'} id="bunker" sx={{ flexGrow: 1 }}>
+            {/*@ts-ignore*/}
+            <Component {...props} setSnackbar={setSnackbar} setTitle={setTitle} />
+          </Box>
+        </Box>
+      </main>
+    );
+  };
 };
 
 export default withAdminLayout;

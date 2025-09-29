@@ -14,86 +14,86 @@ import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/swee
 import { Messages } from '../../libs/config';
 
 const BrandList: NextPage = ({ initialInput }: any) => {
-	const device = useDeviceDetect();
-	const router = useRouter();
+  const device = useDeviceDetect();
+  const router = useRouter();
 
-	const [searchFilter, setSearchFilter] = useState<any>(
-		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
-	);
-	const [sellers, setSellers] = useState<Member[]>([]);
+  const [searchFilter, setSearchFilter] = useState<any>(
+    router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
+  );
+  const [sellers, setSellers] = useState<Member[]>([]);
 
-	/** APOLLO **/
-	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
+  /** APOLLO **/
+  const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
 
-	const { refetch: getSellersRefetch } = useQuery(GET_SELLERS, {
-		variables: { input: searchFilter },
-		fetchPolicy: 'network-only',
-		notifyOnNetworkStatusChange: true,
-		onCompleted: (data: T) => {
-			setSellers(data?.getSellers?.list || []);
-		},
-	});
+  const { refetch: getSellersRefetch } = useQuery(GET_SELLERS, {
+    variables: { input: searchFilter },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onCompleted: (data: T) => {
+      setSellers(data?.getSellers?.list || []);
+    },
+  });
 
-	const likeMemberHandler = async (user: any, id: string) => {
-		try {
-			if (!id) return;
-			if (!user._id) throw new Error(Messages.error2);
+  const likeMemberHandler = async (user: any, id: string) => {
+    try {
+      if (!id) return;
+      if (!user._id) throw new Error(Messages.error2);
 
-			await likeTargetMember({ variables: { input: id } });
-			await getSellersRefetch({ input: searchFilter });
-			await sweetTopSmallSuccessAlert('Success!', 800);
-		} catch (err: any) {
-			console.log('LIKE MEMBER ERROR:', err.message);
-			sweetMixinErrorAlert(err.message);
-		}
-	};
+      await likeTargetMember({ variables: { input: id } });
+      await getSellersRefetch({ input: searchFilter });
+      await sweetTopSmallSuccessAlert('Success!', 800);
+    } catch (err: any) {
+      console.log('LIKE MEMBER ERROR:', err.message);
+      sweetMixinErrorAlert(err.message);
+    }
+  };
 
-	if (device === 'mobile') {
-		return <Stack>CAR BRANDS PAGE MOBILE</Stack>;
-	}
+  if (device === 'mobile') {
+    return <Stack>CAR BRANDS PAGE MOBILE</Stack>;
+  }
 
-	return (
-		<div id="brand-list-page">
-			<Stack className={'container'}>
-				<Typography variant="h4" className="brand-title">
-					CAR BRANDS MOBILE
-				</Typography>
-				<Stack className={'brand-grid'}>
-					{sellers?.length === 0 ? (
-						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="no-sellers" loading="lazy" />
-							<p>No Sellers found!</p>
-						</div>
-					) : (
-						sellers.map((seller: Member) => (
-							<BrandCard
-								key={seller._id}
-								seller={seller}
-								likeMemberHandler={likeMemberHandler}
-								onClick={() => {
-									if (!seller.brandSlug) {
-										console.warn('Brand slug missing for seller:', seller);
-										return;
-									}
-									router.push(`/brand/${seller.brandSlug}`);
-								}}
-							/>
-						))
-					)}
-				</Stack>
-			</Stack>
-		</div>
-	);
+  return (
+    <div id="brand-list-page">
+      <Stack className={'container'}>
+        <Typography variant="h4" className="brand-title">
+          CAR BRANDS MOBILE
+        </Typography>
+        <Stack className={'brand-grid'}>
+          {sellers?.length === 0 ? (
+            <div className={'no-data'}>
+              <img src="/img/icons/icoAlert.svg" alt="no-sellers" loading="lazy" />
+              <p>No Sellers found!</p>
+            </div>
+          ) : (
+            sellers.map((seller: Member) => (
+              <BrandCard
+                key={seller._id}
+                seller={seller}
+                likeMemberHandler={likeMemberHandler}
+                onClick={() => {
+                  if (!seller.brandSlug) {
+                    console.warn('Brand slug missing for seller:', seller);
+                    return;
+                  }
+                  router.push(`/brand/${seller.brandSlug}`);
+                }}
+              />
+            ))
+          )}
+        </Stack>
+      </Stack>
+    </div>
+  );
 };
 
 BrandList.defaultProps = {
-	initialInput: {
-		page: 1,
-		limit: 10,
-		sort: 'createdAt',
-		direction: 'ASC',
-		search: {},
-	},
+  initialInput: {
+    page: 1,
+    limit: 10,
+    sort: 'createdAt',
+    direction: 'ASC',
+    search: {},
+  },
 };
 
 export default withLayoutBasic(BrandList);

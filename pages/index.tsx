@@ -12,31 +12,31 @@ import CompareCars from '../libs/components/homepage/CompareCars';
 import TrendCars from '../libs/components/homepage/TrendCars';
 
 const Home: NextPage = () => {
-	const device = useDeviceDetect();
+  const device = useDeviceDetect();
 
-	if (device === 'mobile') {
-		return (
-			<Stack className={'home-page'}>
-				<PopularCars />
-				<TopBrands />
-				<Advertisement />
-				<TrendCars />
-				<CommunityBoards />
-			</Stack>
-		);
-	} else {
-		return (
-			<Stack className={'home-page'}>
-				<PopularCars />
-				<TopBrands />
-				<Advertisement />
-				<TrendCars />
-				<CarReview />
-				<CompareCars />
-				<CommunityBoards />
-			</Stack>
-		);
-	}
+  if (device === 'mobile') {
+    return (
+      <Stack className={'home-page'}>
+        <PopularCars />
+        <TopBrands />
+        <Advertisement />
+        <TrendCars />
+        <CommunityBoards />
+      </Stack>
+    );
+  } else {
+    return (
+      <Stack className={'home-page'}>
+        <PopularCars />
+        <TopBrands />
+        <Advertisement />
+        <TrendCars />
+        <CarReview />
+        <CompareCars />
+        <CommunityBoards />
+      </Stack>
+    );
+  }
 };
 
 export default withLayoutMain(Home);

@@ -1,70 +1,70 @@
 #pc-wrap {
-	#my-page {
-		#my-favorites-page {
-			width: 100%;
-			height: auto;
-			display: flex;
-			flex-direction: column;
-			gap: 57px;
+  #my-page {
+    #my-favorites-page {
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 57px;
 
-			.main-title-box {
-				width: auto;
-				height: auto;
-				flex-direction: row;
-				justify-content: space-between;
+      .main-title-box {
+        width: auto;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-between;
 
-				.right-box {
-					width: 315px;
+        .right-box {
+          width: 315px;
 
-					.main-title {
-						color: #181a20;
-						font-family: $font;
-						font-size: 30px;
-						font-style: normal;
-						font-weight: 600;
-						line-height: normal;
-						letter-spacing: 0.6px;
-						text-transform: capitalize;
-					}
+          .main-title {
+            color: #181a20;
+            font-family: $font;
+            font-size: 30px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            letter-spacing: 0.6px;
+            text-transform: capitalize;
+          }
 
-					.sub-title {
-						color: #181a20;
-						font-family: $font;
-						font-size: 14px;
-						font-style: normal;
-						font-weight: 400;
-						line-height: 26px;
-					}
-				}
-			}
+          .sub-title {
+            color: #181a20;
+            font-family: $font;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 26px;
+          }
+        }
+      }
 
-			.favorites-list-box {
-				width: 100%;
-				height: auto;
-				flex-wrap: wrap;
-				flex-direction: row;
-				padding: 0;
-				gap: 15px;
-			}
+      .favorites-list-box {
+        width: 100%;
+        height: auto;
+        flex-wrap: wrap;
+        flex-direction: row;
+        padding: 0;
+        gap: 15px;
+      }
 
-			.pagination-config {
-				width: 100%;
-				height: auto;
-				justify-content: center;
-				align-items: center;
-				margin-top: 30px;
-				.total-result {
-					p {
-						color: #181a20;
-						text-align: center;
-						font-family: $font;
-						font-size: 14px;
-						font-style: normal;
-						font-weight: 400;
-						line-height: 26px;
-					}
-				}
-			}
-		}
-	}
+      .pagination-config {
+        width: 100%;
+        height: auto;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+        .total-result {
+          p {
+            color: #181a20;
+            text-align: center;
+            font-family: $font;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 26px;
+          }
+        }
+      }
+    }
+  }
 }

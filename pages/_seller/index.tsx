@@ -4,14 +4,14 @@ import { useRouter } from 'next/router';
 import withSellerLayout from '../../libs/components/layout/LayoutSeller';
 
 const SellerHome: NextPage = (props: any) => {
-	const router = useRouter();
+  const router = useRouter();
 
-	/** LIFECYCLES **/
-	useEffect(() => {
-		console.log('Router object:', router);
-		router.push('/_seller/dashboard');
-	}, []);
-	return <></>;
+  /** LIFECYCLES **/
+  useEffect(() => {
+    console.log('Router object:', router);
+    router.push('/_seller/dashboard');
+  }, []);
+  return <></>;
 };
 
 export default withSellerLayout(SellerHome);

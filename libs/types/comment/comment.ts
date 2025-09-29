@@ -3,21 +3,21 @@ import { MeLiked, TotalCounter } from '../car/car';
 import { Member } from '../member/member';
 
 export interface Comment {
-	_id: string;
-	commentStatus: CommentStatus;
-	commentGroup: CommentGroup;
-	commentContent: string;
-	commentRefId: string;
-	memberId: string;
-	createdAt: Date;
-	updatedAt: Date;
+  _id: string;
+  commentStatus: CommentStatus;
+  commentGroup: CommentGroup;
+  commentContent: string;
+  commentRefId: string;
+  memberId: string;
+  createdAt: Date;
+  updatedAt: Date;
 
-	/** from aggregation **/
-	meLiked?: MeLiked[];
-	memberData?: Member;
+  /** from aggregation **/
+  meLiked?: MeLiked[];
+  memberData?: Member;
 }
 
 export interface Comments {
-	list: Comment[];
-	metaCounter: TotalCounter[];
+  list: Comment[];
+  metaCounter: TotalCounter[];
 }

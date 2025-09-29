@@ -1,792 +1,792 @@
 @import '/scss/variables.scss';
 
 #mobile-wrap {
-	.top {
-		height: 100px;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.popular-cars {
-		width: 100%;
-		padding: 20px 0;
-		background: #fff;
-
-		.container {
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-			gap: 15px;
-
-			.popular-text {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 0 10px;
-
-				h2 {
-					font-size: 20px;
-					font-weight: 500;
-					color: #181a20;
-				}
-			}
-
-			.popular-car-box {
-				width: 100%;
-				padding: 10px;
-				overflow: hidden;
-
-				.empty-list {
-					width: 100%;
-					height: 150px;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					font-size: 14px;
-					color: #999;
-				}
-
-				.popular-car-swiper {
-					width: 100%;
-				}
-
-				// Ensure that swiper slide takes up 100% width, one item per view
-				.swiper-slide {
-					width: 100% !important; // Ensure each slide takes up 100% of the container width
-					max-width: 100% !important; // Prevent overflow of any width
-				}
-
-				.popular-car-slide {
-					display: flex;
-					justify-content: center; // Center the car in each slide
-					width: 100% !important;
-				}
-
-				.car-box {
-					width: 100%;
-					border-radius: 12px;
-					background: #fff;
-					cursor: pointer;
-					display: flex;
-					flex-direction: column;
-					border-radius: 20px;
-					border: 1px solid #e5e5e5;
-					box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
-					background-color: #fff;
-
-					.img-box {
-						width: 100%;
-						height: 280px;
-						overflow: hidden;
-						border-radius: 12px 12px 0 0;
-						position: relative;
-
-						img {
-							width: 100%;
-							height: 100%;
-							object-fit: cover;
-							display: block;
-						}
-					}
-
-					.car-info {
-						padding: 20px 22px 17px;
-						display: flex;
-						flex-direction: column;
-						box-sizing: border-box;
-						border-radius: 0px 0px 12px 12px;
-						border: 1px solid rgba(196, 196, 196, 0.71);
-						border-top: none;
-						background: #fff;
-						box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
-
-						.car-content {
-							width: 100%;
-							height: 124px;
-							display: flex;
-							flex-direction: column;
-							align-items: flex-start;
-							justify-content: space-between;
-							gap: 8px;
-
-							.car-type {
-								width: auto;
-								height: auto;
-								color: #ff7101;
-								font-family: $font;
-								font-size: 14px;
-								font-style: normal;
-								font-weight: 500;
-								line-height: 20px;
-							}
-
-							.car-name {
-								width: auto;
-								height: auto;
-								color: #24272c;
-								font-family: $font;
-								font-size: 18px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: normal;
-							}
-
-							.car-category {
-								width: 100%;
-								height: 20px;
-								display: flex;
-								flex-direction: row;
-								justify-content: space-between;
-
-								.category {
-									width: auto;
-									height: 20px;
-									display: flex;
-									align-items: center;
-									gap: 8px;
-
-									img {
-										width: 16px;
-										height: 16px;
-									}
-
-									span {
-										width: auto;
-										height: 20px;
-										color: #696665;
-										font-family: $font;
-										font-size: 14px;
-										font-style: normal;
-										font-weight: 400;
-										line-height: 20px;
-									}
-								}
-							}
-
-							.car-price-btn {
-								width: 100%;
-								height: 25px;
-								display: flex;
-								flex-direction: row;
-								justify-content: space-between;
-								align-items: center;
-								margin-top: 12px;
-
-								.price {
-									color: #ff7101;
-									font-family: $font;
-									font-size: 20px;
-									font-style: normal;
-									font-weight: 600;
-									line-height: normal;
-								}
-
-								.view-like-btn {
-									display: flex;
-									align-items: center;
-									gap: 10px;
-
-									.view-btn,
-									.like-btn {
-										display: flex;
-										align-items: center;
-										justify-content: center;
-
-										.view,
-										.like {
-											width: 16px;
-											height: 16px;
-											color: #444;
-										}
-
-										span {
-											font-size: 13px;
-											margin-left: 3px;
-											color: #444;
-										}
-									}
-								}
-							}
-						}
-
-						.divider {
-							width: 268px;
-							height: 1px;
-							background: #ededed;
-						}
-					}
-				}
-			}
-		}
-	}
-
-	.top-brands {
-		width: 100%;
-		padding: 20px 0;
-		background: #fff;
-		display: flex;
-		flex-direction: column;
-		gap: 15px;
-		margin-bottom: 20px;
-
-		/* ---- Title ---- */
-		.brand-text {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 0 10px;
-
-			h2 {
-				font-size: 20px;
-				font-weight: 500;
-				color: #181a20;
-
-				@media (min-width: 768px) {
-					font-size: 24px;
-					font-weight: 600;
-				}
-			}
-		}
-
-		/* ---- Brand list wrapper ---- */
-		.brands-list {
-			width: 100%;
-			padding: 10px;
-			overflow: hidden;
-
-			.top-brand-swiper {
-				width: 100%;
-			}
-
-			/* Swiper slides */
-			.swiper-slide {
-				width: auto !important; /* allow multiple per view */
-				max-width: none !important;
-				display: flex;
-				justify-content: center;
-			}
-
-			/* ---- Card ---- */
-			.top-brand-card {
-				width: 100%;
-				max-width: 160px;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				gap: 15px;
-				cursor: pointer;
-				border-radius: 12px;
-				background: #f8f8f8;
-				padding: 12px;
-
-				/* ---- Inside Box ---- */
-				.brand-box {
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					gap: 6px;
-					margin-left: 15px;
-
-					.brand-logo-wrapper {
-						width: 80px;
-						height: 80px;
-						border-radius: 50%;
-						overflow: hidden;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						background: #fff;
-						border: 1px solid #eee;
-
-						img {
-							width: 100%;
-							height: 100%;
-							object-fit: cover;
-						}
-					}
-
-					.brand-info {
-						text-align: center;
-						padding: 5px;
-
-						.brand-name {
-							font-size: 14px;
-							font-weight: 600;
-							color: #181a20;
-
-							@media (min-width: 768px) {
-								font-size: 16px;
-							}
-						}
-
-						.brand-total {
-							font-size: 12px;
-							color: #5c6368;
-
-							@media (min-width: 768px) {
-								font-size: 13px;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		/* ---- Empty List ---- */
-		.empty-list {
-			width: 100%;
-			height: 100px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			font-size: 14px;
-			color: #999;
-		}
-	}
-
-	.video-frame {
-		margin: 20px 0;
-		width: 100%;
-		height: 300px;
-		background: black;
-		transform: perspective(0px);
-		box-shadow: -3px 0px 20px 14px #34343480;
-	}
-
-	.trend-cars {
-		width: 100%;
-		padding: 20px 0;
-		background: #fff;
-
-		.container {
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-			gap: 15px;
-
-			.trend-text {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 0 10px;
-
-				h2 {
-					font-size: 20px;
-					font-weight: 500;
-					color: #181a20;
-				}
-			}
-
-			.trend-car-box {
-				width: 100%;
-				padding: 10px;
-				overflow: hidden;
-
-				.trend-car-swiper {
-					width: 100%;
-				}
-
-				// Ensure that swiper slide takes up 100% width, one item per view
-				.swiper-slide {
-					width: 100% !important; // Ensure each slide takes up 100% of the container width
-					max-width: 100% !important; // Prevent overflow of any width
-				}
-
-				.trend-car-slide {
-					display: flex;
-					justify-content: center; // Center the car in each slide
-					width: 100% !important;
-				}
-
-				.car-box {
-					width: 100%;
-					border-radius: 12px;
-					background: #fff;
-					display: flex;
-					flex-direction: column;
-					border-radius: 20px;
-					border: 1px solid #e5e5e5;
-					box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
-					background-color: #fff;
-
-					.img-box {
-						width: 100%;
-						height: 280px;
-						overflow: hidden;
-						border-radius: 12px 12px 0 0;
-						position: relative;
-
-						img {
-							width: 100%;
-							height: 100%;
-							object-fit: cover;
-							display: block;
-						}
-					}
-
-					.car-info {
-						padding: 20px 22px 17px;
-						display: flex;
-						flex-direction: column;
-						box-sizing: border-box;
-						border-radius: 0px 0px 12px 12px;
-						border: 1px solid rgba(196, 196, 196, 0.71);
-						border-top: none;
-						background: #fff;
-						box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
-
-						.car-content {
-							width: 100%;
-							height: 124px;
-							display: flex;
-							flex-direction: column;
-							align-items: flex-start;
-							justify-content: space-between;
-							gap: 8px;
-
-							.car-type {
-								width: auto;
-								height: auto;
-								color: #ff7101;
-								font-family: $font;
-								font-size: 14px;
-								font-style: normal;
-								font-weight: 500;
-								line-height: 20px;
-							}
-
-							.car-name {
-								width: auto;
-								height: auto;
-								color: #24272c;
-								font-family: $font;
-								font-size: 18px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: normal;
-							}
-
-							.car-category {
-								width: 100%;
-								height: 20px;
-								display: flex;
-								flex-direction: row;
-								justify-content: space-between;
-
-								.category {
-									width: auto;
-									height: 20px;
-									display: flex;
-									align-items: center;
-									gap: 8px;
-
-									img {
-										width: 16px;
-										height: 16px;
-									}
-
-									span {
-										width: auto;
-										height: 20px;
-										color: #696665;
-										font-family: $font;
-										font-size: 14px;
-										font-style: normal;
-										font-weight: 400;
-										line-height: 20px;
-									}
-								}
-							}
-
-							.car-price-btn {
-								width: 100%;
-								height: 25px;
-								display: flex;
-								flex-direction: row;
-								justify-content: space-between;
-								align-items: center;
-								margin-top: 12px;
-
-								.price {
-									color: #ff7101;
-									font-family: $font;
-									font-size: 20px;
-									font-style: normal;
-									font-weight: 600;
-									line-height: normal;
-								}
-
-								.view-like-btn {
-									display: flex;
-									align-items: center;
-									gap: 10px;
-
-									.view-btn,
-									.like-btn {
-										display: flex;
-										align-items: center;
-										justify-content: center;
-
-										.view,
-										.like {
-											width: 16px;
-											height: 16px;
-											color: #444;
-										}
-
-										span {
-											font-size: 13px;
-											margin-left: 3px;
-											color: #444;
-										}
-									}
-								}
-							}
-						}
-
-						.divider {
-							width: 268px;
-							height: 1px;
-							background: #ededed;
-						}
-					}
-				}
-			}
-
-			.empty-list {
-				width: 100%;
-				height: 150px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				font-size: 14px;
-				color: #999;
-			}
-		}
-	}
-
-	.community-board {
-		width: 100%;
-		padding: 20px 0;
-		background: #fff;
-		gap: 20px;
-
-		.container {
-			display: flex;
-			flex-direction: column;
-			gap: 15px;
-
-			.blog-text {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 0 10px;
-
-				h2 {
-					font-size: 20px;
-					font-weight: 500;
-					color: #181a20;
-				}
-			}
-
-			.main-blog {
-				display: flex;
-				flex-direction: column;
-				gap: 1px;
-				padding: 10px;
-
-				.post {
-					width: 100%;
-					border-radius: 12px;
-					background: #fff;
-					display: flex;
-					flex-direction: column;
-					border-radius: 20px;
-					border: 1px solid #e5e5e5;
-					box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
-					background-color: #fff;
-
-					.img-box {
-						width: 100%;
-						height: 280px;
-						overflow: hidden;
-						border-radius: 12px 12px 0 0;
-						position: relative;
-
-						img {
-							width: 100%;
-							height: 100%;
-							object-fit: cover;
-							display: block;
-						}
-					}
-
-					.content {
-						width: 100%;
-						display: flex;
-						flex-direction: column;
-						gap: 12px;
-						margin-top: 16px;
-						padding: 0 20px 20px;
-
-						.heading {
-							width: 100%;
-							display: flex;
-							flex-direction: column;
-							gap: 8px;
-
-							.name-type {
-								display: flex;
-								align-items: flex-start;
-								gap: 8px;
-
-								.name {
-									color: #000;
-									font-size: 14px;
-									font-weight: 700;
-									cursor: pointer;
-								}
-
-								.dvr {
-									width: 1px;
-									height: 12px;
-									background: rgba(0, 0, 0, 0.15);
-								}
-
-								.type {
-									color: #ff7101;
-									font-size: 14px;
-									font-weight: 500;
-									cursor: pointer;
-								}
-							}
-
-							h2 {
-								color: #000;
-								font-size: 22px;
-								font-weight: 500;
-								line-height: 1.3;
-								cursor: pointer;
-								transition: color 0.3s ease;
-
-								&:hover {
-									color: #ff7101;
-								}
-							}
-						}
-
-						span {
-							color: #000;
-							font-size: 14px;
-							font-weight: 400;
-							line-height: 20px;
-						}
-					}
-				}
-			}
-		}
-	}
-
-	#footer {
-		position: relative;
-		padding: 60px 0px 18px 0px;
-		width: 100%;
-		height: auto;
-		display: flex;
-		flex-direction: row;
-		background: #181a20;
-
-		.footer-container {
-			padding: 0 10px;
-			margin: 0 auto;
-			width: 1300px;
-			height: auto;
-
-			.divider {
-				width: 100%;
-				height: 1px;
-				background-color: #212329;
-				margin: 10px 0;
-			}
-
-			.footer-main {
-				display: flex;
-				flex-direction: row;
-				justify-content: space-around;
-				align-items: center;
-				gap: 20px;
-
-				.main {
-					display: flex;
-					flex-direction: column;
-					gap: 10px;
-
-					h3 {
-						font-size: 16px;
-						font-weight: 600;
-						color: #fff;
-						margin-bottom: 5px;
-					}
-
-					.info {
-						display: flex;
-						flex-direction: column;
-						gap: 10px;
-
-						span {
-							font-size: 12px;
-							color: #bebdbd;
-							cursor: pointer;
-
-							&:hover {
-								color: #ff7101;
-							}
-						}
-					}
-				}
-			}
-
-			.footer-end {
-				display: flex;
-				flex-direction: row;
-				justify-content: space-around;
-				align-items: center;
-				gap: 10px;
-
-				.logo-box img {
-					width: 80px;
-					height: auto;
-				}
-
-				.info-social {
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					gap: 5px;
-
-					span {
-						font-size: 11px;
-						color: #bebdbd;
-					}
-
-					.media-box {
-						display: flex;
-						gap: 10px;
-
-						svg {
-							font-size: 20px;
-							color: #fff;
-							cursor: pointer;
-
-							&:hover {
-								color: #ff7101;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+  .top {
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .popular-cars {
+    width: 100%;
+    padding: 20px 0;
+    background: #fff;
+
+    .container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .popular-text {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+
+        h2 {
+          font-size: 20px;
+          font-weight: 500;
+          color: #181a20;
+        }
+      }
+
+      .popular-car-box {
+        width: 100%;
+        padding: 10px;
+        overflow: hidden;
+
+        .empty-list {
+          width: 100%;
+          height: 150px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 14px;
+          color: #999;
+        }
+
+        .popular-car-swiper {
+          width: 100%;
+        }
+
+        // Ensure that swiper slide takes up 100% width, one item per view
+        .swiper-slide {
+          width: 100% !important; // Ensure each slide takes up 100% of the container width
+          max-width: 100% !important; // Prevent overflow of any width
+        }
+
+        .popular-car-slide {
+          display: flex;
+          justify-content: center; // Center the car in each slide
+          width: 100% !important;
+        }
+
+        .car-box {
+          width: 100%;
+          border-radius: 12px;
+          background: #fff;
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          border-radius: 20px;
+          border: 1px solid #e5e5e5;
+          box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+          background-color: #fff;
+
+          .img-box {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+            }
+          }
+
+          .car-info {
+            padding: 20px 22px 17px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            border-radius: 0px 0px 12px 12px;
+            border: 1px solid rgba(196, 196, 196, 0.71);
+            border-top: none;
+            background: #fff;
+            box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+
+            .car-content {
+              width: 100%;
+              height: 124px;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              justify-content: space-between;
+              gap: 8px;
+
+              .car-type {
+                width: auto;
+                height: auto;
+                color: #ff7101;
+                font-family: $font;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 20px;
+              }
+
+              .car-name {
+                width: auto;
+                height: auto;
+                color: #24272c;
+                font-family: $font;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+              }
+
+              .car-category {
+                width: 100%;
+                height: 20px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .category {
+                  width: auto;
+                  height: 20px;
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+
+                  img {
+                    width: 16px;
+                    height: 16px;
+                  }
+
+                  span {
+                    width: auto;
+                    height: 20px;
+                    color: #696665;
+                    font-family: $font;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 20px;
+                  }
+                }
+              }
+
+              .car-price-btn {
+                width: 100%;
+                height: 25px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 12px;
+
+                .price {
+                  color: #ff7101;
+                  font-family: $font;
+                  font-size: 20px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: normal;
+                }
+
+                .view-like-btn {
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+
+                  .view-btn,
+                  .like-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .view,
+                    .like {
+                      width: 16px;
+                      height: 16px;
+                      color: #444;
+                    }
+
+                    span {
+                      font-size: 13px;
+                      margin-left: 3px;
+                      color: #444;
+                    }
+                  }
+                }
+              }
+            }
+
+            .divider {
+              width: 268px;
+              height: 1px;
+              background: #ededed;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .top-brands {
+    width: 100%;
+    padding: 20px 0;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+
+    /* ---- Title ---- */
+    .brand-text {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+
+      h2 {
+        font-size: 20px;
+        font-weight: 500;
+        color: #181a20;
+
+        @media (min-width: 768px) {
+          font-size: 24px;
+          font-weight: 600;
+        }
+      }
+    }
+
+    /* ---- Brand list wrapper ---- */
+    .brands-list {
+      width: 100%;
+      padding: 10px;
+      overflow: hidden;
+
+      .top-brand-swiper {
+        width: 100%;
+      }
+
+      /* Swiper slides */
+      .swiper-slide {
+        width: auto !important; /* allow multiple per view */
+        max-width: none !important;
+        display: flex;
+        justify-content: center;
+      }
+
+      /* ---- Card ---- */
+      .top-brand-card {
+        width: 100%;
+        max-width: 160px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        cursor: pointer;
+        border-radius: 12px;
+        background: #f8f8f8;
+        padding: 12px;
+
+        /* ---- Inside Box ---- */
+        .brand-box {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 6px;
+          margin-left: 15px;
+
+          .brand-logo-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            border: 1px solid #eee;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+
+          .brand-info {
+            text-align: center;
+            padding: 5px;
+
+            .brand-name {
+              font-size: 14px;
+              font-weight: 600;
+              color: #181a20;
+
+              @media (min-width: 768px) {
+                font-size: 16px;
+              }
+            }
+
+            .brand-total {
+              font-size: 12px;
+              color: #5c6368;
+
+              @media (min-width: 768px) {
+                font-size: 13px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    /* ---- Empty List ---- */
+    .empty-list {
+      width: 100%;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      color: #999;
+    }
+  }
+
+  .video-frame {
+    margin: 20px 0;
+    width: 100%;
+    height: 300px;
+    background: black;
+    transform: perspective(0px);
+    box-shadow: -3px 0px 20px 14px #34343480;
+  }
+
+  .trend-cars {
+    width: 100%;
+    padding: 20px 0;
+    background: #fff;
+
+    .container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .trend-text {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+
+        h2 {
+          font-size: 20px;
+          font-weight: 500;
+          color: #181a20;
+        }
+      }
+
+      .trend-car-box {
+        width: 100%;
+        padding: 10px;
+        overflow: hidden;
+
+        .trend-car-swiper {
+          width: 100%;
+        }
+
+        // Ensure that swiper slide takes up 100% width, one item per view
+        .swiper-slide {
+          width: 100% !important; // Ensure each slide takes up 100% of the container width
+          max-width: 100% !important; // Prevent overflow of any width
+        }
+
+        .trend-car-slide {
+          display: flex;
+          justify-content: center; // Center the car in each slide
+          width: 100% !important;
+        }
+
+        .car-box {
+          width: 100%;
+          border-radius: 12px;
+          background: #fff;
+          display: flex;
+          flex-direction: column;
+          border-radius: 20px;
+          border: 1px solid #e5e5e5;
+          box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+          background-color: #fff;
+
+          .img-box {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+            }
+          }
+
+          .car-info {
+            padding: 20px 22px 17px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            border-radius: 0px 0px 12px 12px;
+            border: 1px solid rgba(196, 196, 196, 0.71);
+            border-top: none;
+            background: #fff;
+            box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+
+            .car-content {
+              width: 100%;
+              height: 124px;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              justify-content: space-between;
+              gap: 8px;
+
+              .car-type {
+                width: auto;
+                height: auto;
+                color: #ff7101;
+                font-family: $font;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 20px;
+              }
+
+              .car-name {
+                width: auto;
+                height: auto;
+                color: #24272c;
+                font-family: $font;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+              }
+
+              .car-category {
+                width: 100%;
+                height: 20px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .category {
+                  width: auto;
+                  height: 20px;
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+
+                  img {
+                    width: 16px;
+                    height: 16px;
+                  }
+
+                  span {
+                    width: auto;
+                    height: 20px;
+                    color: #696665;
+                    font-family: $font;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 20px;
+                  }
+                }
+              }
+
+              .car-price-btn {
+                width: 100%;
+                height: 25px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 12px;
+
+                .price {
+                  color: #ff7101;
+                  font-family: $font;
+                  font-size: 20px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: normal;
+                }
+
+                .view-like-btn {
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+
+                  .view-btn,
+                  .like-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .view,
+                    .like {
+                      width: 16px;
+                      height: 16px;
+                      color: #444;
+                    }
+
+                    span {
+                      font-size: 13px;
+                      margin-left: 3px;
+                      color: #444;
+                    }
+                  }
+                }
+              }
+            }
+
+            .divider {
+              width: 268px;
+              height: 1px;
+              background: #ededed;
+            }
+          }
+        }
+      }
+
+      .empty-list {
+        width: 100%;
+        height: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        color: #999;
+      }
+    }
+  }
+
+  .community-board {
+    width: 100%;
+    padding: 20px 0;
+    background: #fff;
+    gap: 20px;
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .blog-text {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+
+        h2 {
+          font-size: 20px;
+          font-weight: 500;
+          color: #181a20;
+        }
+      }
+
+      .main-blog {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        padding: 10px;
+
+        .post {
+          width: 100%;
+          border-radius: 12px;
+          background: #fff;
+          display: flex;
+          flex-direction: column;
+          border-radius: 20px;
+          border: 1px solid #e5e5e5;
+          box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+          background-color: #fff;
+
+          .img-box {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+            }
+          }
+
+          .content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+            padding: 0 20px 20px;
+
+            .heading {
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+
+              .name-type {
+                display: flex;
+                align-items: flex-start;
+                gap: 8px;
+
+                .name {
+                  color: #000;
+                  font-size: 14px;
+                  font-weight: 700;
+                  cursor: pointer;
+                }
+
+                .dvr {
+                  width: 1px;
+                  height: 12px;
+                  background: rgba(0, 0, 0, 0.15);
+                }
+
+                .type {
+                  color: #ff7101;
+                  font-size: 14px;
+                  font-weight: 500;
+                  cursor: pointer;
+                }
+              }
+
+              h2 {
+                color: #000;
+                font-size: 22px;
+                font-weight: 500;
+                line-height: 1.3;
+                cursor: pointer;
+                transition: color 0.3s ease;
+
+                &:hover {
+                  color: #ff7101;
+                }
+              }
+            }
+
+            span {
+              color: #000;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #footer {
+    position: relative;
+    padding: 60px 0px 18px 0px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    background: #181a20;
+
+    .footer-container {
+      padding: 0 10px;
+      margin: 0 auto;
+      width: 1300px;
+      height: auto;
+
+      .divider {
+        width: 100%;
+        height: 1px;
+        background-color: #212329;
+        margin: 10px 0;
+      }
+
+      .footer-main {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        gap: 20px;
+
+        .main {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+
+          h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 5px;
+          }
+
+          .info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            span {
+              font-size: 12px;
+              color: #bebdbd;
+              cursor: pointer;
+
+              &:hover {
+                color: #ff7101;
+              }
+            }
+          }
+        }
+      }
+
+      .footer-end {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        gap: 10px;
+
+        .logo-box img {
+          width: 80px;
+          height: auto;
+        }
+
+        .info-social {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 5px;
+
+          span {
+            font-size: 11px;
+            color: #bebdbd;
+          }
+
+          .media-box {
+            display: flex;
+            gap: 10px;
+
+            svg {
+              font-size: 20px;
+              color: #fff;
+              cursor: pointer;
+
+              &:hover {
+                color: #ff7101;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
