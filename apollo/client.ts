@@ -62,6 +62,10 @@ class LoggingWebSocket {
 
 function createIsomorphicLink() {
 	if (typeof window !== 'undefined') {
+		// log env variable
+		// console.log('GRAPHQL URL from env:', process.env.REACT_APP_API_GRAPHQL_URL);
+		// console.log('WS URL from env:', process.env.REACT_APP_API_WS);
+
 		const authLink = new ApolloLink((operation, forward) => {
 			operation.setContext(({ headers = {} }) => ({
 				headers: {
