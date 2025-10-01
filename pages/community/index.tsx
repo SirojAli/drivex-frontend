@@ -23,19 +23,25 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 	const router = useRouter();
 	const { query } = router;
 
-	const articleCategory = query?.articleCategory as string;
+	/** Use category from query or default to 'ALL' */
+	const category = (query?.articleCategory as string) || 'ALL';
+
 	const [searchCommunity, setSearchCommunity] = useState<BoardArticlesInquiry>(initialInput);
 	const [boardArticles, setBoardArticles] = useState<BoardArticle[]>([]);
 	const [totalCount, setTotalCount] = useState<number>(0);
 
-	/** Default to ALL-BLOGS on first load **/
+	/** Update searchCommunity when category changes */
 	useEffect(() => {
-		if (!articleCategory) {
-			router.replace({ pathname: router.pathname, query: { articleCategory: 'ALL' } }, undefined, { shallow: true });
-		}
-	}, []);
+		const isAll = category === 'ALL';
+		const newSearch: BoardArticlesInquiry = {
+			...searchCommunity,
+			page: 1, // reset to first page on category change
+			search: isAll ? {} : { articleCategory: category.toUpperCase() as BoardArticleCategory },
+		};
+		setSearchCommunity(newSearch);
+	}, [category]);
 
-	/** Apollo Query **/
+	/** Apollo Query */
 	const {
 		loading: boardArticlesLoading,
 		data: boardArticlesData,
@@ -51,33 +57,17 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 		},
 	});
 
-	/** React to category change **/
-	useEffect(() => {
-		const isAll = articleCategory === 'ALL';
-
-		const newSearch: BoardArticlesInquiry = {
-			...searchCommunity,
-			page: 1,
-			search: isAll
-				? {}
-				: {
-						articleCategory: articleCategory?.toUpperCase() as BoardArticleCategory,
-				  },
-		};
-		setSearchCommunity(newSearch);
-	}, [articleCategory]);
-
-	/** Refetch when searchCommunity changes **/
+	/** Refetch when searchCommunity changes */
 	useEffect(() => {
 		boardArticlesRefetch({ input: searchCommunity });
 	}, [searchCommunity, boardArticlesRefetch]);
 
-	/** Pagination handler **/
+	/** Pagination handler */
 	const paginationHandler = (_: T, page: number) => {
 		setSearchCommunity({ ...searchCommunity, page });
 	};
 
-	/** Like Handler **/
+	/** Like Handler */
 	const [likeTargetBoardArticle] = useMutation(LIKE_TARGET_BOARD_ARTICLE);
 
 	const likeArticleHandler = async (user: T, id: string) => {
@@ -103,7 +93,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 							Home
 						</Link>
 						<ArrowForwardIosIcon className={'arrow'} />
-						<span>All Blogs</span>
+						<span>{category === 'ALL' ? 'All Blogs' : category}</span>
 					</Stack>
 
 					{/* Title */}
