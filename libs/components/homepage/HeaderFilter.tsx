@@ -180,12 +180,8 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 		<>
 			<Stack className={'header-box'}>
 				<Stack className={'header-text'}>
-					{/* <p className={'bold'}>Find Your Perfect Car Today</p> */}
-					{/* <p className={'bold'}>Drive Your Dream Today</p> */}
 					<p className={'bold'}>Drive Beyond Limits</p>
 
-					{/* <span className={'short'}>Discover New Models from Brands You Love</span> */}
-					{/* <span className={'short'}>Browse, Compare, and Drive with Confidence</span> */}
 					<span className={'short'}>Explore the Cars that Move You</span>
 
 					<Box className={'detail'}>
@@ -229,7 +225,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							{carType.map((type: string) => {
 								return (
 									<div
-										style={{ backgroundImage: `url(/img/banner/types/${type.toLowerCase()}.jpg)` }}
+										style={{ backgroundImage: `url(/img/banner/brands/${type}.png)` }}
 										onClick={() => carTypeSelectHandler(type)}
 										key={type}
 									>
