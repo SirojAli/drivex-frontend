@@ -225,7 +225,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							{carType.map((type: string) => {
 								return (
 									<div
-										style={{ backgroundImage: `url(/img/banner/brands/${type}.png)` }}
+										style={{ backgroundImage: `url(/img/banner/brands/${type}.jpg)` }}
 										onClick={() => carTypeSelectHandler(type)}
 										key={type}
 									>
