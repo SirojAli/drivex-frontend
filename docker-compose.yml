@@ -9,7 +9,7 @@ services:
       - PORT=3000
 
     volumes:
-      - /root/drivex-project/drivex-frontend:/usr/src/drivex-frontend
+      - /home/drivex-project/drivex-frontend:/usr/src/drivex-frontend
     working_dir: /usr/src/drivex-frontend
 
     networks:
