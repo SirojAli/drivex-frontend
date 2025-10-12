@@ -58,7 +58,7 @@ const Join: NextPage = () => {
 					</Stack>
 					<Stack className={'main'}>
 						<Stack className={'left'}>
-							<img src="/img/cars/head9.png" alt="" />
+							<img src="/img/cars/i8.png" alt="" />
 						</Stack>
 						<Stack className={'right'}>
 							<Box className={'info'}>
