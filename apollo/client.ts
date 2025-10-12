@@ -46,12 +46,12 @@ function createIsomorphicLink() {
 
 	// HTTP link
 	const httpLink = createUploadLink({
-		uri: process.env.REACT_APP_API_GRAPHQL_URL, // e.g., https://72.60.197.203:4001/graphql
+		uri: process.env.REACT_APP_API_GRAPHQL_URL, // e.g., https://idrivex.uz:4001/graphql
 	});
 
 	// WebSocket link for subscriptions
 	const wsLink = new WebSocketLink({
-		uri: process.env.REACT_APP_API_WS ?? 'wss://72.60.197.203:4001', // use WSS for HTTPS
+		uri: process.env.REACT_APP_API_WS ?? 'wss://idrivex.uz/ws/', // use WSS for HTTPS
 		options: {
 			reconnect: true,
 			connectionParams: {
