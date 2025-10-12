@@ -1,203 +1,213 @@
 #pc-wrap {
-  #brand-list-page {
-    background: #f8f8f8;
-    margin-bottom: 100px;
+	#brand-list-page {
+		background: #f8f8f8;
+		margin-bottom: 100px;
 
-    .container {
-      width: 1320px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
+		.container {
+			width: 1320px;
+			margin: 0 auto;
+			display: flex;
+			flex-direction: column;
 
-      .brand-title {
-        text-align: center;
-        margin-top: 40px;
-        margin-bottom: 10px;
-        color: #000;
-        font-family: $font;
-        font-weight: 600;
-        font-size: 28px;
-        letter-spacing: 0.8px;
-      }
+			.brand-title {
+				text-align: center;
+				margin-top: 30px;
+				margin-bottom: 20px;
+				color: #000;
+				font-family: $font;
+				font-weight: 600;
+				font-size: 28px;
+				letter-spacing: 0.8px;
+			}
 
-      .brand-grid {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        padding: 20px;
-      }
+			.brand-grid {
+				width: 100%;
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 20px;
+				padding: 20px;
 
-      .seller-box {
-        width: 100%;
-        height: 420px;
-        display: flex;
-        flex-direction: column;
-        background-color: #fff;
-        border: 1px solid #afafaf;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        cursor: pointer;
-        transition: all 0.25s ease;
+				.seller-box {
+					width: 100%;
+					height: 360px;
+					display: flex;
+					flex-direction: column;
+					background-color: #fff;
+					border-radius: 16px;
+					box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+					overflow: hidden;
+					cursor: pointer;
+					transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-        .seller-img {
-          width: 100%;
-          height: 240px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: #fff;
-          border-bottom: 1px solid #eee;
-          padding: 15px;
+					&:hover {
+						transform: translateY(-5px) scale(1.03);
+						box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+					}
 
-          img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            object-position: center;
-          }
-        }
+					.seller-img {
+						width: 100%;
+						height: 180px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						background-color: #fff;
+						border-bottom: 1px solid #eee;
+						padding: 15px;
+						overflow: hidden;
 
-        .seller-info {
-          display: flex;
-          flex-direction: column;
-          background-color: #f9f9f9;
-          padding: 10px;
-          height: 180px;
+						img {
+							max-width: 80%;
+							max-height: 80%;
+							object-fit: contain;
+							transition: transform 0.3s ease;
 
-          .main-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+							&:hover {
+								transform: scale(1.05);
+							}
+						}
+					}
 
-            .main-stage {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              padding-bottom: 5px;
-              border-bottom: 1px solid #ccc;
+					.seller-info {
+						display: flex;
+						flex-direction: column;
+						background-color: #fafafa;
+						padding: 12px;
+						height: 180px;
 
-              .seller-name {
-                .name {
-                  font-family: $font;
-                  font-size: 24px;
-                  font-weight: 600;
-                  color: #222;
-                  letter-spacing: 0.5px;
-                }
-              }
+						.main-info {
+							flex: 1;
+							display: flex;
+							flex-direction: column;
 
-              .like-btn {
-                top: 10px;
-                right: 10px;
-                width: 36px;
-                height: 36px;
-                padding: 6px;
-                border-radius: 50%;
-                background-color: #ffffff;
-                border: 1px solid #ccc;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                transition: all 0.2s ease;
+							.main-stage {
+								display: flex;
+								justify-content: space-between;
+								align-items: center;
+								padding-bottom: 5px;
+								border-bottom: 1px solid #ddd;
 
-                .heart-icon {
-                  fill: #fff;
-                  stroke: #ff7101;
-                  stroke-width: 2;
-                  width: 20px;
-                  height: 20px;
-                  transition: all 0.2s ease;
-                }
+								.seller-name {
+									.name {
+										font-family: $font;
+										font-size: 18px;
+										font-weight: 600;
+										color: #161e2d;
+									}
+								}
 
-                &.liked {
-                  border-color: #bbb;
+								.like-btn {
+									width: 32px;
+									height: 32px;
+									border-radius: 50%;
+									background-color: #fff;
+									border: 1px solid rgba(255, 113, 1, 0.3);
+									display: flex;
+									justify-content: center;
+									align-items: center;
+									cursor: pointer;
+									transition: all 0.3s ease;
 
-                  .heart-icon {
-                    fill: #dc3545;
-                    stroke: #dc3545;
-                  }
-                }
-              }
-            }
+									.heart-icon {
+										width: 18px;
+										height: 18px;
+										fill: none;
+										stroke: #ff0000;
+										stroke-width: 2;
+										transition: all 0.3s ease;
+									}
 
-            .second-stage {
-              margin-top: 10px;
-              padding: 6px;
-              border-radius: 6px;
-              display: flex;
-              flex-direction: column;
-              justify-content: space-between;
-              gap: 15px;
-              background-color: #fafafa;
+									&:hover {
+										background-color: rgba(255, 113, 1, 0.1);
+										transform: scale(1.1);
+									}
 
-              .seller-location,
-              .seller-contact {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                font-family: $font;
-                font-size: 14px;
-                font-weight: 500;
-                color: #2c2c2c;
+									&.liked {
+										background-color: #fff;
+										border-color: #ff7101;
+										.heart-icon {
+											fill: #ff0000;
+											stroke: #ff0000;
+										}
+									}
+								}
+							}
 
-                svg {
-                  color: #555;
-                  font-size: 18px;
-                }
-              }
-            }
-          }
+							.second-stage {
+								margin-top: 8px;
+								padding: 6px;
+								border-radius: 8px;
+								display: flex;
+								flex-direction: column;
+								gap: 10px;
+								background-color: #fff;
 
-          .rating-info {
-            display: flex;
-            align-items: center;
-            padding: 8px 0 0;
-            border-top: 1px solid #ccc;
+								.seller-location,
+								.seller-contact {
+									display: flex;
+									align-items: center;
+									gap: 6px;
+									font-family: $font;
+									font-size: 13px;
+									font-weight: 500;
+									color: #555;
 
-            .rating {
-              display: flex;
-              gap: 2px;
-              color: #ffc107;
-              font-size: 16px;
-            }
+									svg {
+										color: #888;
+										font-size: 16px;
+									}
+								}
+							}
+						}
 
-            .rating-meta {
-              margin-left: auto;
-              display: flex;
-              align-items: center;
-              gap: 10px;
+						.rating-info {
+							display: flex;
+							align-items: center;
+							padding-top: 6px;
+							border-top: 1px solid #ddd;
 
-              .divider {
-                width: 1px;
-                height: 20px;
-                background-color: #ccc;
-              }
+							.rating {
+								display: flex;
+								gap: 2px;
+								color: #ffc107;
+								font-size: 15px;
+							}
 
-              .like,
-              .view {
-                display: flex;
-                align-items: center;
-                gap: 5px;
+							.rating-meta {
+								margin-left: auto;
+								display: flex;
+								align-items: center;
+								gap: 8px;
 
-                .like-count,
-                .view-count {
-                  font-family: $font;
-                  font-size: 13px;
-                  font-weight: 600;
-                  color: #333;
-                }
+								.divider {
+									width: 1px;
+									height: 18px;
+									background-color: #ccc;
+								}
 
-                .mui-icon {
-                  color: #888;
-                  font-size: 18px;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+								.like,
+								.view {
+									display: flex;
+									align-items: center;
+									gap: 4px;
+
+									.like-count,
+									.view-count {
+										font-family: $font;
+										font-size: 12px;
+										font-weight: 600;
+										color: #333;
+									}
+
+									.mui-icon {
+										color: #888;
+										font-size: 16px;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

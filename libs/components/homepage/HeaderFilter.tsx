@@ -181,9 +181,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 			<Stack className={'header-box'}>
 				<Stack className={'header-text'}>
 					<p className={'bold'}>Drive Beyond Limits</p>
-
 					<span className={'short'}>Explore the Cars that Move You</span>
-
 					<Box className={'detail'}>
 						<Link href={'/car'} className={'p'}>
 							Get Started
@@ -191,17 +189,28 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					</Box>
 				</Stack>
 				<Stack className={'search-box'}>
+					<Stack className={'search-logo'}>
+						{[
+							{ name: 'SUV', image: 'suv.png' },
+							{ name: 'COUPE', image: 'convertible.png' },
+							{ name: 'CROSSOVER', image: 'crossover.png' },
+							{ name: 'SEDAN', image: 'sedan.png' },
+						].map((item) => (
+							<Box key={item.name} className={'logo'} onClick={() => carTypeQuickSelectHandler(item.name)}>
+								<img src={`/img/types/${item.image}`} alt={item.name} loading="lazy" />
+								<span>{item.name}</span>
+							</Box>
+						))}
+					</Stack>
 					<Stack className={'select-box'}>
 						<Box component={'div'} className={`box ${openBrand ? 'on' : ''}`} onClick={brandStateChangeHandler}>
 							<span>{searchFilter?.search?.brandList ? searchFilter?.search?.brandList[0] : 'Car Make'} </span>
 							<ExpandMoreIcon />
 						</Box>
-
 						<Box className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler}>
 							<span> {searchFilter?.search?.typeList ? searchFilter?.search?.typeList[0] : 'Car type'} </span>
 							<ExpandMoreIcon />
 						</Box>
-
 						<Box className={`box ${openFuelType ? 'on' : ''}`} onClick={fuelStateChangeHandler}>
 							<span>
 								{searchFilter?.search?.fuelTypeList ? `${searchFilter?.search?.fuelTypeList[0]}}` : 'Fuel Type'}
@@ -258,19 +267,6 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 								<SearchIcon className={'btn'} />
 							</Box>
 						</div>
-					</Stack>
-					<Stack className={'search-logo'}>
-						{[
-							{ name: 'SUV', image: 'suv.png' },
-							{ name: 'COUPE', image: 'convertible.png' },
-							{ name: 'CROSSOVER', image: 'crossover.png' },
-							{ name: 'SEDAN', image: 'sedan.png' },
-						].map((item) => (
-							<Box key={item.name} className={'logo'} onClick={() => carTypeQuickSelectHandler(item.name)}>
-								<img src={`/img/types/${item.image}`} alt={item.name} loading="lazy" />
-								<span>{item.name}</span>
-							</Box>
-						))}
 					</Stack>
 				</Stack>
 			</Stack>

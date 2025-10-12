@@ -54,11 +54,11 @@ const Join: NextPage = () => {
 							Home
 						</Link>
 						<ArrowForwardIosIcon className={'arrow'} />
-						<span>Login / Signup</span>
+						<span>Login / Sign-up</span>
 					</Stack>
 					<Stack className={'main'}>
 						<Stack className={'left'}>
-							<img src="/img/cars/head4.jpg" alt="" />
+							<img src="/img/cars/head9.png" alt="" />
 						</Stack>
 						<Stack className={'right'}>
 							<Box className={'info'}>
@@ -105,15 +105,6 @@ const Join: NextPage = () => {
 								</div>
 							</Box>
 							<Box className={'register'}>
-								{loginView && (
-									<div className={'remember-info'}>
-										<FormGroup>
-											<FormControlLabel control={<Checkbox defaultChecked size="small" />} label="Remember me" />
-										</FormGroup>
-										<a>Lost your password?</a>
-									</div>
-								)}
-
 								{loginView ? (
 									<Button variant="contained" disabled={input.nick == '' || input.password == ''} onClick={doLogin}>
 										LOGIN
@@ -124,7 +115,7 @@ const Join: NextPage = () => {
 										disabled={input.nick == '' || input.password == '' || input.email == ''}
 										onClick={doSignUp}
 									>
-										SIGNUP
+										SIGN-UP
 									</Button>
 								)}
 							</Box>
@@ -132,7 +123,7 @@ const Join: NextPage = () => {
 								{loginView ? (
 									<p>
 										Do not you have an account?
-										<b onClick={() => viewChangeHandler(false)}>Signup</b>
+										<b onClick={() => viewChangeHandler(false)}>Sign-up</b>
 									</p>
 								) : (
 									<p>
