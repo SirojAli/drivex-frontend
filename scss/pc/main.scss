@@ -578,7 +578,7 @@
 	.header-main {
 		position: relative;
 		width: 100%;
-		height: 870px;
+		height: 870px !important;
 		background-image: url('/img/cars/SS.jpg');
 		background-size: cover;
 
@@ -594,13 +594,13 @@
 				position: relative;
 				display: flex;
 				flex-direction: column;
-				align-items: flex-start;
+				align-items: flex-start !important;
 
 				.header-text {
 					width: 750px;
 					display: flex;
 					flex-direction: column;
-					align-items: flex-start;
+					align-items: flex-start !important;
 					gap: 20px;
 					margin-top: 150px;
 					animation: fadeInUp 1.2s ease forwards;
@@ -611,7 +611,7 @@
 						font-size: 72px;
 						font-weight: 800;
 						line-height: 1.1;
-						text-align: center;
+						// text-align: center;
 						text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 						letter-spacing: -1px;
 					}
@@ -656,9 +656,9 @@
 
 				.search-box {
 					position: relative;
-					width: 1290px;
-					margin-top: 300px;
-					padding: 16px 29px;
+					width: 1290px !important;
+					margin-top: 300px !important;
+					padding: 16px 29px !important;
 					display: flex;
 					flex-direction: column;
 					align-items: center;
@@ -976,7 +976,7 @@
 		background: black;
 		background-image: url('/img/cars/head6.jpg');
 		background-size: cover;
-		background-position: center 50%; /* 80% down from top */
+		background-position: center 50%;
 		background-repeat: no-repeat;
 
 		&.auth {

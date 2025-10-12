@@ -213,7 +213,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						</Box>
 						<Box className={`box ${openFuelType ? 'on' : ''}`} onClick={fuelStateChangeHandler}>
 							<span>
-								{searchFilter?.search?.fuelTypeList ? `${searchFilter?.search?.fuelTypeList[0]}}` : 'Fuel Type'}
+								{searchFilter?.search?.fuelTypeList ? `${searchFilter?.search?.fuelTypeList[0]}` : 'Fuel Type'}
 							</span>
 							<ExpandMoreIcon />
 						</Box>
