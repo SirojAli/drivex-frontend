@@ -177,7 +177,7 @@ const CompareCarCard: React.FC<CompareCarCardProps> = ({ car1, car2 }) => {
 							<Grid
 								item
 								xs={12}
-								md={4.5}
+								md={4}
 								key={car._id + field.key}
 								sx={{
 									px: 3,

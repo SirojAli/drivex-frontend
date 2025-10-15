@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { Stack, Box } from '@mui/material';
-import WestIcon from '@mui/icons-material/West';
-import EastIcon from '@mui/icons-material/East';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import TopBrandCard from './TopBrandCard';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { SellersInquiry } from '../../types/member/member.input';
@@ -19,6 +14,10 @@ import { Member } from '../../types/member/member';
 import { Message } from '../../enums/common.enum';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { useRouter } from 'next/router';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 interface TopSellerProps {
 	initialInput: SellersInquiry;

@@ -1,16 +1,6 @@
-import {
-	Stack,
-	TextField,
-	Button,
-	Checkbox,
-	FormControlLabel,
-	Typography,
-	Box,
-	Modal,
-	CircularProgress,
-} from '@mui/material';
+import { Stack, TextField, Button, Typography, Box, Modal, CircularProgress } from '@mui/material';
 import { NextPage } from 'next';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import withLayoutFull from '../../libs/components/layout/LayoutFull';
 import Link from 'next/link';
 import {
@@ -56,12 +46,9 @@ import { T } from '../../libs/types/common';
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { GET_COMMENTS } from '../../apollo/admin/query';
 import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
-import CarCard from '../../libs/components/car/CarCard';
 import { REACT_APP_API_URL } from '../../libs/config';
 import CompareModalContent from './../../pages/car/compare';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import CarVideoPlayer from '../../libs/components/car/CarVideo';
-import { Member } from '../../libs/types/member/member';
 import { CarType } from '../../libs/enums/car.enum';
 import { Comment } from '../../libs/types/comment/comment';
 

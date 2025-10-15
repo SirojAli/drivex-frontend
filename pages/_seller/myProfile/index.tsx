@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import withSellerLayout from '../../../libs/components/layout/LayoutSeller';
-import { Box, Button, Stack, TextField, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { Messages, REACT_APP_API_URL } from '../../../libs/config';
-import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import { userVar } from '../../../apollo/store';
 import { MemberUpdate } from '../../../libs/types/member/member.update';
@@ -11,7 +10,6 @@ import { useMutation, useReactiveVar } from '@apollo/client';
 import { getJwtToken, updateStorage, updateUserInfo } from '../../../libs/auth/index';
 import { sweetErrorHandling, sweetMixinSuccessAlert } from '../../../libs/sweetAlert';
 import { UPDATE_MEMBER } from '../../../apollo/user/mutation';
-import PersonIcon from '@mui/icons-material/Person';
 
 const EditProfile: NextPage = ({ initialValues, ...props }: any) => {
 	const token = getJwtToken();

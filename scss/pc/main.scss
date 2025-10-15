@@ -52,7 +52,7 @@
 
 							span {
 								position: relative;
-								color: #eeeeeeed;
+								color: #fff;
 								font-family: $font;
 								font-size: 15px;
 								font-style: normal;
@@ -187,7 +187,7 @@
 
 						span {
 							position: relative;
-							color: #eeeeeeed;
+							color: #fff;
 							font-family: $font;
 							font-size: 15px;
 							font-style: normal;
@@ -313,7 +313,7 @@
 
 							span {
 								position: relative;
-								color: #eeeeeeed;
+								color: #fff;
 								font-family: $font;
 								font-size: 15px;
 								font-style: normal;
@@ -611,8 +611,6 @@
 						font-size: 72px;
 						font-weight: 800;
 						line-height: 1.1;
-						// text-align: center;
-						text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 						letter-spacing: -1px;
 					}
 
@@ -674,7 +672,6 @@
 						gap: 10px;
 						border-radius: 16px;
 						background: #fff;
-						box-shadow: 0px 4px 26px 0px rgba(66, 71, 76, 0.08);
 						position: relative;
 
 						.box {
@@ -693,6 +690,7 @@
 							span {
 								color: #000;
 								font-size: 14px;
+								font-weight: 500;
 								font-family: $font;
 								transition: color 0.3s ease;
 							}

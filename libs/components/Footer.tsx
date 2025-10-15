@@ -1,5 +1,4 @@
 import { Box, Stack } from '@mui/material';
-import moment from 'moment';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TelegramIcon from '@mui/icons-material/Telegram';

@@ -2,26 +2,20 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
 	Stack,
 	Typography,
-	OutlinedInput,
 	Button,
-	Checkbox,
 	FormControl,
-	InputLabel,
 	Select,
 	MenuItem,
 	Slider,
-	IconButton,
 	Box,
 	SelectChangeEvent,
 } from '@mui/material';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { CarISearch, CarsInquiry } from '../../types/car/car.input';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
 import { CarBrand, CarType, CarFuelType, CarTransmission, CarDriveType, CarColor } from '../../enums/car.enum';
 import SearchIcon from '@mui/icons-material/Search';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { GET_CARS } from '../../../apollo/user/query';
 import { T } from '../../types/common';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';

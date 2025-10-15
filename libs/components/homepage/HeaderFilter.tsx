@@ -1,14 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Stack, Box, Modal, Divider, Button, Tooltip, IconButton } from '@mui/material';
+import { Stack, Box, Tooltip, IconButton } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
 import Link from 'next/link';
 import { CarsInquiry } from '../../types/car/car.input';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import CloseIcon from '@mui/icons-material/Close';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import { useRouter } from 'next/router';
 import { CarBrand, CarFuelType, CarType } from '../../enums/car.enum';
 import RefreshIcon from '@mui/icons-material/Refresh';

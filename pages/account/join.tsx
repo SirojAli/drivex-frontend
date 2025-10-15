@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, Stack } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
 
 import { useRouter } from 'next/router';
 import { logIn, signUp } from '../../libs/auth';

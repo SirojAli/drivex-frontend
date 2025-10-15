@@ -1,6 +1,5 @@
 import React from 'react';
 import { Stack, Box } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';

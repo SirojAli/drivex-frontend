@@ -15,7 +15,6 @@ import { userVar } from '../../../apollo/store';
 import { useRouter } from 'next/router';
 import { Car } from '../../../libs/types/car/car';
 import { BoardArticle } from '../../../libs/types/board-article/board-article';
-import { T } from '../../../libs/types/common';
 import { GET_BOARD_ARTICLES, GET_CARS } from '../../../apollo/user/query';
 
 interface SellerCommunity {
