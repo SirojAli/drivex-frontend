@@ -608,10 +608,11 @@
 					.bold {
 						color: #fff;
 						font-family: $font;
-						font-size: 72px;
+						font-size: clamp(48px, 6vw, 72px);
 						font-weight: 800;
 						line-height: 1.1;
 						letter-spacing: -1px;
+						white-space: nowrap;
 					}
 
 					.short {
@@ -655,6 +656,7 @@
 				.search-box {
 					position: relative;
 					width: 1290px !important;
+					z-index: 20;
 					margin-top: 300px !important;
 					padding: 16px 29px !important;
 					display: flex;
